@@ -1,6 +1,11 @@
 # assemble the msat data and do basic QA/QC
 
+setwd('/Users/mpinsky/Documents/Rutgers/Latitudinal gradients of diversity/globalFishGenetics/')
+
+
+######################
 # basic functions
+######################
 calcHe = function(x){ # calculate expected heterozygosit from allele frequencies. does not check that they sum to 1
 	x = x[!is.na(x)]
 	h = 1-sum(x^2)
@@ -13,37 +18,35 @@ sumna = function(x){ # remove NAs, unless all are in NAs, then return NA
 }
 
 
-# main script
-setwd('/Users/mpinsky/Documents/Princeton/Latitudinal gradients of diversity/Analysis/')
 
 
-###########
-## msats ##
-###########
+################################
+## Read in and merge data files
+################################
 # read in msat files
-msat1 = read.csv('../Data/msat Data/csv/Fishery lat msats 000 2015-05-20 SSP.csv', stringsAsFactors=FALSE)
+msat1 = read.csv('data/msat/Fishery lat msats 000 2015-05-20 SSP.csv', stringsAsFactors=FALSE)
 #	head(msat1)
-msat2 = read.csv('../Data/msat Data/csv/Fishery lat msats 001 2015-07-04 MLP.csv', stringsAsFactors=FALSE)
+msat2 = read.csv('data/msat/Fishery lat msats 001 2015-07-04 MLP.csv', stringsAsFactors=FALSE)
 #	head(msat2)
-msat3 = read.csv('../Data/msat Data/csv/Fishery lat msats 002 2015-08-08 SSP.csv', stringsAsFactors=FALSE)
+msat3 = read.csv('data/msat/Fishery lat msats 002 2015-08-08 SSP.csv', stringsAsFactors=FALSE)
 #	head(msat3)
 	msat3 <- msat3[msat3$spp != '', ] # trim empty rows
-msat4 = read.csv('../Data/msat Data/csv/Fishery lat msats 100 2015-08-20 MLP.csv', stringsAsFactors=FALSE)
+msat4 = read.csv('data/msat/Fishery lat msats 100 2015-08-20 MLP.csv', stringsAsFactors=FALSE)
 #	head(msat4)
 	msat4 <- msat4[,!(names(msat4)=='X')] # drop an extra column
 	msat4 <- msat4[msat4$spp != '', ] # trim empty rows
-msat5 = read.csv('../Data/msat Data/csv/Fishery lat msats 101 2015-07-17 SSP.csv', stringsAsFactors=FALSE)
+msat5 = read.csv('data/msat/Fishery lat msats 101 2015-07-17 SSP.csv', stringsAsFactors=FALSE)
 #	head(msat5)
 	msat5 = msat5[,!(names(msat5)=='X')] # drop an extra column
 	msat5 <- msat5[msat5$spp != '', ] # trim empty rows
-msat6 = read.csv('../Data/msat Data/csv/Fishery lat msats 200 2015-02-10 MLP.csv', stringsAsFactors=FALSE)
+msat6 = read.csv('data/msat/Fishery lat msats 200 2015-02-10 MLP.csv', stringsAsFactors=FALSE)
 #	head(msat6)
 	msat6 = msat6[,!(names(msat6)=='X')] # drop an extra column
 	msat6 <- msat6[msat6$spp != '', ] # trim empty rows
-msat7 = read.csv('../Data/msat Data/csv/Fishery lat msats 201 2015-10-13 MLP.csv', stringsAsFactors=FALSE)
+msat7 = read.csv('data/msat/Fishery lat msats 201 2015-10-13 MLP.csv', stringsAsFactors=FALSE)
 #	head(msat7)
 
-ppdat = read.csv("../Data/msat Data/Pinsky&Palumbi/ppdat_2016-03-04wLL.csv", stringsAsFactors=FALSE) # Pinsky & Palumbi 2014 data
+ppdat = read.csv("data/msat/ppdat_2016-03-04wLL.csv", stringsAsFactors=FALSE) # Pinsky & Palumbi 2014 data
 	ppdat$NumMarkers <- ppdat$NumMarker # for some reason, the contents weren't copied over before
 #	head(ppdat)
 
@@ -152,6 +155,9 @@ msat7 = msat7[!(msat7$Source %in% dups),]
 	msat = rbind(msat, ppdatmsat) # merge in Pinsky & Palumbi 2014 data
 		dim(msat) # 16473 x 90
 		
+# merge in srdb stock information (WORKING HERE)		
+
+
 # Process allele frequencies into He where needed
 	inds = is.na(msat$He) & !is.na(msat$p1)
 	sum(inds) # 54
