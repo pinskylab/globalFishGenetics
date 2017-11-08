@@ -6,6 +6,8 @@ setwd('/Users/mpinsky/Documents/Rutgers/Latitudinal gradients of diversity/globa
 ######################
 # basic functions
 ######################
+library(rfishbase)
+
 calcHe = function(x){ # calculate expected heterozygosit from allele frequencies. does not check that they sum to 1
 	x = x[!is.na(x)]
 	h = 1-sum(x^2)
@@ -21,7 +23,7 @@ sumna = function(x){ # remove NAs, unless all are in NAs, then return NA
 
 
 ################################
-## Read in and merge data files
+## Read in data files
 ################################
 # read in msat files
 msat1 = read.csv('data/msat/Fishery lat msats 000 2015-05-20 SSP.csv', stringsAsFactors=FALSE)
@@ -47,8 +49,14 @@ msat7 = read.csv('data/msat/Fishery lat msats 201 2015-10-13 MLP.csv', stringsAs
 #	head(msat7)
 
 ppdat = read.csv("data/msat/ppdat_2016-03-04wLL.csv", stringsAsFactors=FALSE) # Pinsky & Palumbi 2014 data
-	ppdat$NumMarkers <- ppdat$NumMarker # for some reason, the contents weren't copied over before
+	names(ppdat)[names(ppdat) == "NumMarker"] <- "NumMarkers" # for some reason, the contents weren't copied over before
 #	head(ppdat)
+
+srdbmatch <- read.csv("data/srdb_matching/msat_to_match.csv", stringsAsFactors=FALSE) # to match genetic data to SRDB stocks
+
+#######################
+## Merge files
+#######################
 
 # add an indicator for source file
 msat1$file <- 'msats000'
@@ -122,9 +130,27 @@ msat7 = msat7[!(msat7$Source %in% dups),]
 	msat7 <- msat7[msat7$Source !='Naciri et al. 1999 The Journal of Heredity 90: 591-596',] # keep msat6 version since I was more careful about which sites to keep or drop
 
 		# Bahri-Sfar et al. 2000 Proc. R. Soc. Lond. B 267:929-935 (msats201) and Bahri-Sfar et al. 2000 Proceedings of the Royal Society B 267:929-935 (msats200): found by accident, not by fuzzy matching above
-	msat6[msat6$Source=='Bahri-Sfar et al. 2000 Proceedings of the Royal Society B 267:929-935',!grepl('^p', names(msat6))]
-	msat7[msat7$Source=='Bahri-Sfar et al. 2000 Proc. R. Soc. Lond. B 267:929-935',!grepl('^p', names(msat7))] 
+#	msat6[msat6$Source=='Bahri-Sfar et al. 2000 Proceedings of the Royal Society B 267:929-935',!grepl('^p', names(msat6))]
+#	msat7[msat7$Source=='Bahri-Sfar et al. 2000 Proc. R. Soc. Lond. B 267:929-935',!grepl('^p', names(msat7))] 
 	msat7 <- msat7[msat7$Source !='Bahri-Sfar et al. 2000 Proc. R. Soc. Lond. B 267:929-935',] # keep msat6 version since I was more careful about which sites to keep or drop
+	
+	# examine and trim out duplicate records from same spp/study/site
+		# Ruzzante et al. 1996 inshore-offshore CJFAS
+#	ppdat[(ppdat$Source=='Ruzzante et al. 1996 inshore-offshore CJFAS' & ppdat$spp=='Gadus morhua' & ppdat$Site=='SW Arm, Trinity Bay'),]
+#	ppdat[(ppdat$Source=='Ruzzante et al. 1996 inshore-offshore CJFAS' & ppdat$spp=='Gadus morhua' & ppdat$Site=='SW Arm, Trinity Bay' & ppdat$He!=0.875),] # the lines to remove
+	ppdat <- ppdat[!(ppdat$Source=='Ruzzante et al. 1996 inshore-offshore CJFAS' & ppdat$spp=='Gadus morhua' & ppdat$Site=='SW Arm, Trinity Bay' & ppdat$He!=0.875),] # remove the 3 lines
+	
+#	srdbmatch[(srdbmatch$Source=='Ruzzante et al. 1996 inshore-offshore CJFAS' & srdbmatch$spp=='Gadus morhua' & srdbmatch$Site=='SW Arm, Trinity Bay'),]
+#	srdbmatch[(srdbmatch$Source=='Ruzzante et al. 1996 inshore-offshore CJFAS' & srdbmatch$spp=='Gadus morhua' & srdbmatch$Site=='SW Arm, Trinity Bay' & srdbmatch$He!=0.875),] # the lines to remove
+	srdbmatch <- srdbmatch[!(srdbmatch$Source=='Ruzzante et al. 1996 inshore-offshore CJFAS' & srdbmatch$spp=='Gadus morhua' & srdbmatch$Site=='SW Arm, Trinity Bay' & srdbmatch$He!=0.875),] # remove the 3 lines
+
+#	ppdat[(ppdat$Source=='Ruzzante et al. 1996 inshore-offshore CJFAS' & ppdat$spp=='Gadus morhua' & ppdat$Site=='North Cape, Grand Bank'),]
+#	ppdat[(ppdat$Source=='Ruzzante et al. 1996 inshore-offshore CJFAS' & ppdat$spp=='Gadus morhua' & ppdat$Site=='North Cape, Grand Bank' & ppdat$CollectionYear!=1994),] # the lines to remove
+	ppdat <- ppdat[!(ppdat$Source=='Ruzzante et al. 1996 inshore-offshore CJFAS' & ppdat$spp=='Gadus morhua' & ppdat$Site=='North Cape, Grand Bank' & ppdat$CollectionYear!=1994),] # remove the 3 lines
+
+#	srdbmatch[(srdbmatch$Source=='Ruzzante et al. 1996 inshore-offshore CJFAS' & srdbmatch$spp=='Gadus morhua' & srdbmatch$Site=='North Cape, Grand Bank'),]
+#	srdbmatch[(srdbmatch$Source=='Ruzzante et al. 1996 inshore-offshore CJFAS' & srdbmatch$spp=='Gadus morhua' & srdbmatch$Site=='North Cape, Grand Bank' & srdbmatch$CollectionYear!=1994),] # the lines to remove
+	srdbmatch <- srdbmatch[!(srdbmatch$Source=='Ruzzante et al. 1996 inshore-offshore CJFAS' & srdbmatch$spp=='Gadus morhua' & srdbmatch$Site=='North Cape, Grand Bank' & srdbmatch$CollectionYear!=1994),] # remove the 3 lines
 
 # verify column names match
 	all(names(msat1) == names(msat2))
@@ -135,28 +161,35 @@ msat7 = msat7[!(msat7$Source %in% dups),]
 	all(names(msat1) == names(msat7)) # fails
 		nn <- setdiff(names(msat1), names(msat7))
 		for(i in 1:length(nn)) msat7[[nn[i]]] <- NA # pad extra columns in msat7
-		setdiff(names(msat1), names(msat7))
-		setdiff(names(msat7), names(msat1))
+		setdiff(names(msat1), names(msat7)) # none: good
+		setdiff(names(msat7), names(msat1)) # none: good
 
 # merge files from students
 	msat = rbind(msat1, msat2, msat3, msat4, msat5, msat6, msat7) # merge student files
-		dim(msat) # 4585
+		dim(msat) # 4570 rows of data
 			
 # merge in file from Pinsky & Palumbi
 	msat$lat = NA # need this to merge with ppdat
 	nms = setdiff(names(msat), names(ppdat)) # column names in msat that aren't in ppdat
 	nms
-	for(i in 1:length(nms)) ppdat[[nms[i]]] = NA # add these columns to ppdat
+	if(length(names)>0) for(i in 1:length(nms)) ppdat[[nms[i]]] = NA # add these columns to ppdat
 	ppdat$lon <- ppdat$long # move to new column name to match msat
 	ppdatmsat = ppdat[,names(msat)] # trim Pinsky & Palumbi to only msats and only columns that match the student data
-	dim(ppdatmsat) # 11888
-	dim(msat) # 4585
+	dim(ppdatmsat) # 8241
+	dim(msat) # 4568
 	
 	msat = rbind(msat, ppdatmsat) # merge in Pinsky & Palumbi 2014 data
-		dim(msat) # 16473 x 90
+		dim(msat) # 12809 x 90
 		
-# merge in srdb stock information (WORKING HERE)		
+# merge in srdb stock information	
+	# match on spp, Source, Site
+	# bring in fbsci, stockid, lat, lon (latter two for error-checking)
+	names(srdbmatch)[names(srdbmatch)=='lat'] <- 'lat_srdb'
+	names(srdbmatch)[names(srdbmatch)=='lon'] <- 'lon_srdb'
 
+		nrow(msat) # 12809
+	msat <- merge(msat, srdbmatch[,c('spp', 'Source', 'Country', 'Site', 'CollectionYear', 'MarkerName', 'fbsci', 'stockid', 'lat_srdb', 'lon_srdb')], all.x=TRUE, by=c('spp', 'Source', 'Country', 'Site', 'MarkerName', 'CollectionYear'))
+		nrow(msat) # 12809
 
 # Process allele frequencies into He where needed
 	inds = is.na(msat$He) & !is.na(msat$p1)
@@ -166,14 +199,21 @@ msat7 = msat7[!(msat7$Source %in% dups),]
 	 
 # Calc lat and lon in decimal degrees
 	inds = is.na(msat$lat) & !is.na(msat$lat_deg)
-	sum(inds) # 15067
+	sum(inds) # 12359
 #	msat[inds,c('lat', 'lat_deg', 'lat_min')]
 	msat$lat[inds] = rowSums(cbind(msat$lat_deg[inds], msat$lat_min[inds]/60, msat$lat_sec[inds]/3600), na.rm=TRUE)
 
 	inds = !is.na(msat$lon_deg)
-	sum(inds) # 15067
+	sum(inds) # 12359
 	msat$lon[inds] = rowSums(cbind(msat$lon_deg[inds], msat$lon_min[inds]/60, msat$lon_sec[inds]/3600), na.rm=TRUE)
 
+
+# remove lines without lat/lon
+	inds <- is.na(msat$lat) | is.na(msat$lon)
+	sum(inds) # 450
+	# msat[inds, c('spp', 'Source', 'Site', 'lat', 'lon', 'file')] # site description is too vague or no map in the paper
+	msat <- msat[!inds, ]
+	nrow(msat) #12359
 
 # fix species name mistakes
 	# msat[msat$spp %in% c("Dicentrarchus labrax", "Dicentrarchus labrax "),!grepl('^p', names(msat6))]
@@ -191,6 +231,8 @@ msat7 = msat7[!(msat7$Source %in% dups),]
 
 	msat$spp[msat$spp == "Lophius piscatorious"] <- "Lophius piscatorius" # fix the missing a
 
+	msat$spp[msat$spp == "Symphodus ocellatus "] <- "Symphodus ocellatus" # delete the extra space
+
 	# msat[msat$spp %in% c("Pagrus auratus"),!grepl('^p', names(msat6))] # all samples from New Zealand, therefore Pagrus auratus, not Sparus aurata
 
 	# msat[msat$spp %in% c("Sebastes marinus"),!grepl('^p', names(msat6))] # FB calls this norvegicus
@@ -199,6 +241,9 @@ msat7 = msat7[!(msat7$Source %in% dups),]
 	
 	# msat[msat$spp %in% c("Trachinotus falcatus"),c('spp', 'CommonName', 'Source', 'PrimerNote', 'Country', 'Site')] # no reason to suspect this is actually C. lunula (from the paper)
 
+
+# Fix ? in repeat definitions
+	msat$Repeat[msat$Repeat %in% c('?', '') & !is.na(msat$Repeat)] <- NA
 
 ###########
 # QA/QC
@@ -209,101 +254,137 @@ summary(msat)
 	# repeats are NOT all numeric
 
 # check species names visually
-#t(t(sort(unique(msat$spp)))) # to print as one long list. 363 species.
+#t(t(sort(unique(msat$spp)))) # to print as one long list. 293 species.
 
 # check for slightly misspelled species names with fuzzy matching
 #spps <- sort(unique(msat$spp))
 #
 #poss_matches <- vector('list', length=length(spps))
 #for(i in 1:(length(spps)-1)){
-#	poss_matches[[i]] <- agrep(pattern=spps[i], x=spps[(i+1):length(spps)], fixed=TRUE, value=TRUE, max.distance=list(all=0.2), useBytes=TRUE)
-#	len <- length(poss_matches[[i]])
-#	if(len>0){
-#		print(paste(', i=', i, sep=''))
-#		print(cbind(spps[i], paste(poss_matches[[i]][which(len>0)], collapse=',')))
-#	}
+#poss_matches[[i]] <- agrep(pattern=spps[i], x=spps[(i+1):length(spps)], fixed=TRUE, value=TRUE, max.distance=list(all=0.2), useBytes=TRUE)
+#len <- length(poss_matches[[i]])
+#if(len>0){
+#	print(paste(', i=', i, sep=''))
+#	print(cbind(spps[i], paste(poss_matches[[i]][which(len>0)], collapse=',')))
+#}
 #}
 
 
 
-# find Fishbase species names
-	fbdat <- data.frame(spp=sort(unique(msat$spp)), fbsci=NA) # translation table from my scientific names to those in fishbase
-
-	options(nwarnings=300)
-	for(i in 1:nrow(fbdat)){ # check sci names
-		cat(i)
-		if(!(fbdat$spp[i] %in% c('Sebastes marinus', 'Pagrus auratus', 'Chaetodon lunulatus', 'Trachinotus falcatus'))){ # chokes for no apparent reason on S. marinus. Returns 3 answers for P. auratus and C. lunulatus.
-			fbdat$fbsci[i] <- validate_names(fbdat$spp[i]) # check that sci names are correct. returned warnings, all about potential synonyms.
-		}
-		if(fbdat$spp[i] == 'Sebastes marinus'){
-			fbdat$fbsci[i] <- 'Sebastes norvegicus' # what FB calls it (from a web search)
-		}
-		if(fbdat$spp[i] == 'Pagrus auratus'){
-			fbdat$fbsci[i] <- 'Pagrus auratus' # correct since our samples are from New Zealand
-		}
-		if(fbdat$spp[i] == 'Chaetodon lunulatus'){
-			fbdat$fbsci[i] <- 'Chaetodon lunulatus' # assume this isn't C. lunula (other option FB gives)
-		}
-		if(fbdat$spp[i] == 'Trachinotus falcatus'){
-			fbdat$fbsci[i] <- 'Trachinotus falcatus' # correct since our samples are from Puerto Rico (not Indo-pacific)
-		}
-	}
-		warnings()
-		# for(i in 1:nrow(fbdat)) print(synonyms(fbdat$fbsci[i])) # there is only ever 1 accepted name
-
-		inds <- which(fbdat$spp != fbdat$fbsci)
-		fbdat[inds,] # examine rows where fishbase has a different name
-		
-		
-	# write out
-	write.csv(fbdat, file='output/fbdat_msat.csv', row.names=FALSE)
-
-# check repeat definitions: STILL need to do
+# check repeat definitions
 	x=as.numeric(msat$Repeat)
-	msat$Repeat[is.na(x)]
+	msat$Repeat[is.na(x) & !is.na(msat$Repeat)] #one line is "9 or 2". Leave this as is for now.
 
 # check that allele freqs sum to 1
 	x = apply(msat[,grep('p[[:digit:]]+', names(msat))], MARGIN=1, FUN=sumna) 
-	which(x<0.9)
+	which(x<0.9) # none
 	msat[which(x<0.99 & is.na(msat$He)),] # none
 
 # check lat
-	msat[msat$lat>90 & !is.na(msat$lat),c('spp', 'Source', 'Country', 'Site', 'lat_deg', 'lat_min', 'lat_sec', 'lat')]	
-	msat[msat$lat < -90 & !is.na(msat$lat),c('spp', 'Source', 'Country', 'Site', 'lat_deg', 'lat_min', 'lat_sec', 'lat')]	
+	msat[msat$lat>90 & !is.na(msat$lat),c('spp', 'Source', 'Country', 'Site', 'lat_deg', 'lat_min', 'lat_sec', 'lat')]	# none
+	msat[msat$lat < -90 & !is.na(msat$lat),c('spp', 'Source', 'Country', 'Site', 'lat_deg', 'lat_min', 'lat_sec', 'lat')] # none
 
-	sum(is.na(msat$lat) & !is.na(msat$lat_deg)) # missing lat but not lat_deg?
+	sum(is.na(msat$lat) & !is.na(msat$lat_deg)) # missing lat but not lat_deg? none
 
-	hist(msat$lat)
+	inds <- is.na(msat$lat)
+	sum(inds) # 0
+	msat[inds, c('spp', 'Source', 'lat_deg', 'lat', 'file')]
+
+
+	hist(msat$lat) # mostly northern hemisphere, but not only
 
 # check lon
-	msat[msat$lon > 180 & !is.na(msat$lon),c('spp', 'Source', 'Country', 'Site', 'lon_deg', 'lon_min', 'lon_sec', 'lon')]	
-	msat[msat$lon < -180 & !is.na(msat$lon),c('spp', 'Source', 'Country', 'Site', 'lon_deg', 'lon_min', 'lon_sec', 'lon')]	
-	msat[msat$lon == 0 & !is.na(msat$lon),c('spp', 'Source', 'Country', 'Site', 'lon_deg', 'lon_min', 'lon_sec', 'lon')]	
+	msat[msat$lon > 180 & !is.na(msat$lon),c('spp', 'Source', 'Country', 'Site', 'lon_deg', 'lon_min', 'lon_sec', 'lon')] # none
+	msat[msat$lon < -180 & !is.na(msat$lon),c('spp', 'Source', 'Country', 'Site', 'lon_deg', 'lon_min', 'lon_sec', 'lon')] # none
+	msat[msat$lon == 0 & !is.na(msat$lon),c('spp', 'Source', 'Country', 'Site', 'lon_deg', 'lon_min', 'lon_sec', 'lon')] # none
 
-	sum(is.na(msat$lon) & !is.na(msat$lon_deg)) # missing lon but not lon_deg?
+	sum(is.na(msat$lon) & !is.na(msat$lon_deg)) # missing lon but not lon_deg? none
 
-	hist(msat$lon) # 
+	inds <- is.na(msat$lon)
+	sum(inds) # 0
+
+	hist(msat$lon) # mostly western hemisphere
+	
+# compare lat and lon to srdbmatch lat/lon, fill in where missing
+	plot(msat$lat, msat$lat_srdb); abline(0,1) # falls right on 1:1 line
+	plot(msat$lon, msat$lon_srdb); abline(0,1) # falls right on 1:1 line
+	
+	msat[is.na(msat$lat) & !is.na(msat$lat_srdb),] # 0
+	msat[is.na(msat$lon) & !is.na(msat$lon_srdb),] # 0
+
 
 # check He
-	msat[(msat$He<0 | msat$He>1) & !is.na(msat$He),c('spp', 'Source', 'Country', 'Site', 'He')]	
+	msat[(msat$He<0 | msat$He>1) & !is.na(msat$He),c('spp', 'Source', 'Country', 'Site', 'He')]	# 0
+
+	inds <- is.na(msat$He)
+	sum(inds) # 0
+	msat[inds,]
 
 # check CrossSpp
 	sort(unique(msat$CrossSpp))	
-	inds = which(!(msat$CrossSpp %in% c(0, 1))) # good that all are numbers
+	inds = which(!(msat$CrossSpp %in% c(0, 1)) & !is.na(msat$CrossSpp)) # good that all are numbers
 	length(inds)
-	t(sort(unique(msat$CrossSpp[inds])))
+	t(sort(unique(msat$CrossSpp[inds]))) # some fractional CrossSpp values
+	msat[inds, c('CrossSpp', 'NumMarkers')] # all have NumMarkers > 1s
 
 # check places where NumMarkers isn't known (not yet done)
+	inds <- is.na(msat$NumMarkers)
+	sum(inds) # now 0
+	msat[inds, c('spp', 'Source', 'NumMarkers', 'MarkerName', 'file')]
+
 
 # Process collection year (to do later)
 	# need to clean this first
 	
+# All data included?
+	inds <- is.na(msat$He) | is.na(msat$spp) | is.na(msat$lat) | is.na(msat$lon) | is.na(msat$PrimerNote) | is.na(msat$n)
+	sum(inds) # 0
+	msat[inds,]
+	
 # Trim just to relevant columns
-msat <- msat[,c('spp', 'CommonName', 'Source', 'PrimerNote', 'Country', 'Site', 'CollectionYear', 'NumMarkers', 'MarkerName', 'CrossSpp', 'n', 'Repeat', 'He', 'Hese', 'file', 'lat', 'lon')]
-
+msat <- msat[,c('spp', 'CommonName', 'Source', 'PrimerNote', 'Country', 'Site', 'lat', 'lon', 'stockid', 'CollectionYear', 'NumMarkers', 'MarkerName', 'CrossSpp', 'n', 'Repeat', 'He', 'Hese', 'file')]
+	dim(msat) # 12359
 
 # write out msat data (allow multiple loci per line)
-	write.csv(msat, file=paste('output/msat_', Sys.Date(), '.csv', sep=''))
+	write.csv(msat, file='output/msat.csv')
+
+
+
+#########################################
+# find Fishbase species names
+#########################################
+
+fbdat <- data.frame(spp=sort(unique(msat$spp)), fbsci=NA) # translation table from my scientific names to those in fishbase
+
+options(nwarnings=300)
+nrow(fbdat) # 275
+for(i in 1:nrow(fbdat)){ # check sci names
+	cat(paste(i, " ", sep=''))
+	if(!(fbdat$spp[i] %in% c('Sebastes marinus', 'Pagrus auratus', 'Chaetodon lunulatus', 'Trachinotus falcatus'))){ # chokes for no apparent reason on S. marinus. Returns 3 answers for P. auratus and C. lunulatus.
+		fbdat$fbsci[i] <- validate_names(as.character(fbdat$spp[i])) # check that sci names are correct. returned warnings, all about potential synonyms.
+	}
+	if(fbdat$spp[i] == 'Sebastes marinus'){
+		fbdat$fbsci[i] <- 'Sebastes norvegicus' # what FB calls it (from a web search)
+	}
+	if(fbdat$spp[i] == 'Pagrus auratus'){
+		fbdat$fbsci[i] <- 'Pagrus auratus' # correct since our samples are from New Zealand
+	}
+	if(fbdat$spp[i] == 'Chaetodon lunulatus'){
+		fbdat$fbsci[i] <- 'Chaetodon lunulatus' # assume this isn't C. lunula (other option FB gives)
+	}
+	if(fbdat$spp[i] == 'Trachinotus falcatus'){
+		fbdat$fbsci[i] <- 'Trachinotus falcatus' # correct since our samples are from Puerto Rico (not Indo-pacific)
+	}
+}
+	warnings() # All are "... can also be misapplied to other species"
+	# for(i in 1:nrow(fbdat)) print(synonyms(fbdat$fbsci[i])) # there is only ever 1 accepted name
+
+	inds <- which(fbdat$spp != fbdat$fbsci)
+	fbdat[inds,] # examine rows where fishbase has a different name. all look like the same species, but different names, so ok.
+	
+	
+# write out
+write.csv(fbdat, file='output/fbdat_msat.csv', row.names=FALSE)
 
 
 #####################################################################################
@@ -338,14 +419,16 @@ msat <- msat[,c('spp', 'CommonName', 'Source', 'PrimerNote', 'Country', 'Site', 
 #############################
 # plot sampling locations
 #############################
-
 require(maps)
 require(mapdata)
-pdf('figures/map_msats.pdf')
 
-plot(latlon$lon, latlon$lat, col='red', cex=0.5, xlab='Longitude', ylab='Latitude', main='Microsatellite data')
-map(database='worldHires', add=TRUE, fill=TRUE, col='grey', boundary=FALSE, interior=FALSE)
-points(latlon$lon, latlon$lat, col='red', cex=0.5)
+msat <- read.csv('output/msat.csv')
+
+# pdf('figures/map_msats.pdf')
+
+plot(msat$lon, msat$lat, col='red', cex=0.5, xlab='Longitude', ylab='Latitude', main='Microsatellite data')
+map(database='world', add=TRUE, fill=TRUE, col='grey', boundary=FALSE, interior=FALSE)
+points(msat$lon, msat$lat, col='red', cex=0.5)
 
 dev.off()
 
@@ -355,45 +438,46 @@ dev.off()
 # Make duplicates of datapoints that are averages across multiple loci (so each row is one locus)
 #####################################################################################################
 
-dim(msat) # 16473
+dim(msat) # 12359
 inds = !is.na(msat$NumMarkers) # only where NumMarkers is known
-sum(inds) # 16406
-sum(!inds) # only 67 missing
+sum(inds) # 12359
+sum(!inds) # 0 missing
 msatloci = msat[inds,][rep(row.names(msat[inds,]), msat$NumMarkers[inds]),] # replicate rows so that each is one locus
-dim(msatloci) # 22239
+dim(msatloci) # 16934
 msatloci$He_orig = msatloci$He # save original He
 
 # Add error to He where Hese is known
 inds = which(!is.na(msatloci$Hese) & msatloci$NumMarkers>1)
-	length(inds) # 706
+	length(inds) # 699
 sds <- msatloci$Hese[inds]*sqrt(msatloci$NumMarkers[inds]) # convert SE to SD
-	summary(sds)
+	summary(sds) # mean 0.21
 e = rnorm(length(inds), mean = 0, sd = sds) # generate random deviations to add to the mean
 msatloci$He[inds] = msatloci$He_orig[inds] + e # add to the mean
-	summary(msatloci$He[inds])
+	summary(msatloci$He[inds]) # -0.3 to 1.9
 	msatloci$He[msatloci$He>1] = 1 # enforce He <= 1
 	msatloci$He[msatloci$He<0] = 0 # enforce He >=0
-	summary(msatloci$He[inds])
+	summary(msatloci$He[inds]) # mean 0.7
 
 # Add error to He where Hese is not known
 	msat[!is.na(msat$Hese), c('spp', 'Source', 'Hese')] # many Hese values available
-hesdmean = mean(msat$Hese*sqrt(msat$NumMarkers), na.rm=T) # convert SE to SD. SD=0.1897
+hesdmean = mean(msat$Hese*sqrt(msat$NumMarkers), na.rm=T) # convert SE to SD. SD=0.190
 	hesdmean
 	# summary(lm(I(Hese*sqrt(NumMarkers)) ~ He, data = msat)) # p=0.06 lack definitive evidence that SD increases with mean
 inds = which(msatloci$NumMarkers > 1 & is.na(msatloci$Hese) & !is.na(msatloci$He)) # values to add error to
-	length(inds) # 4513
+	length(inds) # 4483
 e = rnorm(length(inds), mean = 0, sd = hesdmean)
-	summary(e)
+	summary(e) # -0.76 to 0.6
 msatloci$He[inds] = msatloci$He_orig[inds] + e
-	summary(msatloci$He[inds])
+	summary(msatloci$He[inds]) # -0.14 to 1.5
 	msatloci$He[msatloci$He>1] = 1 # enforce He <= 1
 	msatloci$He[msatloci$He<0] = 0 # enforce He >=0
-	summary(msatloci$He[inds])
+	summary(msatloci$He[inds]) # mean 0.76
 
 # new row names so that none are duplicated
 rownames(msatloci) = 1:nrow(msatloci)
+nrow(msatloci)
 
 # write out msat data (one locus per line)
-	write.csv(msatloci, file=paste('output/msatloci_', Sys.Date(), '.csv', sep=''))
+	write.csv(msatloci, file=paste('output/msatloci.csv', sep=''))
 
 
