@@ -166,7 +166,7 @@ msat7 = msat7[!(msat7$Source %in% dups),]
 
 # merge files from students
 	msat = rbind(msat1, msat2, msat3, msat4, msat5, msat6, msat7) # merge student files
-		dim(msat) # 4570 rows of data
+		dim(msat) # 4568 rows of data
 			
 # merge in file from Pinsky & Palumbi
 	msat$lat = NA # need this to merge with ppdat
@@ -187,8 +187,21 @@ msat7 = msat7[!(msat7$Source %in% dups),]
 	names(srdbmatch)[names(srdbmatch)=='lat'] <- 'lat_srdb'
 	names(srdbmatch)[names(srdbmatch)=='lon'] <- 'lon_srdb'
 
+	# trim to unique spp, Source, Site
+	inds <- duplicated(srdbmatch[,c('spp', 'Source', 'Country', 'Site', 'CollectionYear')])
+	inds2 <- duplicated(srdbmatch[,c('spp', 'Source', 'Country', 'Site', 'CollectionYear', 'lat_srdb', 'lon_srdb')])
+	sum(inds) # 6476
+	sum(inds2) # 6476: matches: good, means that lat/lon the same for each row we'll keep
+		# srdbmatch[inds &  !inds2,]
+	nrow(srdbmatch) # 7878
+
+	srdbmatch <- srdbmatch[!inds,] # trim
+	nrow(srdbmatch) # 1402
+
+	# sort(setdiff(srdbmatch$Source, msat$Source)) # papers in srdbmatch that aren't in msat. checked by eye the mismatch wasn't a typo.
+
 		nrow(msat) # 12809
-	msat <- merge(msat, srdbmatch[,c('spp', 'Source', 'Country', 'Site', 'CollectionYear', 'MarkerName', 'fbsci', 'stockid', 'lat_srdb', 'lon_srdb')], all.x=TRUE, by=c('spp', 'Source', 'Country', 'Site', 'MarkerName', 'CollectionYear'))
+	msat <- merge(msat, srdbmatch[,c('spp', 'Source', 'Country', 'Site', 'CollectionYear', 'fbsci', 'stockid', 'lat_srdb', 'lon_srdb')], all.x=TRUE, by=c('spp', 'Source', 'Country', 'Site', 'CollectionYear'))
 		nrow(msat) # 12809
 
 # Process allele frequencies into He where needed
@@ -211,7 +224,7 @@ msat7 = msat7[!(msat7$Source %in% dups),]
 # remove lines without lat/lon
 	inds <- is.na(msat$lat) | is.na(msat$lon)
 	sum(inds) # 450
-	# msat[inds, c('spp', 'Source', 'Site', 'lat', 'lon', 'file')] # site description is too vague or no map in the paper
+	# msat[inds, c('spp', 'Source', 'Site', 'lat', 'lon', 'file')] # site description is too vague or no location described in the paper
 	msat <- msat[!inds, ]
 	nrow(msat) #12359
 
@@ -475,7 +488,7 @@ msatloci$He[inds] = msatloci$He_orig[inds] + e
 
 # new row names so that none are duplicated
 rownames(msatloci) = 1:nrow(msatloci)
-nrow(msatloci)
+nrow(msatloci) # 16934
 
 # write out msat data (one locus per line)
 	write.csv(msatloci, file=paste('output/msatloci.csv', sep=''))
