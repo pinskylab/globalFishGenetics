@@ -1,4 +1,4 @@
-spp,CommonName,Source,Primer,Country,Site,lat_deg,lat_min,lon_deg,lon_min,CollectionYear,NumMarker,MarkerName,CrossSpp,n,Repeat,He,Hese
+spp,CommonName,Source,PrimerNote,Country,Site,lat_deg,lat_min,lon_deg,lon_min,CollectionYear,NumMarker,MarkerName,CrossSpp,n,Repeat,He,Hese
 Acanthopagrus schlegelii,Blackhead seabream,An et al. 2010 Anim Cell Syst,0,Korea,Jeju captured,33.522077,,126.525049,,,1,ACS16,0,50,2,0.927,
 Acanthopagrus schlegelii,Blackhead seabream,An et al. 2010 Anim Cell Syst,0,Korea,Jeju captured,33.522077,,126.525049,,,1,ACS17,0,50,2,0.876,
 Acanthopagrus schlegelii,Blackhead seabream,An et al. 2010 Anim Cell Syst,0,Korea,Jeju captured,33.522077,,126.525049,,,1,ACS21,0,50,2,0.887,
@@ -713,7 +713,7 @@ Clupea pallasii,Pacific herring,Beacham et al. 2001 CSAS; Beacham et al. 2002 CS
 Clupea pallasii,Pacific herring,Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS,0,Canada,"Bowser, BC",49.441845,,-124.671493,,1999,13,,0,260,,0.88,
 Clupea pallasii,Pacific herring,Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS,0,Canada,"Bryant Island, BC",48.95333333,,-125.3638889,,1999,13,,0,151,,0.88,
 Clupea pallasii,Pacific herring,Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS,0,Canada,"Bute Inlet, BC",50.581493,,-124.920845,,1999,13,,0,358,,0.89,
-Clupea pallasii,Pacific herring,Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS,0,Canada,"Castle Rock, BC",,,,,1999,13,,0,136,,0.87,
+Clupea pallasii,Pacific herring,Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS,0,Canada,"Castle Rock, BC",48.893,,-125.306,,1999,13,,0,136,,0.87,
 Clupea pallasii,Pacific herring,Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS,0,USA,"Cherry Point, WA",48.870361,,-122.769184,,2000,13,,0,164,,0.9,
 Clupea pallasii,Pacific herring,Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS,0,Canada,"Chrome Island, BC",49.472335,,-124.682987,,2000,13,,0,137,,0.86,
 Clupea pallasii,Pacific herring,Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS,0,Canada,"Dundivan Inlet, BC",52.21632512,,-128.2533065,,1999,13,,0,260,,0.88,
