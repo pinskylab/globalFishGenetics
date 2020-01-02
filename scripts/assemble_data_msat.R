@@ -400,6 +400,127 @@ for(i in 1:nrow(fbdat)){ # check sci names
 write.csv(fbdat, file='output/fbdat_msat.csv', row.names=FALSE)
 
 
+#################################
+## Add species and stock data
+#################################
+
+# Add overfished status
+	tsview <- read.csv('Data/srdb/timeseries_values_views.csv')
+	stocks <- read.csv('Data/srdb/stock.csv')
+
+	# find whether overfished or not (for each srdb stock)
+	tsmin <- aggregate(list(minB=tsview$B.Bmsytouse), by=list(stockid=tsview$stockid, stocklong=tsview$stocklong), FUN=min) # find minimum B/Bmsy
+	tsmin$srdb_overfished <- tsmin$minB<1 # overfished if B/Bmsy ever less than 1
+
+	# add species name to srdb data
+	tsminstock <- merge(tsmin, stocks)
+		dim(tsmin)
+		dim(tsminstock)
+	head(tsminstock)
+
+	# summarize by spp
+	# would prefer to match by stock, but would have to do that partially by hand
+	tsminsp <- aggregate(list(propOF = tsminstock$srdb_overfished), by=list(spp=tsminstock$scientificname), FUN=mean)
+		head(tsminsp)
+		dim(tsminsp)
+
+	# examine match species from mtDNA to tsminsp
+	nodataspp <- sort(setdiff(mtdna$spp, tsminsp$spp)) # species with no stock status information
+	nodataspp
+	dataspp <- sort(intersect(mtdna$spp, tsminsp$spp)) # species with no stock status information
+	dataspp
+	
+		# search for slight mismatches in names
+		grep('Clupea', tsminsp$spp, value=TRUE)
+		grep('radiata', tsminsp$spp, value=TRUE)
+		grep('Ammodytes', tsminsp$spp, value=TRUE)
+		grep('thazard', tsminsp$spp, value=TRUE)
+		grep('Beryx', tsminsp$spp, value=TRUE)
+		grep('argus', tsminsp$spp, value=TRUE)
+		grep('herz', tsminsp$spp, value=TRUE)
+		grep('labrax', tsminsp$spp, value=TRUE)
+		grep('sargus', tsminsp$spp, value=TRUE)
+		grep('hynnus', tsminsp$spp, value=TRUE)
+		grep('Lutjanus', tsminsp$spp, value=TRUE)
+		grep('Merluccius', tsminsp$spp, value=TRUE)
+		grep('californicus', tsminsp$spp, value=TRUE)
+		grep('Scomber', tsminsp$spp, value=TRUE)
+		grep('Trachurus', tsminsp$spp, value=TRUE)
+		grep('variegat', tsminsp$spp, value=TRUE)
+		
+	# fix some names to match mtdna
+	#not needed
+	
+	# set NA to 0
+	tsminsp$propOF[is.na(tsminsp$propOF)] <- 0
+	
+	# merge in overfished status (at species level)
+	mtdna2 <- merge(mtdna, tsminsp, all.x=TRUE)
+		dim(mtdna)
+		dim(mtdna2)
+
+	# set missing data to 0
+	mtdna2$propOF[is.na(mtdna2$propOF)] <- 0
+
+# Add average global fisheries catch
+	fao=read.csv("Data/FAO FIGIS/figis_guestnull.csv") # original fao data
+	ccols = grep("^X", names(fao)) # columns that have catch data (e.g. "X1950")
+	faospp <- aggregate(list(fao[,ccols]), by=list(spp=fao$Scientific.name), FUN=sum) # sum across countries
+	ccols2 = grep("^X", names(faospp)) # columns that have catch data (e.g. "sumcatch.X1950")
+	faospp$sumcatch = apply(faospp[,ccols2], 1, sum, na.rm=T)
+	faospp$nyears = apply(faospp[,ccols2]>1, 1, sum, na.rm=T)
+	faospp$avecatch = faospp$sumcatch/faospp$nyears
+
+	# examine match species from mtdna to tsminsp
+	sort(setdiff(mtdna2$spp, faospp$spp)) # species with no stock status information
+	sort(intersect(mtdna2$spp, faospp$spp)) # species with no stock status information
+
+		# search for slight mismatches in names
+		grep('radiata', faospp$spp, value=TRUE)
+		grep('alistes', faospp$spp, value=TRUE)
+		grep('herz', faospp$spp, value=TRUE)
+		grep('pineph', faospp$spp, value=TRUE)
+		grep('Glyptocephalus', faospp$spp, value=TRUE)
+		grep('Lutjanus', faospp$spp, value=TRUE)
+		grep('Merluccius', faospp$spp, value=TRUE)
+		grep('major', faospp$spp, value=TRUE)
+		grep('maculatus', faospp$spp, value=TRUE)
+		grep('Trachurus', faospp$spp, value=TRUE)
+		grep('variegat', faospp$spp, value=TRUE)
+
+	# fix names to match my names
+	faospp$spp <- as.character(faospp$spp)
+	faospp$spp[faospp$spp=='Raja radiata'] <- 'Amblyraja radiata'
+	faospp$spp[faospp$spp=='Pseudopleuronectes herzenst.'] <- 'Pleuronectes herzensteini'
+
+	# merge in ave global catch
+	mtdna3 <- merge(mtdna2, faospp[,c('spp', 'avecatch')], all.x=TRUE)
+		dim(mtdna2)
+		dim(mtdna3)
+
+	# set missing data to 0
+	mtdna3$avecatch[is.na(mtdna3$avecatch)] <- 0
+
+# Add body size
+	fbdatmtdna$maxlength<-NA
+	for(i in 1:nrow(fbdatmtdna)){ # get length data
+		fbdatmtdna$maxlength[i] <- as.numeric(species(fbdatmtdna$fbsci[i], fields='Length')$Length)
+		if(is.na(fbdatmtdna$maxlength[i])){ # if male maxlength is NA, use female maxlength
+			fbdatmtdna$maxlength[i] <- as.numeric(species(fbdatmtdna$fbsci[i], fields='LengthFemale')$LengthFemale)
+		}
+	}
+	
+	summary(fbdatmtdna)
+
+	mtdna4 <- merge(mtdna3, fbdatmtdna[,c('spp', 'maxlength')], all.x=TRUE)
+		dim(mtdna3)
+		dim(mtdna4)
+
+# write out mtdna data with species traits
+	write.csv(mtdna4, file=paste('output/mtdnalh_', Sys.Date(), '.csv', sep=''))
+
+
+
 #####################################################################################
 # write out lat/lon and species data for appending environmental and trait data
 #####################################################################################

@@ -1,110 +1,75 @@
-setwd('/Users/mpinsky/Documents/Princeton/Latitudinal gradients of diversity/Analysis/')
-
-
-######################
-# read in mtDNA files and assemble
-# if needed
-######################
-#mtDNA1.1 = read.csv('../Data/mtDNA Data/csvs/Fishery lat mtDNA 1.1 2015-10-22 MW.csv', stringsAsFactors=FALSE)
-#	head(mtDNA1.1)
-#mtDNA1.2 = read.csv('../Data/mtDNA Data/csvs/Fishery lat mtDNA 1.2 2015-10-01 MW.csv', stringsAsFactors=FALSE)
-#	head(mtDNA1.2)
-#mtDNA1.3 = read.csv('../Data/mtDNA Data/csvs/Fishery lat mtDNA 1.3 2015-10-26 MW.csv', stringsAsFactors=FALSE)
-#	head(mtDNA1.3)
-#mtDNA1.4 = read.csv('../Data/mtDNA Data/csvs/Fishery lat mtDNA 1.4 2015-10-02 MW.csv', stringsAsFactors=FALSE)
-#	head(mtDNA1.4)
-#mtDNA1.5 = read.csv('../Data/mtDNA Data/csvs/Fishery lat mtDNA 1.5 2015-10-03 MW.csv', stringsAsFactors=FALSE)
-#	head(mtDNA1.5)
-#mtDNA2.1 = read.csv('../Data/mtDNA Data/csvs/Fishery lat mtDNA 2.1 2015-09-20 MLP.csv', stringsAsFactors=FALSE)
-#	head(mtDNA2.1)
-#mtDNA2.2 = read.csv('../Data/mtDNA Data/csvs/Fishery lat mtDNA 2.2 2015-09-20 MLP.csv', stringsAsFactors=FALSE)
-#	head(mtDNA2.2)
-#mtDNA3 = read.csv('../Data/mtDNA Data/csvs/Fishery lat mtDNA 3 2015-10-26 MW.csv', stringsAsFactors=FALSE)
-#	head(mtDNA3)
-#mtDNA4 = read.csv('../Data/mtDNA Data/csvs/Fishery lat mtDNA 4 2015-10-26 MW.csv', stringsAsFactors=FALSE)
-#	head(mtDNA4)
-#mtDNA5 = read.csv('../Data/mtDNA Data/csvs/Fishery lat mtDNA 5 2015-10-28.2 MLP.csv', stringsAsFactors=FALSE)
-#	head(mtDNA5)
-#
-## Trim off rows with no data
-#	nrow(mtDNA1.1); inds = is.na(mtDNA1.1$spp) | mtDNA1.1$spp == ''; sum(inds)
-#	mtDNA1.1 <- mtDNA1.1[!inds,]; nrow(mtDNA1.1)
-#
-#	nrow(mtDNA1.2); inds = is.na(mtDNA1.2$spp) | mtDNA1.2$spp == ''; sum(inds)
-#	mtDNA1.2 <- mtDNA1.2[!inds,]; nrow(mtDNA1.2)
-#
-#	nrow(mtDNA1.3); inds = is.na(mtDNA1.3$spp) | mtDNA1.3$spp == ''; sum(inds)
-#	mtDNA1.3 <- mtDNA1.3[!inds,]; nrow(mtDNA1.3)
-#
-#	nrow(mtDNA1.4); inds = is.na(mtDNA1.4$spp) | mtDNA1.4$spp == ''; sum(inds)
-#	mtDNA1.4 <- mtDNA1.4[!inds,]; nrow(mtDNA1.4)
-#
-#	nrow(mtDNA1.5); inds = is.na(mtDNA1.5$spp) | mtDNA1.5$spp == ''; sum(inds)
-#	mtDNA1.5 <- mtDNA1.5[!inds,]; nrow(mtDNA1.5)
-#
-#	nrow(mtDNA2.1); inds = is.na(mtDNA2.1$spp) | mtDNA2.1$spp == ''; sum(inds)
-#	mtDNA2.1 <- mtDNA2.1[!inds,]; nrow(mtDNA2.1)
-#
-#	nrow(mtDNA2.2); inds = is.na(mtDNA2.2$spp) | mtDNA2.2$spp == ''; sum(inds)
-#	mtDNA2.2 <- mtDNA2.2[!inds,]; nrow(mtDNA2.2)
-#
-#	nrow(mtDNA3); inds = is.na(mtDNA3$spp) | mtDNA3$spp == ''; sum(inds)
-#	mtDNA3 <- mtDNA3[!inds,]; nrow(mtDNA3)
-#
-#	nrow(mtDNA4); inds = is.na(mtDNA4$spp) | mtDNA4$spp == ''; sum(inds)
-#	mtDNA4 <- mtDNA4[!inds,]; nrow(mtDNA4)
-#
-#	nrow(mtDNA5); inds = is.na(mtDNA5$spp) | mtDNA5$spp == ''; sum(inds)
-#	mtDNA5 <- mtDNA5[!inds,]; nrow(mtDNA5)
-#
-## Check for duplicate studies
-#	# TO DO
-#
-## verify column names match
-#	all(names(mtDNA1.1) == names(mtDNA1.2))
-#	all(names(mtDNA1.1) == names(mtDNA1.3))
-#	all(names(mtDNA1.1) == names(mtDNA1.4))
-#	all(names(mtDNA1.1) == names(mtDNA1.5))
-#	all(names(mtDNA1.1) == names(mtDNA2.1))
-#	all(names(mtDNA1.1) == names(mtDNA2.2))
-#	all(names(mtDNA1.1) == names(mtDNA3))
-#	all(names(mtDNA1.1) == names(mtDNA4))
-#	all(names(mtDNA1.1) == names(mtDNA4))
-#
-## merge files
-#	mtDNA = rbind(mtDNA1.1, mtDNA1.2, mtDNA1.3, mtDNA1.4, mtDNA1.5, mtDNA2.1, mtDNA2.2, mtDNA3, mtDNA4, mtDNA5) # merge files
-#		dim(mtDNA) # 1363
+setwd('/Users/mpinsky/Documents/Rutgers/Latitudinal gradients of diversity/globalFishGenetics/')
 
 #######################################
-# Alternative: read in assembled file
+# Eead in assembled file
 #######################################
-mtDNA <- read.csv('../Data/mtDNA Data/Compiled/Fishery lat mtDNA Complete Database 2016-03-02 MLP.csv')
+mtdna <- read.csv('data/mtDNA/Fishery lat mtDNA Complete Database.csv', stringsAsFactors=FALSE)
+srdbmatch <- read.csv("data/srdb_matching/mtdna_to_match.csv", stringsAsFactors=FALSE) # to match genetic data to SRDB stocks
 
 
 # Calc lat and lon in decimal degrees
-	mtDNA$lat_min[is.na(mtDNA$lat_min)] = 0
-	mtDNA$lat_sec[is.na(mtDNA$lat_sec)] = 0
+	mtdna$lat_min[is.na(mtdna$lat_min)] = 0
+	mtdna$lat_sec[is.na(mtdna$lat_sec)] = 0
 
-	mtDNA$lon_min[is.na(mtDNA$lon_min)] = 0
-	mtDNA$lon_sec[is.na(mtDNA$lon_sec)] = 0
+	mtdna$lon_min[is.na(mtdna$lon_min)] = 0
+	mtdna$lon_sec[is.na(mtdna$lon_sec)] = 0
 
-	mtDNA$lat = rowSums(cbind(mtDNA$lat_deg, mtDNA$lat_min/60, mtDNA$lat_sec/3600))
-		range(mtDNA$lat)	
-	mtDNA$lon = rowSums(cbind(mtDNA$lon_deg, mtDNA$lon_min/60, mtDNA$lon_sec/3600))
-		range(mtDNA$lon)	
+	mtdna$lat = rowSums(cbind(mtdna$lat_deg, mtdna$lat_min/60, mtdna$lat_sec/3600))
+		range(mtdna$lat)	
+	mtdna$lon = rowSums(cbind(mtdna$lon_deg, mtdna$lon_min/60, mtdna$lon_sec/3600))
+		range(mtdna$lon)	
+
+# remove lines without lat/lon
+	inds <- is.na(mtdna$lat) | is.na(mtdna$lon)
+	sum(inds) # 0
+
+
+# merge in srdb stock information	
+	# bring in fbsci, stockid, lat, lon (latter two for error-checking)
+	names(srdbmatch)[names(srdbmatch)=='lat'] <- 'lat_srdb'
+	names(srdbmatch)[names(srdbmatch)=='lon'] <- 'lon_srdb'
+
+	# trim to unique spp, Source, Site
+	inds <- duplicated(srdbmatch[,c('spp', 'Source', 'Country', 'Site', 'CollectionYear')])
+	inds2 <- duplicated(srdbmatch[,c('spp', 'Source', 'Country', 'Site', 'CollectionYear', 'lat_srdb', 'lon_srdb')])
+	sum(inds) # 9
+	sum(inds2) # 9: matches: good, means that lat/lon the same for each row we'll keep
+		# srdbmatch[inds &  !inds2,]
+	nrow(srdbmatch) # 329
+
+	srdbmatch <- srdbmatch[!inds,] # trim to unique sites
+	nrow(srdbmatch) # 320
+
+	# sort(setdiff(srdbmatch$Source, msat$Source)) # papers in srdbmatch that aren't in msat. checked by eye the mismatch wasn't a typo.
+
+		nrow(mtdna) # 1332
+	mtdna <- merge(mtdna, srdbmatch[,c('spp', 'Source', 'Country', 'Site', 'CollectionYear', 'fbsci', 'stockid', 'lat_srdb', 'lon_srdb')], all.x=TRUE, by=c('spp', 'Source', 'Country', 'Site', 'CollectionYear'))
+		nrow(mtdna) # 1332
+
 
 # Fix species names
-	mtDNA$spp <- gsub(' $', '', mtDNA$spp) # remove trailing space
-	mtDNA$spp[mtDNA$spp == 'Hippocampus Kuda'] <- 'Hippocampus kuda' # fix capitalization
-	mtDNA <- mtDNA[mtDNA$spp != 'Merluccius albidus and Merluccius bilinearis',] # remove double spp
-	mtDNA$spp[mtDNA$spp ==  "Paralichthys olivaceus `"] <- "Paralichthys olivaceus"
-	mtDNA$spp[mtDNA$spp ==  "Sparus aurata L."] <- "Sparus aurata"
-	mtDNA$spp[mtDNA$spp ==  "Diplodus sargus sargus"] <- "Diplodus sargus"
-	mtDNA$spp[mtDNA$spp ==  "Clupea pallasii pallasii"] <- "Clupea pallasii"
-	mtDNA$spp[mtDNA$spp ==  "Centrophorus zeehani"] <- "Centrophorus zeehaani"
+	# sort(unique(mtdna$spp))
 
-# Trim just to relevant columns
-mtDNA <- mtDNA[,c('spp', 'CommonName', 'Source', 'Country', 'Site', 'CollectionYear', 'MarkerName', 'n', 'bp', 'He', 'Hese', 'Pi', 'Pise', 'lat', 'lon')]
+	mtdna$spp <- gsub(' $', '', mtdna$spp) # remove trailing space
+	mtdna$spp[mtdna$spp == 'Hippocampus Kuda'] <- 'Hippocampus kuda' # fix capitalization
+	mtdna <- mtdna[mtdna$spp != 'Merluccius albidus and Merluccius bilinearis',] # remove double spp entry
+	mtdna$spp[mtdna$spp ==  "Paralichthys olivaceus `"] <- "Paralichthys olivaceus"
+	mtdna$spp[mtdna$spp ==  "Sparus aurata L."] <- "Sparus aurata"
+	mtdna$spp[mtdna$spp ==  "Diplodus sargus sargus"] <- "Diplodus sargus"
+	mtdna$spp[mtdna$spp ==  "Clupea pallasii pallasii"] <- "Clupea pallasii"
+	mtdna$spp[mtdna$spp ==  "Centrophorus zeehani"] <- "Centrophorus zeehaani"
+
+# Fix locus names
+	mtdna$MarkerName <- gsub(' $', '', mtdna$MarkerName) # remove trailing space
+	mtdna$MarkerName <- gsub('^ ', '', mtdna$MarkerName) # remove leading space
+	mtdna$MarkerName[mtdna$MarkerName %in% c('cyt b', 'Cytb', 'cytochrome b', 'Cytochrome b')] <- 'cytb' # standardize names
+	mtdna$MarkerName[mtdna$MarkerName %in% c('cytochrome c oxidase subunit 1', 'cytochrome oxidase c subunit I', 'cytochrome-c oxidase I')] <- 'cytochrome c oxidase subunit I' # standardize names
+	mtdna$MarkerName[mtdna$MarkerName %in% c('D-Loop', 'D-loop region', 'D-loop sequence')] <- 'D-loop' # standardize names
+	mtdna$MarkerName[mtdna$MarkerName %in% c('Control region', 'control region (D-loop)')] <- 'control region' # standardize names
+	mtdna$MarkerName[mtdna$MarkerName %in% c('HVR-1', 'HVR-I', 'hyper-variable region I')] <- 'HVR I' # standardize names
+	mtdna$MarkerName[mtdna$MarkerName %in% c('ATPase 6 and 8')] <- 'ATPase 6, 8' # standardize names
+	mtdna$MarkerName[mtdna$MarkerName %in% c('NADH-dehydrogenase subunit 4 (ND-4)', 'ND4 region')] <- 'ND4' # standardize names
+	
 
 # Process collection year (to do later)
 	# need to clean this first
@@ -115,54 +80,96 @@ mtDNA <- mtDNA[,c('spp', 'CommonName', 'Source', 'Country', 'Site', 'CollectionY
 # QA/QC
 ###################
 # were numeric fields read as numerics?
-summary(mtDNA)
+	summary(mtdna)
 
 # check species names
-t(t(sort(unique(mtDNA$spp)))) # to print as one long list. 162 species.
+	t(t(sort(unique(mtdna$spp)))) # to print as one long list. 162 species.
 
 # check locus names
-t(t(sort(unique(mtDNA$MarkerName)))) # to print as one long list
+	t(t(sort(unique(mtdna$MarkerName)))) # to print as one long list
+
+# check source names
+	t(t(sort(unique(mtdna$Source)))) # to print as one long list
+
 
 # check lat
-mtDNA[(mtDNA$lat>90 | mtDNA$lat< -90) & !is.na(mtDNA$lat),c('spp', 'Source', 'Country', 'Site', 'lat')]	
+	mtdna[(mtdna$lat>90 | mtdna$lat< -90) & !is.na(mtdna$lat),c('spp', 'Source', 'Country', 'Site', 'lat')]	
+
+	hist(mtdna$lat) # mostly northern hemisphere, but not only
+
 
 # check lon
-mtDNA[(mtDNA$lon>180 | mtDNA$lon< -180) & !is.na(mtDNA$lon),c('spp', 'Source', 'Country', 'Site', 'lon')]	
+	mtdna[(mtdna$lon>180 | mtdna$lon< -180) & !is.na(mtdna$lon),c('spp', 'Source', 'Country', 'Site', 'lon')]	
+
+	hist(mtdna$lon) # # most around 100degW, but quite evenly spread
+
+
+# compare lat and lon to srdbmatch lat/lon, fill in where missing
+	plot(mtdna$lat, mtdna$lat_srdb); abline(0,1) # most fall right on 1:1 line
+		mtdna[abs(mtdna$lat - mtdna$lat_srdb)>0.5 & !is.na(mtdna$lat_srdb), c('spp', 'Source', 'Site', 'lat', 'lat_srdb')] # I'm OK with Dammannagoda et al. 2011 and Bremer et al. 1999, since I entered lat/lon in the mtdna sheet
+	plot(mtdna$lon, mtdna$lon_srdb); abline(0,1) # most fall right on 1:1 line
+		mtdna[abs(mtdna$lon - mtdna$lon_srdb)>0.5 & !is.na(mtdna$lon_srdb), c('spp', 'Source', 'Site', 'lon', 'lon_srdb')] # I'm OK with Tripp-Valdez, Stepien, Scoles et al., Dammannagoda et al., and Bremer et al, since I entered lat/lon on mtdna sheet
+	
+	mtdna[is.na(mtdna$lat) & !is.na(mtdna$lat_srdb),] # 0
+	mtdna[is.na(mtdna$lon) & !is.na(mtdna$lon_srdb),] # 0
+
+
 
 # check He
-mtDNA[(mtDNA$He<0 | mtDNA$He>1) & !is.na(mtDNA$He),c('spp', 'Source', 'Country', 'Site', 'He')]	
+	mtdna[(mtdna$He<0 | mtdna$He>1) & !is.na(mtdna$He),c('spp', 'Source', 'Country', 'Site', 'He')]	# 0
+
+	inds <- is.na(mtdna$He)
+	sum(inds) # 48
 
 # check Pi
-mtDNA[(mtDNA$Pi<0 | mtDNA$Pi>1) & !is.na(mtDNA$Pi),c('spp', 'Source', 'Country', 'Site', 'He')]	
+	mtdna[(mtdna$Pi<0 | mtdna$Pi>1) & !is.na(mtdna$Pi),c('spp', 'Source', 'Country', 'Site', 'He')]	 # 0
 
-# Check species names and make a translation table to FishBase
-	require(rfishbase)
-	fbdatmtdna <- data.frame(spp=sort(unique(mtDNA$spp)), fbsci=NA) # translation table from my scientific names to those in fishbase
-
-	options(nwarnings=300)
-	for(i in 1:nrow(fbdatmtdna)){ # check sci names
-		cat(i)
-		fbdatmtdna$fbsci[i] <- validate_names(fbdatmtdna$spp[i]) # check that sci names are correct. returned warnings, all about potential synonyms.
-	}
-		warnings()
-		# for(i in 1:nrow(fbdatmtdna)) print(synonyms(fbdatmtdna$fbsci[i])) # there is only ever 1 accepted name
-
-		inds <- which(fbdatmtdna$spp != fbdatmtdna$fbsci)
-		fbdatmtdna[inds,] # examine rows where fishbase has a different name
+	inds <- is.na(mtdna$Pi)
+	sum(inds) # 42
 	
-	# write out
-	write.csv(fbdatmtdna, file='output/fbdat_mtdna.csv', row.names=FALSE)
+	sum(is.na(mtdna$Pi) & is.na(mtdna$He)) # 0: good
 
+# All data included?
+	inds <- (is.na(mtdna$He) & is.na(mtdna$Pi)) | is.na(mtdna$spp) | is.na(mtdna$lat) | is.na(mtdna$lon) | is.na(mtdna$n)
+	sum(inds) # 0
+	mtdna[inds,]
 
 
 # Remove problematic datapoints
 	# not used right now
 
 
+# Trim just to relevant columns
 
-# write out mtDNA data (allow multiple loci per line)
-	write.csv(mtDNA, file=paste('output/mtDNA_', Sys.Date(), '.csv', sep=''))
+mtdna <- mtdna[,c('spp', 'CommonName', 'Source', 'Country', 'Site', 'lat', 'lon', 'stockid', 'CollectionYear', 'MarkerName', 'n', 'bp', 'He', 'Hese', 'Pi', 'Pise')]
+	dim(mtdna) # 1332
 
+
+# write out mtdna data (allow multiple loci per line)
+	write.csv(mtdna, file='output/mtdna.csv')
+
+
+
+####################################################################
+# Check species names and make a translation table to FishBase
+####################################################################
+require(rfishbase)
+fbdatmtdna <- data.frame(spp=sort(unique(mtdna$spp)), fbsci=NA) # translation table from my scientific names to those in fishbase
+
+options(nwarnings=300)
+nrow(fbdatmtdna)
+for(i in 1:nrow(fbdatmtdna)){ # check sci names
+	cat(i)
+	fbdatmtdna$fbsci[i] <- validate_names(fbdatmtdna$spp[i]) # check that sci names are correct. returned warnings, all about potential synonyms.
+}
+	warnings() # all related to X "can also be misapplied to other species"
+	# for(i in 1:nrow(fbdatmtdna)) print(synonyms(fbdatmtdna$fbsci[i])) # there is only ever 1 accepted name
+
+	inds <- which(fbdatmtdna$spp != fbdatmtdna$fbsci)
+	fbdatmtdna[inds,] # examine rows where fishbase has a different name. all look good
+
+# write out
+write.csv(fbdatmtdna, file='output/fbdat_mtdna.csv', row.names=FALSE)
 
 
 #####################################################################################
@@ -170,12 +177,12 @@ mtDNA[(mtDNA$Pi<0 | mtDNA$Pi>1) & !is.na(mtDNA$Pi),c('spp', 'Source', 'Country',
 #####################################################################################
 
 # Write out list of stocks, if useful
-#write.csv(mtDNA[,c('spp', 'Source', 'Country', 'Site')], file=paste('output/stocks_', Sys.Date(), '.csv', sep=''))
+#write.csv(mtdna[,c('spp', 'Source', 'Country', 'Site')], file=paste('output/stocks_', Sys.Date(), '.csv', sep=''))
 
 
-	latlonmtdna <- mtDNA[!duplicated(mtDNA[,c('lat', 'lon')]), c('lat', 'lon')]
+	latlonmtdna <- mtdna[!duplicated(mtdna[,c('lat', 'lon')]), c('lat', 'lon')]
 		latlonmtdna <- latlon[order(latlonmtdna$lat, latlonmtdna$lon),]
-	sppsmtdna <- mtDNA[!duplicated(mtDNA$spp), c('spp', 'CommonName')]
+	sppsmtdna <- mtdna[!duplicated(mtdna$spp), c('spp', 'CommonName')]
 	
 	# Add FishBase sci name
 	sppsmtdna2 <- merge(sppsmtdna, fbdatmtdna)
@@ -193,8 +200,8 @@ mtDNA[(mtDNA$Pi<0 | mtDNA$Pi>1) & !is.na(mtDNA$Pi),c('spp', 'Source', 'Country',
 	dim(latlonmtdna) # 1156 locations
 	dim(sppsmtdna2) # 162 species
 
-	write.csv(latlonmtdna, file=paste('output/latlon_mtDNA_', Sys.Date(), '.csv', sep=''), row.names=FALSE)
-	write.csv(sppsmtdna2, file=paste('output/spps_mtDNA_', Sys.Date(), '.csv', sep=''), row.names=FALSE)
+	write.csv(latlonmtdna, file=paste('output/latlon_mtdna_', Sys.Date(), '.csv', sep=''), row.names=FALSE)
+	write.csv(sppsmtdna2, file=paste('output/spps_mtdna_', Sys.Date(), '.csv', sep=''), row.names=FALSE)
 
 
 
@@ -205,11 +212,11 @@ mtDNA[(mtDNA$Pi<0 | mtDNA$Pi>1) & !is.na(mtDNA$Pi),c('spp', 'Source', 'Country',
 require(maps)
 require(mapdata)
 
-pdf('figures/map_mtDNA.pdf')
+pdf('figures/map_mtdna.pdf')
 
-plot(latlon$lon, latlon$lat, col='red', cex=0.5, xlab='Longitude', ylab='Latitude', main='mtDNA data', type='n')
-map(database='worldHires', add=TRUE, fill=TRUE, col='grey', boundary=FALSE, interior=FALSE)
-points(latlon$lon, latlon$lat, col='red', cex=0.5)
+plot(mtdna$lon, mtdna$lat, col='red', cex=0.5, xlab='Longitude', ylab='Latitude', main='mtdna data', type='n')
+map(database='world', add=TRUE, fill=TRUE, col='grey', boundary=FALSE, interior=FALSE)
+points(mtdna$lon, mtdna$lat, col='red', cex=0.5)
 
 dev.off()
 
@@ -241,9 +248,9 @@ dev.off()
 		dim(tsminsp)
 
 	# examine match species from mtDNA to tsminsp
-	nodataspp <- sort(setdiff(mtDNA$spp, tsminsp$spp)) # species with no stock status information
+	nodataspp <- sort(setdiff(mtdna$spp, tsminsp$spp)) # species with no stock status information
 	nodataspp
-	dataspp <- sort(intersect(mtDNA$spp, tsminsp$spp)) # species with no stock status information
+	dataspp <- sort(intersect(mtdna$spp, tsminsp$spp)) # species with no stock status information
 	dataspp
 	
 		# search for slight mismatches in names
@@ -264,19 +271,19 @@ dev.off()
 		grep('Trachurus', tsminsp$spp, value=TRUE)
 		grep('variegat', tsminsp$spp, value=TRUE)
 		
-	# fix some names to match mtDNA
+	# fix some names to match mtdna
 	#not needed
 	
 	# set NA to 0
 	tsminsp$propOF[is.na(tsminsp$propOF)] <- 0
 	
 	# merge in overfished status (at species level)
-	mtDNA2 <- merge(mtDNA, tsminsp, all.x=TRUE)
-		dim(mtDNA)
-		dim(mtDNA2)
+	mtdna2 <- merge(mtdna, tsminsp, all.x=TRUE)
+		dim(mtdna)
+		dim(mtdna2)
 
 	# set missing data to 0
-	mtDNA2$propOF[is.na(mtDNA2$propOF)] <- 0
+	mtdna2$propOF[is.na(mtdna2$propOF)] <- 0
 
 # Add average global fisheries catch
 	fao=read.csv("Data/FAO FIGIS/figis_guestnull.csv") # original fao data
@@ -287,9 +294,9 @@ dev.off()
 	faospp$nyears = apply(faospp[,ccols2]>1, 1, sum, na.rm=T)
 	faospp$avecatch = faospp$sumcatch/faospp$nyears
 
-	# examine match species from mtDNA to tsminsp
-	sort(setdiff(mtDNA2$spp, faospp$spp)) # species with no stock status information
-	sort(intersect(mtDNA2$spp, faospp$spp)) # species with no stock status information
+	# examine match species from mtdna to tsminsp
+	sort(setdiff(mtdna2$spp, faospp$spp)) # species with no stock status information
+	sort(intersect(mtdna2$spp, faospp$spp)) # species with no stock status information
 
 		# search for slight mismatches in names
 		grep('radiata', faospp$spp, value=TRUE)
@@ -310,12 +317,12 @@ dev.off()
 	faospp$spp[faospp$spp=='Pseudopleuronectes herzenst.'] <- 'Pleuronectes herzensteini'
 
 	# merge in ave global catch
-	mtDNA3 <- merge(mtDNA2, faospp[,c('spp', 'avecatch')], all.x=TRUE)
-		dim(mtDNA2)
-		dim(mtDNA3)
+	mtdna3 <- merge(mtdna2, faospp[,c('spp', 'avecatch')], all.x=TRUE)
+		dim(mtdna2)
+		dim(mtdna3)
 
 	# set missing data to 0
-	mtDNA3$avecatch[is.na(mtDNA3$avecatch)] <- 0
+	mtdna3$avecatch[is.na(mtdna3$avecatch)] <- 0
 
 # Add body size
 	fbdatmtdna$maxlength<-NA
@@ -328,9 +335,9 @@ dev.off()
 	
 	summary(fbdatmtdna)
 
-	mtDNA4 <- merge(mtDNA3, fbdatmtdna[,c('spp', 'maxlength')], all.x=TRUE)
-		dim(mtDNA3)
-		dim(mtDNA4)
+	mtdna4 <- merge(mtdna3, fbdatmtdna[,c('spp', 'maxlength')], all.x=TRUE)
+		dim(mtdna3)
+		dim(mtdna4)
 
-# write out mtDNA data with species traits
-	write.csv(mtDNA4, file=paste('output/mtDNAlh_', Sys.Date(), '.csv', sep=''))
+# write out mtdna data with species traits
+	write.csv(mtdna4, file=paste('output/mtdnalh_', Sys.Date(), '.csv', sep=''))

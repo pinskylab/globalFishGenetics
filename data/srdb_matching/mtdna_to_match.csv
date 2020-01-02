@@ -6,8 +6,8 @@ Amblyraja radiata,Iceland,Eyjafjordur,NA,Amblyraja radiata,Starry ray,Chevolot e
 Amblyraja radiata,Iceland,Hunafloi,NA,Amblyraja radiata,Starry ray,Chevolot et al. 2007 Mar Biol 151:1275-1286,2004,cytochrome b,27,290,0.738,NA,0.0047,NA,65.57,-21.08
 Amblyraja radiata,Iceland,Isafjardarjup,NA,Amblyraja radiata,Starry ray,Chevolot et al. 2007 Mar Biol 151:1275-1286,2003,cytochrome b,17,290,0.75,NA,0.003,NA,66.28,-23.2
 Amblyraja radiata,Iceland,Off bistlfjordur,NA,Amblyraja radiata,Starry ray,Chevolot et al. 2007 Mar Biol 151:1275-1286,2003,cytochrome b,24,290,0.916,NA,0.0071,NA,66.91,-13.48
-Amblyraja radiata,Iceland,Off Bjargtangar,NA,Amblyraja radiata,Starry ray,Chevolot et al. 2007 Mar Biol 151:1275-1286,2003,cytochrome b,22,290,0.749,NA,0.006,NA,65.67,-27.56
-Amblyraja radiata,Iceland,Off Bjargtangar,NA,Amblyraja radiata,Starry ray,Chevolot et al. 2007 Mar Biol 151:1275-1286,2003,cytochrome b,32,290,0.802,NA,0.055,NA,65.74,-27.4
+Amblyraja radiata,Iceland,Off Bjargtangar 2,NA,Amblyraja radiata,Starry ray,Chevolot et al. 2007 Mar Biol 151:1275-1286,2003,cytochrome b,22,290,0.749,NA,0.006,NA,65.67,-27.56
+Amblyraja radiata,Iceland,Off Bjargtangar 1,NA,Amblyraja radiata,Starry ray,Chevolot et al. 2007 Mar Biol 151:1275-1286,2003,cytochrome b,32,290,0.802,NA,0.055,NA,65.74,-27.4
 Amblyraja radiata,Iceland,Off Hofn,NA,Amblyraja radiata,Starry ray,Chevolot et al. 2007 Mar Biol 151:1275-1286,2003,cytochrome b,17,290,0.806,NA,0.0036,NA,63.91,-12.53
 Amblyraja radiata,Iceland,Oxafjordur,NA,Amblyraja radiata,Starry ray,Chevolot et al. 2007 Mar Biol 151:1275-1286,2004,cytochrome b,20,290,0.916,NA,0.0071,NA,66.28,-16.28
 Amblyraja radiata,Iceland,Skagafjordur,NA,Amblyraja radiata,Starry ray,Chevolot et al. 2007 Mar Biol 151:1275-1286,2004,cytochrome b,19,290,0.784,NA,0.0058,NA,65.94,-16.79
@@ -16,12 +16,12 @@ Amblyraja radiata,Newfoundland,Newfoundland,NA,Amblyraja radiata,Starry ray,Chev
 Anoplopoma fimbria,Mexico,SQ,NA,Anoplopoma fimbria,Sablefish,Tripp-Valdez et. al 2012 Journal of Applied Ichthyology 28:516-523,,COI,15,353,0.371,0.03950443,0.0015,0.000180739,30.44166667,-115.5691667
 Anoplopoma fimbria,USA,BS,SABLEFEBSAIGA,Anoplopoma fimbria,Sablefish,Tripp-Valdez et. al 2012 Journal of Applied Ichthyology 28:516-523,,COI,15,353,0.467,0.038213436,0.00146,0.000136845,56.08461111,-172.9652417
 Anoplopoma fimbria,USA,GA,SABLEFEBSAIGA,Anoplopoma fimbria,Sablefish,Tripp-Valdez et. al 2012 Journal of Applied Ichthyology 28:516-523,,COI,14,353,0.758,0.031002304,0.0027,0.000160357,54.03594444,-133.9998167
-Anoplopoma fimbria,USA,OR,SABLEFPCOAST,Anoplopoma fimbria,Sablefish,Tripp-Valdez et. al 2012 Journal of Applied Ichthyology 28:516-523,,COI,13,353,0.5,0.037719613,0.0015,0.00011094,45.852779,-124.324432
-Balistes capriscus,USA,Louisiana,GTRIGGM,Balistes capriscus,Gray triggerfish,Atoni et al. 2011 North American Journal of Fisheries 31:714-721,2008.5,ND4,29,617,0.81505,NA,0.00345,NA,27,-91
-Balistes capriscus,USA,South Carolina,NA,Balistes capriscus,Gray triggerfish,Atoni et al. 2011 North American Journal of Fisheries 31:714-721,2008.5,ND4,29,617,0.88736,NA,0.00393,NA,33.08333333,-79
-Balistes capriscus,USA,South Texas,GTRIGGM,Balistes capriscus,Gray triggerfish,Atoni et al. 2011 North American Journal of Fisheries 31:714-721,2008.5,ND4,29,617,0.89195,NA,0.00451,NA,26.01888889,-96.99888889
-Balistes capriscus,USA,South-eastern Florida,NA,Balistes capriscus,Gray triggerfish,Atoni et al. 2011 North American Journal of Fisheries 31:714-721,2008.5,ND4,29,617,0.90726,NA,0.00403,NA,26.08333333,-80
-Balistes capriscus,USA,West Florida,GTRIGGM,Balistes capriscus,Gray triggerfish,Atoni et al. 2011 North American Journal of Fisheries 31:714-721,2008.5,ND4,29,617,0.87957,NA,0.003386,NA,29.343741,-84.993571
+Anoplopoma fimbria,USA,OR,SABLEFPCOAST,Anoplopoma fimbria,Sablefish,Tripp-Valdez et. al 2012 Journal of Applied Ichthyology 28:516-523,,COI,13,353,0.5,0.037719613,0.0015,0.00011094,45.852779,-124.8016667
+Balistes capriscus,USA,Louisiana,GTRIGGM,Balistes capriscus,Gray triggerfish,Antoni et al. 2011 North American Journal of Fisheries 31:714-721,2008.5,ND4,29,617,0.81505,NA,0.00345,NA,27,-91
+Balistes capriscus,USA,South Carolina,NA,Balistes capriscus,Gray triggerfish,Antoni et al. 2011 North American Journal of Fisheries 31:714-721,2008.5,ND4,29,617,0.88736,NA,0.00393,NA,33.08333333,-79
+Balistes capriscus,USA,South Texas,GTRIGGM,Balistes capriscus,Gray triggerfish,Antoni et al. 2011 North American Journal of Fisheries 31:714-721,2008.5,ND4,29,617,0.89195,NA,0.00451,NA,26.01888889,-96.99888889
+Balistes capriscus,USA,South-eastern Florida,NA,Balistes capriscus,Gray triggerfish,Antoni et al. 2011 North American Journal of Fisheries 31:714-721,2008.5,ND4,29,617,0.90726,NA,0.00403,NA,26.08333333,-80
+Balistes capriscus,USA,West Florida,GTRIGGM,Balistes capriscus,Gray triggerfish,Antoni et al. 2011 North American Journal of Fisheries 31:714-721,2008.5,ND4,29,617,0.87957,NA,0.003386,NA,30.150349,-86.485161
 Centropristis striata,USA,CT,BSBASSMATLC,Centropristis striata,Black seabass,"Roy et. al 2012 Marine and Coastal Fisheries: Dynamics, Management, and Ecosystem Service 4:391-402",,control region,13,342,0.641,0.041602515,0.002,0.0005547,41.1,-72.8
 Centropristis striata,USA,FL,NA,Centropristis striata,Black seabass,"Roy et. al 2012 Marine and Coastal Fisheries: Dynamics, Management, and Ecosystem Service 4:391-402",,control region,53,342,0.861,0.005494423,0.007,0.000686803,27.712277,-80.363007
 Centropristis striata,USA,GA,NA,Centropristis striata,Black seabass,"Roy et. al 2012 Marine and Coastal Fisheries: Dynamics, Management, and Ecosystem Service 4:391-402",,control region,40,342,0.887,0.006798897,0.008,0.000790569,31.6,-80.7
@@ -46,18 +46,18 @@ Engraulis encrasicolus,Atlantic Ocean,Aegean Sea,NA,Engraulis encrasicolus,Europ
 Engraulis encrasicolus,Atlantic Ocean,Black Sea,NA,Engraulis encrasicolus,European anchovy,Keskin et al. 2012 Mitochondrial DNA 23(2):62-69,,cytochrome oxidase c subunit I,384,655,0.8422,NA,NA,NA,41.289294,35.332304
 Engraulis encrasicolus,Atlantic Ocean,Marmara Sea,NA,Engraulis encrasicolus,European anchovy,Keskin et al. 2012 Mitochondrial DNA 23(2):62-69,,cytochrome oxidase c subunit I,202,655,0.8422,NA,NA,NA,40.002102,26.062464
 Engraulis encrasicolus,Atlantic Ocean,Mediterranean Sea,NA,Engraulis encrasicolus,European anchovy,Keskin et al. 2012 Mitochondrial DNA 23(2):62-69,,cytochrome oxidase c subunit I,253,655,0.8422,NA,NA,NA,36.100049,33.8202825
-Engraulis encrasicolus,Bay of Biscay,East Cantabrian Sea (Basque Country),ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357äóñ1371,2009,16S,19,503,0.7018,0.0805,0.005022,NA,44.03333333,-1.915555556
-Engraulis encrasicolus,Bay of Biscay,East Cantabrian Sea (Basque Country),ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357äóñ1371,2009,Cytb,17,524,0.9706,0.0323,0.0158,NA,44.03333333,-1.915555556
-Engraulis encrasicolus,Bay of Biscay,East Cantabrian Sea (Getaria Coast),ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357äóñ1371,2009,16S,11,503,0.8727,0.0891,0.005639,NA,44,-1.9
-Engraulis encrasicolus,Bay of Biscay,East Cantabrian Sea (Getaria Coast),ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357äóñ1371,2009,Cytb,12,524,0.8485,0.012723,0.012723,NA,44,-1.9
-Engraulis encrasicolus,Bay of Biscay,West Cantabrian Sea,ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357äóñ1371,2009,16S,40,503,0.5308,0.0891,0.003747,NA,43.763991,-4.049719
-Engraulis encrasicolus,Bay of Biscay,West Cantabrian Sea,ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357äóñ1371,2009,Cytb,39,524,0.726,0.0703,0.011935,NA,43.763991,-4.049719
-Engraulis encrasicolus,Bay of Biscay,West Cantabrian Sea (Valdearenas),ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357äóñ1371,2009,16S,20,503,0.7421,0.0705,0.005159,NA,43.80569,-2.990878
-Engraulis encrasicolus,Bay of Biscay,West Cantabrian Sea (Valdearenas),ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357äóñ1371,2009,Cytb,20,524,0.9474,0.00344,0.016181,NA,43.80569,-2.990878
-Engraulis encrasicolus,France,North Nantes,ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357äóñ1371,2009,16S,31,503,0.7484,0.0577,0.005481,NA,47.018264,-2.084208
-Engraulis encrasicolus,France,North Nantes,ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357äóñ1371,2009,Cytb,31,524,0.9484,0.0246,0.016383,NA,47.018264,-2.084208
-Engraulis encrasicolus,Mediterranean,The Adriatic Sea,NA,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357äóñ1371,2009,16S,20,503,0.7579,0.0811,0.004824,NA,43.00083333,16.0175
-Engraulis encrasicolus,Mediterranean,The Adriatic Sea,NA,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357äóñ1371,2009,Cytb,20,524,0.9842,0.0205,0.014132,NA,43.00083333,16.0175
+Engraulis encrasicolus,Bay of Biscay,East Cantabrian Sea (Basque Country),ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357-1371,2009,16S,19,503,0.7018,0.0805,0.005022,NA,44.2,-2.54
+Engraulis encrasicolus,Bay of Biscay,East Cantabrian Sea (Basque Country),ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357-1371,2009,Cytb,17,524,0.9706,0.0323,0.0158,NA,44.2,-2.54
+Engraulis encrasicolus,Bay of Biscay,East Cantabrian Sea (Getaria Coast),ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357-1371,2009,16S,11,503,0.8727,0.0891,0.005639,NA,44,-2.6
+Engraulis encrasicolus,Bay of Biscay,East Cantabrian Sea (Getaria Coast),ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357-1371,2009,Cytb,12,524,0.8485,0.012723,0.012723,NA,44,-2.6
+Engraulis encrasicolus,Bay of Biscay,West Cantabrian Sea,ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357-1371,2009,16S,40,503,0.5308,0.0891,0.003747,NA,43.47,-4.01
+Engraulis encrasicolus,Bay of Biscay,West Cantabrian Sea,ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357-1371,2009,Cytb,39,524,0.726,0.0703,0.011935,NA,43.47,-4.01
+Engraulis encrasicolus,Bay of Biscay,West Cantabrian Sea (Valdearenas),ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357-1371,2009,16S,20,503,0.7421,0.0705,0.005159,NA,43.44,-3.97
+Engraulis encrasicolus,Bay of Biscay,West Cantabrian Sea (Valdearenas),ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357-1371,2009,Cytb,20,524,0.9474,0.00344,0.016181,NA,43.44,-3.97
+Engraulis encrasicolus,France,North Nantes,ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357-1371,2009,16S,31,503,0.7484,0.0577,0.005481,NA,47,-2.5
+Engraulis encrasicolus,France,North Nantes,ANCHOBAYB,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357-1371,2009,Cytb,31,524,0.9484,0.0246,0.016383,NA,47,-2.5
+Engraulis encrasicolus,Mediterranean,The Adriatic Sea,NA,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357-1371,2009,16S,20,503,0.7579,0.0811,0.004824,NA,43.03,16.13
+Engraulis encrasicolus,Mediterranean,The Adriatic Sea,NA,Engraulis encrasicolus,European Anchovy,Borrell et al. 2012 ICES Journal of Marine Science 69:1357-1371,2009,Cytb,20,524,0.9842,0.0205,0.014132,NA,43.03,16.13
 Engraulis japonicus,China,"East China Sea, E8-3",JANCHOTSST,Engraulis japonicus,Japanese anchovy,Liu et al. 2006,2001,control region,22,522,1,NA,0.011,NA,32.704289,125.695634
 Engraulis japonicus,China,F4,NA,Engraulis japonicus,Japanese anchovy,Liu et al. 2006,2001,control region,20,522,0.99,NA,0.009,NA,30.486733,122.817216
 Engraulis japonicus,China,J1,NA,Engraulis japonicus,Japanese anchovy,Liu et al. 2006,2001,control region,20,522,1,NA,0.01,NA,26.185208,120.323319
@@ -79,9 +79,9 @@ Engraulis japonicus,Japan,Teuri Island,NA,Engraulis japonicus,Japanese anchovy,L
 Engraulis japonicus,Japan,"Utatsu, Miyagi",JANCHOPJPN,Engraulis japonicus,Japanese anchovy,Liu et al. 2006,1997,control region,18,522,1,NA,0.01,NA,38.68513,141.589825
 Engraulis japonicus,Taiwan,Autumn Taiwan,NA,Engraulis japonicus,Japanese anchovy,Chen et al. 2010 Zoological Studies 49: 270-282 ,2001,cytb ,45,740,0.999,NA,0.0144,NA,24.13333333,121.1333333
 Engraulis japonicus,Taiwan,Taiwan Strait,NA,Engraulis japonicus,Japanese anchovy,Chen et al. 2010 Zoological Studies 49: 270-282 ,2001,cytb ,44,740,1,NA,0.013,NA,25.03333333,121.05
-Gadus macrocephalus,Canada,Hecate Strait,PCODHS,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339äóñ4351,2004, ND2/Cytb,34,1509,0.9679,NA,0.004,NA,53.0175,-129.9147222
-Gadus macrocephalus,Japan,Sea of Okhotsk,NA,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339äóñ4351,2005, ND2/Cytb,34,1509,0.9768,NA,0.003,NA,44.03333333,135.0838889
-Gadus macrocephalus,Korea,East China Sea,NA,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339äóñ4351,2005, ND2/Cytb,34,1509,0.9234,NA,0.003,NA,38.08583333,128.0672222
+Gadus macrocephalus,Canada,Hecate Strait,PCODHS,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339-4351,2004, ND2/Cytb,34,1509,0.9679,NA,0.004,NA,53.0175,-129.9147222
+Gadus macrocephalus,Japan,Sea of Okhotsk,NA,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339-4351,2005, ND2/Cytb,34,1509,0.9768,NA,0.003,NA,44.03333333,135.0838889
+Gadus macrocephalus,Korea,East China Sea,NA,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339-4351,2005, ND2/Cytb,34,1509,0.9234,NA,0.003,NA,38.08583333,128.0672222
 Gadus macrocephalus,Northwestern Pacific Ocean ,Aleutian Island,PCODBSAI,Gadus macrocephalus,Pacific cod,Liu et al. 2010 Journal of Fish Biology 77:1071-1082 ,2005,control region,21,452,0.49,NA,0.099,NA,50,180
 Gadus macrocephalus,Northwestern Pacific Ocean ,Eastern Hokkaido,NA,Gadus macrocephalus,Pacific cod,Liu et al. 2010 Journal of Fish Biology 77:1071-1082 ,2004,control region,44,452,0.59,NA,0.069,NA,43,140
 Gadus macrocephalus,Northwestern Pacific Ocean ,Gulf of Georgia,NA,Gadus macrocephalus,Pacific cod,Liu et al. 2010 Journal of Fish Biology 77:1071-1082 ,2003,control region,20,452,0.42,NA,0.022,NA,46,130
@@ -94,13 +94,13 @@ Gadus macrocephalus,Northwestern Pacific Ocean ,Yellow Sea,NA,Gadus macrocephalu
 Gadus macrocephalus,South Korea ,Boryeong ,NA,Gadus macrocephalus,Pacific cod ,Gwak & Nakayama 2011 Fisheries Science 77:945-952,2007,control region,74,584,0.472,NA,9.00E-04,NA,36.3514,126.4917
 Gadus macrocephalus,South Korea ,Jinhae ,NA,Gadus macrocephalus,Pacific cod ,Gwak & Nakayama 2011 Fisheries Science 77:945-952,2007,control region,54,584,0.206,NA,3.00E-04,NA,35.0657,128.7202
 Gadus macrocephalus,South Korea ,Jukbyeon,NA,Gadus macrocephalus,Pacific cod ,Gwak & Nakayama 2011 Fisheries Science 77:945-952,2006,control region,56,584,0.553,NA,0.0018,NA,37.0593,129.439
-Gadus macrocephalus,USA,Adak Island (AK),PCODBSAI,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339äóñ4351,2006, ND2/Cytb,36,1509,0.9397,NA,0.004,NA,51.06666667,-175.9483333
-Gadus macrocephalus,USA,Coastal Washington,NA,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339äóñ4351,2005, ND2/Cytb,37,1509,0.9745,NA,0.003,NA,47.08472222,-124.9491667
-Gadus macrocephalus,USA,Kodiak Island (AK),PCODGA,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339äóñ4351,2003, ND2/Cytb,33,1509,0.9773,NA,0.004,NA,57.06888889,-151.9497222
-Gadus macrocephalus,USA,Near Islands (AK),PCODBSAI,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339äóñ4351,2006, ND2/Cytb,36,1509,0.9841,NA,0.004,NA,52.05027778,173.0838889
-Gadus macrocephalus,USA,Puget Sound,NA,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339äóñ4351,2006, ND2/Cytb,32,1509,0.9456,NA,0.004,NA,47.05138889,-121.95
-Gadus macrocephalus,USA,Strait of Georgia,PCODWCVANI,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339äóñ4351,2003, ND2/Cytb,35,1509,0.9529,NA,0.004,NA,48.261203,-123.066998
-Gadus macrocephalus,USA,Unimak Pass (AK),PCODBSAI,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339äóñ4351,2003, ND2/Cytb,35,1509,0.9328,NA,0.003,NA,54.05222222,-167.9833333
+Gadus macrocephalus,USA,Adak Island (AK),PCODBSAI,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339-4351,2006, ND2/Cytb,36,1509,0.9397,NA,0.004,NA,51.06666667,-175.9483333
+Gadus macrocephalus,USA,Coastal Washington,NA,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339-4351,2005, ND2/Cytb,37,1509,0.9745,NA,0.003,NA,47.08472222,-124.9491667
+Gadus macrocephalus,USA,Kodiak Island (AK),PCODGA,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339-4351,2003, ND2/Cytb,33,1509,0.9773,NA,0.004,NA,57.06888889,-151.9497222
+Gadus macrocephalus,USA,Near Islands (AK),PCODBSAI,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339-4351,2006, ND2/Cytb,36,1509,0.9841,NA,0.004,NA,52.05027778,173.0838889
+Gadus macrocephalus,USA,Puget Sound,NA,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339-4351,2006, ND2/Cytb,32,1509,0.9456,NA,0.004,NA,47.05138889,-121.95
+Gadus macrocephalus,USA,Strait of Georgia,PCODWCVANI,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339-4351,2003, ND2/Cytb,35,1509,0.9529,NA,0.004,NA,48.261203,-123.066998
+Gadus macrocephalus,USA,Unimak Pass (AK),PCODBSAI,Gadus macrocephalus,Pacific cod,Canino et al. 2010 Molecular Ecology 19:4339-4351,2003, ND2/Cytb,35,1509,0.9328,NA,0.003,NA,54.05222222,-167.9833333
 Gadus morhua,Canada,"Chance Cove, inner part of Trinity Bay",COD2J3KL,Gadus morhua,Atlantic cod,Carr et al. 1995,1990,cytochrome b,47,307,0.2379,NA,0.0011,NA,47.665,-52.86638889
 Gadus morhua,Canada,"Flatrock , east coast of Avalon Peninsula north of St. John's",COD2J3KL,Gadus morhua,Atlantic cod,Carr et al. 1995,1989,cytochrome b,88,307,0.3457,NA,0.001591,NA,47.695,-52.75
 Gadus morhua,Canada,"Heart's Ease Ledge, near Random Island",COD2J3KL,Gadus morhua,Atlantic cod,Carr et al. 1995,1993,cytochrome b,33,307,0.2275,NA,0.001104,NA,47.989435,-52.909363
@@ -143,11 +143,11 @@ Katsuwonus pelamis,Srilanka,Negombo,SKJCIO,Katsuwonus pelamis,Skipjack tuna,Damm
 Katsuwonus pelamis,Srilanka,Tangalle,SKJCIO,Katsuwonus pelamis,Skipjack tuna,Dammannagoda et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:210-223,2003,"ATPase 6, 10",41,540,0.431,NA,0.002,NA,5.001111111,81.01777778
 Katsuwonus pelamis,Srilanka,Trincomalee,SKJCIO,Katsuwonus pelamis,Skipjack tuna,Dammannagoda et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:210-223,2003,"ATPase 6, 12",49,540,0.669,NA,0.005,NA,8.305896,81.940545
 Katsuwonus pelamis,Srilanka,Weligama,SKJCIO,Katsuwonus pelamis,Skipjack tuna,Dammannagoda et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:210-223,2003,"ATPase 6, 9",52,540,0.8,NA,0.006,NA,5.000833333,80.01888889
-Lepidorhombus boscii,France,Western Coast,NA,Lepidorhombus boscii,Four-spotted megrim,Campo & Garcia-Vazquez. 2010 Journal of Sea Research 64:360äóñ368,2001,control region,30,438,0.8391,0.065,0.0043,NA,46,-5
-Lepidorhombus boscii,Ireland,Southern Ireland,NA,Lepidorhombus boscii,Four-spotted megrim,Campo & Garcia-Vazquez. 2010 Journal of Sea Research 64:360äóñ368,2001,control region,34,438,0.8556,0.0588,0.0045,NA,50,-10
-Lepidorhombus boscii,Mediterranean,Aegean Sea,NA,Lepidorhombus boscii,Four-spotted megrim,Campo & Garcia-Vazquez. 2010 Journal of Sea Research 64:360äóñ368,2001,control region,30,438,0.7379,0.0686,0.0026,NA,37.8,25.4
-Lepidorhombus boscii,Portugal,Atlantic,FMEG8c9a,Lepidorhombus boscii,Four-spotted megrim,Campo & Garcia-Vazquez. 2010 Journal of Sea Research 64:360äóñ368,2001,control region,34,438,0.9091,0.0412,0.0046,NA,39,-10
-Lepidorhombus boscii,Spain,Cantabric Sea,FMEG8c9a,Lepidorhombus boscii,Four-spotted megrim,Campo & Garcia-Vazquez. 2010 Journal of Sea Research 64:360äóñ368,2001,control region,35,438,0.805,0.0642,0.0034,NA,44,-6
+Lepidorhombus boscii,France,Western Coast,NA,Lepidorhombus boscii,Four-spotted megrim,Campo & Garcia-Vazquez. 2010 Journal of Sea Research 64:360-368,2001,control region,30,438,0.8391,0.065,0.0043,NA,46,-5
+Lepidorhombus boscii,Ireland,Southern Ireland,NA,Lepidorhombus boscii,Four-spotted megrim,Campo & Garcia-Vazquez. 2010 Journal of Sea Research 64:360-368,2001,control region,34,438,0.8556,0.0588,0.0045,NA,50,-10
+Lepidorhombus boscii,Mediterranean,Aegean Sea,NA,Lepidorhombus boscii,Four-spotted megrim,Campo & Garcia-Vazquez. 2010 Journal of Sea Research 64:360-368,2001,control region,30,438,0.7379,0.0686,0.0026,NA,37.8,25.4
+Lepidorhombus boscii,Portugal,Atlantic,FMEG8c9a,Lepidorhombus boscii,Four-spotted megrim,Campo & Garcia-Vazquez. 2010 Journal of Sea Research 64:360-368,2001,control region,34,438,0.9091,0.0412,0.0046,NA,39,-10
+Lepidorhombus boscii,Spain,Cantabric Sea,FMEG8c9a,Lepidorhombus boscii,Four-spotted megrim,Campo & Garcia-Vazquez. 2010 Journal of Sea Research 64:360-368,2001,control region,35,438,0.805,0.0642,0.0034,NA,44,-6
 Lutjanus analis,USA,Florida Keys,MUTSNAPSATLCGM,Lutjanus analis,Mutton snapper,Carson et al. 2011 Fishery Bulletin 109:416-428,2008,ND4,27,590,0.835,NA,0.003,NA,25.08333333,-82
 Lutjanus analis,USA,Puerto Rico-East,NA,Lutjanus analis,Mutton snapper,Carson et al. 2011 Fishery Bulletin 109:416-428,2008,ND4,29,590,0.873,NA,0.004,NA,18.280709,-65.493566
 Lutjanus analis,USA,Puerto Rico-West,NA,Lutjanus analis,Mutton snapper,Carson et al. 2011 Fishery Bulletin 109:416-428,2008,ND4,25,590,0.818,NA,0.004,NA,18.201153,-67.292577
@@ -156,7 +156,7 @@ Lutjanus analis,USA,St. Thomas,NA,Lutjanus analis,Mutton snapper,Carson et al. 2
 Makaira nigricans,Ghana,Eastern Atlantic,BMARLINATL,Makaira nigricans,Blue marlin,McDowell et al. 2007 Gulf and Caribbean Research 19:75-82,1998,control region,18,904,0.993,NA,0.121,NA,5.8,1.188582
 Makaira nigricans,Jamaica,Caribeean Sea,BMARLINATL,Makaira nigricans,Blue marlin,McDowell et al. 2007 Gulf and Caribbean Research 19:75-82,1998,control region,11,904,1,NA,0.129,NA,18.2,-75.998842
 Makaira nigricans,USA,"Western North Atlantic, US mid-Atlantic",BMARLINATL,Makaira nigricans,Blue marlin,McDowell et al. 2007 Gulf and Caribbean Research 19:75-82,1997,control region,15,904,1,NA,0.115,NA,41.112,-69.688391
-Merluccius bilinearis,USA,Mb-CN,SHAKEGOMNGB,Merluccius bilinearis,North American hakes ,Machado-Schiaffino et al. 2010 Molecular Phylogenetics and Evolution 55:552-558,2003,control region,117,900,0.827,NA,0.0044,NA,41.87,-69
+Merluccius bilinearis,USA,Mb-CN,SHAKEGOMNGB,Merluccius bilinearis,North American hakes ,Machado-Schiaffino et al. 2010 Molecular Phylogenetics and Evolution 55:552-558,2003,control region,117,900,0.827,NA,0.0044,NA,41,-69
 Merluccius bilinearis,USA,Mb-CS,SHAKESGBMATL,Merluccius bilinearis,North American hakes ,Machado-Schiaffino et al. 2010 Molecular Phylogenetics and Evolution 55:552-558,2003,control region,32,900,0.699,NA,0.0029,NA,39.5,-72
 Merluccius bilinearis,USA,Mb-N,SHAKEGOMNGB,Merluccius bilinearis,North American hakes ,Machado-Schiaffino et al. 2010 Molecular Phylogenetics and Evolution 55:552-558,2003,control region,29,900,0.855,NA,0.0047,NA,43,-66.5
 Merluccius bilinearis,USA,Mb-S,SHAKESGBMATL,Merluccius bilinearis,North American hakes ,Machado-Schiaffino et al. 2010 Molecular Phylogenetics and Evolution 55:552-558,2003,control region,30,900,0.637,NA,0.0024,NA,37.5,-74
@@ -191,7 +191,7 @@ Pagrus pagrus,"USA, Western North Atlantic",South Carolina,RPORGYSATLC,Pagrus pa
 Paralichthys olivaceus,Japan,AKT,OFLOUNNSJ,Paralichthys olivaceus,Bastard halibut,Shigenobu et. al 2007 Fisheries Science 73:1104-1112,2003,ND2 and ND5,45,2871,0.999,0.000745356,0.0084,0.000626099,40.039948,139.859418
 Paralichthys olivaceus,Japan,CHB,OFLOUNPAC,Paralichthys olivaceus,Bastard halibut,Shigenobu et. al 2007 Fisheries Science 73:1104-1112,2003,ND2 and ND5,74,2871,0.9979,0.000116248,0.0083,0.000476615,35.8,140.8
 Paralichthys olivaceus,Japan,EHM,OFLOUNSETO,Paralichthys olivaceus,Bastard halibut,Shigenobu et. al 2007 Fisheries Science 73:1104-1112,2003/2004,ND2 and ND5,112,2871,0.9968,0.000179533,0.0079,0.000368515,34,133.1
-Paralichthys olivaceus,Japan,FKI,OFLOUNNSJ,Paralichthys olivaceus,Bastard halibut,Shigenobu et. al 2007 Fisheries Science 73:1104-1112,2003,ND2 and ND5,126,2871,0.9933,0.000712697,0.0083,0.000374166,35.824251,135.448315
+Paralichthys olivaceus,Japan,FKI,OFLOUNNSJ,Paralichthys olivaceus,Bastard halibut,Shigenobu et. al 2007 Fisheries Science 73:1104-1112,2003,ND2 and ND5,126,2871,0.9933,0.000712697,0.0083,0.000374166,35.600444,135.352528
 Paralichthys olivaceus,Japan,HKD,OFLOUNNSJ,Paralichthys olivaceus,Bastard halibut,Shigenobu et. al 2007 Fisheries Science 73:1104-1112,2003/2005,ND2 and ND5,55,2871,0.9987,0.000512392,0.008,0.000525876,43.185983,140.28327
 Paralichthys olivaceus,Japan,KGS,OFLOUNECS,Paralichthys olivaceus,Bastard halibut,Shigenobu et. al 2007 Fisheries Science 73:1104-1112,2004,ND2 and ND5,64,2871,0.996,0.000525,0.0082,5.00E-04,31.78,129.98
 Paralichthys olivaceus,Japan,MYG,OFLOUNPAC,Paralichthys olivaceus,Bastard halibut,Shigenobu et. al 2007 Fisheries Science 73:1104-1112,2003,ND2 and ND5,39,2871,0.998,0.000208167,0.008,0.0006245,37.199453,141.037079
@@ -199,7 +199,7 @@ Paralichthys olivaceus,Japan,NGS,OFLOUNECS,Paralichthys olivaceus,Bastard halibu
 Paralichthys olivaceus,Japan,TTR,OFLOUNNSJ,Paralichthys olivaceus,Bastard halibut,Shigenobu et. al 2007 Fisheries Science 73:1104-1112,2003/2004,ND2 and ND5,165,2871,0.9981,0.000210195,0.0083,0.000319185,35.596775,133.706866
 Paralichthys olivaceus,Yellow Sea and East China Sea,Qindao,OFLOUNECS,Paralichthys olivaceus,Japanese flounder ,Li et al 2011 African Journal of Biotechnology 10(60):12833-12839,2006,cytochrome c oxidase subunit I,50,528,0.746,NA,0.00334,NA,36.15,120.6333333
 Paralichthys olivaceus,Yellow Sea and East China Sea,Zhoushan,OFLOUNECS,Paralichthys olivaceus,Japanese flounder ,Li et al 2011 African Journal of Biotechnology 10(60):12833-12839,2008,cytochrome c oxidase subunit I,50,528,0.712,NA,0.00318,NA,30.13333333,122.5
-Reinhardtius hippoglossoides,Canada,Davis Strait,GHAL01ABCDEF,Reinhardtius hippoglossoides,Greenland halibut,Vis et al. 1997,,cytochrome b,40,401,0.7266,NA,0.002969,NA,61.56,-61.63
+Reinhardtius hippoglossoides,Canada,Davis Strait,GHAL01ABCDEF,Reinhardtius hippoglossoides,Greenland halibut,Vis et al. 1997,,cytochrome b,40,401,0.7266,NA,0.002969,NA,63.576126,-60.925187
 Reinhardtius hippoglossoides,Canada,Estuary of Gulf of St. Lawrence,GHAL4RST,Reinhardtius hippoglossoides,Greenland halibut,Vis et al. 1997,,cytochrome b,40,401,0.6975,NA,0.002516,NA,48.98,-67
 Reinhardtius hippoglossoides,Canada,Northeastern Newfoundland continental shelf (Northeast Slope),GHAL23KLMNO,Reinhardtius hippoglossoides,Greenland halibut,Vis et al. 1997,,cytochrome b,40,401,0.7304,NA,0.002799,NA,56.705,-50.91666667
 Reinhardtius hippoglossoides,Greenland,Flemish Pass,GHAL01ABCDEF,Reinhardtius hippoglossoides,Greenland halibut,Vis et al. 1997,,cytochrome b,40,401,0.6342,NA,0.001986,NA,60,-47
@@ -208,14 +208,14 @@ Reinhardtius hippoglossoides,Iceland,Western Iceland,NA,Reinhardtius hippoglosso
 Reinhardtius hippoglossoides,Norway,Bear Island north of Norway,GHALNEAR,Reinhardtius hippoglossoides,Greenland halibut,Vis et al. 1997,,cytochrome b,40,401,0.6759,NA,0.002558,NA,73.283,19.00027778
 Sardinops sagax,Australia,Southern Australia,NA,Sardinops sagax,South American pilchard,Bowen & Grant 1997,1985,control region,15,500,1,NA,0.017,NA,-37.16,125
 Sardinops sagax,Chile,Iquique,NA,Sardinops sagax,South American pilchard,Bowen & Grant 1997,1991,control region,18,500,1,NA,0.025,NA,-20.468,-69.98194444
-Sardinops sagax,Japan,Pacific Coast of Hokkaido,PILCHPJPN,Sardinops sagax,South American pilchard,Bowen & Grant 1997,1983,control region,18,500,0.961,NA,0.009,NA,42.180139,141.758301
+Sardinops sagax,Japan,Pacific Coast of Hokkaido,PILCHPJPN,Sardinops sagax,South American pilchard,Bowen & Grant 1997,1983,control region,18,500,0.961,NA,0.009,NA,41.042894,144.235234
 Sardinops sagax,Mexico ,Bahia Magdalena ,SARDPCOAST,Sardinops sagax,South American pilchard ,Garcia-Rodriguez et al. 2011 Fisheries Research 107:169-176,2007,control region,33,500,0.992,0.0104,0.018015,0.009465,23.5,-112
 Sardinops sagax,Mexico ,Bahia Magdalena ,SARDPCOAST,Sardinops sagax,South American pilchard ,Garcia-Rodriguez et al. 2011 Fisheries Research 107:169-176,2006,control region,73,500,1,0.0023,0.017029,0.008828,24.5,-112
 Sardinops sagax,Mexico ,Ensenada ,SARDPCOAST,Sardinops sagax,South American pilchard ,Garcia-Rodriguez et al. 2011 Fisheries Research 107:169-176,2007,control region,47,500,0.991,0.0064,0.018709,0.00971,30.875142,-116.524597
 Sardinops sagax,South Africa,"West coast, Cape Town",SARDSA,Sardinops sagax,South American pilchard,Bowen & Grant 1997,1991,control region,15,500,1,NA,0.018,NA,-34.452,18.035
 Sardinops sagax,USA,"San Diego, Southern California",SARDPCOAST,Sardinops sagax,South American pilchard,Bowen & Grant 1997,1983,control region,15,500,1,NA,0.03,NA,32.713484,-117.377174
 Scomber australasicus,Egypt,"Sinai Peninsula south, Red Sea",NA,Scomber australasicus,Blue mackerel,Scoles Collette Graves 1998,,cytochrome b,15,418,0.95,NA,0.0041,NA,27.528,33.13416667
-Scomber australasicus,Japan,Tokyo,BMACKPJPN,Scomber australasicus,Blue mackerel,Scoles Collette Graves 1998,,cytochrome b,21,418,0.81,NA,0.003,NA,35.205047,139.360401
+Scomber australasicus,Japan,Tokyo,BMACKPJPN,Scomber australasicus,Blue mackerel,Scoles Collette Graves 1998,,cytochrome b,21,418,0.81,NA,0.003,NA,34.870767,139.723738
 Scomber australasicus,Mexico,Revillagigedo Islands,NA,Scomber australasicus,Blue mackerel,Scoles Collette Graves 1998,,cytochrome b,20,418,0.59,NA,0.0013,NA,18.896,-111.8816667
 Scomber australasicus,New Zealand,Wellington,NA,Scomber australasicus,Blue mackerel,Scoles Collette Graves 1998,,cytochrome b,19,418,0.75,NA,0.0077,NA,-41.277,174.1186111
 Scomber australasicus,Taiwan,ECS,BMACKECS,Scomber australasicus,Blue mackerel,Tzeng 2007 Zoological Studies 46(6):656-663,2003,control region,33,866,0.991,0.001914854,0.0073,8.70E-05,26,123
@@ -226,7 +226,7 @@ Scomber australasicus,Taiwan,TT,BMACKECS,Scomber australasicus,Blue mackerel,Tze
 Scomber japonicus,Argentina,Mar del Plata,NA,Scomber japonicus,Chub mackerel,Scoles Collette Graves 1998,,cytochrome b,18,418,0.9,NA,0.005,NA,-37.996,-56.91527778
 Scomber japonicus,Cote d'Ivoire,"Abidjan, Ivory Coast",NA,Scomber japonicus,Chub mackerel,Scoles Collette Graves 1998,,cytochrome b,20,418,0.91,NA,0.0039,NA,5.315,-3.999166667
 Scomber japonicus,Israel,Meditteranean coast of Israel,NA,Scomber japonicus,Chub mackerel,Scoles Collette Graves 1998,,cytochrome b,20,418,0.9,NA,0.0038,NA,32.027,35
-Scomber japonicus,Japan,Tokyo,CMACKPJPN,Scomber japonicus,Chub mackerel,Scoles Collette Graves 1998,,cytochrome b,20,418,0.88,NA,0.0035,NA,35.10383,139.37688
+Scomber japonicus,Japan,Tokyo,CMACKPJPN,Scomber japonicus,Chub mackerel,Scoles Collette Graves 1998,,cytochrome b,20,418,0.88,NA,0.0035,NA,34.870767,139.723738
 Scomber japonicus,Portugal,POR,NA,Scomber japonicus,Chub mackerel,Tzeng et. al 2007 Journal of the Fisheries Society of Taiwan 34(3):237-245,,control region,10,865,1,0.014230249,0.0111,9.49E-05,42.5,-8.9
 Scomber japonicus,South African,Cape Town,NA,Scomber japonicus,Chub mackerel,Scoles Collette Graves 1998,,cytochrome b,20,418,0.81,NA,0.0038,NA,-33.8,18.06722222
 Scomber japonicus,Taiwan,Kaoshing,NA,Scomber japonicus,Chub mackerel,Scoles Collette Graves 1998,,cytochrome b,20,418,0.86,NA,0.0029,NA,22.5,120.035
@@ -255,8 +255,8 @@ Scomberomorus niphonius,South Korea,CH ,NA,Scomberomorus niphonius,Japanese Span
 Sebastes flavidus,Canada ,"N. Vancouver Is., BC",NA,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,95,812,0.64,0.004309109,0.0011,9.23E-05,50.875,-129.25
 Sebastes flavidus,Canada ,"S. Vancouver Is., BC",NA,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,85,812,0.517,0.006182518,9.00E-04,7.59E-05,49.12402,-126.67894
 Sebastes flavidus,United States,"Astoria, OR",YTROCKNPCOAST,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,108,812,0.533,0.004811252,9.00E-04,7.70E-05,46.075,-124.51761
-Sebastes flavidus,United States,"Cannon Beach, OR",YTROCKNPCOAST,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,32,812,0.669,0.012727922,0.0012,0.000159099,45.90849,-124.46891
-Sebastes flavidus,United States,"Cannon Beach, OR",YTROCKNPCOAST,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,42,812,0.664,0.006943651,0.0011,0.000123443,45.69968,-124.50905
+Sebastes flavidus,United States,"Cannon Beach, OR 1",YTROCKNPCOAST,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,32,812,0.669,0.012727922,0.0012,0.000159099,45.90849,-124.46891
+Sebastes flavidus,United States,"Cannon Beach, OR 2",YTROCKNPCOAST,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,42,812,0.664,0.006943651,0.0011,0.000123443,45.69968,-124.50905
 Sebastes flavidus,United States,"Craig, AK",NA,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,45,812,0.663,0.008944272,0.0013,0.000149071,54.76883,-133.78431
 Sebastes flavidus,United States,"Eureka, CA",NA,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,5,812,0.7,0.097492564,0.001,0.000447214,40.40833,-124.555
 Sebastes flavidus,United States,"Florence, OR",YTROCKNPCOAST,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,74,812,0.628,0.004882401,0.0011,0.000104623,43.9759,-124.65957
@@ -264,8 +264,8 @@ Sebastes flavidus,United States,"Fort Bragg, CA",NA,Sebastes flavidus,Yellowtail
 Sebastes flavidus,United States,"Neah Bay, WA ",YTROCKNPCOAST,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,73,812,0.666,0.005383893,0.0012,0.000105337,48.50554,-125.79765
 Sebastes flavidus,United States,"Port Orford, OR",YTROCKNPCOAST,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,98,812,0.52,0.005252793,9.00E-04,7.07E-05,42.72806,-124.67289
 Sebastes flavidus,United States,"Salisbury Sound, AK",NA,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,7,812,0.714,0.06841157,0.0013,0.000415761,57.35284,-135.90911
-Sebastes flavidus,United States,"San Francisco, CA",NA,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,67,812,0.429,0.008674031,7.00E-04,7.33E-05,37.87756,-123.04324
-Sebastes flavidus,United States,"San Francisco, CA",NA,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,96,812,0.388,0.006531973,6.00E-04,6.12E-05,38.075,-123.45167
+Sebastes flavidus,United States,"San Francisco, CA 2",NA,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,67,812,0.429,0.008674031,7.00E-04,7.33E-05,37.87756,-123.04324
+Sebastes flavidus,United States,"San Francisco, CA 1",NA,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,96,812,0.388,0.006531973,6.00E-04,6.12E-05,38.075,-123.45167
 Sebastes flavidus,United States,"San Luis Obispo, CA",NA,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,53,812,0.413,0.010714124,5.00E-04,6.87E-05,35.15105,-120.82881
 Sebastes flavidus,United States,"San Miguel Is., CA ",NA,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,7,812,0.286,0.074081037,3.00E-04,0.000188982,34.09976,-120.54119
 Sebastes flavidus,United States,"Santa Barbara, CA",NA,Sebastes flavidus,Yellowtail rockfish,Hess et al. 2011 Canadian Journal of Fisheries and Aquatic Sciences 68:89-104,1999,cyt b ,10,812,0.378,0.057237226,5.00E-04,0.000158114,34.34948,-119.60536
@@ -275,23 +275,23 @@ Seriolella brama,Australia,EVic,WAREHOUESE,Seriolella brama,Common warehou,Robin
 Seriolella brama,Australia,WVic,WAREHOUESE,Seriolella brama,Common warehou,Robinson et. al 2008 Marine and Freshwater Research 59:502-514,,control region,47,389,0.953,NA,0.017,NA,-39,142
 Seriolella punctata,Australia,EVic,WAREHOUESE,Seriolella punctata,Silver warehou,Robinson et. al 2008 Marine and Freshwater Research 59:502-514,,control region,20,403,0.995,NA,0.024,NA,-37,150
 Seriolella punctata,Australia,WVic,WAREHOUESE,Seriolella punctata,Silver warehou,Robinson et. al 2008 Marine and Freshwater Research 59:502-514,,control region,43,403,0.937,NA,0.024,NA,-39,142
-Solea solea,Atlantic Ocean,Bay of Biscay,SOLEVIII,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2007,cytb ,5,590,0.9,0.161,0.0041,0.00117,45.098217,-1.465434
-Solea solea,Atlantic Ocean,Bay of Biscay,SOLEVIII,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2007,cytb ,26,590,0.754,0.09,0.0041,0.00073,45.872931,-1.635438
-Solea solea,Atlantic Ocean,English Channel,SOLEVIId,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2008,cytb ,48,590,0.778,0.06,0.0053,0.00064,50.06833333,1.035833333
-Solea solea,Atlantic Ocean,Irish Sea,SOLEIS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2008,cytb ,44,590,0.794,0.064,0.0048,0.00063,52.0175,-4.966666667
-Solea solea,Atlantic Ocean,Kagerrak,SOLEIIIa,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2007,cytb ,32,590,0.95,0.019,0.0066,0.00056,58.0025,9.05
-Solea solea,Atlantic Ocean,Kattegat,SOLEIIIa,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2007,cytb ,39,590,0.825,0.051,0.0061,0.00059,55.01666667,11.00055556
-Solea solea,Atlantic Ocean,North Sea,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2007,cytb ,17,590,0.875,0.09,0.0036,0.00085,51.03527778,1.033333333
-Solea solea,Atlantic Ocean,North Sea,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2007,cytb ,31,590,0.815,0.066,0.0044,0.00081,54.05027778,7.084166667
-Solea solea,Atlantic Ocean,North Sea,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2008,cytb ,52,590,0.853,0.044,0.0055,0.00051,51.03361111,2.084722222
-Solea solea,Atlantic Ocean,North Sea,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2007,cytb ,45,590,0.782,0.065,0.0047,0.00067,51.35946,2.750248
-Solea solea,Atlantic Ocean,North Sea,SOLEVIIe,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2008,cytb ,44,590,0.813,0.053,0.0031,0.00046,50.06916667,-4.999722222
-Solea solea,Atlantic Ocean,North Sea,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2008,cytb ,27,590,0.84,0.059,0.0039,0.00075,51.376607,2.698063
-Solea solea,Atlantic Ocean,North Sea,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2008,cytb ,57,590,0.751,0.06,0.0043,0.00062,51.03527778,1.033333333
-Solea solea,Atlantic Ocean,North Sea,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2008,cytb ,23,590,0.806,0.079,0.0055,8.00E-04,51.03527778,1.033333333
-Solea solea,Atlantic Ocean,Scheldt estuary,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2007,cytb ,30,590,0.871,0.051,0.0049,0.00077,51.376607,2.698063
-Solea solea,Atlantic Ocean,Wadden Sea,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239äóñ1253,2007,cytb ,48,590,0.795,0.056,0.0045,0.00062,52.08555556,4.085
-Sprattus sprattus,Atlantic Ocean,Bay of Biscay,NA,Sprattus sprattus,European sprat ,Limborg et al. 2012 Heredity 109:96-107,2006,control region ,30,530,0.984,NA,NA,NA,46.488554,-2.772617
+Solea solea,Atlantic Ocean,Bay of Biscay BISB07,SOLEVIII,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2007,cytb ,5,590,0.9,0.161,0.0041,0.00117,,
+Solea solea,Atlantic Ocean,Bay of Biscay BISC07,SOLEVIII,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2007,cytb ,26,590,0.754,0.09,0.0041,0.00073,,
+Solea solea,Atlantic Ocean,English Channel ENG08,SOLEVIId,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2008,cytb ,48,590,0.778,0.06,0.0053,0.00064,,
+Solea solea,Atlantic Ocean,Irish Sea,SOLEIS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2008,cytb ,44,590,0.794,0.064,0.0048,0.00063,,
+Solea solea,Atlantic Ocean,Kagerrak,SOLEIIIa,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2007,cytb ,32,590,0.95,0.019,0.0066,0.00056,,
+Solea solea,Atlantic Ocean,Kattegat KATB07,SOLEIIIa,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2007,cytb ,39,590,0.825,0.051,0.0061,0.00059,,
+Solea solea,Atlantic Ocean,North Sea THA07j,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2007,cytb ,17,590,0.875,0.09,0.0036,0.00085,,
+Solea solea,Atlantic Ocean,North Sea GER07,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2007,cytb ,31,590,0.815,0.066,0.0044,0.00081,,
+Solea solea,Atlantic Ocean,North Sea BEL08f,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2008,cytb ,52,590,0.853,0.044,0.0055,0.00051,,
+Solea solea,Atlantic Ocean,North Sea BEL08s,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2008,cytb ,45,590,0.782,0.065,0.0047,0.00067,,
+Solea solea,Atlantic Ocean,Celtic Sea CEL08,SOLECS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2008,cytb ,44,590,0.813,0.053,0.0031,0.00046,,
+Solea solea,Atlantic Ocean,North Sea BEL08j,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2008,cytb ,27,590,0.84,0.059,0.0039,0.00075,,
+Solea solea,Atlantic Ocean,North Sea THA08,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2008,cytb ,57,590,0.751,0.06,0.0043,0.00062,,
+Solea solea,Atlantic Ocean,North Sea NOR08,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2008,cytb ,23,590,0.806,0.079,0.0055,8.00E-04,,
+Solea solea,Atlantic Ocean,Scheldt estuary ZAN07,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2007,cytb ,30,590,0.871,0.051,0.0049,0.00077,,
+Solea solea,Atlantic Ocean,Wadden Sea TEX07,SOLENS,Solea solea,Sole,Cuveliers et al. 2012 Marine Biology 159:1239-1253,2007,cytb ,48,590,0.795,0.056,0.0045,0.00062,,
+Sprattus sprattus,Atlantic Ocean,Bay of Biscay,NA,Sprattus sprattus,European sprat ,Limborg et al. 2012 Heredity 109:96-107,2006,control region ,30,530,0.984,NA,NA,NA,47.18,-3.16
 Sprattus sprattus,Baltic Sea,Eastern Baltic ,SPRAT22-32,Sprattus sprattus,European sprat ,Limborg et al. 2012 Heredity 109:96-107,2006,control region ,30,530,0.945,NA,NA,NA,55.07,18.44
 Sprattus sprattus,Baltic-North Sea,North Sea,SPRATNS,Sprattus sprattus,European sprat ,Limborg et al. 2012 Heredity 109:96-107,2005,control region ,30,530,0.989,NA,NA,NA,55.4,6.46
 Sprattus sprattus,Black Sea,Black Sea (west),NA,Sprattus sprattus,European sprat ,Limborg et al. 2012 Heredity 109:96-107,2006,control region ,30,530,0.92,NA,NA,NA,44.37,33.5
@@ -307,23 +307,23 @@ Sprattus sprattus,Turkey,BO,NA,Sprattus sprattus,European sprat,Debes et. al 200
 Sprattus sprattus,Ukraine,BL,NA,Sprattus sprattus,European sprat,Debes et. al 2008 Molecular Ecology 17:3873-3888,2006,control region,30,530,0.92,0.006024948,0.0131,0.001296277,44.617,33.5
 Thunnus albacares,Sri Lanka,KK,YFINEIO,Thunnus albacares,Yellowfin tuna,Dammannagoda et. al 2008 Fisheries Research 90:147-157,2002,ATPase 6 and 8,51,498,0.722,NA,0.002,NA,8.333333333,79.2
 Thunnus albacares,Sri Lanka,KR,YFINEIO,Thunnus albacares,Yellowfin tuna,Dammannagoda et. al 2008 Fisheries Research 90:147-157,2001,ATPase 6 and 8,52,498,0.721,NA,0.002,NA,6.283333333,82.38333333
-Thunnus albacares,Sri Lanka,MD,YFINEIO,Thunnus albacares,Yellowfin tuna,Dammannagoda et. al 2008 Fisheries Research 90:147-157,2003,ATPase 6 and 8,42,498,0.507,NA,0.001,NA,3.19,73.95
+Thunnus albacares,Sri Lanka,MD,YFINEIO,Thunnus albacares,Yellowfin tuna,Dammannagoda et. al 2008 Fisheries Research 90:147-157,2003,ATPase 6 and 8,42,498,0.507,NA,0.001,NA,4.333333333,73.95
 Thunnus albacares,Sri Lanka,NE,YFINEIO,Thunnus albacares,Yellowfin tuna,Dammannagoda et. al 2008 Fisheries Research 90:147-157,2003,ATPase 6 and 8,27,498,0.595,NA,0.002,NA,6.95,79.3
 Thunnus albacares,Sri Lanka,TA,YFINEIO,Thunnus albacares,Yellowfin tuna,Dammannagoda et. al 2008 Fisheries Research 90:147-157,2003,ATPase 6 and 8,17,498,0.117,NA,0,NA,5.7,81.23333333
 Thunnus albacares,Sri Lanka,TR,YFINEIO,Thunnus albacares,Yellowfin tuna,Dammannagoda et. al 2008 Fisheries Research 90:147-157,2004,ATPase 6 and 8,39,498,0.317,NA,0.001,NA,8.966666667,81.85
 Thunnus albacares,Sri Lanka,WE,YFINEIO,Thunnus albacares,Yellowfin tuna,Dammannagoda et. al 2008 Fisheries Research 90:147-157,2003,ATPase 6 and 8,19,498,0.521,NA,0.002,NA,5.566666667,80.3
-Trachurus murphyi,Chile,Iquique,CHTRACCH,Trachurus murphyi,Chilean jack mackerel,Cíçrdenas et al. 2009 Fisheries Research 100:109-115,2002,control region,30,772,0.36,NA,7.00E-04,NA,-19.90928,-70.32718
-Trachurus murphyi,Chile,Talcahuano,CHTRACCH,Trachurus murphyi,Chilean jack mackerel,Cíçrdenas et al. 2009 Fisheries Research 100:109-115,2002,control region,35,772,0.22,NA,4.00E-04,NA,-38.94777778,-74.98138889
-Trachurus murphyi,New Zealand,New Zealand,NA,Trachurus murphyi,Chilean jack mackerel,Cíçrdenas et al. 2009 Fisheries Research 100:109-115,2002,control region,26,772,0.15,NA,2.00E-04,NA,-36.98194444,178.1166667
-Trachurus murphyi,Ocean,Open Ocean,NA,Trachurus murphyi,Chilean jack mackerel,Cíçrdenas et al. 2009 Fisheries Research 100:109-115,2006,control region,52,772,0.41,NA,7.00E-04,NA,-31.95,-90.96666667
-Trachurus murphyi,Chile,San Antonio,CHTRACCH,Trachurus murphyi,Chilean jack mackerel,Cíçrdenas et al. 2009 Fisheries Research 100:109-115,2002,control region,30,772,0.51,NA,8.00E-04,NA,-32.824063,-71.914852
+Trachurus murphyi,Chile,Iquique,CHTRACCH,Trachurus murphyi,Chilean jack mackerel,Cardenas et al. 2009 Fisheries Research 100:109-115,2002,control region,30,772,0.36,NA,7.00E-04,NA,-19.90928,-70.32718
+Trachurus murphyi,Chile,Talcahuano,CHTRACCH,Trachurus murphyi,Chilean jack mackerel,Cardenas et al. 2009 Fisheries Research 100:109-115,2002,control region,35,772,0.22,NA,4.00E-04,NA,-38.94777778,-74.98138889
+Trachurus murphyi,New Zealand,New Zealand,NA,Trachurus murphyi,Chilean jack mackerel,Cardenas et al. 2009 Fisheries Research 100:109-115,2002,control region,26,772,0.15,NA,2.00E-04,NA,-36.98194444,178.1166667
+Trachurus murphyi,Ocean,Open Ocean,NA,Trachurus murphyi,Chilean jack mackerel,Cardenas et al. 2009 Fisheries Research 100:109-115,2006,control region,52,772,0.41,NA,7.00E-04,NA,-31.95,-90.96666667
+Trachurus murphyi,Chile,San Antonio,CHTRACCH,Trachurus murphyi,Chilean jack mackerel,Cardenas et al. 2009 Fisheries Research 100:109-115,2002,control region,30,772,0.51,NA,8.00E-04,NA,-32.824063,-71.914852
 Xiphias gladius,Cuba,"Caribbean, NW Atlantic",SWORDNATL,Xiphias gladius,swordfish,"Bremer, Mejuto et al. 1999",,control region,16,330,NA,NA,0.02455,NA,18.313,-74.86638889
 Xiphias gladius,France,GLO,SWORDIO,Xiphias gladius,Swordfish,Muths et. al 2009 Fisheries Research 97(3):263-269,2006,control region,105,517,0.997,NA,0.02,NA,-11,46
 Xiphias gladius,France,RUN,SWORDIO,Xiphias gladius,Swordfish,Muths et. al 2009 Fisheries Research 97(3):263-269,2006,control region,65,517,0.997,NA,0.021,NA,-21,56
 Xiphias gladius,Greece,"Ionian Sea, Mediterranean",SWORDMED,Xiphias gladius,swordfish,"Bremer, Mejuto et al. 1999",,control region,81,330,NA,NA,0.017917,NA,37.3,19
-Xiphias gladius,Madagascar,Indian Ocean,SWORDIO,Xiphias gladius,swordfish,"Bremer, Mejuto et al. 1999",,control region,48,330,NA,NA,0.032221,NA,-20.797,80
+Xiphias gladius,Madagascar,Indian Ocean,SWORDIO,Xiphias gladius,swordfish,"Bremer, Mejuto et al. 1999",,control region,48,330,NA,NA,0.032221,NA,-20.797,39.4
 Xiphias gladius,Madagascar,MADA,SWORDIO,Xiphias gladius,Swordfish,Muths et. al 2009 Fisheries Research 97(3):263-269,2006,control region,100,517,0.997,NA,0.019,NA,-31,43
-Xiphias gladius,Nigeria,"Gulf of Guinea, South Atlantic",SWORDSATL,Xiphias gladius,swordfish,"Bremer, Mejuto et al. 1999",,control region,83,330,NA,NA,0.032048,NA,-1.95,-5.59
+Xiphias gladius,Nigeria,"Gulf of Guinea, South Atlantic",SWORDSATL,Xiphias gladius,swordfish,"Bremer, Mejuto et al. 1999",,control region,83,330,NA,NA,0.032048,NA,-0.745961,-4.787142
 Xiphias gladius,Seychelles,SEY,SWORDIO,Xiphias gladius,Swordfish,Muths et. al 2009 Fisheries Research 97(3):263-269,2006,control region,67,517,0.996,NA,0.019,NA,-5,56
 Xiphias gladius,Uruguay,"Brazil-Uruguay, South Atlantic",SWORDSATL,Xiphias gladius,swordfish,"Bremer, Mejuto et al. 1999",,control region,95,330,NA,NA,0.027678,NA,-33.431,-25
 Xiphias gladius,USA,"Georges Banks, NW Atlantic",SWORDNATL,Xiphias gladius,swordfish,"Bremer, Mejuto et al. 1999",,control region,45,330,NA,NA,0.024745,NA,42.94,-66.94777778
