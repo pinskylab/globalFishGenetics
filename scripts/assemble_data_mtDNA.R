@@ -1,7 +1,8 @@
-setwd('/Users/mpinsky/Documents/Rutgers/Latitudinal gradients of diversity/globalFishGenetics/')
+# Script to assemble the mtDNA dataset
+# Starts from the mtDNA file compiled by hand
 
 #######################################
-# Eead in assembled file
+# Read in assembled file
 #######################################
 mtdna <- read.csv('data/mtDNA/Fishery lat mtDNA Complete Database.csv', stringsAsFactors=FALSE)
 srdbmatch <- read.csv("data/srdb_matching/mtdna_to_match.csv", stringsAsFactors=FALSE) # to match genetic data to SRDB stocks

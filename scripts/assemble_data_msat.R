@@ -1,6 +1,5 @@
 # assemble the msat data and do basic QA/QC
-
-setwd('/Users/mpinsky/Documents/Rutgers/Latitudinal gradients of diversity/globalFishGenetics/')
+# starts from the individual msat files
 
 
 ######################
