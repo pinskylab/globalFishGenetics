@@ -1,0 +1,749 @@
+spp,CommonName,Source,Country,Site,lat_deg,lat_min,lat_sec,lon_deg,lon_min,lon_sec,CollectionYear,MarkerName,n,bp,He,Hese,Pi,Pise,Notes
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Kuala Selangor,3,19,56,101,15,5,2010-2011,Cyt b,14,1140,1,,0.011,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Tawau,4,14,37,117,53,4,2010-2011,Cyt b,7,1140,0.952,,0.011,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Kuala Perlis,6,24,1,100,7,51,2010-2011,Cyt b,16,1140,0.992,,0.01,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Tanjung Dawai,5,40,48,100,22,18,2010-2011,Cyt b,12,1140,1,,0.01,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Bagan Panchor,4,31,43,100,38,2,2010-2011,Cyt b,15,1140,1,,0.01,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Maukah,2,53,49,112,5,44,2010-2011,Cyt b,15,1140,0.981,,0.01,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Bintulu,3,11,41,113,5,23,2010-2011,Cyt b,17,1140,1,,0.01,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Kota Kinabalu,5,58,58,116,4,18,2010-2011,Cyt b,16,1140,0.991,,0.01,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Vietnam,aCan Tho,10,2,25,105,47,0,2010-2011,Cyt b,21,1140,0.981,,0.01,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Kudat,6,52,46,116,50,45,2010-2011,Cyt b,15,1140,0.991,,0.01,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Indonesia,Banda Aceh,5,31,43,95,24,6,2010-2011,Cyt b,9,1140,0.972,,0.01,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Teluk Bahang,5,27,37,100,12,25,2010-2011,Cyt b,19,1140,0.977,,0.009,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Tok Bali,5,53,24,102,28,24,2010-2011,Cyt b,15,1140,1,,0.009,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Pulau Kambing,5,19,32,103,7,53,2010-2011,Cyt b,12,1140,0.985,,0.009,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Kuantan,3,47,55,103,19,24,2010-2011,Cyt b,15,1140,0.991,,0.009,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Endau,2,29,18,103,37,23,2010-2011,Cyt b,15,1140,0.971,,0.009,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Tanjung Sedili,1,55,47,104,6,48,2010-2011,Cyt b,19,1140,0.994,,0.009,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Bintawa,1,34,9,110,22,33,2010-2011,Cyt b,15,1140,0.981,,0.009,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Semporna,4,28,44,118,37,4,2010-2011,Cyt b,15,1140,0.991,,0.009,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Thailand,Trang,7.443686,,,99.253009,,,2010-2011,Cyt b,13,1140,1,,0.009,,geo coordinates pulled from place name
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Iran,Bandar Abbas,27,11,54,56,16,3,2010-2011,Cyt b,17,1140,0.978,,0.009,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Sarikei,2,8,58,111,31,9,2010-2011,Cyt b,13,1140,0.974,,0.008,,
+Rastrelliger kanagurta,Indian mackerel,Akib et al. 2015 PLoS ONE 10:e0119749,Malaysia,Sandakan,5,50,20,118,7,16,2010-2011,Cyt b,19,1140,0.965,,0.008,,
+Micropogonias undulatus,Atlantic croaker,"Anderson, O'Leary & Cooper 2019 Marine and Coastal Fisheries: Dynamics, Management and Ecosystem Science 11:3-16",USA,Apalachicola,29.719077,,,-84.968155,,,2016,Control region,36,424,0.983,,0.016,,geo coordinates pulled from place name
+Micropogonias undulatus,Atlantic croaker,"Anderson, O'Leary & Cooper 2019 Marine and Coastal Fisheries: Dynamics, Management and Ecosystem Science 11:3-16",USA,Cedar Lakes,28.827367,,,-95.528208,,,2016,Control region,66,424,0.976,,0.015,,geo coordinates pulled from place name
+Micropogonias undulatus,Atlantic croaker,"Anderson, O'Leary & Cooper 2019 Marine and Coastal Fisheries: Dynamics, Management and Ecosystem Science 11:3-16",USA,Sabine Lake,29.913284,,,-93.845511,,,2016,Control region,45,424,0.972,,0.013,,geo coordinates pulled from place name
+Micropogonias undulatus,Atlantic croaker,"Anderson, O'Leary & Cooper 2019 Marine and Coastal Fisheries: Dynamics, Management and Ecosystem Science 11:3-16",USA,Bay St. Louis,30.30666,,,-89.311634,,,2016,Control region,35,424,0.966,,0.013,,geo coordinates pulled from place name
+Micropogonias undulatus,Atlantic croaker,"Anderson, O'Leary & Cooper 2019 Marine and Coastal Fisheries: Dynamics, Management and Ecosystem Science 11:3-16",USA,Laguna Madre,26.726098,,,-97.43534,,,2016,Control region,63,424,0.97,,0.012,,geo coordinates pulled from place name
+Micropogonias undulatus,Atlantic croaker,"Anderson, O'Leary & Cooper 2019 Marine and Coastal Fisheries: Dynamics, Management and Ecosystem Science 11:3-16",USA,Jacksonville,30.403458,,,-81.38047,,,2016,Control region,30,424,0.926,,0.012,,geo coordinates pulled from place name
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,St. Rogatien,24.7,,,-166.9,,,2005,Cyt b,23,490,0.84,,0.0039,,pulled from paper figure
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Nihoa,23.060978,,,-161.921577,,,2007,Cyt b,43,490,0.79,,0.0028,,geo coordinates pulled from place name
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Kaua'i,22.080148,,,-159.527252,,,1998,Cyt b,69,490,0.76,,0.0028,,geo coordinates pulled from place name
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Gardner,24.998991,,,-167.998729,,,2006,Cyt b,104,490,0.78,,0.0027,,geo coordinates pulled from place name
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Moloka'i,21.162501,,,-157.023202,,,1998,Cyt b,92,490,0.78,,0.0026,,geo coordinates pulled from place name
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Big Island,19.283722,,,-155.45665,,,1998,Cyt b,83,490,0.76,,0.0025,,geo coordinates pulled from place name
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Lisianski,26.06671,,,-173.966682,,,1998-2006,Cyt b,34,490,0.75,,0.0024,,geo coordinates pulled from place name
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Raita,25.4,,,-168,,,2005-2006,Cyt b,26,490,0.74,,0.0024,,pulled from paper figure
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Twin Banks,23.4,,,-162.5,,,1998,Cyt b,14,490,0.75,,0.0024,,pulled from paper figure
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Ni'ihau,21.895325,,,-160.162123,,,2005-2006,Cyt b,51,490,0.76,,0.0024,,geo coordinates pulled from place name
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,O'ahu,21.566096,,,-158.110806,,,1997-2007,Cyt b,55,490,0.73,,0.0023,,geo coordinates pulled from place name
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Kaho'olawe,20.561465,,,-156.603969,,,2006,Cyt b,11,490,0.78,,0.0022,,geo coordinates pulled from place name
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Pearl & Hermes,27.859901,,,-175.841783,,,1998,Cyt b,12,490,0.67,,0.0021,,geo coordinates pulled from place name
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Maui,20.800952,,,-156.087773,,,2006-2007,Cyt b,50,490,0.73,,0.0021,,geo coordinates pulled from place name
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Brooks Banks,23.9,,,-166.3,,,2005-2006,Cyt b,76,490,0.69,,0.002,,pulled from paper figure
+Etelis coruscans,Flame snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Maro Reef,26.538935,,,-170.792546,,,1998-2006,Cyt b,44,490,0.67,,0.0019,,geo coordinates pulled from place name
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Brooks Banks,23.9,,,-166.3,,,2005-2006,Cyt b,10,436,0.38,,0.00185,,pulled from paper figure
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Gardner,24.998991,,,-167.998729,,,2006,Cyt b,31,436,0.49,,0.00141,,geo coordinates pulled from place name
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Raita,25.4,,,-168,,,2005-2006,Cyt b,46,436,0.25,,0.0008,,pulled from paper figure
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Maui,20.800952,,,-156.087773,,,2006,Cyt b,74,436,0.25,,0.00073,,geo coordinates pulled from place name
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Twin Banks,23.4,,,-162.5,,,1998,Cyt b,71,436,0.24,,0.00065,,pulled from paper figure
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Necker,23.575345,,,-164.70026,,,1998-2007,Cyt b,64,436,0.24,,0.00064,,geo coordinates pulled from place name
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Maro Reef,26.538935,,,-170.792546,,,2006-2007,Cyt b,46,436,0.21,,0.0006,,geo coordinates pulled from place name
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Ni'ihau,21.895325,,,-160.162123,,,1998-2006,Cyt b,76,436,0.22,,0.0006,,geo coordinates pulled from place name
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Northampton,25.33438,,,-172.066624,,,1998-2007,Cyt b,81,436,0.23,,0.00056,,geo coordinates pulled from place name
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Big Island,19.283722,,,-155.45665,,,1998,Cyt b,73,436,0.23,,0.00056,,geo coordinates pulled from place name
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,O'ahu,21.566096,,,-158.110806,,,1998-2007,Cyt b,34,436,0.17,,0.00054,,geo coordinates pulled from place name
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Kaua'i,22.080148,,,-159.527252,,,1998,Cyt b,44,436,0.21,,0.00051,,geo coordinates pulled from place name
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,St. Rogatien,24.7,,,-166.9,,,2006,Cyt b,31,436,0.19,,0.00045,,pulled from paper figure
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Moloka'i,21.162501,,,-157.023202,,,1998-2007,Cyt b,64,436,0.15,,0.00043,,geo coordinates pulled from place name
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Salmon Bank,26.7,,,-176.2,,,2006,Cyt b,11,436,0,,0,,pulled from paper figure
+Etelis carbunculus,Ruby snapper,Andrews et al. 2014 PLoS ONE 9:e91665,USA,Lisianski,26.06671,,,-173.966682,,,2006-2007,Cyt b,12,436,0,,0,,geo coordinates pulled from place name
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Tunisia,Zarzis,33,24,,11,13,,2009,CR,7,995,1,,0.026,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Italy,Montalto di Castro,42,8,,11,12,,2011,CR,6,995,1,,0.025,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Italy,Porto Cervo,40,55,,10,2,,2010,CR,8,995,1,,0.024,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Tunisia,Bizerte,37,16,,9,55,,2009,CR,7,995,1,,0.023,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Portugal,Portimão,36,58,,7,56,,2012,CR,13,995,1,,0.023,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Italy,Vibo Marina,38,45,,16,80,,2010,CR,7,995,1,,0.022,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Italy,Cagliari,39,,,9,15,,2010,CR,6,995,1,,0.022,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Italy,Acitrezza,38,2,,16,90,,2010,CR,12,995,1,,0.021,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Italy,Ancona,44,12,,13,15,,2010,CR,8,995,1,,0.02,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Italy,Gaeta,41,11,,13,26,,2010,CR,7,995,1,,0.019,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Italy,Alghero,40,32,,8,11,,2010,CR,9,995,1,,0.018,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Tunisia,Lampedusa,35,11,,12,70,,2012,CR,7,995,1,,0.018,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Italy,Bari,41,25,,16,10,,2010,CR,8,995,1,,0.016,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Italy,Elba,42,59,,10,22,,2011,CR,7,995,1,,0.016,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Italy,Fiumicino,41,41,,12,40,,2010,CR,9,995,1,,0.015,,
+Pagellus erythrinus,Common pandora,Angiulli et al. 2016 Marine Biology Research 12:4-15,Italy,Castel Sardo,40,84,,8,34,,2010,CR,7,995,1,,0.012,,
+Coryphaenoides mediterraneus,Mediterranean grenadier,Catarino et al. 2017 PLoS ONE 12:e0174988,Atlantic Ocean,MAR_3,42.911,,,-29.2388,,,2011-2012,COI,38,613,0.542,,0.0012,,
+Coryphaenoides mediterraneus,Mediterranean grenadier,Catarino et al. 2017 PLoS ONE 12:e0174988,Atlantic Ocean,MAR_2,51.8334,,,-29.9833,,,2011-2012,COI,10,613,0.6,,0.0011,,
+Coryphaenoides mediterraneus,Mediterranean grenadier,Catarino et al. 2017 PLoS ONE 12:e0174988,Atlantic Ocean,ROC,57,,,9,30,,2011,COI,49,613,0.119,,0.0002,,
+Coryphaenoides mediterraneus,Mediterranean grenadier,Catarino et al. 2017 PLoS ONE 12:e0174988,Atlantic Ocean,MAR_1,53.1223,,,-35.05,,,2011-2012,COI,30,613,0,,0,,
+Pontinus kuhlii,Offshore rockfish,"Catarino, Stefanni & Menezes 2013 Deep-Sea Research II 98:160-169",Portugal,Madeira,32.806242,,,-16.792258,,,1995-2003,CR,4,376-377,0.9778,,0.0187,,geo coordinates pulled from place name
+Pontinus kuhlii,Offshore rockfish,"Catarino, Stefanni & Menezes 2013 Deep-Sea Research II 98:160-169",Atlantic Ocean,Seine seamount,33.750534,,,-14.417139,,,1995-2003,CR,10,376-377,0.9556,,0.0186,,geo coordinates pulled from place name
+Pontinus kuhlii,Offshore rockfish,"Catarino, Stefanni & Menezes 2013 Deep-Sea Research II 98:160-169",Atlantic Ocean,Condor seamount,37.8,,,-29.3,,,1995-2011,CR,10,376-377,1,,0.0172,,pulled from paper figure
+Pontinus kuhlii,Offshore rockfish,"Catarino, Stefanni & Menezes 2013 Deep-Sea Research II 98:160-169",Cape Verde,Cape Verde,16.189099,,,-23.840952,,,2000,CR,10,376-377,0.9333,,0.0171,,geo coordinates pulled from place name
+Pontinus kuhlii,Offshore rockfish,"Catarino, Stefanni & Menezes 2013 Deep-Sea Research II 98:160-169",Atlantic Ocean,Voador seamount,37,,,-31.5,,,1995-2011,CR,10,376-377,0.9778,,0.016,,pulled from paper figure
+Pontinus kuhlii,Offshore rockfish,"Catarino, Stefanni & Menezes 2013 Deep-Sea Research II 98:160-169",Atlantic Ocean,Voador seamount,37,,,-31.5,,,1995-2011,Cyt b,10,425,0.9333,,0.0084,,pulled from paper figure
+Pontinus kuhlii,Offshore rockfish,"Catarino, Stefanni & Menezes 2013 Deep-Sea Research II 98:160-169",Cape Verde,Cape Verde,16.189099,,,-23.840952,,,2000,Cyt b,10,425,0.9111,,0.0073,,geo coordinates pulled from place name
+Pontinus kuhlii,Offshore rockfish,"Catarino, Stefanni & Menezes 2013 Deep-Sea Research II 98:160-169",Portugal,Madeira,32.806242,,,-16.792258,,,1995-2003,Cyt b,4,425,0.9556,,0.006,,geo coordinates pulled from place name
+Pontinus kuhlii,Offshore rockfish,"Catarino, Stefanni & Menezes 2013 Deep-Sea Research II 98:160-169",Atlantic Ocean,Condor seamount,37.8,,,-29.3,,,1995-2011,Cyt b,10,425,0.8333,,0.0051,,pulled from paper figure
+Pontinus kuhlii,Offshore rockfish,"Catarino, Stefanni & Menezes 2013 Deep-Sea Research II 98:160-169",Atlantic Ocean,Seine seamount,33.750534,,,-14.417139,,,1995-2003,Cyt b,10,425,0.6889,,0.0036,,geo coordinates pulled from place name
+Atherinella brasiliensis,Neotropical silverside,"Cortinhas et al. 2016 Estuarine, Coastal and Shelf Science 178:148-157",Brazil,Itaparica,-12.978106,,,-38.595195,,,,D-loop,19,933,0.98,,0.004,,geo coordinates pulled from place name
+Atherinella brasiliensis,Neotropical silverside,"Cortinhas et al. 2016 Estuarine, Coastal and Shelf Science 178:148-157",Brazil,Conceição,-27.201605,,,-48.491153,,,,D-loop,20,933,0.99,,0.003,,geo coordinates pulled from place name
+Atherinella brasiliensis,Neotropical silverside,"Cortinhas et al. 2016 Estuarine, Coastal and Shelf Science 178:148-157",Brazil,Paranaguá,-25.592483,,,-48.347013,,,,D-loop,20,933,0.94,,0.002,,geo coordinates pulled from place name
+Atherinella brasiliensis,Neotropical silverside,"Cortinhas et al. 2016 Estuarine, Coastal and Shelf Science 178:148-157",Brazil,Camacho,-28.611534,,,-48.871218,,,,D-loop,20,933,0.86,,0.002,,geo coordinates pulled from place name
+Atherinella brasiliensis,Neotropical silverside,"Cortinhas et al. 2016 Estuarine, Coastal and Shelf Science 178:148-157",Brazil,Carapebus,-22.265685,,,-41.608415,,,,D-loop,20,933,0.54,,0.001,,geo coordinates pulled from place name
+Atherinella brasiliensis,Neotropical silverside,"Cortinhas et al. 2016 Estuarine, Coastal and Shelf Science 178:148-157",Brazil,Patos,-33.377528,,,-52.943417,,,,D-loop,20,933,0.75,,0.001,,geo coordinates pulled from place name
+Cephalopholis fulva,Coney,De Souza et al. 2015 Annals of the Brazilian Academy of Sciences 87:121-136,Brazil,Espírito Santo state,-20,20,,-40,14,,2009,HVR-1,30,388,0.977,0.0026,0.024,0.0024,
+Cephalopholis fulva,Coney,De Souza et al. 2015 Annals of the Brazilian Academy of Sciences 87:121-136,Brazil,Rocas atoll,-3,51,,-33,49,,2009,HVR-1,11,388,0.981,0.0139,0.024,0.0039,
+Cephalopholis fulva,Coney,De Souza et al. 2015 Annals of the Brazilian Academy of Sciences 87:121-136,Brazil,Ceará state,-3,42,,-38,30,,2009,HVR-1,37,388,0.998,0.001,0.023,0.002,
+Cephalopholis fulva,Coney,De Souza et al. 2015 Annals of the Brazilian Academy of Sciences 87:121-136,Brazil,Bahia state,-13,,,-38,29,,2009,HVR-1,48,388,0.997,0.0007,0.023,0.0017,
+Cephalopholis fulva,Coney,De Souza et al. 2015 Annals of the Brazilian Academy of Sciences 87:121-136,Brazil,Rio Grande de Norte state,-5,16,,-35,22,,2009,HVR-1,42,388,0.994,0.0011,0.022,0.0017,
+Cephalopholis fulva,Coney,De Souza et al. 2015 Annals of the Brazilian Academy of Sciences 87:121-136,Brazil,Fernando de Noronha archipelago,-3,50,,-32,24,,2009,HVR-1,36,388,0.996,0.0012,0.022,0.0018,
+Lutjanus jocu,Dog snapper,De souza et al. 2019 Front. Mar. Sci. 6:545,Brazil,Ceará,-3,37,22.75,-38,19,19.13,,HVR-1,31,394,0.997,,0.038,,
+Lutjanus jocu,Dog snapper,De souza et al. 2019 Front. Mar. Sci. 6:545,Brazil,Bahia,-12,57,54.19,-38,17,46.77,,HVR-1,14,394,1,,0.036,,
+Lutjanus jocu,Dog snapper,De souza et al. 2019 Front. Mar. Sci. 6:545,Brazil,Espírito Santo,-20,22,53.1,-40,15,32.32,,HVR-1,16,394,0.991,,0.036,,
+Lutjanus jocu,Dog snapper,De souza et al. 2019 Front. Mar. Sci. 6:545,Brazil,Rio Grande de Norte,-5,44,5.29,-35,4,3.94,,HVR-1,39,394,0.997,,0.035,,
+Lutjanus analis,Mutton snapper,De souza et al. 2019 Front. Mar. Sci. 6:545,Brazil,Bahia,-12,57,54.19,-38,17,46.77,,HVR-1,17,493,1,,0.033,,
+Lutjanus analis,Mutton snapper,De souza et al. 2019 Front. Mar. Sci. 6:545,Brazil,Ceará,-3,37,22.75,-38,19,19.13,,HVR-1,27,493,0.985,,0.032,,
+Lutjanus analis,Mutton snapper,De souza et al. 2019 Front. Mar. Sci. 6:545,Brazil,Rio Grande de Norte,-5,44,5.29,-35,4,3.94,,HVR-1,29,493,1,,0.032,,
+Lutjanus analis,Mutton snapper,De souza et al. 2019 Front. Mar. Sci. 6:545,Brazil,Espírito Santo,-20,22,53.1,-40,15,32.32,,HVR-1,8,493,1,,0.029,,
+Lutjanus analis,Mutton snapper,De souza et al. 2019 Front. Mar. Sci. 6:545,Brazil,Rio Grande de Norte,-5,44,5.29,-35,4,3.94,,Cyt b,20,667,0.889,,0.005,,
+Lutjanus analis,Mutton snapper,De souza et al. 2019 Front. Mar. Sci. 6:545,Brazil,Bahia,-12,57,54.19,-38,17,46.77,,Cyt b,14,667,0.824,,0.004,,
+Lutjanus analis,Mutton snapper,De souza et al. 2019 Front. Mar. Sci. 6:545,Brazil,Ceará,-3,37,22.75,-38,19,19.13,,Cyt b,23,667,0.806,,0.003,,
+Lutjanus analis,Mutton snapper,De souza et al. 2019 Front. Mar. Sci. 6:545,Brazil,Espírito Santo,-20,22,53.1,-40,15,32.32,,Cyt b,16,667,0.616,,0.001,,
+Amodytes personatus,Japanese sand lance,Deng et al. 2019 Journal of the Marine Biological Association of the United Kingdom 1-8,Japan,Sendai Bay,38.034484,,,141.046457,,,2006,ATP6,22,644,0.987,0.003731013,,,geo coordinates pulled from place name; sample size split into two lineages for pi so excluded
+Amodytes personatus,Japanese sand lance,Deng et al. 2019 Journal of the Marine Biological Association of the United Kingdom 1-8,Japan,Cape Soya,45.523053,,,141.936058,,,2005,ATP6,21,644,0.9952,0.003600595,,,geo coordinates pulled from place name; sample size split into two lineages for pi so excluded
+Amodytes personatus,Japanese sand lance,Deng et al. 2019 Journal of the Marine Biological Association of the United Kingdom 1-8,Japan,Aomori Prefecture,40.931241,,,140.787853,,,2009,ATP6,24,644,0.9783,0.00481733,,,geo coordinates pulled from place name; sample size split into two lineages for pi so excluded
+Amodytes personatus,Japanese sand lance,Deng et al. 2019 Journal of the Marine Biological Association of the United Kingdom 1-8,Japan,Fukuoka,33.624171,,,130.357348,,,2005,ATP6,21,644,0.981,0.004909903,0.0068,0.00085105,geo coordinates pulled from place name
+Amodytes personatus,Japanese sand lance,Deng et al. 2019 Journal of the Marine Biological Association of the United Kingdom 1-8,Japan,Seto Naikai,34.132318,,,133.245432,,,2005,ATP6,22,644,0.974,0.00588434,0.0062,0.000767523,geo coordinates pulled from place name
+Amodytes personatus,Japanese sand lance,Deng et al. 2019 Journal of the Marine Biological Association of the United Kingdom 1-8,Japan,Aichi Prefecture,34.750935,,,137.191387,,,2005,ATP6,24,644,0.9819,0.003755884,0.0058,0.000694022,geo coordinates pulled from place name
+Amodytes personatus,Japanese sand lance,Deng et al. 2019 Journal of the Marine Biological Association of the United Kingdom 1-8,China,Qingdao,36.033363,,,120.436729,,,2015,ATP6,30,644,0.9701,0.003560197,0.0057,0.000602495,geo coordinates pulled from place name
+Amodytes personatus,Japanese sand lance,Deng et al. 2019 Journal of the Marine Biological Association of the United Kingdom 1-8,China,Dalian,38.939716,,,121.63307,,,2009,ATP6,21,644,0.9714,0.006546537,0.0054,0.000698297,geo coordinates pulled from place name
+Trygonorrhina fasciata,Eastern fiddler ray,Donnellan et al. 2015 Zootaxa 3981:367-384,Australia,Stockton,-32.91,,,151.79,,,2006,ND4,6,875,0.333,,,,He calculated as haplotype diversity from haplotype counts given in paper
+Trygonorrhina dumerilii,Southern fiddler ray,Donnellan et al. 2015 Zootaxa 3981:367-384,Australia,GSV,-35.2,,,138.19,,,2004,ND4,7,875,0.286,,,,He calculated as haplotype diversity from haplotype counts given in paper
+Trygonorrhina dumerilii,Southern fiddler ray,Donnellan et al. 2015 Zootaxa 3981:367-384,Australia,Comet Bay,-32.5,,,115.17,,,2005-2007,ND4,16,875,0.325,,,,He calculated as haplotype diversity from haplotype counts given in paper
+Chrysoblephus puniceus,Slinger seabream,Duncan et al. 2015 Fisheries Research 164:64-72,Mozambique,Ponta da Barra,-22.921416,,,35.601068,,,,CR,34,944,0.98,,0.012,,geo coordinates pulled from place name
+Chrysoblephus puniceus,Slinger seabream,Duncan et al. 2015 Fisheries Research 164:64-72,Mozambique,Inhaca,-26.016838,,,32.953338,,,,CR,29,944,0.95,,0.012,,geo coordinates pulled from place name
+Chrysoblephus puniceus,Slinger seabream,Duncan et al. 2015 Fisheries Research 164:64-72,South Africa,Southern KZN,-30.149424,,,30.997112,,,,CR,42,944,0.98,,0.012,,geo coordinates pulled from place name
+Chrysoblephus puniceus,Slinger seabream,Duncan et al. 2015 Fisheries Research 164:64-72,South Africa,Transkei,-32.546191,,,28.564466,,,,CR,38,944,0.97,,0.012,,geo coordinates pulled from place name
+Chrysoblephus puniceus,Slinger seabream,Duncan et al. 2015 Fisheries Research 164:64-72,Mozambique,Southern Inhambane,-23.862792,,,35.38148,,,,CR,43,944,0.98,,0.011,,geo coordinates pulled from place name
+Chrysoblephus puniceus,Slinger seabream,Duncan et al. 2015 Fisheries Research 164:64-72,Mozambique,Ponta de Ouro,-26.838163,,,32.88738,,,,CR,30,944,0.97,,0.011,,geo coordinates pulled from place name
+Chrysoblephus puniceus,Slinger seabream,Duncan et al. 2015 Fisheries Research 164:64-72,South Africa,Richards Bay,-28.80138,,,32.045279,,,,CR,32,944,0.96,,0.011,,geo coordinates pulled from place name
+Chrysoblephus puniceus,Slinger seabream,Duncan et al. 2015 Fisheries Research 164:64-72,Mozambique,Gaza,-25.209939,,,33.884123,,,,CR,33,944,0.96,,0.01,,geo coordinates pulled from place name
+Merlangius merlangus,Whiting,Eiriksson & Árnason 2014 Environ. Biol. Fish 97:103-110,Norway,Norway,70,6,,21,43,,1992,COI,78,621,0.6,0.05,0.0013,0.0011,
+Merlangius merlangus,Whiting,Eiriksson & Árnason 2014 Environ. Biol. Fish 97:103-110,Iceland,Iceland,64,39,,-23,4,,2004,COI,30,621,0.58,0.08,0.0012,0.001,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,French Polynesia,Mo'orea,-17.53,,,-149.83,,,,cyt b,4,715,1,,0.007,,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,Madagascar,Madagascar,-25.32,,,46.17,,,,cyt b,17,715,0.88,,0.006,,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,Djibouti,Djibouti,11.75,,,43.21,,,,cyt b,6,715,0.87,,0.005,,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,Sudan,Sudan,21.02,,,37.13,,,,cyt b,10,715,0.76,,0.005,,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,Saudi Arabia,Jeddah,21.49,,,39.11,,,,cyt b,23,715,0.83,,0.005,,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,Saudi Arabia,Thuwal,22.33,,,38.85,,,,cyt b,5,715,0.9,,0.005,,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,Cook Islands,Rarotonga,-21.23,,,-159.78,,,,cyt b,10,715,0.96,,0.004,,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,Saudi Arabia,Farasan Banks,16.75,,,41.49,,,,cyt b,5,715,1,,0.004,,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,Israel,Gulf of Aqaba/Eilat,29.508262,,,34.972604,,,,cyt b,10,715,0.87,,0.004,,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,USA,Johnston Atoll,16.73,,,-169.53,,,,cyt b,21,715,0.68,,0.003,,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,USA,Big Island,19.71,,,-155.45,,,,cyt b,44,715,0.52,,0.002,,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,USA,Palmyra,5.87,,,-162.08,,,,cyt b,34,715,0.83,,0.002,,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,Japan,Yoron,27.05,,,128.43,,,,cyt b,16,715,0.68,,0.002,,
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva 2015 J. Biogeogr. 42:2402-2413,Seychelles,Mahé,-4.68,,,55.48,,,,cyt b,4,715,0.67,,0.001,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Algeria,Bouharoun,36,37,472,2,38,124,2003,COI,6,579,0.333,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Algeria,Annaba,36,54,166,7,47,152,2001,COI,5,579,0.4,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Italy,Fiumicino,41,45,273,12,7,324,2001,COI,4,579,0.667,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Italy,Tuscany,43,22,22,9,55,322,2002,COI,7,579,0,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Italy,Marche,43,21,330,14,17,510,2002,COI,5,579,0,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Italy,Fano,44,31,120,13,0,250,2006,COI,9,579,0.417,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Turkey,Antakya,36,15,203,35,19,114,2004,COI,6,579,0.333,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Turkey,Iskenderun,35,52,352,33,33,532,2004,COI,5,579,0.4,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Cyprus,Cyprus,34,21,396,33,8,564,2009,COI,4,579,0,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Algeria,Cap Djinet,36,53,12,3,40,201,2009,COI,7,601,0.476,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Spain,Southern Minorca,39,35,540,4,33,306,2006,COI,7,601,0,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Italy,Tuscany,43,22,22,9,55,322,2010,COI,8,601,0,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Croatia,Croatia,45,7,845,14,25,664,2004,COI,9,601,0.667,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Italy,Fano,44,31,120,13,0,250,2000,COI,11,601,0.436,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Cyprus,Cyprus,34,21,396,33,8,564,2009,COI,4,601,0,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Algeria,Bouharoun,36,37,472,2,38,124,2010,COI,19,593,0.20468,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Cagliari,38,52,511,8,45,212,2009,COI,17,593,0.2279,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Fano,44,31,120,13,0,250,2008,COI,8,593,0.64286,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Ionian Sea,39,39,65,17,37,390,2008,COI,4,593,0,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Cyprus,Cyprus,34,21,396,33,8,564,2009,COI,5,593,0.7,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Algeria,Bouharoun,36,37,472,2,38,124,2010,COI,9,596,0.667,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Algeria,Tipaza,36,50,176,3,22,63,2010,COI,12,596,0.621,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Cagliari,38,52,511,8,45,212,2009,COI,14,596,0.495,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Fano,45,18,44,12,39,83,2008,COI,10,596,0.778,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Cyprus,Cyprus,34,21,39,33,8,56,2009,COI,5,596,0.9,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Algeria,Bouharoun,36,37,472,2,38,124,2003,CR,6,354,0.733,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Algeria,Annaba,36,54,166,7,47,152,2001,CR,5,354,0.4,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Italy,Fiumicino,41,45,273,12,7,324,2001,CR,4,354,0,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Italy,Tuscany,43,22,22,9,55,322,2002,CR,7,354,0.2857,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Italy,Marche,43,21,330,14,17,510,2002,CR,5,354,0,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Italy,Fano,44,31,120,13,0,250,2006,CR,9,354,0.222,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Turkey,Antakya,36,15,203,35,19,114,2004,CR,6,354,0.6,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Turkey,Iskenderun,35,52,352,33,33,532,2004,CR,5,354,0.7,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Cyprus,Cyprus,34,21,396,33,8,564,2009,CR,4,354,0.8333,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Portugal,Portugal,38,22,0,8,83,0,2005,CR,5,354,0,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Algeria,Cap Djinet,36,53,12,3,40,201,2009,CR,7,732,0.2857,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Spain,Southern Minorca,39,35,540,4,33,306,2006,CR,7,732,0,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Italy,Tuscany,43,22,22,9,55,322,2010,CR,8,732,0,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Croatia,Croatia,45,7,845,14,25,664,2004,CR,9,732,0.5556,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Italy,Fano,44,31,120,13,0,250,2000,CR,11,732,0.4727,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Cyprus,Cyprus,34,21,396,33,8,564,2009,CR,4,732,1,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Algeria,Bouharoun,36,37,472,2,38,124,2010,CR,19,667,0.7836,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Cagliari,38,52,511,8,45,212,2009,CR,17,667,0.5882,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Fano,44,31,120,13,0,250,2008,CR,8,667,0.92857,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Ionian Sea,39,39,65,17,37,390,2008,CR,4,667,0.8333,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Cyprus,Cyprus,34,21,396,33,8,564,2009,CR,5,667,0.9,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Algeria,Bouharoun,36,37,472,2,38,124,2010,CR,9,624,0.9444,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Algeria,Tipaza,36,50,176,3,22,63,2010,CR,12,624,0.98485,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Cagliari,38,52,511,8,45,212,2009,CR,14,624,0.91758,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Fano,45,18,44,12,39,83,2008,CR,10,624,0.88,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Cyprus,Cyprus,34,21,39,33,8,56,2009,CR,5,624,1,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Algeria,Bouharoun,36,37,472,2,38,124,2003,NADH2,6,748,0.333,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Algeria,Annaba,36,54,166,7,47,152,2001,NADH2,5,748,0,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Italy,Fiumicino,41,45,273,12,7,324,2001,NADH2,4,748,0,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Italy,Tuscany,43,22,22,9,55,322,2002,NADH2,7,748,0,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Italy,Marche,43,21,330,14,17,510,2002,NADH2,5,748,0.4,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Italy,Fano,44,31,120,13,0,250,2006,NADH2,9,748,0.556,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Turkey,Antakya,36,15,203,35,19,114,2004,NADH2,6,748,0.333,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Turkey,Iskenderun,35,52,352,33,33,532,2004,NADH2,5,748,0,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Cyprus,Cyprus,34,21,396,33,8,564,2009,NADH2,4,748,0,,,,
+Raja clavata,Thornback ray,Ferrari et al. 2018 Peerj 10.7717,Portugal,Portugal,38,22,0,8,83,0,2005,NADH2,5,748,0.6,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Algeria,Cap Djinet,36,53,12,3,40,201,2009,NADH2,7,698,0.2857,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Spain,Southern Minorca,39,35,540,4,33,306,2006,NADH2,7,698,0.2857,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Italy,Tuscany,43,22,22,9,55,322,2010,NADH2,8,698,0,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Croatia,Croatia,45,7,845,14,25,664,2004,NADH2,9,698,0.556,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Italy,Fano,44,31,120,13,0,250,2000,NADH2,11,698,0.4364,,,,
+Raja miraletus,Brown skate,Ferrari et al. 2018 Peerj 10.7717,Cyprus,Cyprus,34,21,396,33,8,564,2009,NADH2,4,698,0.8333,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Algeria,Bouharoun,36,37,472,2,38,124,2010,NADH2,19,673,0.76608,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Cagliari,38,52,511,8,45,212,2009,NADH2,17,673,0.8235,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Fano,44,31,120,13,0,250,2008,NADH2,8,673,0.60714,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Ionian Sea,39,39,65,17,37,390,2008,NADH2,4,673,1,,,,
+Galeus melastomus,Blackmouth catshark,Ferrari et al. 2018 Peerj 10.7717,Cyprus,Cyprus,34,21,396,33,8,564,2009,NADH2,5,673,0.9,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Algeria,Bouharoun,36,37,472,2,38,124,2010,NADH2,9,749,0.8889,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Algeria,Tipaza,36,50,176,3,22,63,2010,NADH2,12,749,0.87879,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Cagliari,38,52,511,8,45,212,2009,NADH2,14,749,0.4736,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Italy,Fano,45,18,44,12,39,83,2008,NADH2,10,749,0.2,,,,
+Scyliorhinus canicula,Small-spotted catshark,Ferrari et al. 2018 Peerj 10.7717,Cyprus,Cyprus,34,21,39,33,8,56,2009,NADH2,5,749,0,,,,
+Menticirrhus americanus,Southern kingroaker,Freitas et al. 2017 Fisheries Research 191:87-94,Brazil,Piauí,-2.83758,,,-41.68686,,,,CR,18,801,0.993,,0.0081,,
+Menticirrhus americanus,Southern kingroaker,Freitas et al. 2017 Fisheries Research 191:87-94,Brazil,Pará,-0.82902,,,-46.60465,,,,CR,20,801,0.995,,0.0079,,
+Menticirrhus americanus,Southern kingroaker,Freitas et al. 2017 Fisheries Research 191:87-94,Brazil,Bahia,-13.37118,,,-38.87249,,,,CR,26,801,0.985,,0.0079,,
+Menticirrhus americanus,Southern kingroaker,Freitas et al. 2017 Fisheries Research 191:87-94,Brazil,Paraíba,-6.88774,,,-34.86246,,,,CR,24,801,0.993,,0.0067,,
+Menticirrhus americanus,Southern kingroaker,Freitas et al. 2017 Fisheries Research 191:87-94,Brazil,Santa Catarina,-20.29703,,,-40.28698,,,,CR,30,801,0.405,,0.001,,
+Pholis fangi,,Gao et al. 2019 J. Ocean Univ. China 18:947-952,China,Yantai,37.493671,,,121.475818,,,2007,CR,20,487,0.7895,,0.0036,,geo coordinates pulled from place name
+Pholis fangi,,Gao et al. 2019 J. Ocean Univ. China 18:947-952,China,Laizhou Bay,37.380427,,,119.508294,,,2010,CR,20,487,0.7789,,0.0035,,geo coordinates pulled from place name
+Pholis fangi,,Gao et al. 2019 J. Ocean Univ. China 18:947-952,China,Quingdao,36.038081,,,120.34419,,,2010,CR,22,487,0.7403,,0.0029,,geo coordinates pulled from place name
+Pholis fangi,,Gao et al. 2019 J. Ocean Univ. China 18:947-952,China,Dandong,39.902748,,,124.281152,,,2010,CR,20,487,0.6737,,0.0028,,geo coordinates pulled from place name
+Pholis fangi,,Gao et al. 2019 J. Ocean Univ. China 18:947-952,China,Dalian,38.943124,,,121.680095,,,2011,CR,20,487,0.7474,,0.0025,,geo coordinates pulled from place name
+Pholis fangi,,Gao et al. 2019 J. Ocean Univ. China 18:947-952,China,Rushan,36.780653,,,121.652187,,,2011,CR,21,487,0.6667,,0.0025,,geo coordinates pulled from place name
+Pholis fangi,,Gao et al. 2019 J. Ocean Univ. China 18:947-952,China,Rizhao,35.38773,,,119.577491,,,2009,CR,20,487,0.4421,,0.0016,,geo coordinates pulled from place name
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,Japan,Ise Bay,34,45,,136,47,,2013,CR,26,414,0.997,,0.036,,
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,China,Shantou,23,16,,116,51,,2015,CR,18,414,1,,0.032,,
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,China,Longkou,37,33,,120,15,,2014,CR,8,414,1,,0.031,,
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,China,Jiaonan,35,39,,120,5,,2015,CR,28,414,0.998,,0.031,,
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,Japan,Awaji Island,34,28,,135,13,,2015,CR,26,414,0.997,,0.03,,
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,South Korea,Pushan,37,49,,129,12,,2016,CR,18,414,0.974,,0.03,,
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,China,Rushan,36,50,,121,47,,2016,CR,28,414,0.995,,0.03,,
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,China,Jimo,36,15,,120,47,,2014,CR,20,414,1,,0.03,,
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,China,Xiamen,24,11,,118,25,,2014,CR,27,414,0.997,,0.03,,
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,Japan,Tokyo Bay,35,12,,139,33,,2014,CR,30,414,0.991,,0.029,,
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,China,Zhoushan,30,24,,122,21,,2016,CR,50,414,0.999,,0.028,,
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,China,Laizhou Bay,37,32,,119,7,,2014,CR,24,414,0.996,,0.026,,
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,China,Beibu Bay,20,47,,108,43,,2016,CR,29,414,0.993,,0.026,,
+Sillago japonica,Japanese whiting,Gao et al. 2019 Mitochondrial DNA Part A 30:172-183,China,Laoshantou,36,15,,120,48,,2015,CR,14,414,0.989,,0.024,,
+Nuchequula mannusella,,Gao et al. 2019 Pakistan J. Zool. 51:1527-1535,China,Lianzhou Bay of Beihai,21.528536,,,109.021783,,,2015,Cyt b,30,1141,0.59,,0.00073,,geo coordinates pulled from place name
+Nuchequula mannusella,,Gao et al. 2019 Pakistan J. Zool. 51:1527-1535,China,Leizhou Bay of Zhanjiang,20.944844,,,110.359368,,,2014,Cyt b,12,1141,0.58,,0.00071,,geo coordinates pulled from place name
+Nuchequula mannusella,,Gao et al. 2019 Pakistan J. Zool. 51:1527-1535,China,Fangchenggang,21.660433,,,108.339258,,,2014,Cyt b,29,1141,0.43,,0.0006,,geo coordinates pulled from place name
+Nuchequula mannusella,,Gao et al. 2019 Pakistan J. Zool. 51:1527-1535,China,Zhuhai,22.284529,,,113.611623,,,2015,Cyt b,30,1141,0.51,,0.00052,,geo coordinates pulled from place name
+Nuchequula mannusella,,Gao et al. 2019 Pakistan J. Zool. 51:1527-1535,China,Shantou,23.319399,,,116.786672,,,2014,Cyt b,30,1141,0.42,,0.00041,,geo coordinates pulled from place name
+Nuchequula mannusella,,Gao et al. 2019 Pakistan J. Zool. 51:1527-1535,China,Xiamen,24.439131,,,118.162752,,,2015,Cyt b,32,1141,0.39,,0.00038,,geo coordinates pulled from place name
+Auxis thazard,Frigate tuna,Habib & Sulaiman 2016 Acta Oceanol. Sin. 35:76-82,Indonesia,Java Sea,-4,3,,114,40,,2013,D-loop,30,426,1,,0.119,,
+Auxis rochei,Bullet tuna,Habib & Sulaiman 2016 Acta Oceanol. Sin. 35:76-82,Brunei,Brunei Darussalam,5.580067,,,113.986838,,,2013,D-loop,10,426,1,,0.039,,geo coordinates pulled from place name
+Hexagrammos agrammus,Spotty-bellied greenling,Habib et al. 2015 Ocean Sci. J. 50:143-154,South Korea,Tongyoung,34.856045,,,128.458231,,,2008,CR,55,469,0.97,,0.009,,geo coordinates pulled from place name
+Hexagrammos agrammus,Spotty-bellied greenling,Habib et al. 2015 Ocean Sci. J. 50:143-154,South Korea,Imwonjin,37.1903,,,129.358248,,,2007,CR,30,469,0.92,,0.007,,geo coordinates pulled from place name
+Hexagrammos agrammus,Spotty-bellied greenling,Habib et al. 2015 Ocean Sci. J. 50:143-154,South Korea,Imwonjin,37.1903,,,129.358248,,,2007,Cyt b,30,697,0.96,,0.006,,geo coordinates pulled from place name
+Hexagrammos agrammus,Spotty-bellied greenling,Habib et al. 2015 Ocean Sci. J. 50:143-154,South Korea,Tongyoung,34.856045,,,128.458231,,,2008,Cyt b,55,697,0.92,,0.006,,geo coordinates pulled from place name
+Lethrinus harak,Thumbprint emperor,Healey et al. 2017 Ecology & Evolution 10.1002/ece3.3775,Madagascar,Belo sur Mer,-20.737358,,,43.995694,,,2009-2012,COI,42,486,0.47,,0.009,,geo coordinates pulled from place name
+Lethrinus harak,Thumbprint emperor,Healey et al. 2017 Ecology & Evolution 10.1002/ece3.3775,Mozambique,Pemba,-12.969427,,,40.488202,,,2009-2012,COI,22,486,0.39,,0.008,,geo coordinates pulled from place name
+Lethrinus mahsena,Sky emperor,Healey et al. 2017 Ecology & Evolution 10.1002/ece3.3775,Mozambique,Maputo,-25.953005,,,32.62303,,,2009-2012,COI,6,486,0.6,,0.0018,,geo coordinates pulled from place name
+Lethrinus mahsena,Sky emperor,Healey et al. 2017 Ecology & Evolution 10.1002/ece3.3775,Maruitius,Mahebourg,-20.406609,,,57.712051,,,2009-2012,COI,18,486,0.54,,0.0017,,geo coordinates pulled from place name
+Lethrinus mahsena,Sky emperor,Healey et al. 2017 Ecology & Evolution 10.1002/ece3.3775,Tanzania,Zanzibar,-6.160199,,,39.185947,,,2009-2012,COI,18,486,0.57,,0.0016,,geo coordinates pulled from place name
+Lethrinus harak,Thumbprint emperor,Healey et al. 2017 Ecology & Evolution 10.1002/ece3.3775,Tanzania,Zanzibar,-6.160199,,,39.185947,,,2009-2012,COI,18,486,0.63,,0.0015,,geo coordinates pulled from place name
+Lethrinus mahsena,Sky emperor,Healey et al. 2017 Ecology & Evolution 10.1002/ece3.3775,Madagascar,Belo sur Mer,-20.737358,,,43.995694,,,2009-2012,COI,5,486,0.6,,0.0012,,geo coordinates pulled from place name
+Lethrinus harak,Thumbprint emperor,Healey et al. 2017 Ecology & Evolution 10.1002/ece3.3775,Mauritius,Mahebourg,-20.406609,,,57.712051,,,2009-2012,COI,22,486,0.42,,0.0008,,geo coordinates pulled from place name
+Lethrinus nebulosus,Spangled emperor,Healey et al. 2018 ICES Journal of Marine Science 75:1465-1472,Madagascar,East Madacascar,-17.5012,,,49.66225,,,2011-2012,CR,13,421,1,,0.0505,,geo coordinates pulled from place name (average of 2 sampling sites)
+Lethrinus nebulosus,Spangled emperor,Healey et al. 2018 ICES Journal of Marine Science 75:1465-1472,Kenya,Kenya,-4,,,40,,,2011-2012,CR,29,421,0.998,,0.0498,,pulled from paper figure
+Lethrinus nebulosus,Spangled emperor,Healey et al. 2018 ICES Journal of Marine Science 75:1465-1472,Madagascar,West Madagascar,-21.4059,,,43.6142,,,2011-2012,CR,22,421,0.996,,0.0492,,geo coordinates pulled from place name (average of 2 sampling sites)
+Lethrinus nebulosus,Spangled emperor,Healey et al. 2018 ICES Journal of Marine Science 75:1465-1472,Mauritius,Mauritius,-20.5,,,57.7,,,2011-2012,CR,36,421,0.992,,0.0471,,pulled from paper figure
+Lethrinus nebulosus,Spangled emperor,Healey et al. 2018 ICES Journal of Marine Science 75:1465-1472,Tanzania,Tanzania,-6,,,39.7,,,2011-2012,CR,41,421,0.995,,0.0399,,pulled from paper figure
+Genypterus capensis,Kingklip,Henriques et al. 2017 Fisheries Research 187:86-97,South Africa,Eastern Agulhas Bank,-34.017225,,,25.497178,,,2014,CR,55,290,0.94,,0.014,,geo coordinates pulled from place name
+Genypterus capensis,Kingklip,Henriques et al. 2017 Fisheries Research 187:86-97,South Africa,Child's Bank,-31,,,15,,,2014,CR,50,290,0.877,,0.009,,pulled from paper figure
+Genypterus capensis,Kingklip,Henriques et al. 2017 Fisheries Research 187:86-97,South Africa,Cape Town,-33.918827,,,17,,,2015,CR,50,290,0.843,,0.009,,geo coordinates pulled from place name
+Genypterus capensis,Kingklip,Henriques et al. 2017 Fisheries Research 187:86-97,South Africa,Western Agulhas Bank,-35.2,,,18.1,,,2014,CR,70,290,0.86,,0.008,,pulled from paper figure
+Naso unicornis,Bluespine unicornfish,Horne et al. 2013 Journal of Heredity 104:532-546,USA,Ipan,13.360093,,,144.771698,,,2008,CR,35,250,1,,0.0924,,geo coordinates pulled from place name
+Naso unicornis,Bluespine unicornfish,Horne et al. 2013 Journal of Heredity 104:532-546,USA,Asan,13.476482,,,144.7136,,,2008,CR,56,250,1,,0.0857,,geo coordinates pulled from place name
+Naso unicornis,Bluespine unicornfish,Horne et al. 2013 Journal of Heredity 104:532-546,USA,Cocos,13.239967,,,144.652838,,,2008,CR,20,250,1,,0.0841,,geo coordinates pulled from place name
+Naso unicornis,Bluespine unicornfish,Horne et al. 2013 Journal of Heredity 104:532-546,USA,Tanguison,13.54346,,,144.807945,,,2008,CR,39,250,0.99,,0.0821,,geo coordinates pulled from place name
+Naso unicornis,Bluespine unicornfish,Horne et al. 2013 Journal of Heredity 104:532-546,USA,Saipan,15.209056,,,145.742519,,,2008,CR,28,250,1,,0.0817,,geo coordinates pulled from place name
+Naso unicornis,Bluespine unicornfish,Horne et al. 2013 Journal of Heredity 104:532-546,USA,Pago,13.423933,,,144.789269,,,2008,CR,24,250,1,,0.0813,,geo coordinates pulled from place name
+Uropterygius micropterus,Tidepool snake moray,Huang et al. 2018 Peerj 10.7717/peerj.4741,Taiwan,Jihui,23.125171,,,121.397756,,,2014-2016,"cytb, cytochrome c oxidase subunit I",32,1336,0.998,,0.0073,,geo coordinates pulled from place name
+Uropterygius micropterus,Tidepool snake moray,Huang et al. 2018 Peerj 10.7717/peerj.4741,Taiwan,Liuqiu,22.342656,,,120.371779,,,2014-2016,"cytb, cytochrome c oxidase subunit I",12,1336,1,,0.0069,,geo coordinates pulled from place name
+Uropterygius micropterus,Tidepool snake moray,Huang et al. 2018 Peerj 10.7717/peerj.4741,Taiwan,Green Island,22.666293,,,121.489522,,,2014-2016,"cytb, cytochrome c oxidase subunit I",20,1336,1,,0.0067,,geo coordinates pulled from place name
+Uropterygius micropterus,Tidepool snake moray,Huang et al. 2018 Peerj 10.7717/peerj.4741,Philippines,Badian,9.867671,,,123.348031,,,2014-2016,"cytb, cytochrome c oxidase subunit I",39,1336,0.9973,,0.0064,,geo coordinates pulled from place name
+Uropterygius micropterus,Tidepool snake moray,Huang et al. 2018 Peerj 10.7717/peerj.4741,Japan,Ishigaki Island,24.423486,,,124.172027,,,2014-2016,"cytb, cytochrome c oxidase subunit I",14,1336,1,,0.0063,,geo coordinates pulled from place name
+Uropterygius micropterus,Tidepool snake moray,Huang et al. 2018 Peerj 10.7717/peerj.4741,Taiwan,Wanlitong,21.995373,,,120.703934,,,2014-2016,"cytb, cytochrome c oxidase subunit I",11,1336,1,,0.0062,,geo coordinates pulled from place name
+Uropterygius micropterus,Tidepool snake moray,Huang et al. 2018 Peerj 10.7717/peerj.4741,Taiwan,Checheng,22.073644,,,120.692291,,,2014-2016,"cytb, cytochrome c oxidase subunit I",31,1336,0.9979,,0.0061,,geo coordinates pulled from place name
+Uropterygius micropterus,Tidepool snake moray,Huang et al. 2018 Peerj 10.7717/peerj.4741,Taiwan,Shitiping,23.488919,,,121.513813,,,2014-2016,"cytb, cytochrome c oxidase subunit I",36,1336,0.9921,,0.006,,geo coordinates pulled from place name
+Amphiprion akallopsisos,Skunk clownfish,Huyghe & Kochzius 2018 PLoS ONE 13:e0193825,Mozambique,Pemba,-12.974445,,,40.499531,,,,CR,35,337,0.77,,0.0064,,geo coordinates pulled from place name
+Amphiprion akallopsisos,Skunk clownfish,Huyghe & Kochzius 2018 PLoS ONE 13:e0193825,Mozambique,Nacala,-14.555969,,,40.667823,,,,CR,31,337,0.503,,0.0027,,geo coordinates pulled from place name
+Amphiprion akallopsisos,Skunk clownfish,Huyghe & Kochzius 2018 PLoS ONE 13:e0193825,Mozambique,Tofo,-23.852385,,,35.546061,,,,CR,8,337,0.25,,0.0008,,geo coordinates pulled from place name
+Beringraja pulchra,Mottled skate,Im et al. 2017 J. Appl. Ichthyol. 23:950-956,South Korea,Heuksando,34.671828,,,125.419423,,,2011,COI,27,471,0.581,,0.0019,,geo coordinates pulled from place name
+Beringraja pulchra,Mottled skate,Im et al. 2017 J. Appl. Ichthyol. 23:950-956,South Korea,Daechungdo,37.7,,,124.8,,,2011,COI,30,471,0.536,,0.0018,,pulled from paper figure
+Beringraja pulchra,Mottled skate,Im et al. 2017 J. Appl. Ichthyol. 23:950-956,South Korea,Ulleungdo,37.507218,,,130.857068,,,2012,COI,33,471,0,,0,,geo coordinates pulled from place name
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,US Virgin Islands,Grammanik Bank,18.189632,,,-64.958086,,,2010,"Atpase, cytb",72,1419,0.737,,0.0089,,geo coordinates pulled from place name
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Bahamas, Dog Rocks,25.076431,,,-77.650077,,,2011,"Atpase, cytb",4,1419,0.833,,0.0088,,pulled from paper figure
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Mexico,Chinchorro Bank,18.590754,,,-87.357135,,,2013,"Atpase, cytb",7,1419,0.857,,0.0071,,geo coordinates pulled from place name
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Belize,Glover's Reef,16.801109,,,-87.783634,,,1994,"Atpase, cytb",21,1419,0.852,,0.007,,geo coordinates pulled from place name
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Antigua and Barbuda,Antigua,17.084344,,,-61.815682,,,2013,"Atpase, cytb",32,1419,0.954,,0.007,,geo coordinates pulled from place name
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,USA,Bajo de Sico,18.306786,,,-67.258937,,,2013,"Atpase, cytb",10,1419,0.844,,0.0064,,pulled from paper figure
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Turks and Caicos,South Caicos,21.516011,,,-71.519643,,,2011,"Atpase, cytb",32,1419,0.823,,0.0053,,geo coordinates pulled from place name
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Bahamas,Long Island,23.221129,,,-75.086857,,,2000,"Atpase, cytb",23,1419,0.834,,0.0052,,geo coordinates pulled from place name
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Bahamas,Lee Stocking,23.770821,,,-76.098563,,,1994,"Atpase, cytb",4,1419,0.5,,0.0035,,geo coordinates pulled from place name
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Cuba,Pardon del Medio,21.911116,,,-82.951863,,,1996,"Atpase, cytb",17,1419,0.721,,0.0032,,pulled from paper figure
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Cayman Islands,Little Cayman,19.694094,,,-80.036071,,,2005,"Atpase, cytb",72,1419,0.776,,0.0011,,geo coordinates pulled from place name
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,USA,Florida Keys,24.766114,,,-80.982893,,,1994,"Atpase, cytb",31,1419,0.817,,0.0011,,pulled from paper figure
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Cuba,Corona San Carlos,22.764705,,,-83.81429,,,1996,"Atpase, cytb",14,1419,0.78,,0.0009,,pulled from paper figure
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Belize,Caye Glory,17.101271,,,-88.016452,,,1995,"Atpase, cytb",12,1419,0.758,,0.0008,,geo coordinates pulled from place name
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Cayman Islands,Cayman Brac,19.727769,,,-79.802144,,,2008,"Atpase, cytb",27,1419,0.732,,0.0008,,geo coordinates pulled from place name
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Belize,Turneffe Atoll,17.45873,,,-87.827336,,,1993,"Atpase, cytb",5,1419,0.7,,0.0006,,geo coordinates pulled from place name
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Belize,Lighthouse Reef,17.314786,,,-87.555234,,,1993,"Atpase, cytb",4,1419,0.667,,0.0005,,geo coordinates pulled from place name
+Epinephelus striatus,Nassau grouper,Jackson et al. 2014 PLoS ONE 9:e97508,Cayman Islands,Grand Cayman,19.331808,,,-81.239727,,,2008,"Atpase, cytb",8,1419,0.893,,0.0005,,geo coordinates pulled from place name
+Pristipomoides zonatus,Oblique-banded snapper,Kennington et al. 2017 Fisheries Research 193:242-249,Australia,Clerke Reef,-17.364987,,,119.333247,,,1997-2013,Cox1,30,661,0.75,0.07,0.0032,0.0021,geo coordinates pulled from place name
+Pristipomoides zonatus,Oblique-banded snapper,Kennington et al. 2017 Fisheries Research 193:242-249,Australia,Imperieuse Reef,-17.59865,,,118.83329,,,2009,Cox1,30,661,0.68,0.08,0.0032,0.0021,geo coordinates pulled from place name
+Pristipomoides zonatus,Oblique-banded snapper,Kennington et al. 2017 Fisheries Research 193:242-249,Tonga,Tonga,-21.241247,,,-175.025692,,,1997-2013,Cox1,22,661,0.78,0.08,0.0031,0.0021,geo coordinates pulled from place name
+Pristipomoides zonatus,Oblique-banded snapper,Kennington et al. 2017 Fisheries Research 193:242-249,Australia,Cocos (Keeling) Islands,-12.153546,,,96.862304,,,1997-2013,Cox1,30,661,0.79,0.05,0.003,0.002,geo coordinates pulled from place name
+Pristipomoides zonatus,Oblique-banded snapper,Kennington et al. 2017 Fisheries Research 193:242-249,Australia,Christmas Island,-10.460628,,,105.613512,,,1997-2013,Cox1,30,661,0.67,0.07,0.0029,0.0019,geo coordinates pulled from place name
+Pristipomoides zonatus,Oblique-banded snapper,Kennington et al. 2017 Fisheries Research 193:242-249,Fiji,Arabis Seamount & Rotuma Shoal,-12.499035,,,177.071623,,,1997-2013,Cox1,18,661,0.61,0.12,0.0028,0.0019,geo coordinates pulled from place name
+Pristipomoides zonatus,Oblique-banded snapper,Kennington et al. 2017 Fisheries Research 193:242-249,Pacific Ocean,Colwyn Ridge,-22,,,174,,,1997-2013,Cox1,14,661,0.79,0.09,0.0028,0.0019,geo coordinates pulled from place name
+Pristipomoides zonatus,Oblique-banded snapper,Kennington et al. 2017 Fisheries Research 193:242-249,Australia,Scott Reef,-13.999042,,,121.833548,,,2009,Cox1,30,661,0.7,0.08,0.0025,0.0017,geo coordinates pulled from place name
+Thunnus albacares,Yellowfin tuna,Kunal et al. 2013 Conserv. Genet. 14:205-213,India,Veraval,20.54,,,70.22,,,2007,D-loop,50,500,0.9984,,,,
+Thunnus albacares,Yellowfin tuna,Kunal et al. 2013 Conserv. Genet. 14:205-213,India,Kochi,9.58,,,76.16,,,2008,D-loop,48,500,0.9991,,,,
+Thunnus albacares,Yellowfin tuna,Kunal et al. 2013 Conserv. Genet. 14:205-213,India,Port-Blair,11.4,,,92.46,,,2008,D-loop,50,500,0.9991,,,,
+Thunnus albacares,Yellowfin tuna,Kunal et al. 2013 Conserv. Genet. 14:205-213,India,Vizag,17.42,,,83.15,,,2009,D-loop,50,500,0.9967,,,,
+Thunnus albacares,Yellowfin tuna,Kunal et al. 2013 Conserv. Genet. 14:205-213,India,Pondicherry,11.927044,,,79.853967,,,2008,D-loop,50,500,0.9984,,,,geo coordinates pulled from place name
+Thunnus albacares,Yellowfin tuna,Kunal et al. 2013 Conserv. Genet. 14:205-213,India,Agatti,10.5,,,72.12,,,2008,D-loop,23,500,1,,,,
+Thunnus albacares,Yellowfin tuna,Kunal et al. 2013 Conserv. Genet. 14:205-213,India,Tuticorin,8.49,,,78.08,,,2009,D-loop,50,500,0.9992,,,,
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Ogasawara (Bonin) Islands,27.079167,,,142.21702,,,2007-2011,CR,60,872,0.990395,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Kozu Island,34.216488,,,139.147821,,,2007-2011,CR,32,872,0.907258,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Izu-oshima Island,34.750752,,,139.382503,,,2007-2011,CR,31,872,0.96344,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Izu Peninsula,34.830122,,,139.075735,,,2007-2011,CR,20,872,0.936842,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Mie Prefecture,34.34222,,,136.697856,,,2007-2011,CR,20,872,0.978947,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,N. Miyazaki Prefecture,32.478625,,,131.672478,,,2007-2011,CR,20,872,0.978947,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,S. Miyazaki Prefecture,31.528861,,,131.386604,,,2007-2011,CR,22,872,1,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Fukue Island,32.710688,,,128.757272,,,2007-2011,CR,20,872,0.957895,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Shimokoshika-jima Island,31.712163,,,129.724681,,,2007-2011,CR,16,872,0.95,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Tanegashima Island,30.630747,,,130.977755,,,2007-2011,CR,19,872,0.988304,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Yaku-shima Island,30.352696,,,130.512734,,,2007-2011,CR,22,872,0.969697,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Kuchino-shima Island,29.969423,,,129.924462,,,2007-2011,CR,10,872,0.977778,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Gaja-jima Island,29.905243,,,129.540414,,,2007-2011,CR,20,872,0.973684,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Kodakara-jima Island,29.223751,,,129.324493,,,2007-2011,CR,16,872,0.983333,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Amami-oshima Island,28.282984,,,129.354486,,,2007-2011,CR,10,872,1,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Okinawa Island,26.705859,,,128.161069,,,2007-2011,CR,25,872,1,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Yaeyama Islands,24.4,,,124.6,,,2007-2011,CR,30,872,0.986207,,,,pulled from paper figure
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Taiwan,East Coast,23.984284,,,121.6383,,,2007-2011,CR,25,872,0.993333,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Taiwan,Southern Coast,21.954691,,,120.755507,,,2007-2011,CR,20,872,0.994737,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Taiwan,West Coast,23.764021,,,120.122151,,,2007-2011,CR,12,872,0.969697,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Vietnam,Nha Trang,12.240673,,,109.214914,,,2007-2011,CR,35,872,0.971429,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Malaysia,Kota Kinabalu,6.019033,,,116.093812,,,2007-2011,CR,26,872,0.956923,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Indonesia,Bitung,1.423907,,,125.160842,,,2007-2011,CR,23,872,0.956522,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Ogasawara (Bonin) Islands,27.079167,,,142.21702,,,2007-2011,Cyt b,60,1053,0.909774,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Kozu Island,34.216488,,,139.147821,,,2007-2011,Cyt b,32,1053,0.739919,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Izu-oshima Island,34.750752,,,139.382503,,,2007-2011,Cyt b,31,1053,0.883871,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Izu Peninsula,34.830122,,,139.075735,,,2007-2011,Cyt b,20,1053,0.889474,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Mie Prefecture,34.34222,,,136.697856,,,2007-2011,Cyt b,20,1053,0.942105,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,N. Miyazaki Prefecture,32.478625,,,131.672478,,,2007-2011,Cyt b,20,1053,0.921053,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,S. Miyazaki Prefecture,31.528861,,,131.386604,,,2007-2011,Cyt b,22,1053,0.939394,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Fukue Island,32.710688,,,128.757272,,,2007-2011,Cyt b,20,1053,0.863158,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Shimokoshika-jima Island,31.712163,,,129.724681,,,2007-2011,Cyt b,16,1053,0.916667,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Tanegashima Island,30.630747,,,130.977755,,,2007-2011,Cyt b,19,1053,0.976608,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Yaku-shima Island,30.352696,,,130.512734,,,2007-2011,Cyt b,22,1053,0.965368,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Kuchino-shima Island,29.969423,,,129.924462,,,2007-2011,Cyt b,10,1053,0.911111,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Gaja-jima Island,29.905243,,,129.540414,,,2007-2011,Cyt b,20,1053,0.931579,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Kodakara-jima Island,29.223751,,,129.324493,,,2007-2011,Cyt b,16,1053,0.991667,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Amami-oshima Island,28.282984,,,129.354486,,,2007-2011,Cyt b,10,1053,0.977778,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Okinawa Island,26.705859,,,128.161069,,,2007-2011,Cyt b,25,1053,0.953333,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Japan,Yaeyama Islands,24.4,,,124.6,,,2007-2011,Cyt b,30,1053,0.958621,,,,pulled from paper figure
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Taiwan,East Coast,23.984284,,,121.6383,,,2007-2011,Cyt b,25,1053,0.913333,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Taiwan,Southern Coast,21.954691,,,120.755507,,,2007-2011,Cyt b,20,1053,0.989474,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Taiwan,West Coast,23.764021,,,120.122151,,,2007-2011,Cyt b,12,1053,0.969697,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Vietnam,Nha Trang,12.240673,,,109.214914,,,2007-2011,Cyt b,35,1053,0.961345,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Malaysia,Kota Kinabalu,6.019033,,,116.093812,,,2007-2011,Cyt b,26,1053,0.976923,,,,geo coordinates pulled from place name
+Epinephelus fasciatus,Blacktip Grouper,Kuriiwa et al. 2014 Ichthyol. Res. 61:361-374,Indonesia,Bitung,1.423907,,,125.160842,,,2007-2011,Cyt b,23,1053,0.956522,,,,geo coordinates pulled from place name
+Gadus morhua,Atlantic cod,"Lait, Marshall & Carr 2018 Ecology and Evolution 8:6420-6437",Canada,Hopedale,55.458002,,,-60.214912,,,2013,mitogenome,12,16575,1,,0.0028,,geo coordinates pulled from place name
+Gadus morhua,Atlantic cod,"Lait, Marshall & Carr 2018 Ecology and Evolution 8:6420-6437",Poland,Sopot,54.445718,,,18.575062,,,2004,mitogenome,10,16575,1,,0.0027,,geo coordinates pulled from place name
+Gadus morhua,Atlantic cod,"Lait, Marshall & Carr 2018 Ecology and Evolution 8:6420-6437",Norway,Tromsö,69.652584,,,18.955858,,,1989,mitogenome,7,16575,1,,0.0026,,geo coordinates pulled from place name
+Gadus morhua,Atlantic cod,"Lait, Marshall & Carr 2018 Ecology and Evolution 8:6420-6437",Canada,Hawke Channel,53.067138,,,-55.667497,,,1994,mitogenome,10,16575,1,,0.0024,,pulled from paper figure
+Gadus morhua,Atlantic cod,"Lait, Marshall & Carr 2018 Ecology and Evolution 8:6420-6437",Canada,Fundy,43.687105,,,-64.991598,,,1994,mitogenome,10,16575,1,,0.0023,,pulled from paper figure
+Gadus morhua,Atlantic cod,"Lait, Marshall & Carr 2018 Ecology and Evolution 8:6420-6437",USA,Georges Bank,41.066253,,,-68.564823,,,1995,mitogenome,10,16575,1,,0.0022,,geo coordinates pulled from place name
+Gadus morhua,Atlantic cod,"Lait, Marshall & Carr 2018 Ecology and Evolution 8:6420-6437",Canada,Random Island,48.134739,,,-53.55223,,,1994,mitogenome,11,16575,1,,0.0021,,geo coordinates pulled from place name
+Gadus morhua,Atlantic cod,"Lait, Marshall & Carr 2018 Ecology and Evolution 8:6420-6437",Canada,Postville,54.908829,,,-59.767629,,,2014,mitogenome,14,16575,1,,0.0018,,geo coordinates pulled from place name
+Gadus morhua,Atlantic cod,"Lait, Marshall & Carr 2018 Ecology and Evolution 8:6420-6437",Canada,Flemish Cap,47.876838,,,-45.483398,,,1993,mitogenome,11,16575,1,,0.0018,,geo coordinates pulled from place name
+Gadus morhua,Atlantic cod,"Lait, Marshall & Carr 2018 Ecology and Evolution 8:6420-6437",Canada,N. Grand Banks,48.202715,,,-51.182344,,,1994,mitogenome,13,16575,1,,0.0017,,pulled from paper figure
+Gadus morhua,Atlantic cod,"Lait, Marshall & Carr 2018 Ecology and Evolution 8:6420-6437",Canada,E. Scotian Shelf,45.644085,,,-59.780762,,,1994,mitogenome,11,16575,1,,0.0017,,pulled from paper figure
+Gadus morhua,Atlantic cod,"Lait, Marshall & Carr 2018 Ecology and Evolution 8:6420-6437",Canada,Makkovik,55.088823,,,-59.169422,,,2013,mitogenome,14,16575,1,,0.0016,,geo coordinates pulled from place name
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie 2016 Fisheries Research 174:19-29",New Zealand,Hawkes Bay,-39.344608,,,177.236921,,,,CR,22,488,0.957,,0.0137,,geo coordinates pulled from place name
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie 2016 Fisheries Research 174:19-29",New Zealand,Kaikoura,-42.425785,,,173.672057,,,,CR,39,488,0.853,,0.01258,,geo coordinates pulled from place name
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie 2016 Fisheries Research 174:19-29",New Zealand,Otago,-46.34639,,,170.224676,,,,CR,49,488,0.808,,0.01216,,geo coordinates pulled from place name
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie 2016 Fisheries Research 174:19-29",New Zealand,Cook Strait,-41.312182,,,174.323793,,,,CR,25,488,0.88,,0.0117,,geo coordinates pulled from place name
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie 2016 Fisheries Research 174:19-29",New Zealand,Leigh,-36.296066,,,174.808136,,,,CR,49,488,0.894,,0.01153,,geo coordinates pulled from place name
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie 2016 Fisheries Research 174:19-29",New Zealand,Makara,-41.313783,,,174.624757,,,,CR,21,488,0.805,,0.01131,,geo coordinates pulled from place name
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie 2016 Fisheries Research 174:19-29",New Zealand,Chatham Islands,-43.967911,,,-176.319733,,,,CR,44,488,0.878,,0.00934,,geo coordinates pulled from place name
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie 2016 Fisheries Research 174:19-29",New Zealand,Hokitika,-42.712699,,,170.96194,,,,CR,45,488,0.822,,0.00928,,geo coordinates pulled from place name
+Thamnaconus hypargyreus,Lesser-spotted leatherjacket,Li et al. 2016 Mitochondrial DNA 27:798-805,China,Pearl River Estuary,21,37,,113,37,,2013,CR,35,636,0.9597,,0.0116,,
+Thamnaconus hypargyreus,Lesser-spotted leatherjacket,Li et al. 2016 Mitochondrial DNA 27:798-805,China,East Guangdong,22,52,,117,5,,2013,CR,34,636,0.975,,0.0108,,
+Thamnaconus hypargyreus,Lesser-spotted leatherjacket,Li et al. 2016 Mitochondrial DNA 27:798-805,China,Beibu Bay,21,3,,109,10,,2012,CR,21,636,0.9286,,0.0105,,
+Thamnaconus hypargyreus,Lesser-spotted leatherjacket,Li et al. 2016 Mitochondrial DNA 27:798-805,China,Nansha Islands,5,25,,109,34,,2013,CR,34,636,0.918,,0.0075,,
+Thamnaconus hypargyreus,Lesser-spotted leatherjacket,Li et al. 2016 Mitochondrial DNA 27:798-805,China,West Guangdong,21,5,,111,5,,2013,CR,34,636,0.918,,0.0069,,
+Pampus minor,Southern lesser pomfret,Li et al. 2019 Pakistan J. Zool. 51:149-157,Malaysia,Kuala Selangor,3.32364,,,101.236816,,,2016,Cytb,24,415,0.6341,0.0199,0.0048,0.0007,geo coordinates pulled from place name
+Pampus minor,Southern lesser pomfret,Li et al. 2019 Pakistan J. Zool. 51:149-157,Malaysia,Mukah,2.929505,,,112.06176,,,2016,Cytb,24,415,0.5036,0.025,0.0028,0.0004,geo coordinates pulled from place name
+Pampus minor,Southern lesser pomfret,Li et al. 2019 Pakistan J. Zool. 51:149-157,China,Beihai,21.425024,,,109.082557,,,2016,Cytb,24,415,0.6377,0.0124,0.0019,0.0003,geo coordinates pulled from place name
+Pampus minor,Southern lesser pomfret,Li et al. 2019 Pakistan J. Zool. 51:149-157,China,Haikou,20.081555,,,110.215835,,,2016,Cytb,24,415,0.529,0.0213,0.0014,0.0003,geo coordinates pulled from place name
+Branchiostoma japonicum,,"Li, Zhong & Wang 2013 Zoological Science 30:83-91",China,Quingdao,36.051652,,,12.393669,,,2006,"tRNAG, ND6",15,467,1,,0.0166,,geo coordinates pulled from place name
+Branchiostoma belcheri,,"Li, Zhong & Wang 2013 Zoological Science 30:83-91",China,Maoming,21.513626,,,111.042936,,,2005,"tRNAG, ND6",15,541,1,,0.0156,,geo coordinates pulled from place name
+Branchiostoma japonicum,,"Li, Zhong & Wang 2013 Zoological Science 30:83-91",China,Xiamen,24.479806,,,118.066633,,,2005,"tRNAG, ND6",15,467,1,,0.0128,,geo coordinates pulled from place name
+Branchiostoma belcheri,,"Li, Zhong & Wang 2013 Zoological Science 30:83-91",China,Beihai,21.425024,,,109.082557,,,2008,"tRNAG, ND6",10,541,1,,0.0123,,geo coordinates pulled from place name
+Branchiostoma belcheri,,"Li, Zhong & Wang 2013 Zoological Science 30:83-91",China,Xiamen,24.479806,,,118.066633,,,2005,"tRNAG, ND6",15,541,0.9917,,0.0102,,geo coordinates pulled from place name
+Chromis viridis,Blue-green damselfish,Liu et al. 2019 PeerJ 7:e7384,Australia,Lizard Island,-14.666513,,,145.462654,,,2007-2017,Cytb,35,911,0.968,0.0034,0.039,0.0032,geo coordinates pulled from place name
+Chromis viridis,Blue-green damselfish,Liu et al. 2019 PeerJ 7:e7384,Indonesia,Komodo,-8.561369,,,119.441041,,,2007-2017,Cytb,18,911,0.882,0.0151,0.014,0.0016,geo coordinates pulled from place name
+Chromis viridis,Blue-green damselfish,Liu et al. 2019 PeerJ 7:e7384,Madagascar,Toliara,-20.290536,,,44.27074,,,2007-2017,Cytb,9,911,0.889,0.0303,0.007,0.0013,geo coordinates pulled from place name
+Chromis viridis,Blue-green damselfish,Liu et al. 2019 PeerJ 7:e7384,Indonesia,Amed,-8.333868,,,115.64842,,,2007-2017,Cytb,19,911,0.953,0.0083,0.007,0.0009,geo coordinates pulled from place name
+Chromis viridis,Blue-green damselfish,Liu et al. 2019 PeerJ 7:e7384,Taiwan,Dongsha,20.703534,,,116.724549,,,2007-2017,Cytb,15,911,0.933,0.0139,0.005,0.0008,geo coordinates pulled from place name
+Chromis viridis,Blue-green damselfish,Liu et al. 2019 PeerJ 7:e7384,Japan,Sesoko Island,26.646333,,,127.864911,,,2007-2017,Cytb,11,911,0.946,0.0199,0.005,0.0009,geo coordinates pulled from place name
+Chromis viridis,Blue-green damselfish,Liu et al. 2019 PeerJ 7:e7384,Israel,Eliat,24.514481,,,34.958865,,,2007-2017,Cytb,10,911,0.956,0.0187,0.004,0.0006,geo coordinates pulled from place name
+Chromis viridis,Blue-green damselfish,Liu et al. 2019 PeerJ 7:e7384,French Polynesia,Moorea Island,-17.53412,,,-149.830682,,,2007-2017,Cytb,48,911,0.785,0.0088,0.003,0.0003,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,Japan,Kochi,33.358191,,,133.371119,,,2012,CR,23,458,0.9368,,0.0251,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,Japan,Iki Island,33.795724,,,129.712759,,,2012,CR,21,458,0.9571,,0.0239,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,China,Xiamen,24.411672,,,118.111265,,,2014,CR,24,458,0.9565,,0.0236,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,China,Weihai,37.509799,,,122.155264,,,2009,CR,24,458,0.9964,,0.0235,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,Japan,Yokosuka,35.279732,,,139.71197,,,2011,CR,22,458,0.974,,0.0229,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,Japan,Ishikawa,36.657932,,,136.389593,,,2012,CR,10,458,0.8667,,0.0224,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,Japan,Tottori,35.54361,,,134.087662,,,2015,CR,24,458,0.9783,,0.0224,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,Japan,Shizuoka,34.935802,,,138.475934,,,2012,CR,12,458,0.9848,,0.0224,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,China,Guangzhou,22.663588,,,113.724941,,,2010,CR,18,458,0.9804,,0.0221,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,China,Zhoushan,29.99608,,,122.089691,,,2015,CR,24,458,0.9601,,0.0219,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,China,Rushan,36.790251,,,121.7098,,,2009,CR,23,458,0.9526,,0.0216,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,Japan,Ariake-kai,33.030019,,,130.313659,,,2012,CR,10,458,0.9778,,0.0216,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,China,Quingdao,36.036107,,,120.386116,,,2009,CR,24,458,0.9964,,0.0208,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,China,Shantou,23.31139,,,116.796332,,,2015,CR,21,458,0.9524,,0.0194,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,Japan,Hakata Island,34.214879,,,133.091874,,,2011,CR,14,458,0.956,,0.0179,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,China,Huizhou,22.702843,,,114.626876,,,2010,CR,21,458,0.9524,,0.0173,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,Japan,Awaji,34.342222,,,134.815651,,,2012,CR,15,458,0.9996,,0.0171,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,China,Wenzhou,27.90433,,,120.916468,,,2010,CR,14,458,0.978,,0.0167,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,Japan,Niigata,37.921036,,,138.983031,,,2015,CR,15,458,0.9238,,0.0156,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,China,Beihai,21.539395,,,109.020758,,,2015,CR,24,458,0.9638,,0.014,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,China,Hainan,20.124059,,,110.454234,,,2010,CR,14,458,0.989,,0.011,,geo coordinates pulled from place name
+Sebastiscus marmoratus,Marbled rockfish,Liu et al. 2019 ZooKeys 830:127-144,Japan,Hyogo,34.749083,,,134.706661,,,2015,CR,24,458,0.8587,,0.0098,,geo coordinates pulled from place name
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer 2016 PeerJ 4:e2583",Mexico,Bahía Guaymas,27,55,6,-110,53,56,2005,Cytb,30,873,0.947,0.0047,0.0051,0.0005,
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer 2016 PeerJ 4:e2583",Mexico,Huatabampo,26,49,39,-119,38,32,2005,Cytb,28,873,0.947,0.0057,0.0051,5.4805,
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer 2016 PeerJ 4:e2583",USA,Santa Clara,31,41,12,-114,29,59,2006,Cytb,28,873,0.952,0.0049,0.005,0.0005,
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer 2016 PeerJ 4:e2583",Mexico,Puerto Peñasco,31,19,,-113,32,13,2006,Cytb,28,873,0.955,0.0057,0.005,0.0005,
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer 2016 PeerJ 4:e2583",Mexico,San Felipe,31,1,39,-114,50,7,2006,Cytb,27,873,0.966,0.0048,0.0048,0.0005,
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer 2016 PeerJ 4:e2583",Mexico,Bahía Kino,28,49,22,-111,56,27,2006,Cytb,29,873,0.924,0.0076,0.0047,0.0005,
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer 2016 PeerJ 4:e2583",Mexico,Puerto Libertad,29,54,15,-112,40,59,2006,Cytb,29,873,0.931,0.0065,0.0043,0.0005,
+Odonus niger,Redtoothed triggerfish,Matias et al. 2013 Mitochondrial DNA 24:584-595,Philippines,Tingloy,13.658826,,,120.882568,,,,CR,14,891,1,0.0072,0.0467,0.0017,geo coordinates pulled from place name
+Odonus niger,Redtoothed triggerfish,Matias et al. 2013 Mitochondrial DNA 24:584-595,Philippines,Mabini,13.700853,,,120.876967,,,,CR,21,891,1,0.0033,0.0461,0.0012,geo coordinates pulled from place name
+Epinephelus merra,Honeycomb grouper,Matias et al. 2013 Mitochondrial DNA 24:584-595,Philippines,Masinloc,15.532567,,,119.939888,,,,CR,21,485,0.98,0.005,0.0184,0.0005,geo coordinates pulled from place name
+Parupeneus multifasciatus,Manybar goatfish,Matias et al. 2013 Mitochondrial DNA 24:584-595,Philippines,Bolinao,16.363403,,,119.847298,,,,CR,12,873,1,0.0098,0.0184,0.0005,geo coordinates pulled from place name
+Parupeneus multifasciatus,Manybar goatfish,Matias et al. 2013 Mitochondrial DNA 24:584-595,Philippines,Masinloc,15.532567,,,119.939888,,,,CR,11,873,1,0.0118,0.0173,0.0005,geo coordinates pulled from place name
+Epinephelus merra,Honeycomb grouper,Matias et al. 2013 Mitochondrial DNA 24:584-595,Philippines,Alaminos,16.183643,,,120.018662,,,,CR,14,485,0.99,0.0083,0.0155,0.0005,geo coordinates pulled from place name
+Epinephelus merra,Honeycomb grouper,Matias et al. 2013 Mitochondrial DNA 24:584-595,Philippines,Bolinao,16.363403,,,119.847298,,,,CR,32,485,0.98,0.0023,0.015,0.0003,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Elba Island,42.79672,,,10.1922278,,,2012,CR,4,,0.667,,,,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Argentario,42.380348,,,11.115586,,,2012,CR,5,,0.733,,,,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Civitavecchia,42.087012,,,11.786588,,,2012,CR,8,,0,,,,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Cagliari,39.200911,,,9.102282,,,2012,CR,5,,0,,,,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Siracusa,37.073939,,,15.298018,,,2012,CR,6,,0.333,,,,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Gallipoli,40.347741,,,26.496889,,,2012,CR,4,,0,,,,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Otranto,40.148706,,,18.49032,,,2012,CR,7,,0.285714,,,,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Elba Island,42.79672,,,10.1922278,,,2012,Cytb,4,1057,1,,,,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Argentario,42.380348,,,11.115586,,,2012,Cytb,5,1057,0.9,,,,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Civitavecchia,42.087012,,,11.786588,,,2012,Cytb,8,1057,0.857143,,,,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Cagliari,39.200911,,,9.102282,,,2012,Cytb,5,1057,0.9,,,,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Siracusa,37.073939,,,15.298018,,,2012,Cytb,6,1057,1,,,,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Gallipoli,40.347741,,,26.496889,,,2012,Cytb,4,1057,1,,,,geo coordinates pulled from place name
+Sphyraena viridensis,Yellowmouth barracuda,"Milana, Ciampoli & Sola 2014 Biological Journal of the Linnean Society 113:635-641",Italy,Otranto,40.148706,,,18.49032,,,2012,Cytb,7,1057,0.904762,,,,geo coordinates pulled from place name
+Okamejei kenojei,Ocellate spot skate,Misawa et al. 2018 Fishery Bulletin 117:24-36,Japan,East China Sea,32.90658,,,130.716779,,,,CR,31,597,0.6989,0.008944344,0.0016,0.000233487,geo coordinates pulled from place name
+Okamejei kenojei,Ocellate spot skate,Misawa et al. 2018 Fishery Bulletin 117:24-36,Japan,Osaka Bay,34.50296,,,135.186743,,,,CR,24,597,0.0833,0.015288898,0.0001,0.000612372,geo coordinates pulled from place name
+Pristipomoides filamentosus,Crimson jobfish,Mzingirwa et al. 2019 Molecular Biology Reports 46:5079-5088,Madagascar,Toliara,-23.351619,,,43.685494,,,2013,Cytb,18,489,0.902,0.0156,0.011,0.0014,
+Pristipomoides filamentosus,Crimson jobfish,Mzingirwa et al. 2019 Molecular Biology Reports 46:5079-5088,Mauritius,Petite Riveire,-20.193652,,,57.44717,,,2013,Cytb,18,489,0.863,0.0151,0.005,0.0007,
+Pristipomoides filamentosus,Crimson jobfish,Mzingirwa et al. 2019 Molecular Biology Reports 46:5079-5088,Kenya,Shimoni,-4.647163,,,39.380413,,,2013,Cytb,21,489,0.629,0.0268,0.004,0.0007,
+Pristipomoides filamentosus,Crimson jobfish,Mzingirwa et al. 2019 Molecular Biology Reports 46:5079-5088,Tanzania,Dar es Salaam,-6.792354,,,39.208328,,,2013,Cytb,13,489,0.731,0.0369,0.003,0.0006,
+Pristipomoides filamentosus,Crimson jobfish,Mzingirwa et al. 2019 Molecular Biology Reports 46:5079-5088,Seychelles,Mahé,-4.682669,,,55.480396,,,2013,Cytb,21,489,0.429,0.0292,0.002,0.0002,
+Pristipomoides filamentosus,Crimson jobfish,Mzingirwa et al. 2019 Molecular Biology Reports 46:5079-5088,South Africa,Durban,-29.85868,,,31.02184,,,2013,Cytb,22,489,0.745,0.0198,0.002,0.0004,
+Xyrichtys novacula,Pearly razorfish,Nirchio et al. 2019 Genetica 147:47-56,Venezuela,Margarita Island,11.040647,,,-63.921145,,,,COI,36,510,0.6603,,,,geo coordinates pulled from place name
+Xyrichtys novacula,Pearly razorfish,Nirchio et al. 2019 Genetica 147:47-56,Italy,Ponza Island,40.914301,,,12.958515,,,,COI,8,510,0.4286,,,,geo coordinates pulled from place name
+Xyrichtys novacula,Pearly razorfish,Nirchio et al. 2019 Genetica 147:47-56,Italy,Gallipoli,40.052866,,,17.986013,,,,COI,4,510,0,,,,geo coordinates pulled from place name
+Acanthurus triostegus,Convict surgeonfish,Otwoma et al. 2018 J. Fish Biol. 93:597-608 ,Tanzania,Dar Es Salaam,-6.749797,,,39.300974,,,2015,ATPase6/8,7,842,1,,0.009,,geo coordinates pulled from place name
+Acanthurus triostegus,Convict surgeonfish,Otwoma et al. 2018 J. Fish Biol. 93:597-608 ,Kenya,Mobasa,-4.067377,,,39.702996,,,2015,ATPase6/8,6,842,1,,0.008,,geo coordinates pulled from place name
+Acanthurus triostegus,Convict surgeonfish,Otwoma et al. 2018 J. Fish Biol. 93:597-608 ,Kenya,Kiunga,-1.746577,,,41.49137,,,2015,ATPase6/8,9,842,0.92,,0.006,,geo coordinates pulled from place name
+Acanthurus triostegus,Convict surgeonfish,Otwoma et al. 2018 J. Fish Biol. 93:597-608 ,Tanzania,Mtwara,-10.255964,,,40.162882,,,2015,ATPase6/8,4,842,1,,0.005,,geo coordinates pulled from place name
+Acanthurus triostegus,Convict surgeonfish,Otwoma et al. 2018 J. Fish Biol. 93:597-608 ,Madagascar,Anakao,-23.655027,,,43.641767,,,2015,ATPase6/8,9,842,0.89,,0.005,,geo coordinates pulled from place name
+Carcharhinus galapagensis,Galapagos shark,Pazmiño et al. 2017 Conserv. Genet. 18:1151-1163,Ecuador,Santa Cruz,-0.700011,,,-90.65554333,,,,CR,46,997,0.555,0.0133,0.074,0.0059,Not sure of exact sample sizes --- 85 total sampled but only 77 used in mtDNA analyses and unclear where those 77 came from
+Carcharhinus galapagensis,Galapagos shark,Pazmiño et al. 2017 Conserv. Genet. 18:1151-1163,Ecuador,Northern Islands,-1,39,,-91,59,,,CR,4,997,1,0.135,0.053,0.02,Not sure of exact sample sizes --- 85 total sampled but only 77 used in mtDNA analyses and unclear where those 77 came from
+Carcharhinus galapagensis,Galapagos shark,Pazmiño et al. 2017 Conserv. Genet. 18:1151-1163,Ecuador,Isabela,0,50,,-90,49,,,CR,8,997,0.585,0.0247,0.018,0.0035,Not sure of exact sample sizes --- 85 total sampled but only 77 used in mtDNA analyses and unclear where those 77 came from
+Carcharhinus galapagensis,Galapagos shark,Pazmiño et al. 2017 Conserv. Genet. 18:1151-1163,Ecuador,San Cristobal,-0.525015,,,-89.9,,,,CR,27,997,0.361,0.0269,0.007,0,Not sure of exact sample sizes --- 85 total sampled but only 77 used in mtDNA analyses and unclear where those 77 came from
+Sardinella lemuru,Bali sardine,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Philippines,Palawan,9.59959,,,118.344876,,,,D-loop,40,305,0.9987,0.0009,0.039748,0.0032,geo coordinates pulled from place name
+Sardinella lemuru,Bali sardine,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Philippines,Zamboanga,6.925259,,,122.047269,,,,D-loop,50,305,0.9984,0.0006,0.037405,0.0027,geo coordinates pulled from place name
+Sardinella lemuru,Bali sardine,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Indonesia,Indonesia,1.477665,,,124.8171,,,,D-loop,48,305,0.9981,0.0007,0.036779,0.0027,geo coordinates pulled from place name
+Sardinella lemuru,Bali sardine,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Philippines,Tawi-Tawi,5.242868,,,119.96642,,,,D-loop,44,305,0.9984,0.0007,0.036413,0.0028,geo coordinates pulled from place name
+Auxis thazard,Frigate tuna,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Indonesia,Indonesia,1.477665,,,124.8171,,,,D-loop,22,309,0.9952,0.0035,0.035913,0.004,geo coordinates pulled from place name
+Auxis thazard,Frigate tuna,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Philippines,Palawan,9.59959,,,118.344876,,,,D-loop,49,309,1,0.0006,0.034123,0.0025,geo coordinates pulled from place name
+Auxis thazard,Frigate tuna,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Malaysia,Malaysia,6.878104,,,116.836371,,,,D-loop,40,309,0.9987,0.001,0.032696,0.0027,geo coordinates pulled from place name
+Sardinella lemuru,Bali sardine,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Malaysia,Malaysia,6.878104,,,116.836371,,,,D-loop,49,305,1,0.0006,0.030987,0.0023,geo coordinates pulled from place name
+Auxis thazard,Frigate tuna,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Philippines,Zamboanga,6.925259,,,122.047269,,,,D-loop,39,309,0.972,0.0011,0.030625,0.0026,geo coordinates pulled from place name
+Rastrelliger kanagurta,Indian mackerel,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Philippines,Palawan,9.59959,,,118.344876,,,,D-loop,31,323,1,0.0173,0.028797,0.0027,geo coordinates pulled from place name
+Rastrelliger kanagurta,Indian mackerel,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Malaysia,Malaysia,6.878104,,,116.836371,,,,D-loop,48,323,0.9628,0.0018,0.018975,0.0015,geo coordinates pulled from place name
+Rastrelliger kanagurta,Indian mackerel,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Philippines,Tawi-Tawi,5.242868,,,119.96642,,,,D-loop,43,323,0.9574,0.002,0.012735,0.0011,geo coordinates pulled from place name
+Rastrelliger kanagurta,Indian mackerel,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Philippines,Zamboanga,6.925259,,,122.047269,,,,D-loop,47,323,0.9574,0.0019,0.011691,0.001,geo coordinates pulled from place name
+Selar crumenophthalmus,Bigeye scad,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Malaysia,Malaysia,6.878104,,,116.836371,,,,D-loop,50,364,0.0641,0.0091,0.005482,0.0005,geo coordinates pulled from place name
+Selar crumenophthalmus,Bigeye scad,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Philippines,Palawan,9.59959,,,118.344876,,,,D-loop,49,364,0.7432,0.01,0.005425,0.0005,geo coordinates pulled from place name
+Selar crumenophthalmus,Bigeye scad,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Philippines,Tawi-Tawi,5.242868,,,119.96642,,,,D-loop,37,364,0.0678,0.0111,0.005318,0.0006,geo coordinates pulled from place name
+Selar crumenophthalmus,Bigeye scad,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Indonesia,Indonesia,1.477665,,,124.8171,,,,D-loop,50,364,0.0675,0.0095,0.005108,0.0005,geo coordinates pulled from place name
+Selar crumenophthalmus,Bigeye scad,"Pedrosa-Gerasmio, Agmata & Santos 2015 Fisheries Research 162:64-74",Philippines,Zamboanga,6.925259,,,122.047269,,,,D-loop,38,364,0.7255,0.013,0.004831,0.0005,geo coordinates pulled from place name
+Abudefduf saxatilis,Sergeant major,Piñeros et al. 2015 Evol. Biol. 42:235-249,Mexico,Lobos Island,21,29,19.4,-97,13,37.5,,"cytb, control region",27,1250,0.98,0.0192,0.009,0.001,
+Abudefduf saxatilis,Sergeant major,Piñeros et al. 2015 Evol. Biol. 42:235-249,Mexico,Antón Lizardo,19,5,57.2,-95,56,30.1,,"cytb, control region",18,1250,0.99,0.0047,0.008,0.0009,
+Abudefduf saxatilis,Sergeant major,Piñeros et al. 2015 Evol. Biol. 42:235-249,Mexico,Veracruz,19,11,58.5,-96,4,10,,"cytb, control region",12,1250,1,0.0087,0.007,0.0012,
+Abudefduf saxatilis,Sergeant major,Piñeros et al. 2015 Evol. Biol. 42:235-249,Mexico,Contoy Island,21,28,19.4,-86,47,19.9,,"cytb, control region",13,1250,0.99,0.0111,0.007,0.0011,
+Abudefduf saxatilis,Sergeant major,Piñeros et al. 2015 Evol. Biol. 42:235-249,Mexico,Xcalak,18,19,33.5,-87,48,56.2,,"cytb, control region",15,1250,1,0.0052,0.007,0.001,
+Abudefduf saxatilis,Sergeant major,Piñeros et al. 2015 Evol. Biol. 42:235-249,Mexico,Cozumel Island,20,26,26.5,-87,0,8.2,,"cytb, control region",17,1250,1,0.0049,0.006,0.0007,
+Abudefduf saxatilis,Sergeant major,Piñeros et al. 2015 Evol. Biol. 42:235-249,Mexico,Tuxpan,21,1,37.3,-97,11,56.9,,"cytb, control region",16,1250,0.99,0.0075,0.005,0.0008,
+Hexagrammos otakii,Fat greenling,Ren et al. 2013 Biochemical Systematics and Ecology 47:156-163,Japan,Matsushima,38.370675,,,141.075339,,,,CR,11,471,0.891,0.0223,0.009,0.0015,geo coordinates pulled from place name
+Hexagrammos otakii,Fat greenling,Ren et al. 2013 Biochemical Systematics and Ecology 47:156-163,,Rongcheng,37.083387,,,122.554008,,,,CR,31,471,0.991,0.0041,0.008,0.0007,geo coordinates pulled from place name
+Hexagrammos otakii,Fat greenling,Ren et al. 2013 Biochemical Systematics and Ecology 47:156-163,,Yantai,37.604728,,,121.332314,,,,CR,24,471,0.982,0.0033,0.007,0.0008,geo coordinates pulled from place name
+Hexagrammos otakii,Fat greenling,Ren et al. 2013 Biochemical Systematics and Ecology 47:156-163,,Rizhao,35.409244,,,119.580278,,,,CR,67,471,0.978,0.0016,0.007,0.0005,geo coordinates pulled from place name
+Hexagrammos otakii,Fat greenling,Ren et al. 2013 Biochemical Systematics and Ecology 47:156-163,,Ganyu,34.833999,,,119.218119,,,,CR,26,471,0.951,0.0069,0.007,0.0008,geo coordinates pulled from place name
+Hexagrammos otakii,Fat greenling,Ren et al. 2013 Biochemical Systematics and Ecology 47:156-163,Japan,Aomori Prefecture,40.968581,,,140.78236,,,,CR,24,471,0.96,0.0051,0.006,0.0014,geo coordinates pulled from place name
+Hexagrammos otakii,Fat greenling,Ren et al. 2013 Biochemical Systematics and Ecology 47:156-163,,Dalian,38.879072,,,121.717527,,,,CR,25,471,0.953,0.006,0.006,0.0008,geo coordinates pulled from place name
+Hexagrammos otakii,Fat greenling,Ren et al. 2013 Biochemical Systematics and Ecology 47:156-163,,Zhaoyuan,37.5082,,,120.163132,,,,CR,19,471,0.942,0.0087,0.006,0.0009,geo coordinates pulled from place name
+Hexagrammos otakii,Fat greenling,Ren et al. 2013 Biochemical Systematics and Ecology 47:156-163,,Quingdao,36.04388,,,120.384056,,,,CR,24,471,0.906,0.0086,0.006,0.0008,geo coordinates pulled from place name
+Hexagrammos otakii,Fat greenling,Ren et al. 2013 Biochemical Systematics and Ecology 47:156-163,China,Dandong,39.933488,,,124.307597,,,,CR,24,471,0.906,0.0096,0.004,0.0006,geo coordinates pulled from place name
+Seriola dumerili,Greater amberjack,Šegvi?-Bubi? et al. 2016 Fisheries Research 179:271-279,Spain,Santa Cruz de Tenerife,28.458269,,,-16.245823,,,,"cytb, 16S",5,987,0.71,,,,geo coordinates pulled from place name
+Seriola rivoliana,Longfin yellowtail,Šegvi?-Bubi? et al. 2016 Fisheries Research 179:271-279,Portugal,Azores,38.390493,,,-27.877794,,,,"cytb, 16S",11,987,0.79,,,,geo coordinates pulled from place name
+Aetobatus narinari,Spotted eagle ray,Sellas et al. 2015 Journal of Heredity 266-275,USA,Florida,27.344437,,,-82.567594,,,2009-2011,Cytb,169,580,0.71,,0.0024,,geo coordinates pulled from place name
+Aetobatus narinari,Spotted eagle ray,Sellas et al. 2015 Journal of Heredity 266-275,Cuba,Cuba,21.651703,,,-83.102581,,,2013,Cytb,19,580,0.561,,0.0024,,geo coordinates pulled from place name
+Aetobatus narinari,Spotted eagle ray,Sellas et al. 2015 Journal of Heredity 266-275,Mexico,Mexico,19.53495,,,-92.177222,,,2009-2013,Cytb,96,580,0.536,,0.0022,,geo coordinates pulled from place name
+Seriola lalandi,Yellowtail kingfish,Sepúlveda & González 2017 Journal of Fish Biology 90:249-264,Chile,Chañaral,-26.346308,,,-70.631411,,,2012,COI,33,674,0.68,0.01393,0.0019,0.0000522,geo coordinates pulled from place name
+Seriola lalandi,Yellowtail kingfish,Sepúlveda & González 2017 Journal of Fish Biology 90:249-264,Chile,Antofagasta,-23.630241,,,-70.42636,,,2013,COI,45,674,0.43,0.01342,0.001,0.0000447,geo coordinates pulled from place name
+Seriola lalandi,Yellowtail kingfish,Sepúlveda & González 2017 Journal of Fish Biology 90:249-264,Chile,Coquimbo,-29.943517,,,-71.32444,,,2014,COI,30,674,0.19,0.01643,0.0004,0.0000365,geo coordinates pulled from place name
+Seriola lalandi,Yellowtail kingfish,Sepúlveda & González 2017 Journal of Fish Biology 90:249-264,Chile,Juan Fernández Archipelago,-33.659423,,,-78.935932,,,2014,COI,30,674,0.07,0.01095,0.0001,0.000083,geo coordinates pulled from place name
+Archosargus probatocephalus,Sheepshead,Seyoum et al. 2017 Bull. Mar. Sci. 93:691-713,USA,Florida Bay,25.037202,,,-80.725444,,,1996,CR,30,470,,,0.043,,geo coordinates pulled from place name
+Archosargus probatocephalus,Sheepshead,Seyoum et al. 2017 Bull. Mar. Sci. 93:691-713,USA,Steinhatchee,29.67132,,,-83.392316,,,1999,CR,28,470,,,0.042,,geo coordinates pulled from place name
+Archosargus probatocephalus,Sheepshead,Seyoum et al. 2017 Bull. Mar. Sci. 93:691-713,USA,Corpus Christi,27.799609,,,-97.330457,,,1999,CR,31,470,,,0.04,,geo coordinates pulled from place name
+Archosargus probatocephalus,Sheepshead,Seyoum et al. 2017 Bull. Mar. Sci. 93:691-713,USA,Apalachicola,29.718192,,,-84.9814,,,1999,CR,60,470,,,0.04,,geo coordinates pulled from place name
+Archosargus probatocephalus,Sheepshead,Seyoum et al. 2017 Bull. Mar. Sci. 93:691-713,USA,Cedar Keys,29.135342,,,-83.042618,,,1998,CR,33,470,,,0.039,,geo coordinates pulled from place name
+Archosargus probatocephalus,Sheepshead,Seyoum et al. 2017 Bull. Mar. Sci. 93:691-713,USA,Tampa Bay,27.739577,,,-82.59122,,,1999,CR,38,470,,,0.039,,geo coordinates pulled from place name
+Archosargus probatocephalus,Sheepshead,Seyoum et al. 2017 Bull. Mar. Sci. 93:691-713,USA,Fort Walton,30.426693,,,-86.583054,,,1997,CR,25,470,,,0.034,,geo coordinates pulled from place name
+Archosargus probatocephalus,Sheepshead,Seyoum et al. 2017 Bull. Mar. Sci. 93:691-713,USA,Indian River,27.691957,,,-80.351466,,,1999,CR,36,470,,,0.034,,geo coordinates pulled from place name
+Archosargus probatocephalus,Sheepshead,Seyoum et al. 2017 Bull. Mar. Sci. 93:691-713,USA,Morehead City,34.715791,,,-76.72042,,,1999,CR,36,470,,,0.033,,geo coordinates pulled from place name
+Archosargus probatocephalus,Sheepshead,Seyoum et al. 2017 Bull. Mar. Sci. 93:691-713,USA,Charleston,32.76209,,,-79.886029,,,2001,CR,23,470,,,0.032,,geo coordinates pulled from place name
+Archosargus probatocephalus,Sheepshead,Seyoum et al. 2017 Bull. Mar. Sci. 93:691-713,USA,St. Johns River,30.40297,,,-81.395411,,,2001,CR,29,470,,,0.031,,geo coordinates pulled from place name; mouth of river in Jacksonville given map in paper
+Archosargus probatocephalus,Sheepshead,Seyoum et al. 2017 Bull. Mar. Sci. 93:691-713,USA,St. Simmons & Cumberland Islands,31.001457,,,-81.3979225,,,1998,CR,31,470,,,0.031,,geo coordinates pulled from place name; mean lat/long coordinates between islands provided
+Engraulis capensis,Southern African anchovy,Silva et al. 2017 Scientific Reports 7:2893,South Africa,South Africa,-34.7,,,21,,,2007,Cytb,13,1044,0.923,,0.019,,
+Engraulis japonicus,Japanese anchovy,Silva et al. 2017 Scientific Reports 7:2893,Japan,Japan,35.6,,,139.9,,,2006,Cytb,24,1044,1,,0.011,,
+Engraulis capensis,Southern African anchovy,Silva et al. 2017 Scientific Reports 7:2893,Namibia,Namibia,-17.2,,,11.7,,,2007,Cytb,24,1044,0.92,,0.01,,
+Engraulis australis,Australian anchovy,Silva et al. 2017 Scientific Reports 7:2893,Australia,Australia,-35,,,151,,,2008,Cytb,34,1044,0.998,,0.007,,
+Engraulis australis,Australian anchovy,Silva et al. 2017 Scientific Reports 7:2893,New Zealand,New Zealand,-36.7,,,175,,,2005,Cytb,35,1044,0.709,,0.001,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,Brazil,Amapá,2.158992,,,-50.631086,,,2001-2014,CR,34,632,0.6257,,0.0026,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Amapá,2.158992,,,-50.631086,,,2001-2014,ND4,33,590,0.0606,,0.002,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,R. G. Norte,-5.325649,,,-35.248962,,,2001-2014,CR,61,632,0.4814,,0.0019,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Pará,-0.023003,,,-48.501911,,,2001-2014,CR,67,632,0.5898,,0.0017,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Ceará,-3.15889,,,-39.123397,,,2001-2014,CR,24,632,0.6667,,0.0016,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Bahia,-13.608078,,,-38.861227,,,2001-2014,CR,55,632,0.5973,,0.0013,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Pará,-0.023003,,,-48.501911,,,2001-2014,Cytb,32,777,0.2923,,0.0008,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,E. Santo,-20.329831,,,-40.013493,,,2001-2014,CR,16,632,0.35,,0.0007,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Bahia,-13.608078,,,-38.861227,,,2001-2014,ND4,47,590,0.2784,,0.0007,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Maranhão,-2.107936,,,-43.489737,,,2001-2014,CR,15,632,0.2571,,0.0006,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,R. G. Norte,-5.325649,,,-35.248962,,,2001-2014,Cytb,77,777,0.2662,,0.0006,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Pará,-0.023003,,,-48.501911,,,2001-2014,ND4,33,590,0.1761,,0.0006,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Amapá,2.158992,,,-50.631086,,,2001-2014,Cytb,23,777,0.17,,0.0005,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Ceará,-3.15889,,,-39.123397,,,2001-2014,ND4,23,590,0.3241,,0.0005,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,R. G. Norte,-5.325649,,,-35.248962,,,2001-2014,ND4,48,590,0.3085,,0.0005,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,E. Santo,-20.329831,,,-40.013493,,,2001-2014,ND4,17,590,0.3309,,0.0005,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Maranhão,-2.107936,,,-43.489737,,,2001-2014,Cytb,15,777,0.3619,,0.0004,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Bahia,-13.608078,,,-38.861227,,,2001-2014,Cytb,59,777,0.225,,0.0003,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Ceará,-3.15889,,,-39.123397,,,2001-2014,Cytb,29,777,0.1995,,0.0002,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,E. Santo,-20.329831,,,-40.013493,,,2001-2014,Cytb,18,777,0.2157,,0.0002,,
+Lutjanus synagris,Lane snapper,Silva et al. 2018 Fisheries Research 198:138-149,,Maranhão,-2.107936,,,-43.489737,,,2001-2014,ND4,15,590,0.1333,,0.0002,,
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho 2014 J. Biogeogr. 41:1171-1182",France,Bay of Biscay,43.5,,,-2.9,,,2007,Cytb,23,1045,0.98,,0.015,,
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho 2014 J. Biogeogr. 41:1171-1182",Poland,Poland,54.6,,,16.5,,,2008,Cytb,9,1045,0.917,,0.014,,
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho 2014 J. Biogeogr. 41:1171-1182",Portugal,Portugal - North,40.7,,,-8.8,,,1998,Cytb,25,1045,0.997,,0.013,,
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho 2014 J. Biogeogr. 41:1171-1182",Portugal,Portugal - South,37.1,,,-8.4,,,2007,Cytb,29,1045,0.995,,0.011,,
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho 2014 J. Biogeogr. 41:1171-1182",England,English Channel,50.8,,,0.1,,,2007,Cytb,27,1045,0.963,,0.01,,
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho 2014 J. Biogeogr. 41:1171-1182",Norway,Norway,59,,,10.6,,,2007,Cytb,24,1045,0.953,,0.009,,
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho 2014 J. Biogeogr. 41:1171-1182",Spain,Málaga,36.6,,,-4.3,,,,Cytb,31,1045,1,,0.007,,
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho 2014 J. Biogeogr. 41:1171-1182",Spain,Canary Islands,28.3,,,-15,,,1999,Cytb,24,1045,0.996,,0.007,,
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho 2014 J. Biogeogr. 41:1171-1182",Senegal,Senegal,14.8,,,-17.6,,,1999,Cytb,25,1045,1,,0.006,,
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho 2014 J. Biogeogr. 41:1171-1182",Guinea-Bissau,Guinea-Bissau,9.7,,,-14.2,,,2006,Cytb,20,1045,1,,0.006,,
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho 2014 J. Biogeogr. 41:1171-1182",Ghana,Ghana,5.6,,,0,,,2008,Cytb,25,1045,1,,0.006,,
+Engraulis eurystole,Silver anchovy,"Silva, Horne & Castilho 2014 J. Biogeogr. 41:1171-1182",USA,USA,41.5,,,-66.1,,,2006,Cytb,12,1045,0.909,,0.004,,
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho 2014 J. Biogeogr. 41:1171-1182",Morocco,Tangier,35.9,,,-5.9,,,,Cytb,38,1045,0.423,,0.003,,
+Labroides dimidiatus,Bluestreak cleaner wrasse,Sims et al. 2014 Coral Reefs 33:223-233,Australia,Christmas Island,-10.452862,,,105.629646,,,,CR,7,,1,,0.00026,,geo coordinates pulled from place name
+Labroides dimidiatus,Bluestreak cleaner wrasse,Sims et al. 2014 Coral Reefs 33:223-233,Seychelles,Seychelles,-4.659087,,,55.423616,,,,CR,9,,1,,0.00023,,geo coordinates pulled from place name
+Labroides dimidiatus,Bluestreak cleaner wrasse,Sims et al. 2014 Coral Reefs 33:223-233,Saudi Arabia,Red Sea,22.292288,,,39.078065,,,,CR,4,,1,,0.00021,,geo coordinates pulled from place name
+Labroides dimidiatus,Bluestreak cleaner wrasse,Sims et al. 2014 Coral Reefs 33:223-233,Australia,Cocos-Keeling Island,-12.142004,,,96.89085,,,,CR,5,,1,,0.0002,,geo coordinates pulled from place name
+Labroides dimidiatus,Bluestreak cleaner wrasse,Sims et al. 2014 Coral Reefs 33:223-233,Australia,Lizard Island,-14.659536,,,145.465486,,,,CR,18,,0.83,,0.00013,,geo coordinates pulled from place name
+Labroides dimidiatus,Bluestreak cleaner wrasse,Sims et al. 2014 Coral Reefs 33:223-233,Australia,Heron Island,-23.441783,,,151.914621,,,,CR,32,,0.75,,0.00011,,geo coordinates pulled from place name
+Collichthys lucidus,,Song et al. 2013 Environ. Biol. Fish 97:69-77,China,Zhoushan,29.965584,,,122.208477,,,2010,CR,23,400,0.921,,0.026,,geo coordinates pulled from place name
+Collichthys lucidus,,Song et al. 2013 Environ. Biol. Fish 97:69-77,China,Ningde,26.651394,,,119.573647,,,2010,CR,22,400,0.823,,0.023,,geo coordinates pulled from place name
+Collichthys lucidus,,Song et al. 2013 Environ. Biol. Fish 97:69-77,China,Lianyungang,34.7787987,,,119.400045,,,2009,CR,23,400,0.81,,0.014,,geo coordinates pulled from place name
+Collichthys lucidus,,Song et al. 2013 Environ. Biol. Fish 97:69-77,China,Shanghai,31.077399,,,121.910481,,,2009,CR,16,400,0.908,,0.012,,geo coordinates pulled from place name
+Collichthys lucidus,,Song et al. 2013 Environ. Biol. Fish 97:69-77,China,Changjiang River,32.245265,,,120.983534,,,2011,CR,23,400,0.834,,0.008,,geo coordinates pulled from place name
+Collichthys lucidus,,Song et al. 2013 Environ. Biol. Fish 97:69-77,China,Xiamen,24.465384,,,118.06044,,,2009,CR,21,400,0.629,,0.003,,geo coordinates pulled from place name
+Collichthys lucidus,,Song et al. 2013 Environ. Biol. Fish 97:69-77,China,Shenzhen,22.487684,,,113.978285,,,2009,CR,23,400,0.755,,0.003,,geo coordinates pulled from place name
+Diplodus vulgaris,Two-banded seabream,Stefanni et al. 2015 Heredity 115:527-537,Portugal,Malta Island,35.897186,,,14.446366,,,2008,CR,11,344-345,1,0.157,0.023,0.011,geo coordinates pulled from place name
+Diplodus vulgaris,Two-banded seabream,Stefanni et al. 2015 Heredity 115:527-537,Portugal,Portugal C.,38.56595,,,-9.29509,,,2008,CR,34,344-345,1,0.082,0.022,0.002,geo coordinates pulled from place name
+Diplodus vulgaris,Two-banded seabream,Stefanni et al. 2015 Heredity 115:527-537,Italy,Torre Guaceto,40.718263,,,17.793467,,,2007,CR,11,344-345,0.964,0.029,0.02,0.005,geo coordinates pulled from place name
+Diplodus vulgaris,Two-banded seabream,Stefanni et al. 2015 Heredity 115:527-537,Italy,Palermo,38.121556,,,13.377875,,,2007,CR,28,344-345,1,0.004,0.018,0.002,geo coordinates pulled from place name
+Diplodus vulgaris,Two-banded seabream,Stefanni et al. 2015 Heredity 115:527-537,Portugal,Madeira Island,33.586712,,,-16.66211,,,2009,CR,30,344-345,0.94,0.006,0.017,0.002,geo coordinates pulled from place name
+Diplodus vulgaris,Two-banded seabream,Stefanni et al. 2015 Heredity 115:527-537,Portugal,Portugal S.,37.10449,,,-8.59826,,,2008,CR,25,344-345,0.961,0.006,0.017,0.002,geo coordinates pulled from place name
+Diplodus vulgaris,Two-banded seabream,Stefanni et al. 2015 Heredity 115:527-537,Spain,Balearic Island,39.560668,,,2.648136,,,2007,CR,14,344-345,1,0.012,0.017,0.003,geo coordinates pulled from place name
+Diplodus vulgaris,Two-banded seabream,Stefanni et al. 2015 Heredity 115:527-537,Portugal,Azores Islands,38.66108,,,-28.694561,,,2007-2008,CR,23,344-345,0.668,0.035,0.014,0.004,geo coordinates pulled from place name
+Diplodus vulgaris,Two-banded seabream,Stefanni et al. 2015 Heredity 115:527-537,Spain,Cadiz,36.530452,,,-6.289334,,,2008,CR,20,344-345,0.984,0.006,0.013,0.002,geo coordinates pulled from place name
+Amphiprion latezonatus,Wide-band anemonefish,Steinberg et al. 2016 Coral Reefs 35:959-970,Australia,Lord Howe Island,-31.546103,,,159.083156,,,,D-loop,33,316,0.742,0.01271,0.00612,0.00069,geo coordinates pulled from place name
+Amphiprion latezonatus,Wide-band anemonefish,Steinberg et al. 2016 Coral Reefs 35:959-970,Australia,Sunshine Coast,-26.411,,,153.1487,,,,D-loop,7,316,0.95,0.03893,0.00512,0.00148,geo coordinates pulled from place name
+Amphiprion latezonatus,Wide-band anemonefish,Steinberg et al. 2016 Coral Reefs 35:959-970,Australia,North Solitary Island,-29.91934,,,153.392455,,,,D-loop,34,316,0.75,0.01372,0.00463,0.00055,geo coordinates pulled from place name
+Amphiprion latezonatus,Wide-band anemonefish,Steinberg et al. 2016 Coral Reefs 35:959-970,Australia,Norfolk Island,-29.03932,,,167.943606,,,,D-loop,31,316,0.703,0.01652,0.00444,0.00056,geo coordinates pulled from place name
+Pampus chinensis,Chinese pomfret,Sun & Tang 2018 J. Fish Biol. 92:214-228,Indonesia,Doka,-7.316492,,,133.942151,,,,Cytb,30,1137,0.674,0.0168,0.00295,0.00032,pulled from paper figure
+Pampus chinensis,Chinese pomfret,Sun & Tang 2018 J. Fish Biol. 92:214-228,China,Dongxing,21.53355,,,108.044971,,,,Cytb,30,1137,0.825,0.00639,0.0021,0.00024,geo coordinates pulled from place name
+Pampus chinensis,Chinese pomfret,Sun & Tang 2018 J. Fish Biol. 92:214-228,China,Ningde,26.652008,,,119.569183,,,,Cytb,30,1137,0.828,0.00712,0.00187,0.00022,geo coordinates pulled from place name
+Pampus chinensis,Chinese pomfret,Sun & Tang 2018 J. Fish Biol. 92:214-228,China,Xiamen,24.464134,,,118.061813,,,,Cytb,30,1137,0.756,0.00822,0.00165,0.0002,geo coordinates pulled from place name
+Pampus chinensis,Chinese pomfret,Sun & Tang 2018 J. Fish Biol. 92:214-228,China,Zhuhai,21.977952,,,113.330092,,,,Cytb,30,1137,0.637,0.01461,0.00156,0.00019,geo coordinates pulled from place name
+Pampus chinensis,Chinese pomfret,Sun & Tang 2018 J. Fish Biol. 92:214-228,China,Ningbo,30.112125,,,121.632327,,,,Cytb,30,1137,0.618,0.01059,0.00123,0.00016,geo coordinates pulled from place name
+Pampus chinensis,Chinese pomfret,Sun & Tang 2018 J. Fish Biol. 92:214-228,China,Qionghai,19.200372,,,110.623075,,,,Cytb,30,1137,0.561,0.01059,0.00112,0.00015,geo coordinates pulled from place name
+Pampus chinensis,Chinese pomfret,Sun & Tang 2018 J. Fish Biol. 92:214-228,China,Dongfang,19.036866,,,108.548664,,,,Cytb,30,1137,0.543,0.01168,0.00107,0.00014,geo coordinates pulled from place name
+Pampus chinensis,Chinese pomfret,Sun & Tang 2018 J. Fish Biol. 92:214-228,China,Zhanjiang,21.269187,,,110.415281,,,,Cytb,30,1137,0.561,0.01059,0.00106,0.00014,geo coordinates pulled from place name
+Pampus chinensis,Chinese pomfret,Sun & Tang 2018 J. Fish Biol. 92:214-228,China,Haikou,20.062852,,,110.225471,,,,Cytb,30,1137,0.541,0.00949,0.00084,0.00012,geo coordinates pulled from place name
+Pampus chinensis,Chinese pomfret,Sun & Tang 2018 J. Fish Biol. 92:214-228,China,Sanya,18.256097,,,109.453976,,,,Cytb,30,1137,0.54,0.01114,0.00081,0.00012,geo coordinates pulled from place name
+Crystallichthys matsushimae,,Tohkairin et al. 2016 Ichthyol. Res. 63:370-381,Japan,Sea of Okhotsk,44.68194,,,143.2674,,,,COI,42,396,0.767,0.00772,0.00413,0.00043,geo coordinates pulled from place name
+Crystallichthys matsushimae,,Tohkairin et al. 2016 Ichthyol. Res. 63:370-381,Japan,Sea of Okhotsk,44.68194,,,143.2674,,,,Cytb,42,1010,0.879,0.00525,0.00374,0.00033,geo coordinates pulled from place name
+Crystallichthys matsushimae,,Tohkairin et al. 2016 Ichthyol. Res. 63:370-381,Japan,N Honshu,40.29908,,,140.3791,,,,Cytb,23,1010,0.96,0.00459,0.00361,0.00044,geo coordinates pulled from place name
+Crystallichthys matsushimae,,Tohkairin et al. 2016 Ichthyol. Res. 63:370-381,Japan,N Honshu,40.29908,,,140.3791,,,,COI,23,396,0.597,0.01314,0.00192,0.00034,geo coordinates pulled from place name
+Crystallichthys matsushimae,,Tohkairin et al. 2016 Ichthyol. Res. 63:370-381,South Korea,Korean Peninsula,38.205319,,,128.601817,,,,Cytb,8,1010,0.464,0.01414,0.0005,0.00019,geo coordinates pulled from place name
+Crystallichthys matsushimae,,Tohkairin et al. 2016 Ichthyol. Res. 63:370-381,South Korea,Korean Peninsula,38.205319,,,128.601817,,,,COI,8,396,0,0,0,0,geo coordinates pulled from place name
+Saurida elongate,Shortfin lizardfish,Tu et al. 2016 Biochemical Systematics and Ecology 68:44-50,China,Nantong,32.202653,,,121.545484,,,2013,CR,24,463,0.938,0.026,0.007,0.004,geo coordinates pulled from place name
+Saurida elongate,Shortfin lizardfish,Tu et al. 2016 Biochemical Systematics and Ecology 68:44-50,China,Weihai,37.544044,,,122.171045,,,2013,CR,24,463,0.92,0.037,0.006,0.004,geo coordinates pulled from place name
+Saurida elongate,Shortfin lizardfish,Tu et al. 2016 Biochemical Systematics and Ecology 68:44-50,China,Qingdao,36.043635,,,120.323585,,,2012,CR,24,463,0.906,0.03,0.006,0.004,geo coordinates pulled from place name
+Saurida elongate,Shortfin lizardfish,Tu et al. 2016 Biochemical Systematics and Ecology 68:44-50,China,Rizhao,35.370936,,,119.571992,,,2012,CR,24,463,0.928,0.026,0.006,0.003,geo coordinates pulled from place name
+Saurida elongate,Shortfin lizardfish,Tu et al. 2016 Biochemical Systematics and Ecology 68:44-50,China,Beihai,21.427405,,,109.067396,,,2013,CR,22,463,0.81,0.057,0.004,0.003,geo coordinates pulled from place name
+Totoaba macdonaldi,Totoaba,Valenzuela-Quiñonez et al. 2016 Journal of Heredity 107:496-503,Mexico,Desemboque,29.322968,,,-112.505276,,,2005-2013,"16S, COI, CR",4,1816,1,0.0885,0.00424,0.000445,geo coordinates pulled from place name
+Totoaba macdonaldi,Totoaba,Valenzuela-Quiñonez et al. 2016 Journal of Heredity 107:496-503,Mexico,Bahía de Lobos,27.936053,,,-110.517565,,,2005-2013,"16S, COI, CR",15,1816,0.981,0.008004,0.00394,0.00008,geo coordinates pulled from place name
+Totoaba macdonaldi,Totoaba,Valenzuela-Quiñonez et al. 2016 Journal of Heredity 107:496-503,Mexico,San Luis Gonzaga,29.854438,,,-114.332984,,,2005-2013,"16S, COI, CR",8,1816,1,0.022274,0.00383,0.000209,geo coordinates pulled from place name
+Totoaba macdonaldi,Totoaba,Valenzuela-Quiñonez et al. 2016 Journal of Heredity 107:496-503,Mexico,Core Zone,31.483661,,,-114.627975,,,2005-2013,"16S, COI, CR",12,1816,1,0.009815,0.0037,0.000153,geo coordinates pulled from place name
+Chaetodon tricinctus,Three-striped butterflyfish,van der Meer et al. 2013 Ecology and Evolution 3:1653-1666,Australia,Lord Howe Island,-31.545811,,,159.082812,,,,Cytb,16,283,0.925,,0.008,,geo coordinates pulled from place name
+Chaetodon tricinctus,Three-striped butterflyfish,van der Meer et al. 2013 Ecology and Evolution 3:1653-1666,Australia,Middleton Reef,-29.469456,,,159.119101,,,,Cytb,29,283,0.197,,0.001,,geo coordinates pulled from place name
+Chaetodon tricinctus,Three-striped butterflyfish,van der Meer et al. 2013 Ecology and Evolution 3:1653-1666,Australia,Elizabeth Reef,-29.939211,,,159.062671,,,,Cytb,30,283,0.251,,0.001,,geo coordinates pulled from place name
+Chaetodon tricinctus,Three-striped butterflyfish,van der Meer et al. 2013 Ecology and Evolution 3:1653-1666,Australia,Norfolk Island,-29.039921,,,167.945666,,,,Cytb,22,283,0.173,,0.001,,geo coordinates pulled from place name
+Coris bulbifrons,Doubleheader,van der Meer et al. 2015 Coral Reefs 34:393-402,Australia,Elizabeth Reef,-29.939211,,,159.062671,,,,D-loop,8,341,1,,0.0254,,geo coordinates pulled from place name
+Coris bulbifrons,Doubleheader,van der Meer et al. 2015 Coral Reefs 34:393-402,Australia,Norfolk Island,-29.039921,,,167.945666,,,,D-loop,37,341,0.99,,0.0204,,geo coordinates pulled from place name
+Coris bulbifrons,Doubleheader,van der Meer et al. 2015 Coral Reefs 34:393-402,Australia,Middleton Reef,-29.469456,,,159.119101,,,,D-loop,20,341,0.96,,0.0194,,geo coordinates pulled from place name
+Coris bulbifrons,Doubleheader,van der Meer et al. 2015 Coral Reefs 34:393-402,Australia,Lord Howe Island,-31.545811,,,159.082812,,,,D-loop,16,341,0.98,,0.015,,geo coordinates pulled from place name
+Dipturus trachyderma,Roughskin skate,Vargas-Caro et al. 2017 PLoS ONE 12:e0172255,Chile,Valdivia,-39,52,30,-73,24,,,CR,53,556,0.329,0.0106,0.0036,0.0003,
+Zearaja chilensis,Yellownose skate,Vargas-Caro et al. 2017 PLoS ONE 12:e0172255,Chile,San Antonio,-33,35,30,-71,37,,,CR,70,557,0.496,0.0082,0.0024,0.0002,
+Zearaja chilensis,Yellownose skate,Vargas-Caro et al. 2017 PLoS ONE 12:e0172255,Chile,Valdivia,-39,52,30,-73,24,,,CR,61,557,0.462,0.0093,0.0012,0.0001,
+Zearaja chilensis,Yellownose skate,Vargas-Caro et al. 2017 PLoS ONE 12:e0172255,Chile,Puntas Arenas,-53,10,12,-70,54,30,,CR,45,557,0.469,0.0066,0.0008,0.0001,
+Dipturus trachyderma,Roughskin skate,Vargas-Caro et al. 2017 PLoS ONE 12:e0172255,Chile,Puerto Montt,-41,28,24,-72,56,24,,CR,14,556,0.275,0.0396,0.0007,0.0002,
+Zearaja chilensis,Yellownose skate,Vargas-Caro et al. 2017 PLoS ONE 12:e0172255,Chile,Puerto Montt,-41,28,24,-72,56,24,,CR,47,557,0.084,0.008,0.0001,0,
+Dipturus trachyderma,Roughskin skate,Vargas-Caro et al. 2017 PLoS ONE 12:e0172255,Chile,San Antonio,-33,35,30,-71,37,,,CR,52,556,0.038,0.0051,0.0001,0,
+Zearaja chilensis,Yellownose skate,Vargas-Caro et al. 2017 PLoS ONE 12:e0172255,Chile,Aysén,-45,25,,-72,49,,,CR,48,557,0,0,0,0,
+Dipturus trachyderma,Roughskin skate,Vargas-Caro et al. 2017 PLoS ONE 12:e0172255,Chile,Aysén,-45,25,,-72,49,,,CR,11,556,0,0,0,0,
+Dipturus trachyderma,Roughskin skate,Vargas-Caro et al. 2017 PLoS ONE 12:e0172255,Chile,Puntas Arenas,-53,10,12,-70,54,30,,CR,7,556,0,0,0,0,
+Rhincodon typus,Whale shark,Vignaud et al. 2014 Molecular Ecology 23:2590-2601,Djibouti,Djibouti,11.843384,,,43.318396,,,1992-2012,CR,79,608,0.925,,0.01069,,
+Rhincodon typus,Whale shark,Vignaud et al. 2014 Molecular Ecology 23:2590-2601,Seychelles,Seychelles,-4.314078,,,55.495027,,,1992-2012,CR,31,608,0.948,,0.01062,,
+Rhincodon typus,Whale shark,Vignaud et al. 2014 Molecular Ecology 23:2590-2601,Mexico,Isla Holbox,21.550443,,,-87.287959,,,1992-2012,CR,80,608,0.752,,0.00755,,
+Engraulis encrasicolus,European anchovy,Viñas et al. 2014 ICES Journal of Marine Science 71:391-297,Italy,Sicily Island,36,50,,14,5,,1996,CR,37,402,0.998,0.0012,0.031,0.0026,
+Engraulis encrasicolus,European anchovy,Viñas et al. 2014 ICES Journal of Marine Science 71:391-297,Italy,South Adriatic,40,39,,17,55,,1997,CR,38,402,1,0.001,0.031,0.0026,
+Engraulis encrasicolus,European anchovy,Viñas et al. 2014 ICES Journal of Marine Science 71:391-297,Italy,North Adriatic,45,13,,12,17,,1997,CR,42,402,0.993,0.0012,0.028,0.0022,
+Engraulis encrasicolus,European anchovy,Viñas et al. 2014 ICES Journal of Marine Science 71:391-297,Aegean Sea,Aegean Sea,39,,,25,,,1996,CR,49,402,0.996,0.0007,0.025,0.0019,
+Engraulis encrasicolus,European anchovy,Viñas et al. 2014 ICES Journal of Marine Science 71:391-297,Spain,Cádiz,36,30,,-6,20,,1997,CR,47,402,0.993,0.001,0.017,0.0013,
+Engraulis encrasicolus,European anchovy,Viñas et al. 2014 ICES Journal of Marine Science 71:391-297,Spain,Canary Islands,28,6,,-15,24,,1997,CR,44,402,0.988,0.0014,0.013,0.0011,
+Chaetodon trifasciatus,Melon butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,,Seychelles,-4.335953,,,55.297839,,,2005-2013,Cytb,21,605,0.795,0.0168,0.088,0.0096,geo coordinates pulled from place name
+Chaetodon trifasciatus,Melon butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Australia,Christmas Island,-10.480546,,,105.646813,,,2005-2013,Cytb,14,605,0.802,0.0251,0.01,0.0016,geo coordinates pulled from place name
+Chaetodon lunulatus,Oval butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Australia,Christmas Island,-10.480546,,,105.646813,,,2005-2013,Cytb,6,605,0.867,0.0527,0.005,0.0016,geo coordinates pulled from place name
+Chaetodon lunulatus,Oval butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,French Polynesia,Mo'orea,-17.530509,,,-149.82914,,,2005-2013,Cytb,32,605,0.669,0.0152,0.005,0.0005,geo coordinates pulled from place name
+Chaetodon lunulatus,Oval butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Micronesia,Pohnpei,7.006456,,,158.199483,,,2005-2013,Cytb,30,605,0.782,0.0119,0.005,0.0005,geo coordinates pulled from place name
+Chaetodon lunulatus,Oval butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Fiji,Fiji,-17.052819,,,178.914892,,,2005-2013,Cytb,30,605,0.602,0.019,0.004,0.0005,geo coordinates pulled from place name
+Chaetodon lunulatus,Oval butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Kiribati,Kanton Island,-2.796932,,,-171.64286,,,2005-2013,Cytb,15,605,0.695,0.0281,0.004,0.0008,geo coordinates pulled from place name
+Chaetodon lunulatus,Oval butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Japan,Okinawa Island,26.539661,,,128.018679,,,2005-2013,Cytb,8,605,0.643,0.0651,0.004,0.0011,geo coordinates pulled from place name
+Chaetodon lunulatus,Oval butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Kiribati,Kiribati,1.799681,,,-157.365829,,,2005-2013,Cytb,22,605,0.589,0.0141,0.004,0.0006,geo coordinates pulled from place name
+Chaetodon lunulatus,Oval butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Palau,Palau,7.300311,,,134.472996,,,2005-2013,Cytb,26,605,0.471,0.0124,0.004,0.0004,geo coordinates pulled from place name
+Chaetodon lunulatus,Oval butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,USA,Johnston Atoll,16.730722,,,-169.53371,,,2005-2013,Cytb,31,605,0.516,0.0043,0.004,0.0005,geo coordinates pulled from place name
+Chaetodon trifasciatus,Melon butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Britain,Diego Garcia,-7.298257,,,72.423411,,,2005-2013,Cytb,29,605,0.672,0.0137,0.001,0.0002,geo coordinates pulled from place name
+Chaetodon melapterus,Arabian butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Djibouti,Maskali,11.658082,,,43.181065,,,2005-2013,Cytb,17,605,0.353,0.0856,0.001,0.0002,geo coordinates pulled from place name
+Chaetodon melapterus,Arabian butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Djibouti,Obock,11.96087,,,43.292736,,,2005-2013,Cytb,29,605,0.778,0.1084,0.001,0.0002,geo coordinates pulled from place name
+Chaetodon austriacus,Blacktail butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Saudi Arabia,Yanbu,24.030697,,,38.081813,,,2005-2013,Cytb,10,605,0.866,0.0338,0.001,0.0003,geo coordinates pulled from place name
+Chaetodon melapterus,Arabian butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Djibouti,Bay of Ghoubbet,11.52788,,,42.600603,,,2005-2013,Cytb,15,605,0,0,0,0,geo coordinates pulled from place name
+Chaetodon austriacus,Blacktail butterflyfish,Waldrop et al. 2016 J. Biogeogr. 43:1116-1129,Saudi Arabia,Al Lith,20.13003,,,40.259428,,,2005-2013,Cytb,10,605,0.2,0.0487,0,0,geo coordinates pulled from place name
+Boreogadus saida,Arctic cod,Wilson et al. 2019 ICES Journal of Marine Science 76:1713-1721,USA,Southern Shelf,70.038369,,,-140.648168,,,2008-2014,Cytb,71,818-1266,0.86,,0.0052,,geo coordinates pulled from place name
+Boreogadus saida,Arctic cod,Wilson et al. 2019 ICES Journal of Marine Science 76:1713-1721,USA,Western Beaufort,71.485664,,,-154.710667,,,2008-2014,Cytb,62,818-1266,0.92,,0.005,,geo coordinates pulled from place name
+Boreogadus saida,Arctic cod,Wilson et al. 2019 ICES Journal of Marine Science 76:1713-1721,USA,Camden Bay,70.02383,,,-144.737828,,,2008-2014,Cytb,117,818-1266,0.88,,0.0046,,geo coordinates pulled from place name
+Boreogadus saida,Arctic cod,Wilson et al. 2019 ICES Journal of Marine Science 76:1713-1721,Canada,St. Lawrence,50.455494,,,-58.266836,,,2010,Cytb,30,818-1266,0.85,,0.0045,,geo coordinates pulled from place name
+Boreogadus saida,Arctic cod,Wilson et al. 2019 ICES Journal of Marine Science 76:1713-1721,USA,Central Beaufort,70.832914,,,-149.52512,,,2008-2014,Cytb,55,818-1266,0.86,,0.0038,,geo coordinates pulled from place name
+Thunnus obesus,Bigeye tuna,Wu et al. 2014 Fish. Sci. 80:415-426,Pacific,Central-western Pacific,4.5,,,168.5,,,2009,Cytb,24,686,0.793,,0.0026,,
+Larimichthys polyactis,Small yellow croaker,Xiao et al. 2015 Mitochondrial DNA 26:409-419,China,WH,37,20,,122,30,,2009,CR,21,433,0.995,,0.019,,
+Larimichthys polyactis,Small yellow croaker,Xiao et al. 2015 Mitochondrial DNA 26:409-419,China,DY,37,19,,119,45,,2009,CR,13,433,1,,0.016,,
+Larimichthys polyactis,Small yellow croaker,Xiao et al. 2015 Mitochondrial DNA 26:409-419,China,BHG1,40,15,,121,45,,2007,CR,24,433,0.986,,0.014,,
+Larimichthys polyactis,Small yellow croaker,Xiao et al. 2015 Mitochondrial DNA 26:409-419,China,BHG2,39,45,,120,45,,2007,CR,23,433,0.972,,0.014,,
+Larimichthys polyactis,Small yellow croaker,Xiao et al. 2015 Mitochondrial DNA 26:409-419,China,YS2,33,58,,122,26,,2004,CR,21,433,0.975,,0.014,,
+Larimichthys polyactis,Small yellow croaker,Xiao et al. 2015 Mitochondrial DNA 26:409-419,China,YS1,36,8,,122,10,,2005,CR,13,433,1,,0.013,,
+Oplegnathus fasciatus,Rock bream,Xiao et al. 2016 Mitochondrial DNA A 27:2045-2052,Taiwan,Taiwan,25,19,,119,45,,2012,D-loop,4,519,1,,0.024,,
+Oplegnathus fasciatus,Rock bream,Xiao et al. 2016 Mitochondrial DNA A 27:2045-2052,China,Zhoushan,31,,,122,30,,2011,D-loop,24,519,0.993,,0.021,,
+Oplegnathus fasciatus,Rock bream,Xiao et al. 2016 Mitochondrial DNA A 27:2045-2052,China,Jiaonan,35,50,,120,45,,2009,D-loop,12,519,1,,0.019,,
+Oplegnathus fasciatus,Rock bream,Xiao et al. 2016 Mitochondrial DNA A 27:2045-2052,China,Zhoushan,31,,,122,30,,2011,COI,30,642,0.814,,0.009,,
+Oplegnathus fasciatus,Rock bream,Xiao et al. 2016 Mitochondrial DNA A 27:2045-2052,China,Zhoushan,31,,,122,30,,2011,Cytb,30,501,0.851,,0.006,,
+Oplegnathus fasciatus,Rock bream,Xiao et al. 2016 Mitochondrial DNA A 27:2045-2052,China,Jiaonan,35,50,,120,45,,2009,COI,12,642,0.742,,0.003,,
+Oplegnathus fasciatus,Rock bream,Xiao et al. 2016 Mitochondrial DNA A 27:2045-2052,China,Jiaonan,35,50,,120,45,,2009,Cytb,11,501,0.927,,0.003,,
+Miichthys miiuy,Miiuy croaker,Xu et al. 2014 Biochemical Systematics and Ecology 54:240-246,China,Qingdao,36.040304,,,120.318091,,,,COI,30,599,0.867,0.01077,0.00425,0.0017,geo coordinates pulled from place name
+Miichthys miiuy,Miiuy croaker,Xu et al. 2014 Biochemical Systematics and Ecology 54:240-246,China,Zhoushan,29.967071,,,122.199894,,,,COI,30,599,0.749,0.01534,0.00238,0.00122,geo coordinates pulled from place name
+Miichthys miiuy,Miiuy croaker,Xu et al. 2014 Biochemical Systematics and Ecology 54:240-246,China,Chongming,31.508755,,,122.056126,,,,COI,30,599,0.602,0.01899,0.00218,0.00093,geo coordinates pulled from place name
+Miichthys miiuy,Miiuy croaker,Xu et al. 2014 Biochemical Systematics and Ecology 54:240-246,China,Ningde,26.636358,,,119.58223,,,,COI,19,599,0.673,0.0273,0.00195,0.00076,geo coordinates pulled from place name
+Sebastes schlegelii,Black rockfish,Zhang et al. 2014 Mitochondrial DNA Part A 27:1748-1754,South Korea,BS,35,8,20.78,129,7,49.48,2010,CR,4,452,0.67,0.1,0.0089,0.00335,
+Sebastes schlegelii,Black rockfish,Zhang et al. 2014 Mitochondrial DNA Part A 27:1748-1754,China,WH,37,31,34.8,122,12,17.88,2009,CR,24,452,0.88,0.11431,0.0073,0.00088,
+Sebastes schlegelii,Black rockfish,Zhang et al. 2014 Mitochondrial DNA Part A 27:1748-1754,Japan,AO,34,46,16.88,138,21,57.69,2009,CR,5,452,1,0.05814,0.0067,0.00219,
+Sebastes schlegelii,Black rockfish,Zhang et al. 2014 Mitochondrial DNA Part A 27:1748-1754,China,DL,38,50,43.19,121,38,45.94,2009,CR,22,452,0.93,0.00831,0.0065,0.00083,
+Sebastes schlegelii,Black rockfish,Zhang et al. 2014 Mitochondrial DNA Part A 27:1748-1754,China,YT,37,28,59.37,121,29,33.44,2007,CR,18,452,0.93,0.00966,0.0064,0.00094,
+Sebastes schlegelii,Black rockfish,Zhang et al. 2014 Mitochondrial DNA Part A 27:1748-1754,China,RZ,35,24,30.86,119,35,16.12,2008,CR,20,452,0.92,0.00939,0.0058,0.0008,
+Sebastes schlegelii,Black rockfish,Zhang et al. 2014 Mitochondrial DNA Part A 27:1748-1754,China,DD,39,49,25.47,124,18,24.5,2009,CR,18,452,0.9,0.00943,0.0055,0.00082,
+Sebastes schlegelii,Black rockfish,Zhang et al. 2014 Mitochondrial DNA Part A 27:1748-1754,Japan,AM,40,53,36.82,140,46,14.2,2008,CR,22,452,0.94,0.00597,0.0055,0.00072,
+Sebastes schlegelii,Black rockfish,Zhang et al. 2014 Mitochondrial DNA Part A 27:1748-1754,China,QD,36,2,36.77,120,22,48.55,2009,CR,21,452,0.93,0.00786,0.0048,0.00068,
+Sebastes schlegelii,Black rockfish,Zhang et al. 2014 Mitochondrial DNA Part A 27:1748-1754,China,JN,35,50,49,120,4,38.91,2009,CR,19,452,0.87,0.01629,0.0045,0.00067,
+Sebastes schlegelii,Black rockfish,Zhang et al. 2014 Mitochondrial DNA Part A 27:1748-1754,Japan,AR,34,43,19.2,138,34,33.58,2009,CR,14,452,0.88,0.0155,0.004,0.00078,
+Sebastes schlegelii,Black rockfish,Zhang et al. 2014 Mitochondrial DNA Part A 27:1748-1754,Japan,HA,34,2,6.17,134,59,59.11,2009,CR,12,452,0.83,0.02887,0.004,0.00084,
+Sebastes schlegelii,Black rockfish,Zhang et al. 2014 Mitochondrial DNA Part A 27:1748-1754,China,LYG,34,42,23.06,119,36,16,2009,CR,22,452,0.88,0.0113,0.004,0.00058,
+Hippocampus mohnikei,Japanese seahorse,Zhang et al. 2014 PLoS ONE 9:e105494,China,Laizhouwan,37.13,,,119.68,,,,Cytb,20,780,0.912,,0.00368,,
+Hippocampus mohnikei,Japanese seahorse,Zhang et al. 2014 PLoS ONE 9:e105494,China,Yangmadao,37.5,,,121.65,,,,Cytb,30,780,0.961,,0.0034,,
+Hippocampus trimaculatus,Three-spot seahorse,Zhang et al. 2014 PLoS ONE 9:e105494,China,Tropical Zone,19.2933,,,110.1833,,,,Cytb,42,780,0.919,,0.00307,,
+Hippocampus trimaculatus,Three-spot seahorse,Zhang et al. 2014 PLoS ONE 9:e105494,China,Warm-Temperature Zone,24.7833,,,118.44,,,,Cytb,15,780,0.872,,0.00217,,
+Engraulis japonicus,Japanese anchovy,"Zheng, Zou & Han 2015 Biochemical Systematics and Ecology 58:169-177",China,WH,37.24,,,123.28,,,2008,Cytb,15,402,0.9935,,0.009,,
+Engraulis japonicus,Japanese anchovy,"Zheng, Zou & Han 2015 Biochemical Systematics and Ecology 58:169-177",China,C,34,,,123.5,,,2011,Cytb,7,402,0.9048,,0.0074,,
+Engraulis japonicus,Japanese anchovy,"Zheng, Zou & Han 2015 Biochemical Systematics and Ecology 58:169-177",China,A,36,,,123.9,,,2011,Cytb,18,402,0.9542,,0.007,,
+Engraulis japonicus,Japanese anchovy,"Zheng, Zou & Han 2015 Biochemical Systematics and Ecology 58:169-177",China,B2,35,,,123.9,,,2011,Cytb,19,402,0.9474,,0.0069,,
+Engraulis japonicus,Japanese anchovy,"Zheng, Zou & Han 2015 Biochemical Systematics and Ecology 58:169-177",China,E2,30.5,,,125,,,2010,Cytb,24,402,0.9312,,0.0062,,
+Engraulis japonicus,Japanese anchovy,"Zheng, Zou & Han 2015 Biochemical Systematics and Ecology 58:169-177",South Korea,K,35.87,,,126.01,,,2008,Cytb,14,402,0.8762,,0.006,,
+Engraulis japonicus,Japanese anchovy,"Zheng, Zou & Han 2015 Biochemical Systematics and Ecology 58:169-177",China,JN,35.45,,,120.25,,,2008,Cytb,18,402,0.7363,,0.0039,,
+Engraulis japonicus,Japanese anchovy,"Zheng, Zou & Han 2015 Biochemical Systematics and Ecology 58:169-177",China,D,33.5,,,123.5,,,2010,Cytb,17,402,0.4706,,0.0014,,
+Ammodytes personatus,Pacific sandlance,Kim Park Kim 2006,South Korea,"Jumunjin, East Sea",37.979,,,128.8893,,,2005,16S,29,587,0.32,0.020797878,0.0012,0.000185695,
+Ammodytes personatus,Pacific sandlance,Kim Park Kim 2006,South Korea,"Sangju, South Sea",34.814,,,128.285453,,,2005,16S,28,587,0.444,0.022299904,0.0009,0.000170084,
+Ammodytes personatus,Pacific sandlance,Kim Park Kim 2006,South Korea,"Taean, West Sea",36.756,,,125.995612,,,2005,16S,30,587,0.467,0.020448309,0.0011,0.000182574,
+Verasper variegatus,Spotted halibut,Sekino et. al 2011 Conservation Genetics 12:139-159,,SRK,38.8,,,141.65,,,2003-2007,cytb,115,679,0.62,,0.0011,,
+Verasper variegatus,Spotted halibut,Sekino et. al 2011 Conservation Genetics 12:139-159,,SDB,38.2,,,141.18,,,2007,cytb,36,679,0.55,,0.0009,,
+Verasper variegatus,Spotted halibut,Sekino et. al 2011 Conservation Genetics 12:139-159,,FKS,37.5,,,141.1,,,2007,cytb,77,679,0.56,,0.0009,,
+Verasper variegatus,Spotted halibut,Sekino et. al 2011 Conservation Genetics 12:139-159,,ISB,34.8,,,136.7,,,2007-2008,cytb,18,679,0.45,,0.0007,,
+Verasper variegatus,Spotted halibut,Sekino et. al 2011 Conservation Genetics 12:139-159,,SIS,33.5,,,131.9,,,2001-2002,cytb,50,679,0.04,,0.0001,,
+Verasper variegatus,Spotted halibut,Sekino et. al 2011 Conservation Genetics 12:139-159,,TBB,32.6,,,130.06,,,2009,cytb,76,679,0.37,,0.0009,,
+Verasper variegatus,Spotted halibut,Sekino et. al 2011 Conservation Genetics 12:139-159,,CYS,37.8,,,122.7,,,2004-2006,cytb,26,679,0.15,,0.0003,,
+Verasper variegatus,Spotted halibut,Sekino et. al 2011 Conservation Genetics 12:139-159,,SRK,38.8,,,141.65,,,2003-2007,ND2,115,633,0.73,,0.0016,,
+Verasper variegatus,Spotted halibut,Sekino et. al 2011 Conservation Genetics 12:139-159,,SDB,38.2,,,141.18,,,2007,ND2,36,633,0.81,,0.0019,,
+Verasper variegatus,Spotted halibut,Sekino et. al 2011 Conservation Genetics 12:139-159,,FKS,37.5,,,141.1,,,2007,ND2,77,633,0.67,,0.0014,,
+Verasper variegatus,Spotted halibut,Sekino et. al 2011 Conservation Genetics 12:139-159,,ISB,34.8,,,136.7,,,2007-2008,ND2,18,633,0.31,,0.0005,,
+Verasper variegatus,Spotted halibut,Sekino et. al 2011 Conservation Genetics 12:139-159,,TBB,32.6,,,130.06,,,2009,ND2,76,633,0.3,,0.0005,,
+Verasper variegatus,Spotted halibut,Sekino et. al 2011 Conservation Genetics 12:139-159,,CYS,37.8,,,122.7,,,2004-2006,ND2,26,633,0.22,,0.0004,,

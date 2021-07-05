@@ -1,0 +1,52 @@
+spp,CommonName,Source,Country,Site,lat_deg,lat_min,lat_sec,lon_deg,lon_min,lon_sec,CollectionYear,MarkerName,n,bp,He,Hese,Pi,Pise,Notes
+Tylosurus acus imperialis,,Imsiridou et al. (2016) Cah. Biol. Mar. 57:9-15,Greece,Thermaikos Gulf,40.43361,,,22.83208,,,2013-2014,16S,5,558,0,,0,,
+Carcharinus altimus,Bignose shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,7,610,0,0,0,0,geo coordinates pulled from place name
+Carcharinus altimus,Bignose shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,7,990,0,0,0,0,geo coordinates pulled from place name
+Mustelus asterias,Starry smooth-hound,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,8,610,0.571,0.095,0.0009,0.0009,geo coordinates pulled from place name
+Mustelus asterias,Starry smooth-hound,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,8,990,0,0,0,0,
+Mustelus mustelus,Smooth-hound,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,11,610,0.346,0.172,0.0009,0.0009,geo coordinates pulled from place name
+Mustelus mustelus,Smooth-hound,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,11,990,0.182,0.144,0.0002,0.0003,
+Mustelus punctulatus,Blackspotted smooth-hound,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,6,610,0,0,0,0,geo coordinates pulled from place name
+Mustelus punctulatus,Blackspotted smooth-hound,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,6,990,0,0,0,0,
+Prionace glauca,Blue shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,8,610,0.25,0.18,0.0004,0.0006,geo coordinates pulled from place name
+Prionace glauca,Blue shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,8,990,0.786,0.113,0.0029,0.0019,
+Scyliorhinus canicula,Small-spotted catshark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,7,610,0.714,0.181,0.0017,0.0015,geo coordinates pulled from place name
+Scyliorhinus canicula,Small-spotted catshark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,7,990,0.714,0.159,0.0014,0.0011,
+Scyliorhinus stellaris,Nursehound,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,7,610,0,0,0,0,geo coordinates pulled from place name
+Scyliorhinus stellaris,Nursehound,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,7,990,0.667,0.159,0.0014,0.0011,
+Alopias vulpinus,Common thresher,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,11,610,0,0,0,0,geo coordinates pulled from place name
+Alopias vulpinus,Common thresher,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,11,990,0.182,0.144,0.0002,0.0003,
+Isurus oxyrinchus,Shortfin mako,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,9,610,0.778,0.11,0.0052,0.0034,geo coordinates pulled from place name
+Isurus oxyrinchus,Shortfin mako,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,9,990,0.75,0.112,0.0022,0.0015,
+Heptranchis perlo,Sharpnose sevengill shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,8,610,0,0,0,0,geo coordinates pulled from place name
+Heptranchis perlo,Sharpnose sevengill shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,8,990,0.25,0.18,0.003,0.004,
+Hexanchus griseus,Bluntnose sixgill shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,9,610,0,0,0,0,geo coordinates pulled from place name
+Hexanchus griseus,Bluntnose sixgill shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,9,990,0.222,0.166,0.003,0.002,
+Centrophorus uyato,Little gulper shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,14,610,0,0,0,0,geo coordinates pulled from place name
+Centrophorus uyato,Little gulper shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,14,990,0.6,0.064,0.0021,0.0013,
+Dalatias licha,Kitefin shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,7,610,0.286,0.196,0.0005,0.0006,geo coordinates pulled from place name
+Dalatias licha,Kitefin shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,7,990,0,0,0,0,
+Somniosus rostratus,Little sleeper shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,4,610,0,0,0,0,geo coordinates pulled from place name
+Somniosus rostratus,Little sleeper shark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,4,990,0.5,0.265,0.0005,0.0006,
+Squalus blainville,Longnose spurdog,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,13,610,0.795,0.085,0.0025,0.0018,geo coordinates pulled from place name
+Squalus blainville,Longnose spurdog,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,13,990,0.894,0.077,0.0024,0.0016,
+Squatina aculeata,Sawback angelshark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,13,610,0,0,0,0,geo coordinates pulled from place name
+Squatina aculeata,Sawback angelshark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,13,990,0,0,0,0,
+Squatina oculata,Smoothback angelshark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,7,610,0,0,0,0,geo coordinates pulled from place name
+Squatina oculata,Smoothback angelshark,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,7,990,0,0,0,0,
+Bathytoshia centroura,Roughtail stingray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,6,610,0.6,0.215,0.0014,0.0013,geo coordinates pulled from place name
+Bathytoshia centroura,Roughtail stingray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,6,990,0.6,0.215,0.0007,0.0007,
+Dasyatis pastinaca,Common stingray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,8,610,0,0,0,0,geo coordinates pulled from place name
+Dasyatis pastinaca,Common stingray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,8,990,0.25,0.18,0.0005,0.0005,
+Dipturus oxyrinchus,Longnosed skate,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,10,610,0.2,0.154,0.0003,0.0005,geo coordinates pulled from place name
+Dipturus oxyrinchus,Longnosed skate,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,10,990,0.8,0.1,0.0014,0.001,
+Raja clavata,Thornback ray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,25,610,0.08,0.07,0.0001,0.0003,geo coordinates pulled from place name
+Raja clavata,Thornback ray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,25,990,0.76,0.083,0.0011,0.0008,
+Raja miraletus,Brown ray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,4,610,0.5,0.265,0.0008,0.001,geo coordinates pulled from place name
+Raja miraletus,Brown ray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,4,990,0.5,0.265,0.0015,0.0014,
+Raja polystigma,Speckled ray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,6,610,0.867,0.129,0.002,0.0017,geo coordinates pulled from place name
+Raja polystigma,Speckled ray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,6,990,0.8,0.122,0.0016,0.0013,
+Raja radula,Rough ray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,22,610,0.437,0.105,0.0008,0.0008,geo coordinates pulled from place name
+Raja radula,Rough ray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,22,990,0.632,0.103,0.0016,0.0011,
+Torpedo marmorata,Marbled electric ray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,COI,6,610,0.733,0.155,0.0025,0.002,geo coordinates pulled from place name
+Torpedo marmorata,Marbled electric ray,"Vella, Vella & Schembri (2017) Marine Genomics 36:17-23",,Malta,35.951019,,,14.361835,,,2003-2017,ND2,6,990,0.867,0.129,0.0051,0.0033,
