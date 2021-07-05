@@ -1,0 +1,494 @@
+spp,CommonName,Pelagic_Coastal,PC_Certainty,Genus,Family,Northernmost,Southernmost,Westernmost,Easternmost,Range_Total,Half_RangeSize,Centroid
+Abudefduf saxatilis,Sergeant-major,Coastal,,Abudefduf,Pomacentridae,41,-37,-89,14,78,39,2
+Acanthochromis polyacanthus,Spiny chromis,Coastal,,Acanthochromis,Pomacentridae,15,-26,116,169,41,20.5,-5.5
+Acanthocybium solandri,Wahoo,Pelagic,,Acanthocybium,Scombridae,59,-48,-180,180,107,53.5,5.5
+Acanthopagrus australis,Yellowfin bream,Coastal,,Acanthopagrus,Sparidae,-19,-38,#VALUE!,NA,19,9.5,-28.5
+Acanthopagrus berda,Goldsilk seabream,Coastal,,Acanthopagrus,Sparidae,30,-35,22,103,65,32.5,-2.5
+Acanthopagrus latus,Yellowfin seabream,Coastal,,Acanthopagrus,Sparidae,34,15,105,137,19,9.5,24.5
+Acanthopagrus schlegelii,Blackhead seabream,Coastal,,Acanthopagrus,Sparidae,43,20,-143,-107,23,11.5,31.5
+Acanthopagrus taiwanensis,Taiwan picnic seabream,Coastal,,Acanthopagrus,Sparidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Acanthurus leucosternon,Powder blue tang,Coastal,,Acanthopagrus,Sparidae,26,-30,31,129,56,28,-2
+Acanthurus nigricans,Whitecheek surgeonfish,Coastal,,Acanthurus,Acanthuridae,30,-24,#VALUE!,NA,54,27,3
+Acanthurus nigrofuscus,Brown Surgeonfish,Coastal,,Acanthurus,Acanthuridae,31,-34,3,-123,65,32.5,-1.5
+Acanthurus nigroris,Bluelined surgeonfish,Coastal,,Acanthurus,Acanthuridae,28,-24,54,-139,52,26,2
+Acanthurus triostegus,Convict surgeonfish,Coastal,,Acanthurus,Acanthuridae,26,-36,25,-85,62,31,-5
+Aetobatus narinari,Whitespotted eagle ray,Coastal,,Aetobatus,Myliobatidae,43,-32,-115,-154,75,37.5,5.5
+Alopias vulpinus,Thresher,Pelagic,,Alopias,Alopiidae,74,-58,-180,180,132,66,8
+Amblyraja radiata,Starry ray,Coastal,,Amblyraja,Rajidae,72,33,-78,41,39,19.5,52.5
+Ammodytes personatus,Pacific sandlance,Coastal,,Ammodytes,Ammodytidae,54,30,118,-118,24,12,42
+Amphiprion akallopisos,Skunk clownfish,Coastal,,Amphiprion,Pomacentridae,23,-35,#VALUE!,NA,58,29,-6
+Amphiprion clarkii,Yellowtail clownfish,Coastal,,Amphiprion,Pomacentridae,30,-30,47,-172,60,30,0
+Amphiprion frenatus,Tomato clownfish,Coastal,,Amphiprion,Pomacentridae,30,-20,91,143,50,25,5
+Amphiprion latezonatus,Wide-band anemonefish,Coastal,,Amphiprion,Pomacentridae,-25,-32,#VALUE!,NA,7,3.5,-28.5
+Amphiprion mccullochi,Whitesnout anemonefish,Coastal,,Amphiprion,Pomacentridae,-31,-32,#VALUE!,NA,1,0.5,-31.5
+Amphiprion melanopus,Fire clownfish,Coastal,,Amphiprion,Pomacentridae,-10,-30,#VALUE!,NA,20,10,-20
+Amphiprion ocellaris,Clown anemonefish,Coastal,,Amphiprion,Pomacentridae,46,-17,92,147,63,31.5,14.5
+Amphiprion percula,Orange clownfish,Coastal,,Amphiprion,Pomacentridae,-6,-26,141,155,20,10,-16
+Amphiprion perideraion,Pink anemonefish,Coastal,,Amphiprion,Pomacentridae,34,-22,96,156,56,28,6
+Amphiprion polymnus,Saddleback clownfish,Coastal,,Amphiprion,Pomacentridae,36,-33,91,164,69,34.5,1.5
+Anarhichas lupus,Atlantic wolffish,Coastal,,Anarhichas,Anarhichadidae,79,37,-75,56,42,21,58
+Anoplopoma fimbria,Sablefish,Pelagic,,Anoplopoma,Anoplopomatidae,64,23,141,-109,41,20.5,43.5
+Antimora rostrata,Blue antimora,Pelagic,,Antimora,Moridae,62,-62,-180,180,124,62,0
+Aphanopus carbo,Black scabbardfish,Pelagic,,Aphanopus,Trichiuridae,71,-23,-82,17,94,47,24
+Aphanopus intermedius,Intermediate scabbardfish,Pelagic,,Aphanopus,Trichiuridae,50,-35,-105,-14,85,42.5,7.5
+Aphia minuta,Transparent goby,Coastal,,Aphia,Gobiidae,70,25,-13,42,45,22.5,47.5
+Apogon imberbis,Cardinal fish,Coastal,,Apogon,Apogonidae,45,-5,-32,36,50,25,20
+Archosargus probatocephalus,Sheepshead,Coastal,,Archosargus,Sparidae,49,-6,-100,-36,55,27.5,21.5
+Argyrosomus coronus,Dusky kob,Coastal,,Argyrosomus,Sciaenidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Argyrosomus inodorus,Mild meagre,Coastal,,Argyrosomus,Sciaenidae,-17,-38,11,29,21,10.5,-27.5
+Argyrosomus japonicus,Japanese meagre,Coastal,,Argyrosomus,Sciaenidae,40,-39,18,155,79,39.5,0.5
+Argyrosomus regius,Meagre,Coastal,,Argyrosomus,Sciaenidae,65,-6,-23,36,71,35.5,29.5
+Atherinella brasiliensis,Brazilian silverside,Coastal,,Atherinella,Atherinopsidae,13,-36,-77,-34,49,24.5,-11.5
+Atractoscion aequidens,Geelbeck croaker,Coastal,,Atractoscion,Sciaenidae,14,-28,#VALUE!,NA,42,21,-7
+Auxis rochei,Bullet tuna,Coastal,Maybe,Auxis,Scombridae,61,-51,-180,180,112,56,5
+Auxis thazard,Frigate tuna,Pelagic,,Auxis,Scombridae,61,-51,-180,180,112,56,5
+Balistes capriscus,Grey triggerfish,Coastal,,Balistes,Balistidae,58,-37,-98,36,95,47.5,10.5
+Bathygobius cocosensis,Cocos frill-goby,Coastal,,Bathygobius,Gobiidae,32,-28,#VALUE!,NA,60,30,2
+Bathytoshia centroura,Roughtail stingray,Coastal,,Bathytoshia,Dasyatidae,45,-35,-90,36,80,40,5
+Bellapiscis lesleyae,Mottled twister,Coastal,,Bellapiscis,Tripterygiidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Bellapiscis medius,Twister,Coastal,,Bellapiscis,Tripterygiidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Beringraja pulchra,Mottled skate,Coastal,,Beringraja,Rajidae,50,28,119,150,22,11,39
+Beryx decadactylus,Alfonsino,Coastal,,Beryx,Berycidae,70,-48,-180,180,118,59,11
+Beryx splendens,Splendid alfonsino,Pelagic,,Beryx,Berycidae,45,-43,-180,180,88,44,1
+Boreogadus saida,Polar cod,Pelagic,,Boreogadus,Gadidae,87,52,-180,180,35,17.5,69.5
+Branchiostegus japonicus,Horsehead tilefish,Coastal,,Branchiostegus,Malacanthidae,40,15,105,144,25,12.5,27.5
+Branchiostoma belcheri,,Coastal,,Branchiostoma,Branchiostomidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Branchiostoma japonicum,,Coastal,,Branchiostoma,Branchiostomidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Brevoortia gunteri,Finescale menhaden,Coastal,,Brevoortia,Clupeidae,30,17,-99,-88,13,6.5,23.5
+Brevoortia patronus,Gulf menhaden,Coastal,,Brevoortia,Clupeidae,31,19,-95,-80,12,6,25
+Brevoortia smithi,Yellowfin menhaden,Coastal,,Brevoortia,Clupeidae,37,23,-92,-74,14,7,30
+Brevoortia tyrannus,Atlantic menhaden,Coastal,,Brevoortia,Clupeidae,46,30,-81,-64,16,8,38
+Brosme brosme,Cusk,Coastal,,Brosme,Lotidae,83,37,-75,57,46,23,60
+Caffrogobius caffer,Banded goby,Coastal,,Caffrogobius,Gobiidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Carcharhinus albimarginatus,Silvertip shark,Pelagic,,Carcharhinus,Carcharhinidae,32,-31,31,-77,63,31.5,0.5
+Carcharhinus amblyrhynchos,Gray reef shark,Coastal,,Carcharhinus,Carcharhinidae,29,-35,33,-151,64,32,-3
+Carcharhinus galapagensis,Galapagos shark,Pelagic,Maybe,Carcharhinus,Carcharhinidae,36,-34,-180,180,70,35,1
+Carcharhinus isodon,Finetooth shark,Coastal,,Carcharhinus,Carcharhinidae,42,-38,-100,-12,80,40,2
+Carcharhinus leucas,Bull shark,Coastal,,Carcharhinus,Carcharhinidae,42,-39,-180,180,81,40.5,1.5
+Carcharhinus limbatus,Blacktip shark,Coastal,,Carcharhinus,Carcharhinidae,45,-38,-180,180,83,41.5,3.5
+Carcharhinus signatus,Night shark,Coastal,,Carcharhinus,Carcharhinidae,39,-43,-85,15,82,41,-2
+Carcharhinus sorrah,Spot-tail shark,Coastal,,Carcharhinus,Carcharhinidae,31,-31,#VALUE!,NA,62,31,0
+Carcharias taurus,Sand tiger shark,Coastal,,Charcharias,Odontaspididae,45,-48,-100,155,93,46.5,-1.5
+Carcharodon carcharias,Great white shark,Pelagic,,Carcharodon,Lamnidae,61,-58,-180,180,119,59.5,1.5
+Centrophorus harrissoni,Dumb gulper shark,Coastal,,Centrophorus,Centrophoridae,-26,-43,111,-178,17,8.5,-34.5
+Centrophorus moluccensis,Smallfin gulper shark,Coastal,,Centrophorus,Centrophoridae,32,-40,34,171,72,36,-4
+Centrophorus uyato,Little gulper shark,Coastal,,Centrophorus,Centrophoridae,43,-43,#VALUE!,NA,86,43,0
+Centrophorus zeehaani,Southern dogfish,Coastal,,Centrophorus,Centrophoridae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Centropristis striata,Black seabass,Coastal,,Centropristis,Serranidae,45,25,#VALUE!,NA,20,10,35
+Centroscymnus crepidater,Longnose velvet dogfish,Coastal,,Centroscymnus,Somniosidae,64,-57,-159,-77,121,60.5,3.5
+Cephalopholis argus,Peacock hind,Coastal,,Cephalopholis,Serranidae,29,-34,33,-122,63,31.5,-2.5
+Cephalopholis fulva,Coney,Coastal,,Cephalopholis,Serranidae,36,-28,-98,-33,64,32,4
+Cetengraulis edentulus,Atlantic anchoveta,Coastal,,Cetengraulis,Engraulidae,23,-28,-98,-32,51,25.5,-2.5
+Chaenocephalus aceratus,Blackfin icefish,Coastal,,Chaenocephalus,Channichthyidae,-53,-65,-67,4,12,6,-59
+Chaetodon austriacus,Blacktail butterflyfish,Coastal,,Chaetodon,Chaetodontidae,30,10,#VALUE!,NA,20,10,20
+Chaetodon lunulatus,Oval butterflyfish,Coastal,,Chaetodon,Chaetodontidae,37,-32,95,-134,69,34.5,2.5
+Chaetodon melapterus,Arabian butterflyfish,Coastal,,Chaetodon,Chaetodontidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Chaetodon meyeri,Scrawled butterflyfish,Coastal,,Chaetodon,Chaetodontidae,30,-30,#VALUE!,NA,60,30,0
+Chaetodon multicinctus,Pebbled butterflyfish,Coastal,,Chaetodon,Chaetodontidae,30,16,178,-154,14,7,23
+Chaetodon ornatissimus,Ornate butterflyfish,Coastal,,Chaetodon,Chaetodontidae,30,-30,77,-124,60,30,0
+Chaetodon tricinctus,Three-striped butterflyfish,Coastal,,Chaetodon,Chaetodontidae,-25,-33,#VALUE!,NA,8,4,-29
+Chaetodon trifascialis,Chevron butterflyfish,Coastal,,Chaetodon,Chaetodontidae,36,-30,30,-150,66,33,3
+Chaetodon trifasciatus,Melon butterflyfish,Coastal,,Chaetodon,Chaetodontidae,30,-30,#VALUE!,NA,60,30,0
+Champsocephalus gunnari,Mackerel icefish,Pelagic,Maybe,Champsocephalus,Channichthyidae,-48,-66,-65,77,18,9,-57
+Cheilinus undulatus,Humphead wrasse,Coastal,,Cheilinus,Labridae,30,-23,#VALUE!,NA,53,26.5,3.5
+Cheilodipterus artus,Wolf cardinalfish,Coastal,,Cheilopdipterus,Apogonidae,30,-24,#VALUE!,NA,54,27,3
+Chionodraco rastrospinosus,Ocellated icefish,Pelagic,Maybe,Chionodraco,Channichthyidae,-60,-67,-69,-43,7,3.5,-63.5
+Chromis margaritifer,Bicolor chromis,Coastal,,Chromis,Pomacentridae,32,-32,96,-132,64,32,0
+Chromis multilineata,Brown chromis,Coastal,,Chromis,Pomacentridae,30,-23,#VALUE!,NA,53,26.5,3.5
+Chromis viridis,Blue green damselfish,Coastal,,Chromis,Pomacentridae,35,-35,#VALUE!,NA,70,35,0
+Chrysiptera talboti,Talbot's demoiselle,Coastal,,Chrysiptera,Pomacentridae,21,-25,92,-173,46,23,-2
+Chrysoblephus laticeps,Roman seabream,Coastal,,Chrysoblephus,Sparidae,-21,-28,#VALUE!,NA,7,3.5,-24.5
+Chrysoblephus puniceus,Slinger seabream,Coastal,,Chrysoblephus,Sparidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Cirrhilabrus punctatus,Dotted wrasse,Coastal,,Cirrhilabrus,Labridae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Cleisthenes herzensteini,Pointhead flounder,Coastal,,Cleisthenes,Pleuronectidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Clupea harengus,Atlantic herring,Pelagic,,Clupea,Clupeidae,80,33,-79,70,47,23.5,56.5
+Clupea pallasii pallasii,Pacific herring,Coastal,,Clupea,Clupeidae,77,33,34,-119,44,22,55
+Collichthys lucidus,Big head croaker,Coastal,,Collichthys,Sciaenidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Conger conger,European conger,Coastal,,Conger,Congridae,68,12,-32,42,56,28,40
+Coris bulbifrons,Doubleheader,Coastal,,Coris,Labridae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Coris julis,Mediterranean rainbow wrasse,Coastal,,Coris,Labridae,59,-1,-32,36,60,30,29
+Coryphaena hippurus,Common dolphinfish,Pelagic,,Coryphaena,Coryphaenidae,47,-40,-180,180,87,43.5,3.5
+Coryphaenoides armatus,Abyssal grenadier,Pelagic,,Coryphaenoides,Macrouridae,65,-61,-180,180,126,63,2
+Coryphaenoides brevibarbis,Shortbeard grenadier,Pelagic,,Coryphaenoides,Macrouridae,65,-40,-70,-1,105,52.5,12.5
+Coryphaenoides mediterraneus,Mediterranean grenadier,Pelagic,,Coryphaenoides,Macrouridae,67,18,-98,17,49,24.5,42.5
+Crystallias matsushimae,,Coastal,,Crystallias,Liparidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Ctenolabrus rupestris,Goldsinny-wrasse,Coastal,,Ctenolabrus,Labridae,64,30,-11,42,34,17,47
+Cyclopterus lumpus,Lumpfish,Pelagic,,Cyclopterus,Cyclopteridae,80,32,-95,49,48,24,56
+Cymatogaster aggregata,Shiner perch,Coastal,,Cymatogaster,Embiotocidae,57,21,-137,-105,36,18,39
+Cynoglossus semilaevis,Tongue sole,Coastal,,Cynoglossus,Cynoglossidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Cynoscion arenarius,Sand weakfish,Coastal,,Cynoscion,Sciaenidae,30,18,-98,-80,12,6,24
+Cynoscion nebulosus,Spotted weakfish,Coastal,,Cynoscion,Sciaenidae,42,15,-83,-70,27,13.5,28.5
+Cynoscion nothus,Silver seatrout,Coastal,,Cynoscion,Sciaenidae,38,10,-98,-60,28,14,24
+Dalatias licha,Kitefin shark,Pelagic,Maybe,Dalatias,Dalatiidae,72,-56,-153,-98,128,64,8
+Dascyllus aruanus,Humbug damselfish,Coastal,,Dascyllus,Pomacentridae,38,-35,19,-124,73,36.5,1.5
+Dascyllus strasburgi,Strasburg's dascyllus,Coastal,,Dascyllus,Pomacentridae,-5,-10,#VALUE!,NA,5,2.5,-7.5
+Dascyllus trimaculatus,Threespot dascyllus,Coastal,,Dascyllus,Pomacentridae,32,-36,24,-128,68,34,-2
+Dasyatis pastinaca,Common stingray,Coastal,,Dasyatis,Dasyatidae,61,-35,-19,42,96,48,13
+Dentex dentex,Common dentex,Coastal,,Dentex,Sparidae,56,12,-23,42,44,22,34
+Diaphus theta,California headlightfish,Pelagic,,Diaphus,Myctophidae,66,-20,#VALUE!,NA,86,43,23
+Dicentrarchus labrax,European seabass,Coastal,,Dicentrarchus,Moronidae,72,11,-19,42,61,30.5,41.5
+Diplodus hottentotus,Zebra,Coastal,,Diplodus,Sparidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Diplodus sargus,White seabream,Coastal,,Diplodus,Sparidae,48,-36,-18,42,84,42,6
+Diplodus vulgaris,Common two-banded seabream,Coastal,,Diplodus,Sparidae,50,-40,-26,36,90,45,5
+Dipturus oxyrinchus,Longnosed skate,Coastal,,Dipturus,Rajidae,65,11,-19,36,54,27,38
+Dipturus trachyderma,Ray,Coastal,,Dipturus,Rajidae,-2,-57,-99,-42,55,27.5,-29.5
+Dissostichus eleginoides,Patagonian toothfish,Pelagic,,Dissostichus,Nototheniidae,-33,-66,-77,180,33,16.5,-49.5
+Electrona antarctica,Antarctic lanternfish,Pelagic,,Electrona,Myctophidae,-45,-78,-180,180,33,16.5,-61.5
+Eleginops maclovinus,Patagonian blennie,Coastal,,Eleginops,Eleginopsidae,-32,-55,-76,-53,23,11.5,-43.5
+Elops saurus,Ladyfish,Coastal,,Elops,Elopidae,29,-17,#VALUE!,NA,46,23,6
+Embiotoca jacksoni,Black perch,Coastal,,Embiotoca,Embiotocidae,40,23,-124,-114,17,8.5,31.5
+Engraulis australis,Australian anchovy,Coastal,,Engraulis,Engraulidae,-20,-47,109,-177,27,13.5,-33.5
+Engraulis capensis,Southern African anchovy,Coastal,,Engraulis,Engraulidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Engraulis encrasicolus,European anchovy,Coastal,,Engraulis,Engraulidae,62,-37,-18,42,99,49.5,12.5
+Engraulis eurystole,Silver anchovy,Coastal,,Engraulis,Engraulidae,45,0,-91,-46,45,22.5,22.5
+Engraulis japonicus,Japanese anchovy,Coastal,,Engraulis,Engraulidae,49,2,105,155,47,23.5,25.5
+Epinephelus akaara,Hong Kong grouper,Coastal,,Epinephelus,Serranidae,39,20,109,143,19,9.5,29.5
+Epinephelus awoara,Yellow grouper,Coastal,,Epinephelus,Serranidae,39,12,110,143,27,13.5,25.5
+Epinephelus bleekeri,Duskytail grouper,Coastal,,Epinephelus,Serranidae,32,-17,48,136,49,24.5,7.5
+Epinephelus bruneus,Kelp grouper,Coastal,,Epinephelus,Serranidae,38,18,108,142,20,10,28
+Epinephelus coioides,Orange-spotted grouper,Coastal,,Epinephelus,Serranidae,37,-34,28,180,71,35.5,1.5
+Epinephelus fasciatus,Blacktip grouper,Coastal,,Epinephelus,Serranidae,36,-35,22,-124,71,35.5,0.5
+Epinephelus guttatus,Red hind,Coastal,,Epinephelus,Serranidae,36,8,-98,-58,28,14,22
+Epinephelus itajara,Atlantic goliath grouper,Coastal,,Epinephelus,Serranidae,36,-33,-121,12,69,34.5,1.5
+Epinephelus lanceolatus,Giant grouper,Coastal,,Epinephelus,Serranidae,29,-39,24,-122,68,34,-5
+Epinephelus maculatus,Highfin grouper,Coastal,,Epinephelus,Serranidae,29,-34,96,-170,63,31.5,-2.5
+Epinephelus malabaricus,Malabar grouper,Coastal,,Epinephelus,Serranidae,30,-32,29,-173,62,31,-1
+Epinephelus marginatus,Dusky grouper,Coastal,,Epinephelus,Serranidae,54,-43,-65,58,97,48.5,5.5
+Epinephelus merra,Honeycomb grouper,Coastal,,Epinephelus,Serranidae,35,-35,28,-129,70,35,0
+Epinephelus morio,Red grouper,Coastal,,Epinephelus,Serranidae,35,-27,-98,-33,62,31,4
+Epinephelus ongus,White-streaked grouper,Coastal,,Epinephelus,Serranidae,36,-27,31,-179,63,31.5,4.5
+Epinephelus polyphekadion,Camouflage grouper,Coastal,,Epinephelus,Serranidae,30,-34,27,-134,64,32,-2
+Epinephelus striatus,Nassau grouper,Coastal,,Epinephelus,Serranidae,35,-34,-92,-34,69,34.5,0.5
+Etelis carbunculus,Deep-water red snapper,Pelagic,Maybe,Etelis,Lutjanidae,34,-25,35,-150,59,29.5,4.5
+Etelis coruscans,Deepwater longtail red snapper,Coastal,,Etelis,Lutjanidae,38,-32,29,-139,70,35,3
+Etmopterus molleri,Mollers lantern shark,Pelagic,,Etmopterus,Etmopteridae,34,-46,#VALUE!,NA,80,40,-6
+Etmopterus spinax,Velvet belly,Pelagic,Maybe,Etmopterus,Etmopteridae,75,-48,-43,36,123,61.5,13.5
+Eucyclogobius newberryi,Tidewater goby,Coastal,,Eucyclogobius,Oxudercidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Euthynnus affinis,Kawakawa,Pelagic,Maybe,Euthynnus,Scombridae,35,-38,19,-137,73,36.5,-1.5
+Eviota albolineata,White-line dwarfgoby,Coastal,,Eviota,Gobiidae,26,-32,#VALUE!,NA,58,29,-3
+Eviota queenslandica,Queensland dwarfgoby,Coastal,,Eviota,Gobiidae,23,-24,#VALUE!,NA,47,23.5,-0.5
+Fistularia commersonii,Bluespotted cornetfish,Coastal,,Fistularia,Fistulariidae,32,-32,#VALUE!,NA,64,32,0
+Forsterygion capito,Spotted robust triplefin,Coastal,,Forsterygion,Tripterygiidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Forsterygion gymnotum,Tasmanian robust triplefin,Coastal,,Forsterygion,Tripterygiidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Forsterygion lapillum,Common triplefin,Coastal,,Forsterygion,Tripterygiidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Forsterygion nigripenne,Estuarine triplefin,Coastal,,Forsterygion,Tripterygiidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Forsterygion varium,Striped triplefin,Coastal,,Forsterygion,Tripterygiidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Gadus chalcogrammus,Alaska pollock,Coastal,,Gadus,Gadidae,68,34,129,-120,34,17,51
+Gadus macrocephalus,Pacific cod,Coastal,,Gadus,Gadidae,63,31,119,-119,32,16,47
+Gadus morhua,Atlantic cod,Coastal,,Gadus,Gadidae,83,35,-76,86,48,24,59
+Galeorhinus galeus,Tope shark,Coastal,Maybe,Galeorhinus,Triakidae,70,-58,37,111,128,64,6
+Galeus melastomus,Blackmouth catshark,Coastal,,Galeus,Scyliorhinidae,64,14,-19,36,50,25,39
+Genypterus capensis,Kingklip,Coastal,,Genypterus,Ophidiidae,-21,-37,12,28,16,8,-29
+Ginglymostoma cirratum,Nurse shark,Coastal,,Ginglymostoma,Ginglymostomatidae,44,-35,-122,10,79,39.5,4.5
+Girella laevifrons,,Coastal,,Girella,Girellidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Girella punctata,Largescale blackfish,Coastal,,Girella,Girellidae,40,6,111,142,34,17,23
+Glaucosoma hebraicum,West Australian dhufish,Coastal,,Glaucosoma,Glaucosomatidae,16,-36,#VALUE!,NA,52,26,-10
+Glyptocephalus stelleri,Blackfin flounder,Coastal,,Glyptocephalus,Pleuronectidae,66,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Gnatholepis anjerensis,Eye-bar goby,Coastal,,Gnatholepis,Gobiidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Gnatholepis cauerensis,Eyebar goby,Coastal,,Gnatholepis,Gobiidae,30,-28,#VALUE!,NA,58,29,1
+Gobionotothen gibberifrons,,Coastal,,Gobionotothen,Nototheniidae,-53,-67,-75,75,14,7,-60
+Gymnosarda unicolor,Dogtooth tuna,Pelagic,Maybe,Gymnosarda,Scombridae,31,-30,32,-130,61,30.5,0.5
+Gymnothorax chilospilus,Lipspot moray,Coastal,,Gymnothorax,Muraenidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Haemulon flavolineatum,French grunt,Coastal,,Haemulon,Haemulidae,34,-34,-98,-34,68,34,0
+Haemulon plumierii,White grunt,Coastal,,Haemulon,Haemulidae,39,-23,-99,-30,62,31,8
+Halichoeres cyanocephalus,Yellowcheek wrasse,Coastal,,Halichoeres,Labridae,30,-33,-98,-32,63,31.5,-1.5
+Halichoeres garnoti,Yellowhead wrasse,Coastal,,Halichoeres,Labridae,33,-5,-98,-37,38,19,14
+Halichoeres maculipinna,Clown wrasse,Coastal,,Halichoeres,Labridae,37,-26,-98,-32,63,31.5,5.5
+Hapalogenys nigripinnis,Short barbeled velvetchin,Coastal,,Hapalogenys,Hapalogenyidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Helicolenus dactylopterus,Blackbelly rosefish,Coastal,,Helicolenus,Sebastidae,70,-46,#VALUE!,NA,116,58,12
+Heptranchias perlo,Sharpnose sevengill shark,Coastal,,Heptranchias,Hexanchidae,58,-58,-173,-98,116,58,0
+Hexagrammos agrammus,Spotty-bellied greenling,Coastal,,Hexagrammos,Hexagrammidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Hexagrammos otakii,Fat greenling,Coastal,,Hexagrammos,Hexagrammidae,50,26,120,152,24,12,38
+Hexanchus griseus,Bluntnose sixgill shark,Pelagic,,Hexanchus,Hexanchidae,65,-48,-180,180,113,56.5,8.5
+Hippocampus angustus,Western spiny seahorse,Coastal,,Hippocampus,Syngnathidae,-10,-24,#VALUE!,NA,14,7,-17
+Hippocampus guttulatus,Long-snouted seahorse,Coastal,,Hippocampus,Syngnathidae,63,20,-32,36,43,21.5,41.5
+Hippocampus hippocampus,Short-snouted seahorse,Coastal,,Hippocampus,Syngnathidae,53,7,-32,42,46,23,30
+Hippocampus ingens,Pacific seahorse,Coastal,,Hippocampus,Syngnathidae,37,-22,-123,-70,59,29.5,7.5
+Hippocampus kuda,Spotted seahorse,Coastal,,Hippocampus,Syngnathidae,39,-28,32,-154,67,33.5,5.5
+Hippocampus mohnikei,Japanese seahorse,Coastal,,Hippocampus,Syngnathidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Hippocampus trimaculatus,Longnose seahorse,Coastal,,Hippocampus,Syngnathidae,42,-42,65,-132,84,42,0
+Hippoglossus hippoglossus,Atlantic halibut,Pelagic,Maybe,Hippoglossus,Pleuronectidae,79,36,-77,55,43,21.5,57.5
+Hippoglossus stenolepis,Pacific halibut,Coastal,,Hippoglossus,Pleuronectidae,73,42,138,-123,31,15.5,57.5
+Holocentrus adscensionis,Squirrelfish,Coastal,,Holocentrus,Holocentridae,37,-25,-97,13,62,31,6
+Hoplostethus atlanticus,Orange roughy,Pelagic,Maybe,Hoplostethus,Trachichthyidae,65,-56,-168,-84,121,60.5,4.5
+Hyperoglyphe antarctica,Bluenose warehou,Coastal,Maybe,Hyperoglyphe,Centrolophidae,-19,-55,-173,-67,36,18,-37
+Hypoplectrus nigricans,Black hamlet,Coastal,,Hypoplectrus,Serranidae,28,8,-89,-60,20,10,18
+Hypoplectrus puella,Barred hamlet,Coastal,,Hypoplectrus,Serranidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Hyporthodus acanthistius,Rooster hind,Coastal,,Hyporthodus,Serranidae,33,-10,-116,-78,43,21.5,11.5
+Hyporthodus septemfasciatus,Convict grouper,Coastal,,Hyporthodus,Serranidae,40,24,121,142,16,8,32
+Isurus oxyrinchus,Shortfin mako,Pelagic,,Isurus,Lamnidae,61,-56,-180,180,117,58.5,2.5
+Kajikia albida,Atlantic white marlin,Pelagic,,Kajikia,Istiophoridae,47,-45,-99,27,92,46,1
+Kareius bicoloratus,Stone flounder,Coastal,,Kareius,Pleuronectidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Katsuwonus pelamis,Skipjack tuna,Pelagic,,Katsuwonus,Scombridae,63,-47,-180,180,110,55,8
+Labroides dimidiatus,Bluestreak cleaner wrasse,Coastal,,Labroides,Labridae,32,-36,24,-124,68,34,-2
+Larabicus quadrilineatus,Fourline wrasse,Coastal,,Larabicus,Labridae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Larimichthys crocea,Large yellow croaker,Coastal,,Larimichthys,Sciaenidae,38,13,106,141,25,12.5,25.5
+Larimichthys polyactis,Yellow croaker,Coastal,,Larimichthys,Sciaenidae,41,22,117,141,19,9.5,31.5
+Lepadogaster lepadogaster,Shore clingfish,Coastal,,Lepadogaster,Gobiesocidae,46,30,NA,7,16,8,38
+Lepidonotothen squamifrons,Grey rockcod,Coastal,,Lepidonotothen,Nototheniidae,-45,-79,-180,180,34,17,-62
+Lepidorhombus boscii,Four-spot megrim,Coastal,,Lepidorhombus,Scophthalmidae,60,26,-15,36,34,17,43
+Lepidorhombus whiffiagonis,Megrim,Coastal,,Lepidorhombus,Scophthalmidae,73,26,-30,37,47,23.5,49.5
+Lethrinus harak,Thumbprint emperor,Coastal,,Lethrinus,Lethrinidae,32,-32,31,-155,64,32,0
+Lethrinus laticaudis,Grass emperor,Coastal,,Lethrinus,Lethrinidae,-3,-23,#VALUE!,NA,20,10,-13
+Lethrinus mahsena,Sky emperor,Coastal,,Lethrinus,Lethrinidae,28,-26,32,82,54,27,1
+Lethrinus miniatus,Trumpet emperor,Coastal,,Lethrinus,Lethrinidae,27,-34,113,168,61,30.5,-3.5
+Lethrinus nebulosus,Spangled emperor,Coastal,,Lethrinus,Lethrinidae,34,-34,25,-170,68,34,0
+Leuresthes tenuis,California grunion,Coastal,,Leuresthes,Atherinopsidae,37,24,-123,-111,13,6.5,30.5
+Lichia amia,Leerfish,Coastal,,Lichia,Carangidae,47,-28,#VALUE!,NA,75,37.5,9.5
+Limanda limanda,Common dab,Coastal,,Limanda,Pleuronectidae,72,43,-25,45,29,14.5,57.5
+Limanda punctatissima,Sand flounder,Coastal,,Limanda,Pleuronectidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Lipophrys pholis,Shanny,Coastal,,Lipophrys,Blenniidae,65,18,-32,11,47,23.5,41.5
+Lithognathus mormyrus,Sand steenbras,Coastal,,Lithognathus,Sparidae,48,-35,-25,36,83,41.5,6.5
+Lophius budegassa,Blackbellied angler,Coastal,,Lophius,Lophiidae,63,13,-18,42,50,25,38
+Lophius piscatorius,Angler,Coastal,,Lophius,Lophiidae,75,30,-28,46,45,22.5,52.5
+Lutjanus analis,Mutton snapper,Coastal,,Lutjanus,Lutjanidae,43,-28,-98,-31,71,35.5,7.5
+Lutjanus campechanus,Northern red snapper,Coastal,,Lutjanus,Lutjanidae,43,-4,-100,-40,47,23.5,19.5
+Lutjanus carponotatus,Spanish flag snapper,Coastal,,Lutjanus,Lutjanidae,23,-27,79,159,50,25,-2
+Lutjanus fulvus,Blacktail snapper,Coastal,,Lutjanus,Lutjanidae,34,-34,28,-134,68,34,0
+Lutjanus jocu,Dog snapper,Coastal,,Lutjanus,Lutjanidae,42,-26,-98,-8,68,34,8
+Lutjanus kasmira,Common bluestripe snapper,Coastal,,Lutjanus,Lutjanidae,35,-35,31,-134,70,35,0
+Lutjanus peru,Pacific red snapper,Coastal,,Lutjanus,Lutjanidae,28,-17,-115,-74,45,22.5,5.5
+Lutjanus purpureus,Southern red snapper,Coastal,,Lutjanus,Lutjanidae,25,-19,-87,-35,44,22,3
+Lutjanus russellii,Russell's snapper,Coastal,,Lutjanus,Lutjanidae,31,-38,31,-178,69,34.5,-3.5
+Lutjanus synagris,Lane snapper,Coastal,,Lutjanus,Lutjanidae,38,-38,-98,-31,76,38,0
+Macrodon ancylodon,King weakfish,Coastal,,Macrodon,Sciaenidae,11,-40,#VALUE!,NA,51,25.5,-14.5
+Macrourus berglax,Roughhead grenadier,Pelagic,,Macrourus,Macrouridae,82,37,-95,61,45,22.5,59.5
+Macruronus magellanicus,Patagonian grenadier,Coastal,,Macruronus,Macruronidae,-34,-60,-79,-52,26,13,-47
+Makaira nigricans,Blue marlin,Pelagic,,Makaira,Istiophoridae,50,-45,-180,180,95,47.5,2.5
+Megalaspis cordyla,Torpedo scad,Pelagic,,Megalaspis,Carangidae,47,-22,40,156,69,34.5,12.5
+Melanogrammus aeglefinus,Haddock,Coastal,,Melanogrammus,Gadidae,79,35,-76,62,44,22,57
+Menidia menidia,Atlantic silverside,Coastal,,Menidia,Atherinopsidae,60,25,-82,-52,35,17.5,42.5
+Menticirrhus americanus,Southern kingroaker,Coastal,Maybe,Menticirrhus,Sciaenidae,43,-42,-98,-34,85,42.5,0.5
+Merlangius merlangus,Whiting,Pelagic,,Merlangius,Gadidae,72,35,-27,42,37,18.5,53.5
+Merluccius albidus,Offshore silver hake,Coastal,,Merluccius,Merlucciidae,42,4,-98,-50,38,19,23
+Merluccius bilinearis,North American silver hake,Coastal,,Merluccius,Merlucciidae,55,24,-80,-42,31,15.5,39.5
+Merluccius capensis,Shallow-water Cape hake,Coastal,,Merluccius,Merlucciidae,-11,-37,5,33,26,13,-24
+Merluccius hubbsi,Argentine hake,Coastal,,Merluccius,Merlucciidae,-20,-56,-69,-40,36,18,-38
+Merluccius merluccius,European hake,Coastal,,Merluccius,Merlucciidae,76,18,-30,42,58,29,47
+Merluccius paradoxus,Deep-water Cape hake,Coastal,,Merluccius,Merlucciidae,-18,-38,11,46,20,10,-28
+Merluccius productus,North Pacific hake,Coastal,,Merluccius,Merlucciidae,51,15,-130,-77,36,18,33
+Microchirus azevia,Bastard sole,Coastal,,Microchirus,Soleidae,53,12,-18,30,41,20.5,32.5
+Micromesistius poutassou,Blue whiting,Pelagic,,Micromesistius,Gadidae,79,26,-82,51,53,26.5,52.5
+Micropogonias furnieri,White croaker,Coastal,,Micropogonias,Sciaenidae,27,-36,-84,-34,63,31.5,-4.5
+Micropogonias undulatus,Atlantic croaker,Coastal,,Micropogonias,Sciaenidae,43,-37,#VALUE!,NA,80,40,3
+Microstomus pacificus,Dover sole,Coastal,,Microstomus,Pleuronectidae,65,31,-178,-117,34,17,48
+Miichthys miiuy,Mi-iuy croaker,Coastal,,Miichthys,Sciaenidae,43,21,116,146,22,11,32
+Molva molva,Ling,Coastal,,Molva,Lotidae,75,35,-55,44,40,20,55
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Coastal,,Mulloidichthys,Mullidae,30,-37,22,-124,67,33.5,-3.5
+Mullus barbatus barbatus,Red mullet,Coastal,,Mullus,Mullidae,58,14,-32,42,44,22,36
+Mullus surmuletus,Surmullet,Coastal,,Mullus,Mullidae,62,14,-19,42,48,24,38
+Mustelus asterias,Starry smooth-hound,Coastal,,Mustelus,Triakidae,61,16,-19,36,45,22.5,38.5
+Mustelus mustelus,Smooth-hound,Coastal,,Mustelus,Triakidae,58,-34,-19,36,92,46,12
+Mustelus palumbes,Whitespotted smooth-hound,Coastal,,Mustelus,Triakidae,-17,-36,#VALUE!,NA,19,9.5,-26.5
+Mycteroperca microlepis,Gag,Coastal,,Mycteroperca,Serranidae,40,-27,-98,-38,67,33.5,6.5
+Mycteroperca phenax,Scamp,Coastal,,Mycteroperca,Serranidae,41,8,-98,-25,33,16.5,24.5
+Myripristis berndti,Blotcheye soldierfish,Coastal,,Myripristis,Holocentridae,32,-32,#VALUE!,NA,64,32,0
+Myripristis jacobus,Blackbar soldierfish,Coastal,,Myripristis,Holocentridae,37,-23,-98,9,60,30,7
+Naso unicornis,Bluespine unicornfish,Coastal,,Naso,Acanthuridae,35,-33,30,-128,68,34,1
+Nemadactylus macropterus,Tarakihi,Coastal,,Nemadactylus,Latridae,-27,-48,-176,-62,21,10.5,-37.5
+Neopomacentrus filamentosus,Brown demoiselle,Coastal,,Neopomacentrus,Pomacentridae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Nibea albiflora,Yellow drum,Coastal,Maybe,Nibea,Sciaenidae,39,18,105,135,21,10.5,28.5
+Notothenia rossii,Marbled rockcod,Coastal,,Notothenia,Nototheniidae,45,-67,-75,165,112,56,-11
+Nototheniops larseni,Painted notie,Coastal,Maybe,Nototheniops,Nototheniidae,-51,-70,-92,166,19,9.5,-60.5
+Nuchequula mannusella,,Pelagic,,Nuchequula,Leiognathidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Oblada melanura,Saddled seabream,Coastal,,Oblada,Sparidae,44,-15,-19,36,59,29.5,14.5
+Ocyurus chrysurus,Yellowtail snapper,Coastal,,Ocyurus,Lutjanidae,42,-26,-98,-31,68,34,8
+Odonus niger,Red-toothed triggerfish,Coastal,,Odonus,Balistidae,32,-24,30,-137,56,28,4
+Okamejei kenojei,Ocellate spot skate,Coastal,,Okamejei,Rajidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Ophiodon elongatus,Lingcod,Coastal,,Ophiodon,Hexagrammidae,61,31,-172,-116,30,15,46
+Opistognathus aurifrons,Yellowhead jawfish,Coastal,,Opistognathus,Opistognathidae,NA,-23,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Oplegnathus fasciatus,Barred knifejaw,Coastal,,Oplegnathus,Oplegnathidae,41,22,117,-154,19,9.5,31.5
+Ostorhinchus doederleini,Doederlein's cardinalfish,Coastal,,Ostorhinchus,Apogonidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Pagellus bogaraveo,Blackspot seabream,Coastal,,Pagellus,Sparidae,65,20,-32,17,45,22.5,42.5
+Pagellus erythrinus,Common pandora,Coastal,,Pagellus,Sparidae,60,10,-26,36,50,25,35
+Pagothenia borchgrevinki,Bald notothen,Pelagic,,Pagothenia,Nototheniidae,-60,-78,-180,180,18,9,-69
+Pagrus auratus,Silver seabream,Coastal,,Pagrus,Sparidae,44,-47,90,-175,91,45.5,-1.5
+Pagrus auriga,Redbanded seabream,Coastal,,Pagrus,Sparidae,44,-16,-17,35,60,30,14
+Pagrus major,Red seabream,Coastal,,Pagrus,Sparidae,34,15,#VALUE!,NA,19,9.5,24.5
+Pagrus pagrus,Red porgy,Coastal,,Pagrus,Sparidae,51,-43,-98,36,94,47,4
+Pampus argenteus,Silver pomfret,Coastal,,Pampus,Stromateidae,46,-10,47,142,56,28,18
+Pampus chinensis,Chinese silver pomfret,Coastal,,Pampus,Stromateidae,32,-10,48,131,42,21,11
+Pampus minor,Southern lesser pomfret,Coastal,,Pampus,Stromateidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Paracentropogon rubripinnis,Redfin waspfish,Coastal,,Paracentropogon,Tetrarogidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Paralabrax albomaculatus,Whitespotted sandbass,Coastal,,Paralabrax,Serranidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Paralabrax clathratus,Kelp bass,Coastal,,Paralabrax,Serranidae,48,23,-126,-109,25,12.5,35.5
+Paralabrax nebulifer,Barred sand bass,Coastal,,Paralabrax,Serranidae,37,15,-123,-99,22,11,26
+Paralichthys californicus,California flounder,Coastal,,Paralichthys,Paralichthyidae,48,24,#VALUE!,NA,24,12,36
+Paralichthys olivaceus,Bastard halibut,Coastal,,Paralichthys,Paralichthyidae,62,1,99,163,61,30.5,31.5
+Parapristipoma trilineatum,Chicken grunt,Coastal,,Parapristipoma,Haemulidae,39,15,105,140,24,12,27
+Parupeneus multifasciatus,Manybar goatfish,Coastal,,Parupeneus,Mullidae,30,-32,92,-132,62,31,-1
+Pennahia argentata,Silver croaker,Coastal,Maybe,Pennahia,Sciaenidae,39,22,114,136,17,8.5,30.5
+Pholis fangi,,Coastal,,Pholis,Pholidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Planiliza affinis,Eastern keelback mullet,Coastal,,Planiliza,Mugilidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Plectropomus areolatus,Squaretail coralgrouper,Coastal,,Plectropomus,Serranidae,31,-25,32,-169,56,28,3
+Plectropomus leopardus,Leopard coralgrouper,Coastal,,Plectropomus,Serranidae,35,-30,99,-178,65,32.5,2.5
+Plectropomus maculatus,Spotted coralgrouper,Coastal,,Plectropomus,Serranidae,21,-28,117,159,49,24.5,-3.5
+Pleuragramma antarctica,Antarctica silverfish,Pelagic,,Pleuragramma,Nototheniidae,-60,-78,-180,180,18,9,-69
+Pleurogrammus monopterygius,Atka mackerel,Coastal,,Pleurogrammus,Hexagrammidae,64,34,130,-118,30,15,49
+Pleuronectes platessa,European plaice,Coastal,,Pleuronectes,Pleuronectidae,72,36,-47,45,36,18,54
+Polyprion americanus,Wreckfish,Coastal,Maybe,Polyprion,Polyprionidae,70,-55,-82,179,125,62.5,7.5
+Polyprion oxygeneios,Hapuku wreckfish,Coastal,,Polyprion,Polyprionidae,-28,-50,-180,180,22,11,-39
+Pomacentrus amboinensis,Ambon damsel,Coastal,,Pomacentrus,Pomacentridae,30,-25,#VALUE!,NA,55,27.5,2.5
+Pomacentrus coelestis,Neon damselfish,Coastal,,Pomacentrus,Pomacentridae,36,-32,79,-130,68,34,2
+Pomacentrus moluccensis,Lemon damsel,Coastal,,Pomacentrus,Pomacentridae,32,-32,92,-173,64,32,0
+Pomatomus saltatrix,Bluefish,Pelagic,,Pomatomus,Pomatomidae,45,-44,-180,180,89,44.5,0.5
+Pomatoschistus marmoratus,Marbled goby,Coastal,,Pomatoschistus,Gobiidae,48,35,-10,42,13,6.5,41.5
+Pontinus kuhlii,Offshore rockfish,Coastal,,Pontinus,Scorpaenidae,43,-8,-32,16,51,25.5,17.5
+Prionace glauca,Blue shark,Pelagic,,Prionace,Carcharhinidae,71,-55,-180,180,126,63,8
+Pristipomoides filamentosus,Crimson jobfish,Coastal,,Pristipomoides,Lutjanidae,35,-26,31,-144,61,30.5,4.5
+Pristipomoides zonatus,Oblique-banded snapper,Coastal,,Pristipomoides,Lutjanidae,35,-29,34,-146,64,32,3
+Protonibea diacanthus,Blackspotted croaker,Coastal,,Protonibea,Sciaenidae,40,-35,51,148,75,37.5,2.5
+Pseudopleuronectes americanus,Winter flounder,Coastal,,Pseudopleuronectes,Pleuronectidae,55,31,-82,-52,24,12,43
+Pseudopleuronectes herzensteini,Yellow striped flounder,Coastal,,Pseudopleuronectes,Pleuronectidae,67,35,#VALUE!,NA,32,16,51
+Pseudopleuronectes yokohamae,Marbled flounder,Coastal,,Pseudopleuronectes,Pleuronectidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Pterapogon kauderni,Banggai cardinalfish,Coastal,,Pterapogon,Apogonidae,-1,-2,123,124,1,0.5,-1.5
+Pterogobius elapoides,Serpentine goby,Coastal,,Pterogobius,Gobiidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Pterogobius zonoleucus,Whitegirdled goby,Coastal,,Pterogobius,Gobiidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Pterois miles,Devil firefish,Coastal,,Pterois,Scorpaenidae,30,-36,19,112,66,33,-3
+Rachycentron canadum,Cobia,Coastal,,Rachycentron,Rachycentridae,47,-37,-98,166,84,42,5
+Raja clavata,Thornback ray,Coastal,,Raja,Rajidae,70,-29,-25,42,99,49.5,20.5
+Raja miraletus,Brown ray,Coastal,,Raja,Rajidae,44,-35,#VALUE!,NA,79,39.5,4.5
+Raja polystigma,Speckled ray,Coastal,,Raja,Rajidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Raja radula,Rough ray,Coastal,,Raja,Rajidae,46,30,-8,36,16,8,38
+Rastrelliger kanagurta,Indian mackerel,Coastal,,Rastrelliger,Scombridae,38,-36,20,180,74,37,1
+Reinhardtius hippoglossoides,Greenland halibut,Pelagic,,Reinhardtius,Pleuronectidae,79,33,-180,180,46,23,56
+Rhincodon typus,Whale shark,Pelagic,,Rhincodon,Rhincodontidae,45,-48,-180,180,93,46.5,-1.5
+Rhizoprionodon acutus,Milk shark,Coastal,,Rhizoprionodon,Carcharhinidae,41,-30,-27,156,71,35.5,5.5
+Rhomboplites aurorubens,Vermilion snapper,Coastal,,Rhomboplites,Lutjanidae,42,-33,-99,-30,75,37.5,4.5
+Ruanoho whero,Spectacled triplefin,Coastal,Maybe,Ruanoho,Tripterygiidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Sarda sarda,Atlantic bonito,Pelagic,,Sarda,Scombridae,62,-40,-98,42,102,51,11
+Sardina pilchardus,European pilchard,Coastal,,Sardina,Clupeidae,68,14,-32,43,54,27,41
+Sardinella lemuru,Bali sardinella,Coastal,Maybe,Sardinella,Clupeidae,38,-33,97,134,71,35.5,2.5
+Sardinella longiceps,Indian oil sardine,Coastal,,Sardinella,Clupeidae,25,7,57,81,18,9,16
+Sardinops sagax,South American pilchard,Coastal,,Sardinops,Clupeidae,61,-47,-145,180,108,54,7
+Saurida elongata,Slender lizardfish,Coastal,,Saurida,Synodontidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Scartella cristata,Molly miller,Coastal,,Scartella,Blenniidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Scarus ghobban,Blue-barred parrotfish,Coastal,,Scarus,Scaridae,31,-35,21,-77,66,33,-2
+Scarus psittacus,Common parrotfish,Coastal,,Scarus,Scaridae,36,-35,30,-123,71,35.5,0.5
+Sciaenops ocellatus,Red drum,Coastal,Maybe,Sciaenops,Sciaenidae,43,0,#VALUE!,NA,43,21.5,21.5
+Scomber australasicus,Blue mackerel,Coastal,Maybe,Scomber,Scombridae,43,-50,32,-110,93,46.5,-3.5
+Scomber japonicus,Chub mackerel,Pelagic,,Scomber,Scombridae,60,-48,116,-70,108,54,6
+Scomber scombrus,Atlantic mackerel,Pelagic,,Scomber,Scombridae,70,30,-77,42,40,20,50
+Scomberomorus brasiliensis,Serra Spanish mackerel,Coastal,,Scomberomorus,Scombridae,21,-36,-90,-29,57,28.5,-7.5
+Scomberomorus cavalla,King mackerel,Coastal,,Scomberomorus,Scombridae,44,-22,-98,-34,66,33,11
+Scomberomorus commerson,Narrow-barred Spanish mackerel,Pelagic,,Scomberomorus,Scombridae,39,-41,-7,180,80,40,-1
+Scomberomorus concolor,Monterey Spanish mackerel,Coastal,,Scomberomorus,Scombridae,32,26,-115,-108,6,3,29
+Scomberomorus niphonius,Japanese Spanish mackerel,Coastal,,Scomberomorus,Scombridae,45,18,108,143,27,13.5,31.5
+Scomberomorus semifasciatus,Broad-barred king mackerel,Coastal,,Scomberomorus,Scombridae,-7,-30,112,157,23,11.5,-18.5
+Scomberomorus sierra,Pacific sierra,Coastal,,Scomberomorus,Scombridae,33,-27,-121,-70,60,30,3
+Scombrops boops,Gnomefish,Coastal,Maybe,Scombrops,Scombridae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Scombrops gilberti,Gnomefish,Coastal,,Scombrops,Scombridae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Scophthalmus maximus,Turbot,Coastal,,Scophthalmus,Scophthalmidae,70,30,-23,36,40,20,50
+Scophthalmus rhombus,Brill,Coastal,,Scophthalmus,Scophthalmidae,68,30,-25,42,38,19,49
+Scorpaena porcus,Black scorpionfish,Coastal,,Scorpaena,Scorpaenidae,55,25,-32,42,30,15,40
+Scyliorhinus canicula,Lesser spotted dogfish,Coastal,,Scyliorhinus,Scyliorhinidae,63,12,-18,36,51,25.5,37.5
+Scyliorhinus stellaris,Nursehound,Coastal,,Scyliorhinus,Scyliorhinidae,64,12,-18,36,52,26,38
+Sebastes alutus,Pacific ocean perch,Coastal,,Sebastes,Sebastidae,64,24,143,-110,40,20,44
+Sebastes atrovirens,Kelp rockfish,Coastal,,Sebastes,Sebastidae,39,27,-124,-114,12,6,33
+Sebastes auriculatus,Brown rockfish,Coastal,,Sebastes,Sebastidae,61,27,-155,-114,34,17,44
+Sebastes borealis,Shortraker rockfish,Coastal,,Sebastes,Sebastidae,61,34,#VALUE!,NA,27,13.5,47.5
+Sebastes caurinus,Copper rockfish,Coastal,,Sebastes,Sebastidae,60,27,-152,-114,33,16.5,43.5
+Sebastes crameri,Darkblotched rockfish,Coastal,,Sebastes,Sebastidae,70,32,162,-116,38,19,51
+Sebastes emphaeus,Puget Sound rockfish,Coastal,,Sebastes,Sebastidae,60,38,-152,-120,22,11,49
+Sebastes fasciatus,Acadian redfish,Coastal,,Sebastes,Sebastidae,74,35,-75,-13,39,19.5,54.5
+Sebastes flavidus,Yellowtail rockfish,Coastal,,Sebastes,Sebastidae,62,32,-167,-117,30,15,47
+Sebastes helvomaculatus,Rosethorn rockfish,Coastal,,Sebastes,Sebastidae,60,28,-155,-114,32,16,44
+Sebastes inermis,Dark-banded rockfish,Coastal,,Sebastes,Sebastidae,45,30,#VALUE!,NA,15,7.5,37.5
+Sebastes macdonaldi,Mexican rockfish,Coastal,,Sebastes,Sebastidae,37,23,-125,-109,14,7,30
+Sebastes melanops,Black rockfish,Coastal,,Sebastes,Sebastidae,62,22,170,-110,40,20,42
+Sebastes mentella,Beaked redfish,Pelagic,,Sebastes,Sebastidae,79,41,-67,35,38,19,60
+Sebastes miniatus,Vermilion rockfish,Coastal,,Sebastes,Sebastidae,54,27,-134,-114,27,13.5,40.5
+Sebastes mystinus,Blue rockfish,Coastal,,Sebastes,Sebastidae,55,30,130,-150,25,12.5,42.5
+Sebastes norvegicus,Golden redfish,Pelagic,,Sebastes,Sebastidae,79,39,-75,71,40,20,59
+Sebastes oculatus,Patagonian redfish,Coastal,,Sebastes,Sebastidae,-10,-56,-78,-53,46,23,-33
+Sebastes paucispinis,Bocaccio rockfish,Coastal,,Sebastes,Sebastidae,65,31,#VALUE!,NA,34,17,48
+Sebastes pinniger,Canary rockfish,Coastal,,Sebastes,Sebastidae,61,31,-154,-116,30,15,46
+Sebastes polyspinis,Northern rockfish,Coastal,,Sebastes,Sebastidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Sebastes rastrelliger,Grass rockfish,Coastal,,Sebastes,Sebastidae,45,29,-125,-115,16,8,37
+Sebastes ruberrimus,Yelloweye rockfish,Coastal,,Sebastes,Sebastidae,60,28,-170,-115,32,16,44
+Sebastes schlegelii,Korean rockfish,Coastal,,Sebastes,Sebastidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Sebastes thompsoni,Goldeye rockfish,Coastal,,Sebastes,Sebastidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Sebastes viviparus,Norway redfish,Coastal,,Sebastes,Sebastidae,71,50,-50,21,21,10.5,60.5
+Sebastiscus marmoratus,False kelpfish,Coastal,,Sebastiscus,Sebastidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Selar crumenophthalmus,Bigeye scad,Coastal,,Selar,Carangidae,47,-31,-180,180,16,39,39
+Semicossyphus darwini,Galapagos sheephead,Coastal,,Semicossyphus,Labridae,0,-24,-92,-70,24,12,-12
+Semicossyphus pulcher,California sheephead,Coastal,Maybe,Semicossyphus,Labridae,37,22,-123,-106,15,7.5,29.5
+Seriola dumerili,Greater amberjack,Coastal,,Seriola,Carangidae,45,-28,-180,180,73,36.5,8.5
+Seriola lalandi,Yellowtail amberjack,Pelagic,,Seriola,Carangidae,55,-57,-180,180,112,56,-1
+Seriola rivoliana,Longfin yellowtail,Pelagic,,Seriola,Carangidae,43,-38,-180,180,81,40.5,2.5
+Seriolella brama,Common warehou,Coastal,,Seriolella,Centrolophidae,-32,-51,115,179,19,9.5,-41.5
+Seriolella punctata,Silver warehou,Coastal,,Seriolella,Centrolophidae,-32,-55,115,-71,23,11.5,-43.5
+Serranus cabrilla,Comber,Coastal,,Serranus,Serranidae,57,-35,-32,36,92,46,11
+Siganus fuscescens,Mottled spinefoot,Coastal,,Siganus,Siganidae,42,-37,90,171,79,39.5,2.5
+Siganus guttatus,Orange-spotted spinefoot,Coastal,,Siganus,Siganidae,30,-30,#VALUE!,NA,60,30,0
+Siganus spinus,Little spinefoot,Coastal,,Siganus,Siganidae,30,-30,77,-129,60,30,0
+Sillago japonica,Japanese sillago,Coastal,,Sillago,Sillaginidae,45,21,116,149,24,12,33
+Sillago parvisquamis,Small-scale sillago,Coastal,,Sillago,Sillaginidae,37,21,117,142,16,8,29
+Siphamia tubifer,Tubifer cardinalfish,Coastal,,Siphamia,Apogonidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Solea senegalensis,Senegalese sole,Coastal,,Solea,Soleidae,47,-16,-19,14,63,31.5,15.5
+Solea solea,Common sole,Coastal,,Solea,Soleidae,67,17,-17,37,50,25,42
+Somniosus rostratus,Little sleeper shark,Coastal,,Somniosus,Somniosidae,47,-43,#VALUE!,NA,90,45,2
+Sparus aurata,Gilthead seabream,Coastal,,Sparus,Sparidae,62,15,-17,43,47,23.5,38.5
+Sphaeramia orbicularis,Orbiculate cardinalfish,Coastal,,Sphaeramia,Apogonidae,31,-27,32,-173,58,29,2
+Sphyraena barracuda,Great barracuda,Coastal,,Sphyraena,Sphyraenidae,42,-35,-180,180,77,38.5,3.5
+Sphyraena viridensis,Yellowmouth barracuda,Coastal,,Sphyraena,Sphyraenidae,44,14,-26,36,30,15,29
+Sphyrna lewini,Scalloped hammerhead,Pelagic,,Sphyrna,Sphyrnidae,46,-35,-180,180,81,40.5,5.5
+Spinachia spinachia,Sea stickleback,Coastal,,Spinachia,Gasterosteidae,71,43,-11,55,28,14,57
+Sprattus fuegensis,Falkland sprat,Coastal,,Sprattus,Clupeidae,-38,-58,-70,-57,20,10,-48
+Sprattus sprattus,European sprat,Coastal,,Sprattus,Clupeidae,66,30,-11,42,36,18,48
+Squalus acanthias,Picked dogfish,Coastal,,Squalus,Squalidae,81,-57,-82,-171,138,69,12
+Squalus blainville,Longnose spurdog,Coastal,,Squalus,Squalidae,50,-29,-17,43,79,39.5,10.5
+Stegastes partitus,Bicolor damselfish,Coastal,,Stegastes,Pomacentridae,32,-5,-98,-34,37,18.5,13.5
+Stenobrachius leucopsarus,Northern lampfish,Pelagic,,Stenobrachius,Myctophidae,66,29,128,-113,37,18.5,47.5
+Stenobrachius nannochir,Garnet lanternfish,Pelagic,,Stenobrachius,Myctophidae,66,22,139,-109,44,22,44
+Stephanolepis cirrhifer,Threadsail filefish,Coastal,,Stephanolepis,Monacanthidae,32,23,#VALUE!,NA,9,4.5,27.5
+Symphodus melops,Corkwing wrasse,Coastal,,Symphodus,Labridae,63,28,-32,25,35,17.5,45.5
+Symphodus tinca,East Atlantic peacock wrasse,Coastal,,Symphodus,Labridae,47,21,-11,42,26,13,34
+Syngnathus auliscus,Barred pipefish,Coastal,,Syngnathus,Syngnathidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Syngnathus floridae,Dusky pipefish,Coastal,,Syngnathus,Syngnathidae,40,8,#VALUE!,NA,32,16,24
+Syngnathus leptorhynchus,Bay pipefish,Coastal,,Syngnathus,Syngnathidae,61,22,-150,-109,39,19.5,41.5
+Syngnathus scovelli,Gulf pipefish,Coastal,,Syngnathus,Syngnathidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Syngnathus typhle,Broadnosed pipefish,Coastal,,Syngnathus,Syngnathidae,71,30,-11,42,41,20.5,50.5
+Takifugu rubripes,Japanese pufferfish,Coastal,,Takifugu,Tetraodontidae,46,21,119,142,25,12.5,33.5
+Thalassoma bifasciatum,Bluehead,Coastal,,Thalassoma,Labridae,33,8,-98,-59,25,12.5,20.5
+Thamnaconus hypargyreus,Lesser-spotted leatherjacket,Coastal,,Thamnaconus,Monacanthidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Thamnaconus modestus,Black scraper,Coastal,,Thamnaconus,Monacanthidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Thamnaconus septentrionalis,Bluefin leatherjacket,Coastal,,Thamnaconus,Monacanthidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Thunnus alalunga,Albacore,Pelagic,,Thunnus,Scombridae,60,-50,-180,180,110,55,5
+Thunnus albacares,Yellowfin tuna,Pelagic,,Thunnus,Scombridae,59,-48,-180,180,107,53.5,5.5
+Thunnus obesus,Bigeye tuna,Pelagic,,Thunnus,Scombridae,52,-48,-180,180,100,50,2
+Thunnus orientalis,Pacific bluefin tuna,Pelagic,,Thunnus,Scombridae,61,-52,99,-70,113,56.5,4.5
+Thunnus thynnus,Atlantic bluefin tuna,Pelagic,,Thunnus,Scombridae,69,-58,-99,42,127,63.5,5.5
+Torpedo marmorata,Marbled electric ray,Coastal,,Torpedo,Torpedinidae,60,-34,-19,36,94,47,13
+Totoaba macdonaldi,Totoaba,Coastal,,Totoaba,Sciaenidae,32,17,#VALUE!,NA,15,7.5,24.5
+Trachinops caudimaculatus,Southern hulafish,Coastal,,Trachinops,Plesiopidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Trachinotus carolinus,Florida pompano,Coastal,,Trachinotus,Carangidae,43,-38,-97,-35,81,40.5,2.5
+Trachinotus falcatus,Permit,Coastal,,Trachinotus,Carangidae,42,-25,-100,-30,67,33.5,8.5
+Trachinotus goodei,Great pompano,Coastal,,Trachinotus,Carangidae,43,-37,#VALUE!,NA,80,40,3
+Trachurus japonicus,Japanese jack mackerel,Coastal,Maybe,Trachurus,Carangidae,46,29,129,148,17,8.5,37.5
+Trachurus mediterraneus,Mediterraneus horse mackerel,Pelagic,,Trachurus,Carangidae,50,16,-20,43,34,17,33
+Trachurus murphyi,Chilean jack mackerel,Pelagic,,Trachurus,Carangidae,2,-51,106,-79,53,26.5,-24.5
+Trachurus picturatus,Blue jack mackerel,Coastal,,Trachurus,Carangidae,45,-41,-32,17,86,43,2
+Trachurus trachurus,Atlantic horse mackerel,Coastal,,Trachurus,Carangidae,67,-19,-26,42,86,43,24
+Trematomus bernacchii,Emerald rockcod,Coastal,,Trematomus,Nototheniidae,-61,-78,#VALUE!,NA,17,8.5,-69.5
+Trematomus eulepidotus,Blunt scalyhead,Coastal,,Trematomus,Nototheniidae,-60,-78,#VALUE!,NA,18,9,-69
+Trematomus hansoni,Striped rockcod,Coastal,,Trematomus,Nototheniidae,-53,-78,#VALUE!,NA,25,12.5,-65.5
+Trematomus newnesi,Dusky rockcod,Coastal,,Trematomus,Nototheniidae,-60,-78,#VALUE!,NA,18,9,-69
+Trematomus scotti,Crowned rockcod,Coastal,,Trematomus,Nototheniidae,-60,-78,#VALUE!,NA,18,9,-69
+Triaenodon obesus,Whitetip reef shark,Coastal,,Triaenodon,Carcharhinidae,29,-30,33,-77,59,29.5,-0.5
+Triakis megalopterus,Sharptooth houndshark,Coastal,,Triakis,Triakidae,-30,-36,#VALUE!,NA,6,3,-33
+Tripterygion delaisi,Black-faced blenny,Coastal,,Tripterygion,Tripterygiidae,52,12,-19,36,40,20,32
+Trygonorrhina dumerilii,Southern fiddler ray,Coastal,,Trygonorrhina,Rhinobatidae,-31,-41,114,148,10,5,-36
+Trygonorrhina fasciata,Eastern fiddler ray,Coastal,,Trygonorrhina,Rhinobatidae,-28,-38,149,155,10,5,-33
+Urobatis halleri,Haller's round ray,Coastal,,Urobatis,Urotrygonidae,43,7,-125,-79,36,18,25
+Urophycis tenuis,White hake,Coastal,,Urophycis,Phycidae,66,27,-81,-13,39,19.5,46.5
+Uropterygius micropterus,Tidepool snake moray,Coastal,,Uropterygius,Muraenidae,32,-24,#VALUE!,NA,56,28,4
+Verasper moseri,Barfin flounder,Coastal,,Verasper,Pleuronectidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Verasper variegatus,Spotted halibut,Coastal,,Verasper,Pleuronectidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Xiphias gladius,Swordfish,Pelagic,,Xiphias,Xiphiidae,69,-50,-180,180,119,59.5,9.5
+Xyrichtys novacula,Pearly razorfish,Coastal,,Xyrichtys,Labridae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Zearaja chilensis,Yellownose skate,Coastal,,Zearaja,Rajidae,-18,-57,-75,-52,39,19.5,-37.5
+Zearaja maugeana,Maugean skate,Coastal,Maybe,Zearaja,Rajidae,NA,#VALUE!,#VALUE!,NA,#VALUE!,#VALUE!,#VALUE!
+Zebrasoma flavescens,Yellow tang,Coastal,,Zebrasoma,Acanthuridae,30,-25,105,-137,55,27.5,2.5
+Zoarces viviparus,Eelpout,Coastal,,Zoarces,Zoarcidae,72,49,-11,52,23,11.5,60.5
+Zosterisessor ophiocephalus,Grass goby,Coastal,,Zosterisessor,Gobiidae,47,28,-6,42,19,9.5,37.5
