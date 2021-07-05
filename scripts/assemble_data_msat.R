@@ -213,6 +213,13 @@ msat7 = msat7[!(msat7$Source %in% dups),]
 	inds = is.na(msat$lat) & !is.na(msat$lat_deg)
 	sum(inds) # 12359
 #	msat[inds,c('lat', 'lat_deg', 'lat_min')]
+
+	#change minutes & seconds to negative if lat/long is negative
+	msat$lat_min <- ifelse(msat$lat_deg < 0, -msat$lat_min, msat$lat_min) #imp so things sum properly in next step
+	msat$lat_sec <- ifelse(msat$lat_deg < 0, -msat$lat_sec, msat$lat_sec)
+	msat$lon_min <- ifelse(msat$lon_deg < 0, -msat$lon_min, msat$lon_min)
+	msat$lon_sec <- ifelse(msat$lon_deg < 0, -msat$lon_sec, msat$lon_sec)
+
 	msat$lat[inds] = rowSums(cbind(msat$lat_deg[inds], msat$lat_min[inds]/60, msat$lat_sec[inds]/3600), na.rm=TRUE)
 
 	inds = !is.na(msat$lon_deg)
@@ -559,7 +566,7 @@ msat <- read.csv('output/msat.csv')
 
 # pdf('figures/map_msats.pdf')
 
-plot(msat$lon, msat$lat, col='red', cex=0.5, xlab='Longitude', ylab='Latitude', main='Microsatellite data')
+plot(msat$lon, msat$lat, col='red', cex=0.5, xlab='Longitude', ylab='Latitude', main='microsatellite data')
 map(database='world', add=TRUE, fill=TRUE, col='grey', boundary=FALSE, interior=FALSE)
 points(msat$lon, msat$lat, col='red', cex=0.5)
 

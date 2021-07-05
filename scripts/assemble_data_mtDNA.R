@@ -4,9 +4,9 @@
 #######################################
 # Read in assembled file
 #######################################
-mtdna <- read.csv('data/mtDNA/Fishery lat mtDNA Complete Database.csv', stringsAsFactors=FALSE)
-srdbmatch <- read.csv("data/srdb_matching/mtdna_to_match.csv", stringsAsFactors=FALSE) # to match genetic data to SRDB stocks
-
+#mtdna <- read.csv('data/mtDNA/Fishery lat mtDNA Complete Database.csv', stringsAsFactors=FALSE)
+#srdbmatch <- read.csv("data/srdb_matching/mtdna_to_match.csv", stringsAsFactors=FALSE) # to match genetic data to SRDB stocks
+mtdna <- read.csv('data/mtDNA/mtDNA_merged.csv', stringsAsFactors=FALSE)
 
 # Calc lat and lon in decimal degrees
 	mtdna$lat_min[is.na(mtdna$lat_min)] = 0
@@ -59,17 +59,24 @@ srdbmatch <- read.csv("data/srdb_matching/mtdna_to_match.csv", stringsAsFactors=
 	mtdna$spp[mtdna$spp ==  "Diplodus sargus sargus"] <- "Diplodus sargus"
 	mtdna$spp[mtdna$spp ==  "Clupea pallasii pallasii"] <- "Clupea pallasii"
 	mtdna$spp[mtdna$spp ==  "Centrophorus zeehani"] <- "Centrophorus zeehaani"
+	mtdna$spp[mtdna$spp ==  "Amodytes personatus"] <- "Ammodytes personatus"
+	mtdna$spp[mtdna$spp ==  "Acanthopagrus schlegeli"] <- "Acanthopagrus schlegelii"
+	mtdna$spp[mtdna$spp ==  "Amphiprion akallopsisos"] <- "Amphiprion akallopisos"
+	mtdna$spp[mtdna$spp ==  "Saurida elongate"] <- "Saurida elongata"
+	mtdna$spp[mtdna$spp ==  "Holocentrus ascensionis"] <- "Holocentrus adscensionis"
+	mtdna$spp[mtdna$spp ==  "Pleuragramma antarcticum"] <- "Pleuragramma antarctica"
 
 # Fix locus names
 	mtdna$MarkerName <- gsub(' $', '', mtdna$MarkerName) # remove trailing space
 	mtdna$MarkerName <- gsub('^ ', '', mtdna$MarkerName) # remove leading space
-	mtdna$MarkerName[mtdna$MarkerName %in% c('cyt b', 'Cytb', 'cytochrome b', 'Cytochrome b')] <- 'cytb' # standardize names
-	mtdna$MarkerName[mtdna$MarkerName %in% c('cytochrome c oxidase subunit 1', 'cytochrome oxidase c subunit I', 'cytochrome-c oxidase I')] <- 'cytochrome c oxidase subunit I' # standardize names
+	mtdna$MarkerName[mtdna$MarkerName %in% c('cyt b', 'Cytb', 'cytochrome b', 'Cytochrome b', 'Cyt b')] <- 'cytb' # standardize names
+	mtdna$MarkerName[mtdna$MarkerName %in% c('cytochrome c oxidase subunit 1', 'cytochrome oxidase c subunit I', 'cytochrome-c oxidase I', 'COI')] <- 'cytochrome c oxidase subunit I' # standardize names
 	mtdna$MarkerName[mtdna$MarkerName %in% c('D-Loop', 'D-loop region', 'D-loop sequence')] <- 'D-loop' # standardize names
-	mtdna$MarkerName[mtdna$MarkerName %in% c('Control region', 'control region (D-loop)')] <- 'control region' # standardize names
+	mtdna$MarkerName[mtdna$MarkerName %in% c('Control region', 'control region (D-loop)', 'CR')] <- 'control region' # standardize names
 	mtdna$MarkerName[mtdna$MarkerName %in% c('HVR-1', 'HVR-I', 'hyper-variable region I')] <- 'HVR I' # standardize names
-	mtdna$MarkerName[mtdna$MarkerName %in% c('ATPase 6 and 8')] <- 'ATPase 6, 8' # standardize names
+	mtdna$MarkerName[mtdna$MarkerName %in% c('ATPase 6 and 8', 'ATPase6/8')] <- 'ATPase 6, 8' # standardize names
 	mtdna$MarkerName[mtdna$MarkerName %in% c('NADH-dehydrogenase subunit 4 (ND-4)', 'ND4 region')] <- 'ND4' # standardize names
+	mtdna$MarkerName[mtdna$MarkerName %in% c('Cox1')] <- 'cox1' # standardize names
 	
 
 # Process collection year (to do later)
@@ -84,13 +91,13 @@ srdbmatch <- read.csv("data/srdb_matching/mtdna_to_match.csv", stringsAsFactors=
 	summary(mtdna)
 
 # check species names
-	t(t(sort(unique(mtdna$spp)))) # to print as one long list. 162 species.
+	spp_list <- t(t(sort(unique(mtdna$spp)))) # to print as one long list. 245 species.
 
 # check locus names
-	t(t(sort(unique(mtdna$MarkerName)))) # to print as one long list
+	locus_list <- t(t(sort(unique(mtdna$MarkerName)))) # to print as one long list
 
 # check source names
-	t(t(sort(unique(mtdna$Source)))) # to print as one long list
+	source_list <- t(t(sort(unique(mtdna$Source)))) # to print as one long list
 
 
 # check lat
@@ -147,7 +154,8 @@ mtdna <- mtdna[,c('spp', 'CommonName', 'Source', 'Country', 'Site', 'lat', 'lon'
 
 
 # write out mtdna data (allow multiple loci per line)
-	write.csv(mtdna, file='output/mtdna.csv')
+	#write.csv(mtdna, file='output/mtdna.csv')
+	write.csv(mtdna, file='output/mtdna_merged_cleaned.csv')
 
 
 
@@ -156,6 +164,7 @@ mtdna <- mtdna[,c('spp', 'CommonName', 'Source', 'Country', 'Site', 'lat', 'lon'
 ####################################################################
 require(rfishbase)
 fbdatmtdna <- data.frame(spp=sort(unique(mtdna$spp)), fbsci=NA) # translation table from my scientific names to those in fishbase
+fbdatmtdna <- subset(fbdatmtdna, spp!="Branchiostoma belcheri" & spp!="Branchiostoma japonicum") #not in fishbase??
 
 options(nwarnings=300)
 nrow(fbdatmtdna)
@@ -170,7 +179,7 @@ for(i in 1:nrow(fbdatmtdna)){ # check sci names
 	fbdatmtdna[inds,] # examine rows where fishbase has a different name. all look good
 
 # write out
-write.csv(fbdatmtdna, file='output/fbdat_mtdna.csv', row.names=FALSE)
+write.csv(fbdatmtdna, file='output/fbdat_mtdna_merged.csv', row.names=FALSE)
 
 
 #####################################################################################
@@ -213,7 +222,7 @@ write.csv(fbdatmtdna, file='output/fbdat_mtdna.csv', row.names=FALSE)
 require(maps)
 require(mapdata)
 
-pdf('figures/map_mtdna.pdf')
+pdf('figures/map_mtdna_merged.pdf')
 
 plot(mtdna$lon, mtdna$lat, col='red', cex=0.5, xlab='Longitude', ylab='Latitude', main='mtdna data', type='n')
 map(database='world', add=TRUE, fill=TRUE, col='grey', boundary=FALSE, interior=FALSE)
