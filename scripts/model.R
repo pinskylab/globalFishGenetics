@@ -10,8 +10,8 @@ library(MuMIn)
 library(glmmTMB)
 
 #read in data
-mtdna <- read.csv("output/mtdna_assembled_2.csv", stringsAsFactors = FALSE)
-msat <- read.csv("output/msatloci.csv", stringsAsFactors = FALSE)
+mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
+msat <- read.csv("output/msatloci_assembled.csv", stringsAsFactors = FALSE)
 cp_info <- read.csv("output/spp_combined_info.csv", stringsAsFactors = FALSE)
   mtdna <- merge(mtdna, cp_info[, c('spp', 'Pelagic_Coastal', 'Genus', 'Family', 'Northernmost', 'Southernmost', 'Half_RangeSize', 
                                     'Centroid')], all.x = TRUE)
@@ -145,8 +145,16 @@ beta_null_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + (1|
 
 #scale lat
 mtdna_small_He$lat_scale <- scale(mtdna_small_He$lat)
-mtdna_small_He$lon_scale <- scale(mtdna_small_He$lon)
+#mtdna_small_He$lon_scale <- scale(mtdna_small_He$lon)
 mtdna_small_He$abslat_scale <- scale(mtdna_small_He$abslat)
+
+#convert lon to radians
+mtdna_small_He$lon_360 <- mtdna_small_He$lon + 180 #convert (-180,180) to (0,360)
+mtdna_small_He$lon_rad <- (2*pi*mtdna_small_He$lon_360)/360
+
+#check circular relationship
+y <- sin(mtdna_small_He$lon_rad) + cos(mtdna_small_He$lon_rad)
+plot(mtdna_small_He$lon_rad, y)
 
 #lat_model_full <- glmer(cbind(success, failure) ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + (1|spp) + (1|Source) + (1|MarkerName) + 
        #                    (1|Site), family = binomial, data = mtdna_small_He, na.action = "na.fail")
@@ -156,8 +164,8 @@ beta_lat_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + lat_
 
 #lon_model_full <- glmer(cbind(success, failure) ~ bp_scale + range_position + lon_scale + I(lon_scale^2) + (1|spp) + (1|Source) + (1|MarkerName) + 
                     #      (1|Site), family = binomial, data = mtdna_small_He, na.action = "na.fail")
-beta_lon_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + lon_scale + I(lon_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
-                                 (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
+beta_lon_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                                     (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
 #dredge_lon <- dredge(lon_model_full)
 
 #abslat_model_full <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + (1|spp) + (1|Source) + (1|MarkerName) + 
@@ -170,13 +178,13 @@ beta_abslat_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + a
                    #       (1|Site), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa")) #switching to faster optimizer --> can check with allFit to see if optimizers converge
 #ss <- getME(lat_lon_model_full, c("theta", "fixef")) #trying to restart from previous fit (more iterations to converge in)
 #ll_model_2 <- update(lat_lon_model_full, start = ss, control = glmerControl(optCtrl= list(maxfun = 2e4)))
-beta_lat_lon_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + lon_scale + I(lon_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+beta_lat_lon_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                  (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
 #dredge_lat_lon <- dredge(lat_lon_model_full)
 
 #abslat_lon_model_full <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + lon_scale + I(lon_scale^2) + (1|spp) + (1|Source) + (1|MarkerName) + 
                          #     (1|Site), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa")) #switching to faster optimizer --> can check with allFit to see if optimizers converge
-beta_abslat_lon_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + lon_scale + I(lon_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+beta_abslat_lon_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                      (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
 #dredge_abslat_lon <- dredge(abslat_lon_model_full)
 
@@ -299,8 +307,12 @@ coefs
 
 #scale lat
 mtdna_small_pi$lat_scale <- scale(mtdna_small_pi$lat)
-mtdna_small_pi$lon_scale <- scale(mtdna_small_pi$lon)
+#mtdna_small_pi$lon_scale <- scale(mtdna_small_pi$lon)
 mtdna_small_pi$abslat_scale <- scale(mtdna_small_pi$abslat)
+
+#convert lon to radians
+mtdna_small_pi$lon_360 <- mtdna_small_pi$lon + 180 #convert (-180,180) to (0,360)
+mtdna_small_pi$lon_rad <- (2*pi*mtdna_small_pi$lon_360)/360
 
 lat_model_full_pi <- lmer(logpi ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                           (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
@@ -310,15 +322,15 @@ abslat_model_full_pi <- lmer(logpi ~ bp_scale + range_position + abslat_scale + 
                             (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 dredge_abslat_pi <- dredge(abslat_model_full_pi)
 
-lon_model_full_pi <- lmer(logpi ~ bp_scale + range_position + lon_scale + I(lon_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+lon_model_full_pi <- lmer(logpi ~ bp_scale + range_position + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                             (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 dredge_lon_pi <- dredge(lon_model_full_pi)
 
-lat_lon_model_full_pi <- lmer(logpi ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + lon_scale + I(lon_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+lat_lon_model_full_pi <- lmer(logpi ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                             (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 dredge_lat_lon_pi <- dredge(lat_lon_model_full_pi)
 
-abslat_lon_model_full_pi <- lmer(logpi ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + lon_scale + I(lon_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+abslat_lon_model_full_pi <- lmer(logpi ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                 (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 dredge_abslat_lon_pi <- dredge(abslat_lon_model_full_pi)
 
@@ -442,9 +454,13 @@ summary(msat_null_model_full)
 
 #scale lat
 msat$lat_scale <- scale(msat$lat)
-msat$lon_scale <- scale(msat$lon)
+#msat$lon_scale <- scale(msat$lon)
 msat$abslat <- abs(msat$lat)
   msat$abslat_scale <- scale(msat$abslat)
+  
+#convert lon to radians
+msat$lon_360 <- msat$lon + 180 #convert (-180,180) to (0,360)
+msat$lon_rad <- (2*pi*msat$lon_360)/360
 
 #msat_lat_model_full <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + Repeat + range_position + lat_scale + I(lat_scale^2) + (1|spp) + (1|Source) + 
  #                         (1|Site), family = binomial, data = msat, na.action = "na.fail")
@@ -453,7 +469,7 @@ beta_msat_lat_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Rep
 
 #msat_lon_model_full <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + Repeat + range_position + lon_scale + I(lon_scale^2) + (1|spp) + (1|Source) + 
  #                              (1|Site), family = binomial, data = msat, na.action = "na.fail")
-beta_msat_lon_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + range_position + lon_scale + I(lon_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|Site), family = beta_family, data = msat)
+beta_msat_lon_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + range_position + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|Site), family = beta_family, data = msat)
 #msat_dredge_lon <- dredge(msat_lon_model_full)
 
 #msat_abslat_model_full <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + Repeat + range_position + abslat_scale + I(abslat_scale^2) + (1|spp) + (1|Source) + 
@@ -463,10 +479,10 @@ beta_msat_abslat_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + 
 
 #msat_lat_lon_model_full <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + Repeat + range_position + lat_scale + I(lat_scale^2) + lon_scale + I(lon_scale^2) + (1|spp) + (1|Source) + 
  #                              (1|Site), family = binomial, data = msat, na.action = "na.fail")
-beta_msat_lat_lon_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + range_position + lat_scale + I(lat_scale^2) + lon_scale + I(lon_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|Site), family = beta_family, data = msat)
+beta_msat_lat_lon_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + range_position + lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|Site), family = beta_family, data = msat)
 # <- dredge(msat_lat_lon_model_full)
 
 #msat_abslat_lon_model_full <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + Repeat + range_position + abslat_scale + I(abslat_scale^2) + lon_scale + I(lon_scale^2) + (1|spp) + (1|Source) + 
  #                                  (1|Site), family = binomial, data = msat, na.action = "na.fail")
-beta_msat_abslat_lon_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + range_position + abslat_scale + I(abslat_scale^2) + lon_scale + I(lon_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|Site), family = beta_family, data = msat)
+beta_msat_abslat_lon_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + range_position + abslat_scale + I(abslat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|Site), family = beta_family, data = msat)
 #msat_dredge_abslat_lon <- dredge(msat_abslat_lon_model_full)
