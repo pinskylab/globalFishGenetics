@@ -8,6 +8,7 @@ library(plotrix)
 library(lme4)
 library(MuMIn)
 library(glmmTMB)
+library(DHARMa)
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
@@ -132,6 +133,11 @@ for (i in 1:nrow(mtdna_small_He)) { #transform data to handle 1s (Douma & Weedon
 #null model (no abslat/lat/lon)
 beta_null_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + (1|Family/Genus/spp) + (1|Source) + 
                                   (1|Site) + (1|MarkerName), family = beta_family, data = mtdna_small_He)
+
+#checking fit with DHARMa
+null_model_mtdna_he_sim_output <- simulateResiduals(beta_null_model_full, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(null_model_mtdna_he_sim_output) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(null_model_mtdna_he_sim_output) #residuals against predicted value -- looking for uniformity
 
 ######## build lat, abslat & lon model ########
 #have abslat, lat, lon or some combo of three
@@ -277,6 +283,11 @@ null_model_full_pi <- lmer(logpi ~ bp_scale + range_position + (1|Family/Genus/s
                              (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 #dredge_null_pi <- dredge(null_model_full_pi) #not getting same scale/convergence issues as with He
 #dredge_null_pi #same top models as with He
+
+#checking fit with DHARMa
+null_model_pi_sim_output <- simulateResiduals(null_model_full_pi, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(null_model_pi_sim_output) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(null_model_pi_sim_output) #residuals against predicted value -- looking for uniformity
 
 #pull p-values
 coefs <- data.frame(coef(summary(abslat_lon_model_full_pi)))
