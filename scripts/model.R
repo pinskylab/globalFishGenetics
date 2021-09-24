@@ -134,10 +134,53 @@ for (i in 1:nrow(mtdna_small_He)) { #transform data to handle 1s (Douma & Weedon
 beta_null_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + (1|Family/Genus/spp) + (1|Source) + 
                                   (1|Site) + (1|MarkerName), family = beta_family, data = mtdna_small_He)
 
+beta_null_model_test <- glmmTMB(transformed_He ~ bp_scale + range_position, family = beta_family, data = mtdna_small_He)
+sim_test <- simulateResiduals(fittedModel = beta_null_model_test, n = 1000, plot = F)
+plotQQunif(sim_test)
+plotResiduals(sim_test)
+countZeroes <- function(x) sum(x == 0.5)
+testGeneric(sim_test, summary = countZeroes, alternative = "less")
+
+#test binomial model again
+mtdna_small_He$success <- round(mtdna_small_He$He*mtdna_small_He$n)
+mtdna_small_He$failure<- round((1 - mtdna_small_He$He)*mtdna_small_He$n)
+
+binomial_null <- glmer(cbind(success, failure) ~ bp_scale + range_position + (1|Family/Genus/spp) + (1|Source) + 
+                         (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+
+binomial_null_test <- glmer(cbind(success, failure) ~ range_position + (1|Family/Genus/spp) + (1|Source) + 
+                         (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+
+
+binomial_null_sim <- simulateResiduals(fittedModel = binomial_null, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_null_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(binomial_null_sim) #residuals against predicted value -- looking for uniformity
+
+plotResiduals(binomial_null_sim, mtdna_small_He$bp)
+plotResiduals(binomial_null_sim, mtdna_small_He$range_position)
+
+#compare binomial w/ and w/out bp_scale
+anova(binomial_null, binomial_null_test)
+
+#add random effect for every unit
+
+mtdna_small_He$ID <- (1:1680)
+binomial_null_IDRE <- glmer(cbind(success, failure) ~ bp_scale + range_position + (1|Family/Genus/spp) + (1|Source) + 
+                                   (1|Site) + (1|ID) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+
+binomial_null_IDRE_sim <- simulateResiduals(fittedModel = binomial_null_IDRE, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_null_IDRE_sim)
+plotResiduals(binomial_null_IDRE_sim)
+
+
 #checking fit with DHARMa
-null_model_mtdna_he_sim_output <- simulateResiduals(beta_null_model_full, plot = F) #creates "DHARMa" residuals from simulations
+null_model_mtdna_he_sim_output <- simulateResiduals(fittedModel = beta_null_model_full, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
 plotQQunif(null_model_mtdna_he_sim_output) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
 plotResiduals(null_model_mtdna_he_sim_output) #residuals against predicted value -- looking for uniformity
+
+#testing against specific predictors
+plotResiduals(null_model_mtdna_he_sim_output, mtdna_small_He$bp_scale)
+plotResiduals(null_model_mtdna_he_sim_output, mtdna_small_He$range_position)
 
 ######## build lat, abslat & lon model ########
 #have abslat, lat, lon or some combo of three
@@ -146,6 +189,7 @@ plotResiduals(null_model_mtdna_he_sim_output) #residuals against predicted value
 #scale geographic variables
 mtdna_small_He$lat_scale <- scale(mtdna_small_He$lat)
 #mtdna_small_He$lon_scale <- scale(mtdna_small_He$lon)
+mtdna_small_He$abslat <- abs(mtdna_small_He$lat)
 mtdna_small_He$abslat_scale <- scale(mtdna_small_He$abslat)
 
 #convert lon to radians
@@ -161,25 +205,80 @@ beta_lat_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + lat_
                                   (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
 #dredge_lat <- dredge(lat_model_full)
 
+mtdna_he_lat_sim_output <- simulateResiduals(fittedModel = beta_lat_model_full, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(mtdna_he_lat_sim_output) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(mtdna_he_lat_sim_output) #residuals against predicted value -- looking for uniformity
+
+#testing against specific predictors
+plotResiduals(mtdna_he_lat_sim_output, mtdna_small_He$lat_scale)
+
+binomial_lat <- glmer(cbind(success, failure) ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
+                         (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+
+binomial_lat_sim <- simulateResiduals(fittedModel = binomial_lat, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_lat_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(binomial_lat_sim) #residuals against predicted value -- looking for uniformity
+
+plotResiduals(binomial_lat_sim, mtdna_small_He$lat_scale)
+
 #lon model
 beta_lon_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                      (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
 #dredge_lon <- dredge(lon_model_full)
+
+beta_lon_sim <- simulateResiduals(fittedModel = beta_lon_model_full, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(beta_lon_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(beta_lon_sim) #residuals against predicted value -- looking for uniformity
+
+binomial_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
+                        (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+
+binomial_lon_sim <- simulateResiduals(fittedModel = binomial_lon, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_lon_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(binomial_lon_sim) #residuals against predicted value -- looking for uniformity
+
+plotResiduals(binomial_lon_sim, mtdna_small_He$lon_scale)
 
 #abslat model
 beta_abslat_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                  (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
 #dredge_abslat <- dredge(abslat_model_full)
 
+binomial_abslat <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
+                        (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+
+binomial_abslat_sim <- simulateResiduals(fittedModel = binomial_abslat, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_abslat_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(binomial_abslat_sim) #residuals against predicted value -- looking for uniformity
+
+plotResiduals(binomial_abslat_sim, mtdna_small_He$abslat_scale)
+
 #lat & lon model
 beta_lat_lon_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                  (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
 #dredge_lat_lon <- dredge(lat_lon_model_full)
 
+binomial_lat_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
+                           (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+
+binomial_lat_lon_sim <- simulateResiduals(fittedModel = binomial_lat_lon, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_lat_lon_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(binomial_lat_lon_sim) #residuals against predicted value -- looking for uniformity
+
 #abslat & lon model
 beta_abslat_lon_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                      (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
 #dredge_abslat_lon <- dredge(abslat_lon_model_full)
+
+binomial_abslat_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
+                            (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+
+binomial_abslat_lon_sim <- simulateResiduals(fittedModel = binomial_abslat_lon, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_abslat_lon_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(binomial_abslat_lon_sim) #residuals against predicted value -- looking for uniformity
+
+#compare models with anova
+anova(binomial_null, binomial_abslat, binomial_lat, binomial_lon, binomial_abslat_lon, binomial_lat_lon)
 
 ##############################################################################################################
 
@@ -284,10 +383,17 @@ null_model_full_pi <- lmer(logpi ~ bp_scale + range_position + (1|Family/Genus/s
 #dredge_null_pi <- dredge(null_model_full_pi) #not getting same scale/convergence issues as with He
 #dredge_null_pi #same top models as with He
 
+null_model_test <- lmer(logpi ~ range_position + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                             (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
+
 #checking fit with DHARMa
-null_model_pi_sim_output <- simulateResiduals(null_model_full_pi, plot = F) #creates "DHARMa" residuals from simulations
+null_model_pi_sim_output <- simulateResiduals(null_model_test, plot = F) #creates "DHARMa" residuals from simulations
 plotQQunif(null_model_pi_sim_output) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
 plotResiduals(null_model_pi_sim_output) #residuals against predicted value -- looking for uniformity
+
+#testing against specific predictors
+plotResiduals(null_model_pi_sim_output, mtdna_small_pi$bp_scale)
+plotResiduals(null_model_pi_sim_output, mtdna_small_pi$range_position)
 
 #pull p-values
 coefs <- data.frame(coef(summary(abslat_lon_model_full_pi)))
@@ -430,6 +536,86 @@ beta_msat_null_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Re
 summary(msat_null_model_full)
 #msat_dredge_null <- dredge(msat_null_model_full)
 #msat_dredge_null
+
+#try randomly sampling rows from msat to better visualize diagnostics
+msat_small <- sample_n(msat, 2500)
+
+beta_msat_null_test <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + range_position + (1|Family/Genus/spp) + 
+                                       (1|Source) + (1|Site), family = beta_family, data = msat_small)
+
+beta_msat_null_test_sim <- simulateResiduals(fittedModel = beta_msat_null_test, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(beta_msat_null_test_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(beta_msat_null_test_sim) #residuals against predicted value -- looking for uniformity
+
+plotResiduals(beta_msat_null_test_sim, msat$PrimerNote)
+plotResiduals(beta_msat_null_test_sim, msat$CrossSpp)
+plotResiduals(beta_msat_null_test_sim, msat$Repeat)
+plotResiduals(beta_msat_null_test_sim, msat$range_position)
+
+beta_msat_null_model_nocrossspp <- glmmTMB(transformed_He ~ PrimerNote + Repeat + range_position + (1|Family/Genus/spp) + 
+                                       (1|Source) + (1|Site), family = beta_family, data = msat)
+beta_msat_null_model_norepeat <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + range_position + (1|Family/Genus/spp) + 
+                                       (1|Source) + (1|Site), family = beta_family, data = msat)
+beta_msat_null_model_nocnor <- glmmTMB(transformed_He ~ PrimerNote + range_position + (1|Family/Genus/spp) + 
+                                       (1|Source) + (1|Site), family = beta_family, data = msat)
+
+beta_msat_null_noc_sim <- simulateResiduals(fittedModel = beta_msat_null_model_nocrossspp, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+beta_msat_null_nor_sim <- simulateResiduals(fittedModel = beta_msat_null_model_norepeat, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+beta_msat_null_nocnor_sim <- simulateResiduals(fittedModel = beta_msat_null_model_nocnor, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+
+plotQQunif(beta_msat_null_nocnor_sim)
+plotResiduals(beta_msat_null_nocnor_sim, smoothScatter = T)
+
+beta_msat_null_sim <- simulateResiduals(fittedModel = beta_msat_null_model_full, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(beta_msat_null_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(beta_msat_null_sim, smoothScatter = T) #residuals against predicted value -- looking for uniformity
+
+plotResiduals(beta_msat_null_sim, msat$PrimerNote)
+plotResiduals(beta_msat_null_sim, msat$CrossSpp)
+plotResiduals(beta_msat_null_sim, msat$Repeat)
+plotResiduals(beta_msat_null_sim, msat$range_position)
+
+#test binomial model again
+msat$success <- round(msat$He*msat$n)
+msat$failure<- round((1 - msat$He)*msat$n)
+
+binomial_msat_null <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + Repeat + range_position + (1|Family/Genus/spp) + (1|Source) + 
+                         (1|Site), family = binomial, data = msat, na.action = "na.fail")
+
+binomial_msat_null_sim <- simulateResiduals(fittedModel = binomial_msat_null, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_msat_null_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(binomial_msat_null_sim) #residuals against predicted value -- looking for uniformity
+testDispersion(binomial_msat_null_sim)
+
+#try correcting for overdispersion/heteroskedasticity
+#add random effect for every unit
+
+msat$ID <- (1:24182)
+binomial_msat_null_IDRE <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + Repeat + range_position + (1|Family/Genus/spp) + (1|Source) + 
+                              (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
+
+binomial_msat_null_IDRE_sim <- simulateResiduals(fittedModel = binomial_msat_null_IDRE, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_msat_null_IDRE_sim)
+plotResiduals(binomial_msat_null_IDRE_sim)
+
+plotResiduals(binomial_msat_null_sim, msat$PrimerNote)
+plotResiduals(binomial_msat_null_sim, msat$CrossSpp)
+plotResiduals(binomial_msat_null_sim, msat$Repeat)
+plotResiduals(binomial_msat_null_sim, msat$range_position)
+
+#test without weird CrossSpp values (0.875)
+
+sort(unique(msat$CrossSpp))
+msat_test <- subset(msat, CrossSpp != 0.875)
+
+binomial_msat_noweird_CS_null <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + Repeat + range_position + (1|Family/Genus/spp) + (1|Source) + 
+                              (1|Site), family = binomial, data = msat_test, na.action = "na.fail")
+
+binomial_msat_noweird_CS_null_sim <- simulateResiduals(fittedModel = binomial_msat_noweird_CS_null, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_msat_noweird_CS_null_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(binomial_msat_noweird_CS_null_sim) #residuals against predicted value -- looking for uniformity
+
+plotResiduals(binomial_msat_noweird_CS_null_sim, msat_test$CrossSpp)
 
 ######## building lat, abslat & lon model ########
 #have abslat, lat, lon or some combo of three
