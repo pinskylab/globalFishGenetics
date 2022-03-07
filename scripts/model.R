@@ -9,6 +9,7 @@ library(lme4)
 library(MuMIn)
 library(glmmTMB)
 library(DHARMa)
+library(effects)
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
@@ -122,67 +123,48 @@ mtdna_small_He$bp_scale <- scale(as.numeric(mtdna_small_He$bp))
 #subset to only those with range_position
 mtdna_small_He <- subset(mtdna_small_He, range_position != "NA")
 
-#transform He data to deal with 1s (no 0s in dataset as excluded monomorphic data)
-mtdna_small_He$transformed_He <- NA #create column to fill in
-
-for (i in 1:nrow(mtdna_small_He)) { #transform data to handle 1s (Douma & Weedon (2018) Methods in Ecology & Evolution)
-  mtdna_small_He$transformed_He[i] <- ((mtdna_small_He$He[i]*(mtdna_small_He$n[i] - 1)) + 0.5)/mtdna_small_He$n[i]
-}
-
-#### run null model ####
-#null model (no abslat/lat/lon)
-beta_null_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + (1|Family/Genus/spp) + (1|Source) + 
-                                  (1|Site) + (1|MarkerName), family = beta_family, data = mtdna_small_He)
-
-beta_null_model_test <- glmmTMB(transformed_He ~ bp_scale + range_position, family = beta_family, data = mtdna_small_He)
-beta_sim <- simulateResiduals(fittedModel = beta_null_model_full, n = 1000, plot = F)
-plotQQunif(beta_sim)
-plotResiduals(beta_sim)
-countZeroes <- function(x) sum(x == 0.5)
-testGeneric(sim_test, summary = countZeroes, alternative = "less")
-
-#test binomial model again
+#calculate success and failure
 mtdna_small_He$success <- round(mtdna_small_He$He*mtdna_small_He$n)
 mtdna_small_He$failure<- round((1 - mtdna_small_He$He)*mtdna_small_He$n)
 
+#### run null model ####
+#null model (no abslat/lat/lon)
+#binomial model
+
 binomial_null <- glmer(cbind(success, failure) ~ bp_scale + range_position + (1|Family/Genus/spp) + (1|Source) + 
-                         (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+                         (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
+                         control = glmerControl(optimizer = "bobyqa"))
 
-binomial_null_test <- glmer(cbind(success, failure) ~ range_position + (1|Family/Genus/spp) + (1|Source) + 
-                         (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+binomial_null_nobp <- glmer(cbind(success, failure) ~ range_position + (1|Family/Genus/spp) + (1|Source) + 
+                         (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail",
+                         control = glmerControl(optimizer = "bobyqa"))
 
+binomial_null_norp <- glmer(cbind(success, failure) ~ bp_scale + (1|Family/Genus/spp) + (1|Source) + 
+                          (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, 
+                          na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
 
+binomial_null_nobp_norp <- glmer(cbind(success, failure) ~ (1|Family/Genus/spp) + (1|Source) + 
+                              (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
+                              control = glmerControl(optimizer = "bobyqa"))
+
+#check fit with DHARMa
 binomial_null_sim <- simulateResiduals(fittedModel = binomial_null, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
 plotQQunif(binomial_null_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
 plotResiduals(binomial_null_sim) #residuals against predicted value -- looking for uniformity
 
+#against bp & range position
 plotResiduals(binomial_null_sim, mtdna_small_He$bp)
 plotResiduals(binomial_null_sim, mtdna_small_He$range_position)
 
-#compare binomial w/ and w/out bp_scale
-anova(binomial_null, binomial_null_test)
-
-#add random effect for every unit
-mtdna_small_He$ID <- (1:1680)
-binomial_null_IDRE <- glmer(cbind(success, failure) ~ bp_scale + range_position + (1|Family/Genus/spp) + (1|Source) + 
-                                   (1|Site) + (1|ID) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
-
-binomial_null_IDRE_sim <- simulateResiduals(fittedModel = binomial_null_IDRE, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_null_IDRE_sim)
-plotResiduals(binomial_null_IDRE_sim) #doesn't make things better -- makes them worse as far as fit w/residuals looks
-
-
-#checking fit with DHARMa
-null_model_mtdna_he_sim_output <- simulateResiduals(fittedModel = beta_null_model_full, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(null_model_mtdna_he_sim_output) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
-plotResiduals(null_model_mtdna_he_sim_output) #residuals against predicted value -- looking for uniformity
-
-#testing against specific predictors
-plotResiduals(null_model_mtdna_he_sim_output, mtdna_small_He$bp_scale)
-plotResiduals(null_model_mtdna_he_sim_output, mtdna_small_He$range_position)
+#compare binomial w/ and w/out fixed effects
+anova(binomial_null, binomial_null_nobp, binomial_null_norp, binomial_null_nobp_norp)
 
 #test dispersion for binomial model
 testDispersion(binomial_null_sim)
+
+#look at partial residuals
+bp_eff <- effect("range_position", residuals = TRUE, binomial_null) #do with squared value? seems to be the same
+plot(bp_eff, smooth.residuals = TRUE)
 
 ######## build lat, abslat & lon model ########
 #have abslat, lat, lon or some combo of three
@@ -202,125 +184,98 @@ mtdna_small_He$lon_rad <- (2*pi*mtdna_small_He$lon_360)/360
 y <- sin(mtdna_small_He$lon_rad) + cos(mtdna_small_He$lon_rad)
 plot(mtdna_small_He$lon_rad, y)
 
-#lat model
-beta_lat_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
-                                  (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
-#dredge_lat <- dredge(lat_model_full)
-
-mtdna_he_lat_sim_output <- simulateResiduals(fittedModel = beta_lat_model_full, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(mtdna_he_lat_sim_output) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
-plotResiduals(mtdna_he_lat_sim_output) #residuals against predicted value -- looking for uniformity
-
-#testing against specific predictors
-plotResiduals(mtdna_he_lat_sim_output, mtdna_small_He$lat_scale)
-
+#### lat model ####
 binomial_lat <- glmer(cbind(success, failure) ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
-                         (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+                         (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
 
+binomial_lat_norp <- glmer(cbind(success, failure) ~ bp_scale + lat_scale + I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
+                        (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
+
+#checking fit with DHARMa
 binomial_lat_sim <- simulateResiduals(fittedModel = binomial_lat, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
 plotQQunif(binomial_lat_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
 plotResiduals(binomial_lat_sim) #residuals against predicted value -- looking for uniformity
 
 plotResiduals(binomial_lat_sim, mtdna_small_He$lat_scale)
 
-#lon model
-beta_lon_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
-                                     (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
-#dredge_lon <- dredge(lon_model_full)
+#look at partial residuals
+lat_eff <- effect("I(lat_scale^2)", residuals = TRUE, binomial_lat_norp) #do with squared value? seems to be the same
+plot(lat_eff, smooth.residuals = TRUE)
 
-beta_lon_sim <- simulateResiduals(fittedModel = beta_lon_model_full, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(beta_lon_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
-plotResiduals(beta_lon_sim) #residuals against predicted value -- looking for uniformity
-
+#### lon model ####
 binomial_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
-                        (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+                        (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
 
+binomial_lon_norp <- glmer(cbind(success, failure) ~ bp_scale + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
+                        (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
+
+#checking fit with DHARMa
 binomial_lon_sim <- simulateResiduals(fittedModel = binomial_lon, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
 plotQQunif(binomial_lon_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
 plotResiduals(binomial_lon_sim) #residuals against predicted value -- looking for uniformity
 
 plotResiduals(binomial_lon_sim, mtdna_small_He$lon_scale)
 
-#abslat model
-beta_abslat_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
-                                 (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
-#dredge_abslat <- dredge(abslat_model_full)
+#look at partial residuals
+lon_eff <- effect("cos(lon_rad)", residuals = TRUE, binomial_lon_norp) #not sure how to do this...
+plot(lon_eff, smooth.residuals = TRUE)
 
+#### abslat model ####
 binomial_abslat <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
-                        (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+                        (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
 
+binomial_abslat_norp <- glmer(cbind(success, failure) ~ bp_scale + abslat_scale + I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
+                           (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
+
+#checking fit with DHARMa
 binomial_abslat_sim <- simulateResiduals(fittedModel = binomial_abslat, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
 plotQQunif(binomial_abslat_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
 plotResiduals(binomial_abslat_sim) #residuals against predicted value -- looking for uniformity
 
 plotResiduals(binomial_abslat_sim, mtdna_small_He$abslat_scale)
 
-#lat & lon model
-beta_lat_lon_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
-                                 (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
-#dredge_lat_lon <- dredge(lat_lon_model_full)
+#look at partial residuals
+abslat_eff <- effect("abslat_scale", residuals = TRUE, binomial_abslat_norp) #doesn't matter which abslat, reads together
+plot(abslat_eff, smooth.residuals = TRUE)
 
+#### lat & lon model ####
 binomial_lat_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
                            (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
 
+binomial_lat_lon_norp <- glmer(cbind(success, failure) ~ bp_scale + lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
+                            (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
+
+#checking fit with DHARMa
 binomial_lat_lon_sim <- simulateResiduals(fittedModel = binomial_lat_lon, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
 plotQQunif(binomial_lat_lon_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
 plotResiduals(binomial_lat_lon_sim) #residuals against predicted value -- looking for uniformity
 testDispersion(binomial_lat_lon_sim)
 
-#abslat & lon model
-beta_abslat_lon_model_full <- glmmTMB(transformed_He ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
-                                     (1|Site), family = beta_family, data = mtdna_small_He) #beta_family (betabinomial is binomial)
-#dredge_abslat_lon <- dredge(abslat_lon_model_full)
+#look at partial residuals
+lat_eff <- effect("lat_scale", residuals = TRUE, binomial_lat_lon_norp)
+lon_eff <- effect("sin(lon_rad)", residuals = TRUE, binomial_lat_lon_norp)
+plot(lat_eff, smooth.residuals = TRUE)
 
+#### abslat & lon model ###
 binomial_abslat_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
                             (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
 
+binomial_abslat_lon_norp <- glmer(cbind(success, failure) ~ bp_scale + abslat_scale + I(abslat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
+                               (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
+
+#checking fit with DHARMa
 binomial_abslat_lon_sim <- simulateResiduals(fittedModel = binomial_abslat_lon, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
 plotQQunif(binomial_abslat_lon_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
 plotResiduals(binomial_abslat_lon_sim) #residuals against predicted value -- looking for uniformity
 
+#look at partial residuals
+abslat_eff <- effect("abslat_scale", residuals = TRUE, binomial_abslat_lon_norp)
+lon_eff <- effect("sin(lon_rad)", residuals = TRUE, binomial_abslat_lon_norp)
+plot(lat_eff, smooth.residuals = TRUE)
+#x_range_position <- as.data.frame(effects_range_position) #if want to turn these into ggplot
+
 #compare models with anova
 anova(binomial_null, binomial_abslat, binomial_lat, binomial_lon, binomial_abslat_lon, binomial_lat_lon)
-
-#visualize effects
-effects_range_position <- effect(term = "range_position", mod = binomial_lat_lon)
-summary(effects_range_position)
-x_range_position <- as.data.frame(effects_range_position)
-
-#range_position plot
-range_position_plot <- ggplot() + 
-  geom_point(data = mtdna_small_He, aes(x = range_position, y = He)) + 
-  geom_point(data = x_range_position, aes(x = range_position, y = fit), color = "blue") + 
-  geom_line(data = x_range_position, aes(x = range_position, y = fit), color = "blue") + 
-  geom_ribbon(data = x_range_position, aes(x = range_position, ymin = lower, ymax = upper), alpha = 0.3, fill = "blue") + 
-  labs(x = "range_position (% from centroid)", y = "He")
-
-effects_bp_scale <- effect(term = "bp_scale", mod = binomial_lat_lon)
-summary(effects_bp_scale)
-x_bp_scale <- as.data.frame(effects_bp_scale)
-
-#bp_scale plot
-bp_scale_plot <- ggplot() + 
-  geom_point(data = mtdna_small_He, aes(x = bp_scale, y = He)) + 
-  geom_point(data = x_bp_scale, aes(x = bp_scale, y = fit), color = "blue") + 
-  geom_line(data = x_bp_scale, aes(x = bp_scale, y = fit), color = "blue") + 
-  geom_ribbon(data = x_bp_scale, aes(x = bp_scale, ymin = lower, ymax = upper), alpha = 0.3, fill = "blue") + 
-  labs(x = "bp scale", y = "He")
-
-effects_abslat <- effect(term = "abslat_scale", mod = binomial_abslat_lon)
-summary(effects_abslat)
-x_abslat <- as.data.frame(effects_abslat)
-
-#abslat plot
-abslat_plot <- ggplot() + 
-  geom_point(data = mtdna_small_He, aes(x = abslat_scale, y = He)) + 
-  geom_point(data = x_abslat, aes(x = abslat_scale, y = fit), color = "blue") + 
-  geom_line(data = x_abslat, aes(x = abslat_scale, y = fit), color = "blue") + 
-  geom_ribbon(data = x_abslat, aes(x = abslat_scale, ymin = lower, ymax = upper), alpha = 0.3, fill = "blue") + 
-  labs(x = "abslat scale", y = "He")
-
-#bootMer
 
 ##############################################################################################################
 
@@ -420,16 +375,20 @@ mtdna_small_pi <- subset(mtdna_small_pi, range_position != "NA")
 
 #### run null model ####
 #null model (no abslat/lat/lon)
-null_model_full_pi <- lmer(logpi ~ range_position + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+null_model_pi <- lmer(logpi ~ bp_scale + range_position + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                              (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
-#dredge_null_pi <- dredge(null_model_full_pi) #not getting same scale/convergence issues as with He
-#dredge_null_pi #same top models as with He
 
-null_model_test <- lmer(logpi ~ range_position + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+null_model_pi_nobp <- lmer(logpi ~ range_position + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                             (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
+
+null_model_pi_norp <- lmer(logpi ~ bp_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                             (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
+
+null_model_pi_nobp_norp <- lmer(logpi ~ (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                              (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
 #checking fit with DHARMa
-null_model_pi_sim_output <- simulateResiduals(null_model_test, plot = F) #creates "DHARMa" residuals from simulations
+null_model_pi_sim_output <- simulateResiduals(null_model_pi, plot = F) #creates "DHARMa" residuals from simulations
 plotQQunif(null_model_pi_sim_output) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
 plotResiduals(null_model_pi_sim_output) #residuals against predicted value -- looking for uniformity
 testDispersion(null_model_pi_sim_output)
@@ -439,9 +398,13 @@ plotResiduals(null_model_pi_sim_output, mtdna_small_pi$bp_scale)
 plotResiduals(null_model_pi_sim_output, mtdna_small_pi$range_position)
 
 #pull p-values
-coefs <- data.frame(coef(summary(abslat_lon_model_full_pi)))
+coefs <- data.frame(coef(summary(abslat_lon_model_pi_norp)))
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 coefs
+
+#look at partial residuals
+rp_eff <- effect("range_position", residuals = TRUE, null_model_pi)
+plot(rp_eff, smooth.residuals = TRUE)
 
 ######## building lat, abslat & lon model ########
 #have abslat, lat, lon or some combo of three
@@ -457,52 +420,89 @@ mtdna_small_pi$abslat_scale <- scale(mtdna_small_pi$abslat)
 mtdna_small_pi$lon_360 <- mtdna_small_pi$lon + 180 #convert (-180,180) to (0,360)
 mtdna_small_pi$lon_rad <- (2*pi*mtdna_small_pi$lon_360)/360
 
-#lat model
-lat_model_full_pi <- lmer(logpi ~ range_position + lat_scale + I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+#### lat model ###
+lat_model_pi <- lmer(logpi ~ range_position + lat_scale + I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                           (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
-#dredge_lat_pi <- dredge(lat_model_full_pi)
 
-lat_model_pi_sim_output <- simulateResiduals(lat_model_full_pi, plot = F) #creates "DHARMa" residuals from simulations
+lat_model_pi_norp <- lmer(logpi ~ lat_scale + I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                       (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+
+#checking fit with DHARMa
+lat_model_pi_sim_output <- simulateResiduals(lat_model_pi, plot = F) #creates "DHARMa" residuals from simulations
 plotQQunif(lat_model_pi_sim_output) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
 plotResiduals(lat_model_pi_sim_output) #residuals against predicted value -- looking for uniformity
 #testDispersion(lat_model_pi_sim_output)
 
-#abslat model
-abslat_model_full_pi <- lmer(logpi ~ range_position + abslat_scale + I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
-                            (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
-#dredge_abslat_pi <- dredge(abslat_model_full_pi)
+#look at partial residuals
+lat_eff <- effect("lat_scale", residuals = TRUE, lat_model_pi_norp)
+plot(lat_eff, smooth.residuals = TRUE)
 
+#### abslat model ###
+abslat_model_pi <- lmer(logpi ~ range_position + abslat_scale + I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                            (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+
+abslat_model_pi_norp <- lmer(logpi ~ abslat_scale + I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                          (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+
+#checking fit with DHARMa
 abslat_model_pi_sim_output <- simulateResiduals(abslat_model_full_pi, plot = F)
 plotQQunif(abslat_model_pi_sim_output) #QQplot
 plotResiduals(abslat_model_pi_sim_output) #residuals
 
-#lon model
-lon_model_full_pi <- lmer(logpi ~ range_position + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
-                            (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
-#dredge_lon_pi <- dredge(lon_model_full_pi)
+#look at partial residuals
+abslat_eff <- effect("abslat_scale", residuals = TRUE, abslat_model_pi_norp)
+plot(abslat_eff, smooth.residuals = TRUE)
 
+#l### on model ###
+lon_model_pi <- lmer(logpi ~ range_position + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                            (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+
+lon_model_pi_norp <- lmer(logpi ~ sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                       (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+
+#checking fit with DHARMa
 lon_model_pi_sim_output <- simulateResiduals(lon_model_full_pi, plot = F)
 plotQQunif(lon_model_pi_sim_output) #QQplot
 plotResiduals(lon_model_pi_sim_output) #residuals
 
-#lat & lon model
-lat_lon_model_full_pi <- lmer(logpi ~ range_position + lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
-                            (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
-#dredge_lat_lon_pi <- dredge(lat_lon_model_full_pi)
+#look at partial residuals
+lon_eff <- effect("sin(lon_rad)", residuals = TRUE, lon_model_pi_norp)
+plot(lon_eff, smooth.residuals = TRUE)
 
+#### lat & lon model ###
+lat_lon_model_pi <- lmer(logpi ~ range_position + lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                            (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+
+lat_lon_model_pi_norp <- lmer(logpi ~ lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                           (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+
+#checking fit with DHARMa
 lat_lon_model_pi_sim_output <- simulateResiduals(lat_lon_model_full_pi, plot = F)
 plotQQunif(lat_lon_model_pi_sim_output) #QQplot
 plotResiduals(lat_lon_model_pi_sim_output) #residuals
 
-#abslat model
-abslat_lon_model_full_pi <- lmer(logpi ~ range_position + abslat_scale + I(abslat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
-                                (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
-#dredge_abslat_lon_pi <- dredge(abslat_lon_model_full_pi)
+#look at partial residuals
+lat_eff <- effect("lat_scale", residuals = TRUE, lat_lon_model_pi_norp)
+lon_eff <- effect("sin(lon_rad)", residuals = TRUE, lat_lon_model_pi_norp)
+plot(lon_eff, smooth.residuals = TRUE)
 
+#### abslat & lon model ####
+abslat_lon_model_pi <- lmer(logpi ~ range_position + abslat_scale + I(abslat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                                (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+
+abslat_lon_model_pi_norp <- lmer(logpi ~ abslat_scale + I(abslat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                              (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+
+#checking fit with DHARMa
 abslat_lon_model_pi_sim_output <- simulateResiduals(abslat_lon_model_full_pi, plot = F)
 plotQQunif(abslat_lon_model_pi_sim_output) #QQplot
 plotResiduals(abslat_lon_model_pi_sim_output) #residuals
 testDispersion(abslat_lon_model_pi_sim_output)
+
+#look at partial residuals
+abslat_eff <- effect("abslat_scale", residuals = TRUE, abslat_lon_model_pi_norp)
+lon_eff <- effect("sin(lon_rad)", residuals = TRUE, abslat_lon_model_pi_norp)
+plot(lon_eff, smooth.residuals = TRUE)
 
 #compare models with anova
 anova(null_model_full_pi, lat_model_full_pi, lon_model_full_pi, abslat_model_full_pi, lat_lon_model_full_pi, abslat_lon_model_full_pi)
@@ -592,101 +592,85 @@ msat_site <- boxplot(He ~ Site, data = msat) #many sites BUT often only one obse
 #subset to only those with range_position
 msat <- subset(msat, range_position != "NA")
 
-#transform He data to deal with 1s (no 0s in dataset as excluded monomorphic data)
-msat$transformed_He <- NA #create column to fill in
-for (i in 1:nrow(msat)) { #transform data to handle 1s (Douma & Weedon (2018) Methods in Ecology & Evolution)
-  msat$transformed_He[i] <- ((msat$He[i]*(msat$n[i] - 1)) + 0.5)/msat$n[i]
-}
-
-#### run null model ####
-#null model (no abslat/lat/lon)
-beta_msat_null_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + range_position + (1|Family/Genus/spp) + 
-                                       (1|Source) + (1|Site), family = beta_family, data = msat)
-summary(msat_null_model_full)
-#msat_dredge_null <- dredge(msat_null_model_full)
-#msat_dredge_null
-
-#try randomly sampling rows from msat to better visualize diagnostics
-msat_small <- sample_n(msat, 2500)
-
-beta_msat_null_test <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + range_position + (1|Family/Genus/spp) + 
-                                       (1|Source) + (1|Site), family = beta_family, data = msat_small)
-
-beta_msat_null_test_sim <- simulateResiduals(fittedModel = beta_msat_null_test, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(beta_msat_null_test_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
-plotResiduals(beta_msat_null_test_sim) #residuals against predicted value -- looking for uniformity
-
-plotResiduals(beta_msat_null_test_sim, msat$PrimerNote)
-plotResiduals(beta_msat_null_test_sim, msat$CrossSpp)
-plotResiduals(beta_msat_null_test_sim, msat$Repeat)
-plotResiduals(beta_msat_null_test_sim, msat$range_position)
-
-beta_msat_null_model_nocrossspp <- glmmTMB(transformed_He ~ PrimerNote + Repeat + range_position + (1|Family/Genus/spp) + 
-                                       (1|Source) + (1|Site), family = beta_family, data = msat)
-beta_msat_null_model_norepeat <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + range_position + (1|Family/Genus/spp) + 
-                                       (1|Source) + (1|Site), family = beta_family, data = msat)
-beta_msat_null_model_nocnor <- glmmTMB(transformed_He ~ PrimerNote + range_position + (1|Family/Genus/spp) + 
-                                       (1|Source) + (1|Site), family = beta_family, data = msat)
-
-beta_msat_null_noc_sim <- simulateResiduals(fittedModel = beta_msat_null_model_nocrossspp, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-beta_msat_null_nor_sim <- simulateResiduals(fittedModel = beta_msat_null_model_norepeat, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-beta_msat_null_nocnor_sim <- simulateResiduals(fittedModel = beta_msat_null_model_nocnor, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-
-plotQQunif(beta_msat_null_nocnor_sim)
-plotResiduals(beta_msat_null_nocnor_sim, smoothScatter = T)
-
-beta_msat_null_sim <- simulateResiduals(fittedModel = beta_msat_null_model_full, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(beta_msat_null_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
-plotResiduals(beta_msat_null_sim, smoothScatter = T) #residuals against predicted value -- looking for uniformity
-
-plotResiduals(beta_msat_null_sim, msat$PrimerNote)
-plotResiduals(beta_msat_null_sim, msat$CrossSpp)
-plotResiduals(beta_msat_null_sim, msat$Repeat)
-plotResiduals(beta_msat_null_sim, msat$range_position)
-
-#test binomial model again
+#calculate successes & failures
 msat$success <- round(msat$He*msat$n)
 msat$failure<- round((1 - msat$He)*msat$n)
 
-binomial_msat_null <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + Repeat + range_position + (1|Family/Genus/spp) + (1|Source) + 
-                         (1|Site), family = binomial, data = msat, na.action = "na.fail")
-
-binomial_msat_null_sim <- simulateResiduals(fittedModel = binomial_msat_null, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_msat_null_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
-plotResiduals(binomial_msat_null_sim) #residuals against predicted value -- looking for uniformity
-testDispersion(binomial_msat_null_sim)
-
-#try correcting for overdispersion/heteroskedasticity
 #add random effect for every unit
 msat$ID <- (1:24182)
-binomial_msat_null_IDRE <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + Repeat + range_position + (1|Family/Genus/spp) + (1|Source) + 
+
+#### run null model ####
+#null model (no abslat/lat/lon)
+#binomial model
+
+binomial_msat_null <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + Repeat + range_position + (1|Family/Genus/spp) + (1|Source) + 
                               (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
 
-binomial_msat_null_IDRE_sim <- simulateResiduals(fittedModel = binomial_msat_null_IDRE, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_msat_null_IDRE_sim)
-plotResiduals(binomial_msat_null_IDRE_sim)
-testDispersion(binomial_msat_null_IDRE_sim)
+binomial_msat_null_norp <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + Repeat + (1|Family/Genus/spp) + (1|Source) + 
+                              (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
+
+binomial_msat_null_nocrossspp <- glmer(cbind(success, failure) ~ PrimerNote + Repeat + range_position + (1|Family/Genus/spp) + 
+                                              (1|Source) + (1|Site) + (1|ID), family = binomial, data = msat)
+
+binomial_msat_null_norepeat <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + (1|Family/Genus/spp) + 
+                                       (1|Source) + (1|Site) + (1|ID), family = binomial, data = msat)
+
+binomial_msat_null_nopn <- glmer(cbind(success, failure) ~ CrossSpp + Repeat + range_position + (1|Family/Genus/spp) + 
+                                         (1|Source) + (1|Site) + (1|ID), family = binomial, data = msat)
+
+binomial_msat_null_nopn_norepeat <- glmer(cbind(success, failure) ~ CrossSpp + range_position + (1|Family/Genus/spp) + 
+                                   (1|Source) + (1|Site) + (1|ID), family = binomial, data = msat)
+
+binomial_msat_null_nopn_nocrossspp <- glmer(cbind(success, failure) ~ Repeat + range_position + (1|Family/Genus/spp) + 
+                                   (1|Source) + (1|Site) + (1|ID), family = binomial, data = msat)
+
+binomial_msat_null_nopn_norp <- glmer(cbind(success, failure) ~ CrossSpp + range_position + (1|Family/Genus/spp) + 
+                                   (1|Source) + (1|Site) + (1|ID), family = binomial, data = msat)
+
+binomial_msat_null_nocrossspp_norp <- glmer(cbind(success, failure) ~ PrimerNote + Repeat + (1|Family/Genus/spp) + 
+                                         (1|Source) + (1|Site) + (1|ID), family = binomial, data = msat)
+
+binomial_msat_null_norepeat_norp <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + (1|Family/Genus/spp) + 
+                                       (1|Source) + (1|Site) + (1|ID), family = binomial, data = msat)
+
+binomial_msat_null_nocrosspp_norepeat <- glmer(cbind(success, failure) ~ PrimerNote + range_position + (1|Family/Genus/spp) + 
+                                          (1|Source) + (1|Site) + (1|ID), family = binomial, data = msat)
+
+binomial_msat_null_nocrosspp_norepeat_norp <- glmer(cbind(success, failure) ~ PrimerNote + (1|Family/Genus/spp) + 
+                                    (1|Source) + (1|Site) + (1|ID), family = binomial, data = msat)
+
+binomial_msat_null_nocrosspp_norp_nopn <- glmer(cbind(success, failure) ~ Repeat + (1|Family/Genus/spp) + (1|Source) + 
+                              (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
+
+binomial_msat_null_nocrosspp_norepeat_nopn <- glmer(cbind(success, failure) ~ range_position + (1|Family/Genus/spp) + (1|Source) + 
+                              (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
+
+binomial_msat_null_nopn_norepeat_norp <- glmer(cbind(success, failure) ~ CrossSpp + (1|Family/Genus/spp) + (1|Source) + 
+                              (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
+
+binomial_msat_null_nopn_norp_nocrosspp_norepeat <- glmer(cbind(success, failure) ~ (1|Family/Genus/spp) + (1|Source) + 
+                              (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
+
+#checking fit with DHARMa
+binomial_msat_null_sim <- simulateResiduals(fittedModel = binomial_msat_null, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_msat_null_sim)
+plotResiduals(binomial_msat_null_sim)
+testDispersion(binomial_msat_null_sim)
 
 plotResiduals(binomial_msat_null_IDRE_sim, msat$PrimerNote)
 plotResiduals(binomial_msat_null_IDRE_sim, msat$CrossSpp)
 plotResiduals(binomial_msat_null_IDRE_sim, msat$Repeat)
 plotResiduals(binomial_msat_null_IDRE_sim, msat$range_position)
 
-binomial_msat_null_IDRE_nocrossspp <- glmer(cbind(success, failure) ~ PrimerNote + Repeat + range_position + (1|Family/Genus/spp) + 
-                                             (1|Source) + (1|Site) + (1|ID), family = binomial, data = msat)
-binomial_msat_null_IDRE_norepeat <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + (1|Family/Genus/spp) + 
-                                              (1|Source) + (1|Site) + (1|ID), family = binomial, data = msat)
-binomial_msat_null_IDRE_nocnor <- glmer(cbind(success, failure) ~ PrimerNote + range_position + (1|Family/Genus/spp) + 
-                                              (1|Source) + (1|Site) + (1|ID), family = binomial, data = msat)
-
-binomial_msat_null_IDRE_noc_sim <- simulateResiduals(fittedModel = binomial_msat_null_IDRE_nocrossspp, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-binomial_msat_null_IDRE_nor_sim <- simulateResiduals(fittedModel = binomial_msat_null_IDRE_norepeat, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-binomial_msat_null_IDRE_nocnor_sim <- simulateResiduals(fittedModel = binomial_msat_null_IDRE_nocnor, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-
-plotQQunif(binomial_msat_null_IDRE_nocnor_sim)
-plotResiduals(binomial_msat_null_IDRE_nocnor_sim, smoothScatter = T)
-
+#comparing models
 anova(binomial_msat_null_IDRE, binomial_msat_null_IDRE_nocrossspp, binomial_msat_null_IDRE_norepeat, binomial_msat_null_IDRE_nocnor)
+
+#look at partial residuals
+primernote_eff <- effect("PrimerNote", residuals = TRUE, binomial_msat_null)
+crossspp_eff <- effect("CrossSpp", residuals = TRUE, binomial_msat_null)
+repeat_eff <- effect("Repeat", residuals = TRUE, binomial_msat_null)
+rangepos_eff <- effect("range_position", residuals = TRUE, binomial_msat_null)
+plot(rangepos_eff, smooth.residuals = TRUE)
 
 ######## building lat, abslat & lon model ########
 #have abslat, lat, lon or some combo of three
@@ -701,83 +685,97 @@ msat$abslat_scale <- scale(msat$abslat)
 msat$lon_360 <- msat$lon + 180 #convert (-180,180) to (0,360)
 msat$lon_rad <- (2*pi*msat$lon_360)/360
 
-#lat model
-beta_msat_lat_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + 
-                                      range_position + lat_scale + I(lat_scale^2) + 
-                                      (1|Family/Genus/spp) + (1|Source) + (1|Site), 
-                                    family = beta_family, data = msat)
-#msat_dredge_lat <- dredge(msat_lat_model_full)
-
-binomial_msat_lat_IDRE <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + lat_scale + 
+#### lat model ####
+binomial_msat_lat <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + lat_scale + 
                                   I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
                                    (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
 
-binomial_msat_lat_IDRE_sim <- simulateResiduals(fittedModel = binomial_msat_lat_IDRE, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_msat_lat_IDRE_sim)
-plotResiduals(binomial_msat_lat_IDRE_sim)
+binomial_msat_lat_norp <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + lat_scale + 
+                             I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
+                             (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
 
-#lon model
-beta_msat_lon_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + 
-                                      range_position + sin(lon_rad) + cos(lon_rad) + 
-                                      (1|Family/Genus/spp) + (1|Source) + (1|Site), 
-                                    family = beta_family, data = msat)
-#msat_dredge_lon <- dredge(msat_lon_model_full)
+#checking fit with DHARMa
+binomial_msat_lat_sim <- simulateResiduals(fittedModel = binomial_msat_lat, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_msat_lat_sim)
+plotResiduals(binomial_msat_lat_sim)
 
+#look at partial residuals
+lat_eff <- effect("lat_scale", residuals = TRUE, binomial_msat_lat_norp)
+plot(lat_eff, smooth.residuals = TRUE)
 
-binomial_msat_lon_IDRE <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + sin(lon_rad) + 
+#### lon model ####
+binomial_msat_lon <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + sin(lon_rad) + 
                                   cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
                                   (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
 
-binomial_msat_lon_IDRE_sim <- simulateResiduals(fittedModel = binomial_msat_lon_IDRE, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_msat_lon_IDRE_sim)
-plotResiduals(binomial_msat_lon_IDRE_sim)
+binomial_msat_lon_norp <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + sin(lon_rad) + 
+                             cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
+                             (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
 
-#abslat model
-beta_msat_abslat_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + 
-                                         range_position + abslat_scale + I(abslat_scale^2) + 
-                                         (1|Family/Genus/spp) + (1|Source) + (1|Site), 
-                                       family = beta_family, data = msat)
-#msat_dredge_abslat <- dredge(msat_abslat_model_full)
+binomial_msat_lon_sim <- simulateResiduals(fittedModel = binomial_msat_lon, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_msat_lon_sim)
+plotResiduals(binomial_msat_lon_sim)
 
-binomial_msat_abslat_IDRE <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + abslat_scale + 
+#look at partial residuals
+lon_eff <- effect("sin(lon_rad)", residuals = TRUE, binomial_msat_lon_norp)
+plot(lon_eff, smooth.residuals = TRUE)
+
+#a### bslat model ####
+binomial_msat_abslat <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + abslat_scale + 
                                   I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
                                   (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
 
-binomial_msat_abslat_IDRE_sim <- simulateResiduals(fittedModel = binomial_msat_abslat_IDRE, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_msat_abslat_IDRE_sim)
-plotResiduals(binomial_msat_abslat_IDRE_sim)
+binomial_msat_abslat_norp <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + abslat_scale + 
+                                     I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
+                                     (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
 
-#lat & lon model
-beta_msat_lat_lon_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + 
-                                          range_position + lat_scale + I(lat_scale^2) + 
-                                          sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + 
-                                          (1|Source) + (1|Site), family = beta_family, 
-                                        data = msat)
-# <- dredge(msat_lat_lon_model_full)
+#checking fit with DHARMa
+binomial_msat_abslat_sim <- simulateResiduals(fittedModel = binomial_msat_abslat, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_msat_abslat_sim)
+plotResiduals(binomial_msat_abslat_sim)
 
-binomial_msat_lat_lon_IDRE <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + lat_scale + 
+#look at partial residuals
+abslat_eff <- effect("abslat_scale", residuals = TRUE, binomial_msat_abslat_norp)
+plot(abslat_eff, smooth.residuals = TRUE)
+
+#### lat & lon model ####
+binomial_msat_lat_lon <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + lat_scale + 
                                   I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
                                   (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
 
-binomial_msat_lat_lon_IDRE_sim <- simulateResiduals(fittedModel = binomial_msat_lat_lon_IDRE, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_msat_lat_lon_IDRE_sim)
-plotResiduals(binomial_msat_lat_lon_IDRE_sim)
+binomial_msat_lat_lon_norp <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + lat_scale + 
+                                 I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
+                                 (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
 
-#abslat & lon model
-beta_msat_abslat_lon_model_full <- glmmTMB(transformed_He ~ PrimerNote + CrossSpp + Repeat + 
-                                             range_position + abslat_scale + I(abslat_scale^2) + 
-                                             sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + 
-                                             (1|Source) + (1|Site), family = beta_family, 
-                                           data = msat)
-#msat_dredge_abslat_lon <- dredge(msat_abslat_lon_model_full)
+#checking fit with DHARMa
+binomial_msat_lat_lon_sim <- simulateResiduals(fittedModel = binomial_msat_lat_lon, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_msat_lat_lon_sim)
+plotResiduals(binomial_msat_lat_lon_sim)
 
-binomial_msat_abslat_lon_IDRE <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + abslat_scale + 
+#look at partial residuals
+lat_eff <- effect("lat_scale", residuals = TRUE, binomial_msat_lat_lon_norp)
+lon_eff <- effect("sin(lon_rad)", residuals = TRUE, binomial_msat_lat_lon_norp)
+plot(lat_eff, smooth.residuals = TRUE)
+
+#### abslat & lon model ####
+binomial_msat_abslat_lon <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + abslat_scale + 
                                   I(abslat_scale^2) + cos(lon_rad) + sin(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
                                   (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
 
-binomial_msat_abslat_lon_IDRE_sim <- simulateResiduals(fittedModel = binomial_msat_abslat_lon_IDRE, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_msat_abslat_lon_IDRE_sim)
-plotResiduals(binomial_msat_abslat_lon_IDRE_sim)
+binomial_msat_abslat_lon_norp <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + abslat_scale + 
+                                    I(abslat_scale^2) + cos(lon_rad) + sin(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
+                                    (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
 
-anova(binomial_msat_null_IDRE, binomial_msat_lat_IDRE, binomial_msat_lon_IDRE, binomial_msat_abslat_IDRE, 
-      binomial_msat_lat_lon_IDRE, binomial_msat_abslat_lon_IDRE)
+#checking fit with DHARMa
+binomial_msat_abslat_lon_im <- simulateResiduals(fittedModel = binomial_msat_abslat_lon, n = 250, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(binomial_msat_abslat_lon_sim)
+plotResiduals(binomial_msat_abslat_lon_sim)
+
+#look at partial residuals
+abslat_eff <- effect("abslat_scale", residuals = TRUE, binomial_msat_abslat_lon_norp)
+lon_eff <- effect("sin(lon_rad)", residuals = TRUE, binomial_msat_abslat_lon_norp)
+plot(abslat_eff, smooth.residuals = TRUE)
+
+#comparing models
+anova(binomial_msat_null, binomial_msat_lat, binomial_msat_lon, binomial_msat_abslat, 
+      binomial_msat_lat_lon, binomial_msat_abslat_lon)
