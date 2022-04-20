@@ -101,18 +101,31 @@ plotResiduals(mtdna_hd_norp_binomial_null_sim, mtdna_small_He$bp)
 #variables to include: bp, position in spp range, sst predictor, (1|MarkerName), (1|Family/Genus/spp), (1|Source), (1|Site)
 #binomial model
 
-#subset to only those with sst data
-mtdna_small_He <- subset(mtdna_small_He, sst.BO_sstmean != "NA") #should look at where these are...
+#logtransform sst data
 
-#scale sst data (for convergence issues)
-mtdna_small_He$sstmean_scale <- scale(as.numeric(mtdna_small_He$sst.BO_sstmean))
-mtdna_small_He$sstrange_scale <- scale(as.numeric(mtdna_small_He$sst.BO_sstrange))
-mtdna_small_He$sstmax_scale <- scale(as.numeric(mtdna_small_He$sst.BO_sstmax))
-mtdna_small_He$sstmin_scale <- scale(as.numeric(mtdna_small_He$sst.BO_sstmin))
+#subset to only those with sst data
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstmean != "NA") #should look at where these are...
+
+#### log transform sst data ####
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstmean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstrange != 0)
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstmax != 0)
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstmin != 0)
+
+mtdna_small_He$logsstmean <- log10(mtdna_small_He$sst.BO_sstmean)
+mtdna_small_He$logsstrange <- log10(mtdna_small_He$sst.BO_sstrange)
+mtdna_small_He$logsstmax <- log10(mtdna_small_He$sst.BO_sstmax)
+mtdna_small_He$logsstmin <- log10(mtdna_small_He$sst.BO_sstmin)
+
+#remove logsst = NA columns
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logsstmean != "NaN")
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logsstrange != "NaN")
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logsstmax != "NaN")
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logsstmin != "NaN")
 
 ##### sst mean model ####
 ## sst mean w/rp ##
-mtdna_hd_binomial_sstmean <- glmer(cbind(success, failure) ~ bp_scale + range_position + sstmean_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_binomial_sstmean <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmean + (1|Family/Genus/spp) + (1|Source) + 
                                   (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -125,11 +138,11 @@ plotResiduals(mtdna_hd_binomial_sstmean_sim)
 plotResiduals(mtdna_hd_binomial_sstmean_sim, mtdna_small_He$sstmean_scale)
 
 #look at partial residuals
-sstmean_eff <- effect("sstmean_scale", residuals = TRUE, mtdna_hd_binomial_sstmean)
+sstmean_eff <- effect("logsstmean", residuals = TRUE, mtdna_hd_binomial_sstmean)
 plot(sstmean_eff, smooth.residuals = TRUE)
 
 ## sst mean w/out rp ##
-mtdna_hd_norp_binomial_sstmean <- glmer(cbind(success, failure) ~ bp_scale + sstmean_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_norp_binomial_sstmean <- glmer(cbind(success, failure) ~ bp_scale + logsstmean + (1|Family/Genus/spp) + (1|Source) + 
                                      (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                    control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -142,12 +155,12 @@ plotResiduals(mtdna_hd_norp_binomial_sstmean_sim)
 plotResiduals(mtdna_hd_norp_binomial_sstmean_sim, mtdna_small_He$sstmean_scale)
 
 #look at partial residuals
-sstmean_eff <- effect("sstmean_scale", residuals = TRUE, mtdna_hd_norp_binomial_sstmean)
+sstmean_eff <- effect("logsstmean", residuals = TRUE, mtdna_hd_norp_binomial_sstmean)
 plot(sstmean_eff, smooth.residuals = TRUE)
 
 ##### sst range model ####
 ## sst range w/rp ##
-mtdna_hd_binomial_sstrange <- glmer(cbind(success, failure) ~ bp_scale + range_position + sstrange_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_binomial_sstrange <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstrange + (1|Family/Genus/spp) + (1|Source) + 
                                      (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                    control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -164,7 +177,7 @@ sstrange_eff <- effect("sstrange_scale", residuals = TRUE, mtdna_hd_binomial_sst
 plot(sstrange_eff, smooth.residuals = TRUE)
 
 ## sst range w/out rp ##
-mtdna_hd_norp_binomial_sstrange <- glmer(cbind(success, failure) ~ bp_scale + sstrange_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_norp_binomial_sstrange <- glmer(cbind(success, failure) ~ bp_scale + logsstrange + (1|Family/Genus/spp) + (1|Source) + 
                                       (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                     control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -182,7 +195,7 @@ plot(sstrange_eff, smooth.residuals = TRUE)
 
 ##### sst max model ####
 ## sst max w/rp ##
-mtdna_hd_binomial_sstmax <- glmer(cbind(success, failure) ~ bp_scale + range_position + sstmax_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_binomial_sstmax <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmax + (1|Family/Genus/spp) + (1|Source) + 
                                       (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                     control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -191,7 +204,7 @@ mtdna_hd_binomial_sstmax_sim <- simulateResiduals(fittedModel = mtdna_hd_binomia
 plotQQunif(mtdna_hd_binomial_sstmax_sim)
 plotResiduals(mtdna_hd_binomial_sstmax_sim)
 
-#against sstmeax
+#against sstmean
 plotResiduals(mtdna_hd_binomial_sstmax_sim, mtdna_small_He$sstmax_scale)
 
 #look at partial residuals
@@ -199,7 +212,7 @@ sstmax_eff <- effect("sstmax_scale", residuals = TRUE, mtdna_hd_binomial_sstmax)
 plot(sstmax_eff, smooth.residuals = TRUE)
 
 ## sst max w/out rp ##
-mtdna_hd_norp_binomial_sstmax <- glmer(cbind(success, failure) ~ bp_scale + sstmax_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_norp_binomial_sstmax <- glmer(cbind(success, failure) ~ bp_scale + logsstmax + (1|Family/Genus/spp) + (1|Source) + 
                                     (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -208,7 +221,7 @@ mtdna_hd_norp_binomial_sstmax_sim <- simulateResiduals(fittedModel = mtdna_hd_no
 plotQQunif(mtdna_hd_norp_binomial_sstmax_sim)
 plotResiduals(mtdna_hd_norp_binomial_sstmax_sim)
 
-#against sstmeax
+#against sstmean
 plotResiduals(mtdna_hd_norp_binomial_sstmax_sim, mtdna_small_He$sstmax_scale)
 
 #look at partial residuals
@@ -217,7 +230,7 @@ plot(sstmax_eff, smooth.residuals = TRUE)
 
 ##### sst min model ####
 ## sst min w/rp ##
-mtdna_hd_binomial_sstmin <- glmer(cbind(success, failure) ~ bp_scale + range_position + sstmin_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_binomial_sstmin <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmin + (1|Family/Genus/spp) + (1|Source) + 
                                       (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                     control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -230,11 +243,11 @@ plotResiduals(mtdna_hd_binomial_sstmin_sim)
 plotResiduals(mtdna_hd_binomial_sstmin_sim, mtdna_small_He$sstmin_scale)
 
 #look at partial residuals
-sstmin_eff <- effect("sstmin_scale", residuals = TRUE, mtdna_hd_binomial_sstmin)
+sstmin_eff <- effect("logsstmin", residuals = TRUE, mtdna_hd_binomial_sstmin)
 plot(sstmin_eff, smooth.residuals = TRUE)
 
 ## sst min w/out rp ##
-mtdna_hd_norp_binomial_sstmin <- glmer(cbind(success, failure) ~ bp_scale + sstmin_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_norp_binomial_sstmin <- glmer(cbind(success, failure) ~ bp_scale + logsstmin + (1|Family/Genus/spp) + (1|Source) + 
                                     (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -247,19 +260,26 @@ plotResiduals(mtdna_hd_norp_binomial_sstmin_sim)
 plotResiduals(mtdna_hd_norp_binomial_sstmin_sim, mtdna_small_He$sstmin_scale)
 
 #look at partial residuals
-sstmin_eff <- effect("sstmin_scale", residuals = TRUE, mtdna_hd_norp_binomial_sstmin)
+sstmin_eff <- effect("logsstmin", residuals = TRUE, mtdna_hd_norp_binomial_sstmin)
 plot(sstmin_eff, smooth.residuals = TRUE)
 
 ######## Build oxygen models (include mean dissolved oxygen variable) ########
 #variables to include: bp, position in spp range, dissolved oxygen predictor, (1|MarkerName), (1|Family/Genus/spp), (1|Source), (1|Site)
 #binomial model
 
-#scale oxygen data (for convergence issues)
-mtdna_small_He$dissox_scale <- scale(as.numeric(mtdna_small_He$BO_dissox))
+#logtransform dissox data
+
+#### log transform dissolved ox ####
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$BO_dissox != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
+
+mtdna_small_He$logdissox <- log10(mtdna_small_He$BO_dissox)
+
+#remove logdissox = NA columns
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logdissox != "NaN")
 
 ##### diss oxy mean model ####
 ## diss oxy w/rp ##
-mtdna_hd_binomial_dissox <- glmer(cbind(success, failure) ~ bp_scale + range_position + dissox_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_binomial_dissox <- glmer(cbind(success, failure) ~ bp_scale + range_position + logdissox + (1|Family/Genus/spp) + (1|Source) + 
                                      (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                    control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -272,11 +292,11 @@ plotResiduals(mtdna_hd_binomial_dissox_sim)
 plotResiduals(mtdna_hd_binomial_dissox_sim, mtdna_small_He$dissox_scale)
 
 #look at partial residuals
-dissox_eff <- effect("dissox_scale", residuals = TRUE, mtdna_hd_binomial_dissox)
+dissox_eff <- effect("logdissox", residuals = TRUE, mtdna_hd_binomial_dissox)
 plot(dissox_eff, smooth.residuals = TRUE)
 
 ## diss oxy w/out rp ##
-mtdna_hd_norp_binomial_dissox <- glmer(cbind(success, failure) ~ bp_scale + dissox_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_norp_binomial_dissox <- glmer(cbind(success, failure) ~ bp_scale + logdissox + (1|Family/Genus/spp) + (1|Source) + 
                                     (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -289,22 +309,35 @@ plotResiduals(mtdna_hd_norp_binomial_dissox_sim)
 plotResiduals(mtdna_hd_norp_binomial_dissox_sim, mtdna_small_He$dissox_scale)
 
 #look at partial residuals
-dissox_eff <- effect("dissox_scale", residuals = TRUE, mtdna_hd_norp_binomial_dissox)
+dissox_eff <- effect("logdissox", residuals = TRUE, mtdna_hd_norp_binomial_dissox)
 plot(dissox_eff, smooth.residuals = TRUE)
 
 ######## Build chlorophyll A models (include chlorophyll A variables) ########
 #variables to include: bp, position in spp range, chlorophyll A predictor, (1|MarkerName), (1|Family/Genus/spp), (1|Source), (1|Site)
 #binomial model
 
-#scale chlorophyll A data (for convergence issues)
-mtdna_small_He$chloromean_scale <- scale(as.numeric(mtdna_small_He$chloroA.BO_chlomean))
-mtdna_small_He$chlororange_scale <- scale(as.numeric(mtdna_small_He$chloroA.BO_chlorange))
-mtdna_small_He$chloromax_scale <- scale(as.numeric(mtdna_small_He$chloroA.BO_chlomax))
-mtdna_small_He$chloromin_scale <- scale(as.numeric(mtdna_small_He$chloroA.BO_chlomin))
+#logtransform chlorophyll A data
 
+#### log transform chlorophyll A ####
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstmean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$chloroA.BO_chlorange != 0)
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$chloroA.BO_chlomax != 0)
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$chloroA.BO_chlomin != 0)
+
+mtdna_small_He$logchlomean <- log10(mtdna_small_He$sst.BO_sstmean)
+mtdna_small_He$logchlorange <- log10(mtdna_small_He$chloroA.BO_chlorange)
+mtdna_small_He$logchlomax <- log10(mtdna_small_He$chloroA.BO_chlomax)
+mtdna_small_He$logchlomin <- log10(mtdna_small_He$chloroA.BO_chlomin)
+
+#remove logchlo = NA columns
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logchlomean != "Inf" | mtdna_small_He$logchlomean != "NaN")
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logchlorange != "Inf")
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logchlomax != "Inf")
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logchlomin != "Inf")
+                         
 ##### chloroA mean model ####
 ## chloroA mean w/rp ##
-mtdna_hd_binomial_chloromean <- glmer(cbind(success, failure) ~ bp_scale + range_position + chloromean_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_binomial_chloromean <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmean + I(logsstmean^2) + (1|Family/Genus/spp) + (1|Source) + 
                                     (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -314,14 +347,14 @@ plotQQunif(mtdna_hd_binomial_chloromean_sim)
 plotResiduals(mtdna_hd_binomial_chloromean_sim)
 
 #against chloroA mean
-plotResiduals(mtdna_hd_binomial_chloromean_sim, mtdna_small_He$chloromean_scale)
+plotResiduals(mtdna_hd_binomial_chloromean_sim, mtdna_small_He$logchlomean)
 
 #look at partial residuals
-chloromean_eff <- effect("chloromean_scale", residuals = TRUE, mtdna_hd_binomial_chloromean)
+chloromean_eff <- effect("logchlomean", residuals = TRUE, mtdna_hd_binomial_chloromean)
 plot(chloromean_eff, smooth.residuals = TRUE)
 
 ## chloroA mean w/out rp ##
-mtdna_hd_norp_binomial_chloromean <- glmer(cbind(success, failure) ~ bp_scale + chloromean_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_norp_binomial_chloromean <- glmer(cbind(success, failure) ~ bp_scale + logchlomean + I(logchlomean^2) + (1|Family/Genus/spp) + (1|Source) + 
                                         (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                       control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -331,15 +364,15 @@ plotQQunif(mtdna_hd_norp_binomial_chloromean_sim)
 plotResiduals(mtdna_hd_norp_binomial_chloromean_sim)
 
 #against chloroA mean
-plotResiduals(mtdna_hd_norp_binomial_chloromean_sim, mtdna_small_He$chloromean_scale)
+plotResiduals(mtdna_hd_norp_binomial_chloromean_sim, mtdna_small_He$logchlomean)
 
 #look at partial residuals
-chloromean_eff <- effect("chloromean_scale", residuals = TRUE, mtdna_hd_norp_binomial_chloromean)
+chloromean_eff <- effect("logchlomean", residuals = TRUE, mtdna_hd_norp_binomial_chloromean)
 plot(chloromean_eff, smooth.residuals = TRUE)
 
 ##### chloroA range model ####
 ## chloroA range w/rp ##
-mtdna_hd_binomial_chlororange <- glmer(cbind(success, failure) ~ bp_scale + range_position + chlororange_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_binomial_chlororange <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlorange + I(logchlorange^2) + (1|Family/Genus/spp) + (1|Source) + 
                                         (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                       control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -349,14 +382,14 @@ plotQQunif(mtdna_hd_binomial_chlororange_sim)
 plotResiduals(mtdna_hd_binomial_chlororange_sim)
 
 #against chloroA range
-plotResiduals(mtdna_hd_binomial_chlororange_sim, mtdna_small_He$chlororange_scale)
+plotResiduals(mtdna_hd_binomial_chlororange_sim, mtdna_small_He$logchlorange)
 
 #look at partial residuals
-chlororange_eff <- effect("chlororange_scale", residuals = TRUE, mtdna_hd_binomial_chlororange)
+chlororange_eff <- effect("logchlorange", residuals = TRUE, mtdna_hd_binomial_chlororange)
 plot(chlororange_eff, smooth.residuals = TRUE)
 
 ## chloroA range w/out rp ##
-mtdna_hd_norp_binomial_chlororange <- glmer(cbind(success, failure) ~ bp_scale + chlororange_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_norp_binomial_chlororange <- glmer(cbind(success, failure) ~ bp_scale + logchlorange + I(logchlorange^2) + (1|Family/Genus/spp) + (1|Source) + 
                                          (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                        control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -366,15 +399,15 @@ plotQQunif(mtdna_hd_norp_binomial_chlororange_sim)
 plotResiduals(mtdna_hd_norp_binomial_chlororange_sim)
 
 #against chloroA range
-plotResiduals(mtdna_hd_norp_binomial_chlororange_sim, mtdna_small_He$chlororange_scale)
+plotResiduals(mtdna_hd_norp_binomial_chlororange_sim, mtdna_small_He$logchlorange)
 
 #look at partial residuals
-chloromax_eff <- effect("chloromax_scale", residuals = TRUE, mtdna_hd_binomial_chloromax)
+chloromax_eff <- effect("logchlorange", residuals = TRUE, mtdna_hd_norp_binomial_chlororange)
 plot(chloromax_eff, smooth.residuals = TRUE)
 
 ##### chloroA max model ####
-## chloroA max w/out rp ##
-mtdna_hd_binomial_chloromax <- glmer(cbind(success, failure) ~ bp_scale + chloromax_scale + (1|Family/Genus/spp) + (1|Source) + 
+## chloroA max w/rp ##
+mtdna_hd_binomial_chloromax <- glmer(cbind(success, failure) ~ bp_scale + logchlomax + I(logchlomax^2) + range_position + (1|Family/Genus/spp) + (1|Source) + 
                                          (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                        control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -384,15 +417,32 @@ plotQQunif(mtdna_hd_binomial_chloromax_sim)
 plotResiduals(mtdna_hd_binomial_chloromax_sim)
 
 #against chloroA max
-plotResiduals(mtdna_hd_binomial_chloromax_sim, mtdna_small_He$chloromax_scale)
+plotResiduals(mtdna_hd_binomial_chloromax_sim, mtdna_small_He$logchlomax)
 
 #look at partial residuals
-chloromax_eff <- effect("chloromax_scale", residuals = TRUE, mtdna_hd_norp_binomial_chloromax)
+chloromax_eff <- effect("logchlomax", residuals = TRUE, mtdna_hd_binomial_chloromax)
+plot(chloromax_eff, smooth.residuals = TRUE)
+
+## chloroA max w/outrp ##
+mtdna_hd_norp_binomial_chloromax <- glmer(cbind(success, failure) ~ bp_scale + logchlomax + I(logchlomax^2) + (1|Family/Genus/spp) + (1|Source) + 
+                                       (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
+                                     control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
+
+#checking fit with DHARMa
+mtdna_hd_norp_binomial_chloromax_sim <- simulateResiduals(fittedModel = mtdna_hd_norp_binomial_chloromax, n = 1000, plot = F)
+plotQQunif(mtdna_hd_norp_binomial_chloromax_sim)
+plotResiduals(mtdna_hd_norp_binomial_chloromax_sim)
+
+#against chloroA max
+plotResiduals(mtdna_hd_norp_binomial_chloromax_sim, mtdna_small_He$logchlomax)
+
+#look at partial residuals
+chloromax_eff <- effect("logchlomax", residuals = TRUE, mtdna_hd_norp_binomial_chloromax)
 plot(chloromax_eff, smooth.residuals = TRUE)
 
 ##### chloroA min model ####
 ## chloroA min w/rp ##
-mtdna_hd_binomial_chloromin <- glmer(cbind(success, failure) ~ bp_scale + range_position + chloromin_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_binomial_chloromin <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomin + I(logchlomin^2) + (1|Family/Genus/spp) + (1|Source) + 
                                        (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                      control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -402,14 +452,14 @@ plotQQunif(mtdna_hd_binomial_chloromin_sim)
 plotResiduals(mtdna_hd_binomial_chloromin_sim)
 
 #against chloroA min
-plotResiduals(mtdna_hd_binomial_chloromin_sim, mtdna_small_He$chloromin_scale)
+plotResiduals(mtdna_hd_binomial_chloromin_sim, mtdna_small_He$logchlomin)
 
 #look at partial residuals
-chloromin_eff <- effect("chloromin_scale", residuals = TRUE, mtdna_hd_binomial_chloromin)
+chloromin_eff <- effect("logchlomin", residuals = TRUE, mtdna_hd_binomial_chloromin)
 plot(chloromin_eff, smooth.residuals = TRUE)
 
 ## chloroA min w/out rp ##
-mtdna_hd_norp_binomial_chloromin <- glmer(cbind(success, failure) ~ bp_scale + chloromin_scale + (1|Family/Genus/spp) + (1|Source) + 
+mtdna_hd_norp_binomial_chloromin <- glmer(cbind(success, failure) ~ bp_scale + logchlomin + I(logchlomin^2) + (1|Family/Genus/spp) + (1|Source) + 
                                        (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                      control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -419,10 +469,10 @@ plotQQunif(mtdna_hd_norp_binomial_chloromin_sim)
 plotResiduals(mtdna_hd_norp_binomial_chloromin_sim)
 
 #against chloroA min
-plotResiduals(mtdna_hd_norp_binomial_chloromin_sim, mtdna_small_He$chloromin_scale)
+plotResiduals(mtdna_hd_norp_binomial_chloromin_sim, mtdna_small_He$logchlomin)
 
 #look at partial residuals
-chloromin_eff <- effect("chloromin_scale", residuals = TRUE, mtdna_hd_norp_binomial_chloromin)
+chloromin_eff <- effect("logchlomin", residuals = TRUE, mtdna_hd_norp_binomial_chloromin)
 plot(chloromin_eff, smooth.residuals = TRUE)
 
 ##############################################################################################################
@@ -505,17 +555,28 @@ plotResiduals(mtdna_pi_norp_linear_null_sim, mtdna_small_pi$range_position)
 #linear model
 
 #subset to only those with sst data
-mtdna_small_pi <- subset(mtdna_small_pi, sst.BO_sstmean != "NA") #should look at where these are...
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$sst.BO_sstmean != "NA") #should look at where these are...
 
-#scale sst data (for convergence issues)
-mtdna_small_pi$sstmean_scale <- scale(as.numeric(mtdna_small_pi$sst.BO_sstmean))
-mtdna_small_pi$sstrange_scale <- scale(as.numeric(mtdna_small_pi$sst.BO_sstrange))
-mtdna_small_pi$sstmax_scale <- scale(as.numeric(mtdna_small_pi$sst.BO_sstmax))
-mtdna_small_pi$sstmin_scale <- scale(as.numeric(mtdna_small_pi$sst.BO_sstmin))
+#### log transform sst data ####
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$sst.BO_sstmean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$sst.BO_sstrange != 0)
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$sst.BO_sstmax != 0)
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$sst.BO_sstmin != 0)
+
+mtdna_small_pi$logsstmean <- log10(mtdna_small_pi$sst.BO_sstmean)
+mtdna_small_pi$logsstrange <- log10(mtdna_small_pi$sst.BO_sstrange)
+mtdna_small_pi$logsstmax <- log10(mtdna_small_pi$sst.BO_sstmax)
+mtdna_small_pi$logsstmin <- log10(mtdna_small_pi$sst.BO_sstmin)
+
+#remove logsst = NA columns
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstmean != "NaN")
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstrange != "NaN")
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstmax != "NaN")
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstmin != "NaN")
 
 #### sst mean models ####
 ## sst mean w/rp ##
-mtdna_pi_linear_sstmean <- lmer(logpi ~ range_position + sstmean_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_linear_sstmean <- lmer(logpi ~ range_position + logsstmean + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                (1|Site), REML = FALSE, data = mtdna_small_pi, 
                              na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -537,7 +598,7 @@ sstmean_eff <- effect("sstmean_scale", residuals = TRUE, mtdna_pi_linear_sstmean
 plot(sstmean_eff, smooth.residuals = TRUE)
 
 ## sst mean w/out rp ##
-mtdna_pi_norp_linear_sstmean <- lmer(logpi ~ sstmean_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_norp_linear_sstmean <- lmer(logpi ~ logsstmean + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                   (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                 na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -560,7 +621,7 @@ plot(sstmean_eff, smooth.residuals = TRUE)
 
 #### sst range models ####
 ## sst range w/rp ##
-mtdna_pi_linear_sstrange <- lmer(logpi ~ range_position + sstrange_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_linear_sstrange <- lmer(logpi ~ range_position + logsstrange + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                   (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                 na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -582,7 +643,7 @@ sstrange_eff <- effect("sstrange_scale", residuals = TRUE, mtdna_pi_linear_sstra
 plot(sstrange_eff, smooth.residuals = TRUE)
 
 ## sst range w/out rp ##
-mtdna_pi_norp_linear_sstrange <- lmer(logpi ~ sstrange_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_norp_linear_sstrange <- lmer(logpi ~ logsstrange + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                    (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                  na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -605,7 +666,7 @@ plot(sstrange_eff, smooth.residuals = TRUE)
 
 #### sst max models ####
 ## sst max w/rp ##
-mtdna_pi_linear_sstmax <- lmer(logpi ~ range_position + sstmax_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_linear_sstmax <- lmer(logpi ~ range_position + logsstmax + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                    (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                  na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -627,7 +688,7 @@ sstmax_eff <- effect("sstmax_scale", residuals = TRUE, mtdna_pi_linear_sstmax)
 plot(sstmax_eff, smooth.residuals = TRUE)
 
 ## sst max w/out rp ##
-mtdna_pi_norp_linear_sstmax <- lmer(logpi ~ sstmax_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_norp_linear_sstmax <- lmer(logpi ~ logsstmax + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                  (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -650,7 +711,7 @@ plot(sstmax_eff, smooth.residuals = TRUE)
 
 #### sst min models ####
 ## sst min w/rp ##
-mtdna_pi_linear_sstmin <- lmer(logpi ~ range_position + sstmin_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_linear_sstmin <- lmer(logpi ~ range_position + logsstmin + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                  (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -668,11 +729,11 @@ plotResiduals(mtdna_pi_linear_sstmin_sim)
 plotResiduals(mtdna_pi_linear_sstminsim, mtdna_small_pi$sstmin_scale)
 
 #look at partial residuals
-sstmin_eff <- effect("sstmin_scale", residuals = TRUE, mtdna_pi_linear_sstmin)
+sstmin_eff <- effect("logsstmin", residuals = TRUE, mtdna_pi_linear_sstmin)
 plot(sstmin_eff, smooth.residuals = TRUE)
 
 ## sst min w/out rp ##
-mtdna_pi_norp_linear_sstmin <- lmer(logpi ~ sstmin_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_norp_linear_sstmin <- lmer(logpi ~ logsstmin + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                  (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -690,19 +751,26 @@ plotResiduals(mtdna_pi_norp_linear_sstmin_sim)
 plotResiduals(mtdna_pi_norp_linear_sstminsim, mtdna_small_pi$sstmin_scale)
 
 #look at partial residuals
-sstmin_eff <- effect("sstmin_scale", residuals = TRUE, mtdna_pi_norp_linear_sstmin)
+sstmin_eff <- effect("logsstmin", residuals = TRUE, mtdna_pi_norp_linear_sstmin)
 plot(sstmin_eff, smooth.residuals = TRUE)
 
 ######## Build oxygen models (include mean dissolved oxygen variable) ########
 #variables to include: position in spp range, dissolved oxygen predictor, (1|MarkerName), (1|Family/Genus/spp), (1|Source), (1|Site)
 #linear model
 
-#scale oxygen data (for convergence issues)
-mtdna_small_pi$dissox_scale <- scale(as.numeric(mtdna_small_pi$BO_dissox))
+#log transform dissolved ox
+
+#### log transform diss ox data ####
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$BO_dissox != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
+
+mtdna_small_pi$logdissox <- log10(mtdna_small_pi$BO_dissox)
+
+#remove logdissox = NA columns
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logdissox != "NaN")
 
 ##### diss oxy mean model ####
 ## diss oxy mean w/rp ##
-mtdna_pi_linear_dissox <- lmer(logpi ~ range_position + dissox_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_linear_dissox <- lmer(logpi ~ range_position + logdissox + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                  (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -720,11 +788,11 @@ plotResiduals(mtdna_pi_linear_dissox_sim)
 plotResiduals(mtdna_pi_linear_dissox_sim, mtdna_small_pi$dissox_scale)
 
 #look at partial residuals
-dissox_eff <- effect("dissox_scale", residuals = TRUE, mtdna_pi_linear_dissox)
+dissox_eff <- effect("logdissox", residuals = TRUE, mtdna_pi_linear_dissox)
 plot(dissox_eff, smooth.residuals = TRUE)
 
 ## diss oxy mean w/out rp ##
-mtdna_pi_norp_linear_dissox <- lmer(logpi ~ dissox_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_norp_linear_dissox <- lmer(logpi ~ logdissox + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                  (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -742,22 +810,35 @@ plotResiduals(mtdna_pi_norp_linear_dissox_sim)
 plotResiduals(mtdna_pi_norp_linear_dissox_sim, mtdna_small_pi$dissox_scale)
 
 #look at partial residuals
-dissox_eff <- effect("dissox_scale", residuals = TRUE, mtdna_pi_norp_linear_dissox)
+dissox_eff <- effect("logdissox", residuals = TRUE, mtdna_pi_norp_linear_dissox)
 plot(dissox_eff, smooth.residuals = TRUE)
 
 ######## Build chlorophyll A models (include chlorophyll A variables) ########
 #variables to include: position in spp range, chlorophyll A predictor, (1|MarkerName), (1|Family/Genus/spp), (1|Source), (1|Site)
 #linear model
 
-#scale chlorophyll A data (for convergence issues)
-mtdna_small_pi$chloromean_scale <- scale(as.numeric(mtdna_small_pi$chloroA.BO_chlomean))
-mtdna_small_pi$chlororange_scale <- scale(as.numeric(mtdna_small_pi$chloroA.BO_chlorange))
-mtdna_small_pi$chloromax_scale <- scale(as.numeric(mtdna_small_pi$chloroA.BO_chlomax))
-mtdna_small_pi$chloromin_scale <- scale(as.numeric(mtdna_small_pi$chloroA.BO_chlomin))
+#logtransform chlorophyll A data
+
+#### log transform chlorophyll A ####
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlomean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlorange != 0)
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlomax != 0)
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlomin != 0)
+
+mtdna_small_pi$logchlomean <- log10(mtdna_small_pi$chloroA.BO_chlomean)
+mtdna_small_pi$logchlorange <- log10(mtdna_small_pi$chloroA.BO_chlorange)
+mtdna_small_pi$logchlomax <- log10(mtdna_small_pi$chloroA.BO_chlomax)
+mtdna_small_pi$logchlomin <- log10(mtdna_small_pi$chloroA.BO_chlomin)
+
+#remove logchlo = NA columns
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlomean != "Inf")
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlorange != "Inf")
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlomax != "Inf")
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlomin != "Inf")
 
 ##### chloroA mean model ####
 ## chloroA mean w/rp ##
-mtdna_pi_linear_chloromean <- lmer(logpi ~ range_position + chloromean_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_linear_chloromean <- lmer(logpi ~ range_position + logchlomean + I(logchlomean^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                  (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -772,14 +853,14 @@ plotQQunif(mtdna_pi_linear_chloromean_sim)
 plotResiduals(mtdna_pi_linear_chloromean_sim)
 
 #against chloroA mean
-plotResiduals(mtdna_pi_linear_chloromean_sim, mtdna_small_pi$chloromean_scale)
+plotResiduals(mtdna_pi_linear_chloromean_sim, mtdna_small_pi$logchlomean)
 
 #look at partial residuals
-chloromean_eff <- effect("chloromean_scale", residuals = TRUE, mtdna_pi_linear_chloromean)
+chloromean_eff <- effect("logchlomean", residuals = TRUE, mtdna_pi_linear_chloromean)
 plot(chloromean_eff, smooth.residuals = TRUE)
 
 ## chloroA mean w/out rp ##
-mtdna_pi_norp_linear_chloromean <- lmer(logpi ~ chloromean_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_norp_linear_chloromean <- lmer(logpi ~ logchlomean + I(logchlomean^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                      (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                    na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -794,15 +875,15 @@ plotQQunif(mtdna_pi_norp_linear_chloromean_sim)
 plotResiduals(mtdna_pi_norp_linear_chloromean_sim)
 
 #against chloroA mean
-plotResiduals(mtdna_pi_norp_linear_chloromean_sim, mtdna_small_pi$chloromean_scale)
+plotResiduals(mtdna_pi_norp_linear_chloromean_sim, mtdna_small_pi$logchlomean)
 
 #look at partial residuals
-chloromean_eff <- effect("chloromean_scale", residuals = TRUE, mtdna_pi_norp_linear_chloromean)
+chloromean_eff <- effect("logchlomean", residuals = TRUE, mtdna_pi_norp_linear_chloromean)
 plot(chloromean_eff, smooth.residuals = TRUE)
 
 ##### chloroA range model ####
 ## chloroA range w/rp ##
-mtdna_pi_linear_chlororange <- lmer(logpi ~ range_position + chlororange_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_linear_chlororange <- lmer(logpi ~ range_position + logchlorange + I(logchlorange^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                      (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                    na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -817,14 +898,14 @@ plotQQunif(mtdna_pi_linear_chlororange_sim)
 plotResiduals(mtdna_pi_linear_chlororange_sim)
 
 #against chloroA range
-plotResiduals(mtdna_pi_linear_chlororange_sim, mtdna_small_pi$chlororange_scale)
+plotResiduals(mtdna_pi_linear_chlororange_sim, mtdna_small_pi$logchlorange)
 
 #look at partial residuals
-chlororange_eff <- effect("chlororange_scale", residuals = TRUE, mtdna_pi_linear_chlororange)
+chlororange_eff <- effect("logchlorange", residuals = TRUE, mtdna_pi_linear_chlororange)
 plot(chlororange_eff, smooth.residuals = TRUE)
 
 ## chloroA range w/out rp ##
-mtdna_pi_norp_linear_chlororange <- lmer(logpi ~ chlororange_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_norp_linear_chlororange <- lmer(logpi ~ logchlorange + I(logchlorange^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                       (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                     na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -839,15 +920,15 @@ plotQQunif(mtdna_pi_norp_linear_chlororange_sim)
 plotResiduals(mtdna_pi_norp_linear_chlororange_sim)
 
 #against chloroA range
-plotResiduals(mtdna_pi_norp_linear_chlororange_sim, mtdna_small_pi$chlororange_scale)
+plotResiduals(mtdna_pi_norp_linear_chlororange_sim, mtdna_small_pi$logchlorange)
 
 #look at partial residuals
-chlororange_eff <- effect("chlororange_scale", residuals = TRUE, mtdna_pi_norp_linear_chlororange)
+chlororange_eff <- effect("logchlorange", residuals = TRUE, mtdna_pi_norp_linear_chlororange)
 plot(chlororange_eff, smooth.residuals = TRUE)
 
 ##### chloroA max model ####
 ## chloroA max w/rp ##
-mtdna_pi_linear_chloromax <- lmer(logpi ~ range_position + chloromax_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_linear_chloromax <- lmer(logpi ~ range_position + logchlomax + I(logchlomax^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                       (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                     na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -862,14 +943,14 @@ plotQQunif(mtdna_pi_linear_chloromax_sim)
 plotResiduals(mtdna_pi_linear_chloromax_sim)
 
 #against chloroA max
-plotResiduals(mtdna_pi_linear_chloromax_sim, mtdna_small_pi$chloromax_scale)
+plotResiduals(mtdna_pi_linear_chloromax_sim, mtdna_small_pi$logchlomax)
 
 #look at partial residuals
-chloromax_eff <- effect("chloromax_scale", residuals = TRUE, mtdna_pi_linear_chloromax)
+chloromax_eff <- effect("logchlomax", residuals = TRUE, mtdna_pi_linear_chloromax)
 plot(chloromax_eff, smooth.residuals = TRUE)
 
 ## chloroA max w/out rp ##
-mtdna_pi_norp_linear_chloromax <- lmer(logpi ~ chloromax_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_norp_linear_chloromax <- lmer(logpi ~ logchlomax + I(logchlomax^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                     (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                   na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -884,15 +965,15 @@ plotQQunif(mtdna_pi_norp_linear_chloromax_sim)
 plotResiduals(mtdna_pi_norp_linear_chloromax_sim)
 
 #against chloroA max
-plotResiduals(mtdna_pi_norp_linear_chloromax_sim, mtdna_small_pi$chloromax_scale)
+plotResiduals(mtdna_pi_norp_linear_chloromax_sim, mtdna_small_pi$logchlomax)
 
 #look at partial residuals
-chloromax_eff <- effect("chloromax_scale", residuals = TRUE, mtdna_pi_norp_linear_chloromax)
+chloromax_eff <- effect("logchlomax", residuals = TRUE, mtdna_pi_norp_linear_chloromax)
 plot(chloromax_eff, smooth.residuals = TRUE)
 
 ##### chloroA min model ####
 ## chloroA min w/rp ##
-mtdna_pi_linear_chloromin <- lmer(logpi ~ range_position + chloromin_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_linear_chloromin <- lmer(logpi ~ range_position + logchlomin + I(logchlomin^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                     (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                   na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -907,14 +988,14 @@ plotQQunif(mtdna_pi_linear_chloromin_sim)
 plotResiduals(mtdna_pi_linear_chloromin_sim)
 
 #against chloroA min
-plotResiduals(mtdna_pi_linear_chloromin_sim, mtdna_small_pi$chloromin_scale)
+plotResiduals(mtdna_pi_linear_chloromin_sim, mtdna_small_pi$logchlomin)
 
 #look at partial residuals
-chloromin_eff <- effect("chloromin_scale", residuals = TRUE, mtdna_pi_linear_chloromin)
+chloromin_eff <- effect("logchlomin", residuals = TRUE, mtdna_pi_linear_chloromin)
 plot(chloromin_eff, smooth.residuals = TRUE)
 
 ## chloroA min w/out rp ##
-mtdna_pi_norp_linear_chloromin <- lmer(logpi ~ chloromin_scale + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+mtdna_pi_norp_linear_chloromin <- lmer(logpi ~ logchlomin + I(logchlomin^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                                     (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                   na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
@@ -929,10 +1010,10 @@ plotQQunif(mtdna_pi_norp_linear_chloromin_sim)
 plotResiduals(mtdna_pi_norp_linear_chloromin_sim)
 
 #against chloroA min
-plotResiduals(mtdna_pi_norp_linear_chloromin_sim, mtdna_small_pi$chloromin_scale)
+plotResiduals(mtdna_pi_norp_linear_chloromin_sim, mtdna_small_pi$logchlomin)
 
 #look at partial residuals
-chloromin_eff <- effect("chloromin_scale", residuals = TRUE, mtdna_pi_norp_linear_chloromin)
+chloromin_eff <- effect("logchlomin", residuals = TRUE, mtdna_pi_norp_linear_chloromin)
 plot(chloromin_eff, smooth.residuals = TRUE)
 
 ##############################################################################################################
@@ -942,9 +1023,13 @@ plot(chloromin_eff, smooth.residuals = TRUE)
 
 ######## Cleaning msat He dataset ########
 
-##### removing missing n values ####
+#### removing missing n values ####
 msat$n <- as.numeric(msat$n)
 msat <- subset(msat, msat$n != "NA")
+
+#### removing missing repeat values ####
+msat$Repeat <- as.numeric(msat$Repeat)
+msat <- subset(msat, msat$Repeat != "NA")
 
 #### calculating position in range ####
 #fix character type
@@ -1016,15 +1101,26 @@ plotResiduals(msat_he_norp_binomial_null_sim, msat$range_position)
 #subset to only those with sst data
 msat <- subset(msat, sst.BO_sstmean != "NA") #should look at where these are...
 
-#scale sst data (for convergence issues)
-msat$sstmean_scale <- scale(as.numeric(msat$sst.BO_sstmean))
-msat$sstrange_scale <- scale(as.numeric(msat$sst.BO_sstrange))
-msat$sstmax_scale <- scale(as.numeric(msat$sst.BO_sstmax))
-msat$sstmin_scale <- scale(as.numeric(msat$sst.BO_sstmin))
+#### log transform sst data ####
+msat <- subset(msat, msat$sst.BO_sstmean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
+msat <- subset(msat, msat$sst.BO_sstrange != 0)
+msat <- subset(msat, msat$sst.BO_sstmax != 0)
+msat <- subset(msat, msat$sst.BO_sstmin != 0)
+
+msat$logsstmean <- log10(msat$sst.BO_sstmean)
+msat$logsstrange <- log10(msat$sst.BO_sstrange)
+msat$logsstmax <- log10(msat$sst.BO_sstmax)
+msat$logsstmin <- log10(msat$sst.BO_sstmin)
+
+#remove logsst = NA columns
+msat <- subset(msat, msat$logsstmean != "NaN")
+msat <- subset(msat, msat$logsstrange != "NaN")
+msat <- subset(msat, msat$logsstmax != "NaN")
+msat <- subset(msat, msat$logsstmin != "NaN")
 
 ##### sst mean model ####
 ## sst mean w/rp ##
-msat_he_binomial_sstmean <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + sstmean_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_binomial_sstmean <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + logsstmean + (1|Family/Genus/spp) + (1|Source) + 
                                  (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                  control = glmerControl(optimizer = "bobyqa"))
 
@@ -1037,11 +1133,11 @@ plotResiduals(msat_he_binomial_sstmean_sim)
 plotResiduals(msat_he_binomial_sstmean_sim, msat$sstmean_scale)
 
 #look at partial residuals
-sstmean_eff <- effect("sstmean_scale", residuals = TRUE, msat_he_binomial_sstmean)
+sstmean_eff <- effect("logsstmean", residuals = TRUE, msat_he_binomial_sstmean)
 plot(sstmean_eff, smooth.residuals = TRUE)
 
 ## sst mean w/out rp ##
-msat_he_norp_binomial_sstmean <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + sstmean_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_norp_binomial_sstmean <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + logsstmean + (1|Family/Genus/spp) + (1|Source) + 
                                     (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                   control = glmerControl(optimizer = "bobyqa"))
 
@@ -1054,12 +1150,12 @@ plotResiduals(msat_he_norp_binomial_sstmean_sim)
 plotResiduals(msat_he_norp_binomial_sstmean_sim, msat$sstmean_scale)
 
 #look at partial residuals
-sstmean_eff <- effect("sstmean_scale", residuals = TRUE, msat_he_norp_binomial_sstmean)
+sstmean_eff <- effect("logsstmean", residuals = TRUE, msat_he_norp_binomial_sstmean)
 plot(sstmean_eff, smooth.residuals = TRUE)
 
 ##### sst range model ####
 ## sst range w/rp ##
-msat_he_binomial_sstrange <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + sstrange_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_binomial_sstrange <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + logsstrange + (1|Family/Genus/spp) + (1|Source) + 
                                     (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                    control = glmerControl(optimizer = "bobyqa"))
 
@@ -1076,7 +1172,7 @@ sstrange_eff <- effect("sstrange_scale", residuals = TRUE, msat_he_binomial_sstr
 plot(sstrange_eff, smooth.residuals = TRUE)
 
 ## sst range w/out rp ##
-msat_he_norp_binomial_sstrange <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + sstrange_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_norp_binomial_sstrange <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + logsstrange + (1|Family/Genus/spp) + (1|Source) + 
                                      (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                    control = glmerControl(optimizer = "bobyqa"))
 
@@ -1094,7 +1190,7 @@ plot(sstrange_eff, smooth.residuals = TRUE)
 
 ##### sst max model ####
 ## sst max w/rp ##
-msat_he_binomial_sstmax <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + sstmax_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_binomial_sstmax <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + logsstmax + (1|Family/Genus/spp) + (1|Source) + 
                                      (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                    control = glmerControl(optimizer = "bobyqa"))
 
@@ -1111,7 +1207,7 @@ sstmax_eff <- effect("sstmax_scale", residuals = TRUE, msat_he_binomial_sstmax)
 plot(sstmax_eff, smooth.residuals = TRUE)
 
 ## sst max w/out rp ##
-msat_he_norp_binomial_sstmax <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + sstmax_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_norp_binomial_sstmax <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + logsstmax + (1|Family/Genus/spp) + (1|Source) + 
                                    (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                  control = glmerControl(optimizer = "bobyqa"))
 
@@ -1129,7 +1225,7 @@ plot(sstmax_eff, smooth.residuals = TRUE)
 
 ##### sst min model ####
 ## sst min w/rp ##
-msat_he_binomial_sstmin <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + sstmin_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_binomial_sstmin <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + logsstmin + (1|Family/Genus/spp) + (1|Source) + 
                                    (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                  control = glmerControl(optimizer = "bobyqa"))
 
@@ -1146,7 +1242,7 @@ sstmin_eff <- effect("sstmin_scale", residuals = TRUE, msat_he_binomial_sstmin)
 plot(sstmin_eff, smooth.residuals = TRUE)
 
 ## sst min w/out rp ##
-msat_he_norp_binomial_sstmin <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + sstmin_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_norp_binomial_sstmin <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + logsstmin + (1|Family/Genus/spp) + (1|Source) + 
                                    (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                  control = glmerControl(optimizer = "bobyqa"))
 
@@ -1166,12 +1262,19 @@ plot(sstmin_eff, smooth.residuals = TRUE)
 #variables to include: PrimerNote, CrossSpp, position in spp range, dissolved oxygen predictor, (1|Family/Genus/spp), (1|Source), (1|Site), (1|ID)
 #binomial model
 
-#scale oxygen data (for convergence issues)
-msat$dissox_scale <- scale(as.numeric(msat$BO_dissox))
+#log transform data
+
+#### log transform dissox data ####
+msat <- subset(msat, msat$BO_dissox != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
+
+msat$logdissox <- log10(msat$BO_dissox)
+
+#remove logdissox = NA columns
+msat <- subset(msat, msat$logdissox != "NaN")
 
 ##### diss oxy mean model ####
 ## diss oxy mean w/rp ##
-msat_he_binomial_dissox <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + dissox_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_binomial_dissox <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + logdissox + (1|Family/Genus/spp) + (1|Source) + 
                                    (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                  control = glmerControl(optimizer = "bobyqa"))
 
@@ -1184,11 +1287,11 @@ plotResiduals(msat_he_binomial_dissox_sim)
 plotResiduals(msat_he_binomial_dissox_sim, msat$dissox_scale)
 
 #look at partial residuals
-dissox_eff <- effect("dissox_scale", residuals = TRUE, msat_he_binomial_dissox)
+dissox_eff <- effect("logdissox", residuals = TRUE, msat_he_binomial_dissox)
 plot(dissox_eff, smooth.residuals = TRUE)
 
 ## diss oxy mean w/out rp ##
-msat_he_norp_binomial_dissox <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + dissox_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_norp_binomial_dissox <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + logdissox + (1|Family/Genus/spp) + (1|Source) + 
                                    (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                  control = glmerControl(optimizer = "bobyqa"))
 
@@ -1201,22 +1304,35 @@ plotResiduals(msat_he_norp_binomial_dissox_sim)
 plotResiduals(msat_he_norp_binomial_dissox_sim, msat$dissox_scale)
 
 #look at partial residuals
-dissox_eff <- effect("dissox_scale", residuals = TRUE, msat_he_norp_binomial_dissox)
+dissox_eff <- effect("logdissox", residuals = TRUE, msat_he_norp_binomial_dissox)
 plot(dissox_eff, smooth.residuals = TRUE)
 
 ######## Build chlorophyll A models (include chlorophyll A variables) ########
 #variables to include: PrimerNote, CrossSpp, position in spp range, chlorophyll A predictor, (1|Family/Genus/spp), (1|Source), (1|Site), (1|ID)
 #binomial model
 
-#scale chlorophyll A data (for convergence issues)
-msat$chloromean_scale <- scale(as.numeric(msat$chloroA.BO_chlomean))
-msat$chlororange_scale <- scale(as.numeric(msat$chloroA.BO_chlorange))
-msat$chloromax_scale <- scale(as.numeric(msat$chloroA.BO_chlomax))
-msat$chloromin_scale <- scale(as.numeric(msat$chloroA.BO_chlomin))
+#logtransform chlorophyll A data
+
+#### log transform chlorophyll A ####
+msat <- subset(msat, msat$chloroA.BO_chlomean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
+msat <- subset(msat, msat$chloroA.BO_chlorange != 0)
+msat <- subset(msat, msat$chloroA.BO_chlomax != 0)
+msat <- subset(msat, msat$chloroA.BO_chlomin != 0)
+
+msat$logchlomean <- log10(msat$chloroA.BO_chlomean)
+msat$logchlorange <- log10(msat$chloroA.BO_chlorange)
+msat$logchlomax <- log10(msat$chloroA.BO_chlomax)
+msat$logchlomin <- log10(msat$chloroA.BO_chlomin)
+
+#remove logchlo = NA columns
+msat <- subset(msat, msat$logchlomean != "Inf")
+msat <- subset(msat, msat$logchlorange != "Inf")
+msat <- subset(msat, msat$logchlomax != "Inf")
+msat <- subset(msat, msat$logchlomin != "Inf")
 
 ##### chloroA mean model ####
 ## chloroA mean w/rp ##
-msat_he_binomial_chloromean <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + chloromean_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_binomial_chloromean <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + logchlomean + I(logchlomean^2) + (1|Family/Genus/spp) + (1|Source) + 
                                    (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                  control = glmerControl(optimizer = "bobyqa"))
 
@@ -1226,14 +1342,14 @@ plotQQunif(msat_he_binomial_chloromean_sim)
 plotResiduals(msat_he_binomial_chloromean_sim)
 
 #against chloroA mean
-plotResiduals(msat_he_binomial_chloromean_sim, msat$chloromean_scale)
+plotResiduals(msat_he_binomial_chloromean_sim, msat$logchlomean)
 
 #look at partial residuals
-chloromean_eff <- effect("chloromean_scale", residuals = TRUE, msat_he_binomial_chloromean)
+chloromean_eff <- effect("logchlomean", residuals = TRUE, msat_he_binomial_chloromean)
 plot(chloromean_eff, smooth.residuals = TRUE)
 
 ## chloroA mean w/out rp ##
-msat_he_norp_binomial_chloromean <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + chloromean_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_norp_binomial_chloromean <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + logchlomean + I(logchlomean^2) + (1|Family/Genus/spp) + (1|Source) + 
                                        (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                      control = glmerControl(optimizer = "bobyqa"))
 
@@ -1243,15 +1359,15 @@ plotQQunif(msat_he_orp_binomial_chloromean_sim)
 plotResiduals(msat_he_norp_binomial_chloromean_sim)
 
 #against chloroA mean
-plotResiduals(msat_he_norp_binomial_chloromean_sim, msat$chloromean_scale)
+plotResiduals(msat_he_norp_binomial_chloromean_sim, msat$logchlomean)
 
 #look at partial residuals
-chloromean_eff <- effect("chloromean_scale", residuals = TRUE, msat_he_norp_binomial_chloromean)
+chloromean_eff <- effect("logchlomean", residuals = TRUE, msat_he_norp_binomial_chloromean)
 plot(chloromean_eff, smooth.residuals = TRUE)
 
 ##### chloroA range model ####
 ## chloroA range w/rp ##
-msat_he_binomial_chlororange <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + chlororange_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_binomial_chlororange <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + logchlorange + I(logchlorange^2) + (1|Family/Genus/spp) + (1|Source) + 
                                        (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                      control = glmerControl(optimizer = "bobyqa"))
 
@@ -1261,14 +1377,14 @@ plotQQunif(msat_he_binomial_chlororange_sim)
 plotResiduals(msat_he_binomial_chlororange_sim)
 
 #against chloroA range
-plotResiduals(msat_he_binomial_chlororange_sim, msat$chlororange_scale)
+plotResiduals(msat_he_binomial_chlororange_sim, msat$logchlorange)
 
 #look at partial residuals
-chlororange_eff <- effect("chlororange_scale", residuals = TRUE, msat_he_binomial_chlororange)
+chlororange_eff <- effect("logchlorange", residuals = TRUE, msat_he_binomial_chlororange)
 plot(chlororange_eff, smooth.residuals = TRUE)
 
 ## chloroA range w/out rp ##
-msat_he_norp_binomial_chlororange <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + chlororange_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_norp_binomial_chlororange <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + logchlorange + I(logchlorange^2) + (1|Family/Genus/spp) + (1|Source) + 
                                         (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                       control = glmerControl(optimizer = "bobyqa"))
 
@@ -1278,15 +1394,15 @@ plotQQunif(msat_he_norp_binomial_chlororange_sim)
 plotResiduals(msat_he_norp_binomial_chlororange_sim)
 
 #against chloroA range
-plotResiduals(msat_he_norp_binomial_chlororange_sim, msat$chlororange_scale)
+plotResiduals(msat_he_norp_binomial_chlororange_sim, msat$logchlorange)
 
 #look at partial residuals
-chlororange_eff <- effect("chlororange_scale", residuals = TRUE, msat_he_norp_binomial_chlororange)
+chlororange_eff <- effect("logchlorange", residuals = TRUE, msat_he_norp_binomial_chlororange)
 plot(chlororange_eff, smooth.residuals = TRUE)
 
 ##### chloroA max model ####
 ## chloroA max w/rp ##
-msat_he_binomial_chloromax <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + chloromax_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_binomial_chloromax <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + logchlomax + I(logchlomax^2) + (1|Family/Genus/spp) + (1|Source) + 
                                         (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                       control = glmerControl(optimizer = "bobyqa"))
 
@@ -1296,14 +1412,14 @@ plotQQunif(msat_he_binomial_chloromax_sim)
 plotResiduals(msat_he_binomial_chloromax_sim)
 
 #against chloroA max
-plotResiduals(msat_he_binomial_chloromax_sim, msat$chloromax_scale)
+plotResiduals(msat_he_binomial_chloromax_sim, msat$logchlomax)
 
 #look at partial residuals
-chloromax_eff <- effect("chloromax_scale", residuals = TRUE, msat_he_binomial_chloromax)
+chloromax_eff <- effect("logchlomax", residuals = TRUE, msat_he_binomial_chloromax)
 plot(chloromax_eff, smooth.residuals = TRUE)
 
 ## chloroA max w/out rp ##
-msat_he_norp_binomial_chloromax <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + chloromax_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_norp_binomial_chloromax <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + logchlomax + I(logchlomax^2) + (1|Family/Genus/spp) + (1|Source) + 
                                       (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                     control = glmerControl(optimizer = "bobyqa"))
 
@@ -1313,15 +1429,15 @@ plotQQunif(msat_he_norp_binomial_chloromax_sim)
 plotResiduals(msat_he_norp_binomial_chloromax_sim)
 
 #against chloroA max
-plotResiduals(msat_he_norp_binomial_chloromax_sim, msat$chloromax_scale)
+plotResiduals(msat_he_norp_binomial_chloromax_sim, msat$logchlomax)
 
 #look at partial residuals
-chloromax_eff <- effect("chloromax_scale", residuals = TRUE, msat_he_norp_binomial_chloromax)
+chloromax_eff <- effect("logchlomax", residuals = TRUE, msat_he_norp_binomial_chloromax)
 plot(chloromax_eff, smooth.residuals = TRUE)
 
 ##### chloroA min model ####
 ## chloroA min w/rp ##
-msat_he_binomial_chloromin <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + chloromin_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_binomial_chloromin <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + logchlomin + I(logchlomin^2) + (1|Family/Genus/spp) + (1|Source) + 
                                       (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                     control = glmerControl(optimizer = "bobyqa"))
 
@@ -1331,13 +1447,13 @@ plotQQunif(msat_he_binomial_chloromin_sim)
 plotResiduals(msat_he_binomial_chloromin_sim)
 
 #against chloroA min
-plotResiduals(msat_he_binomial_chloromin_sim, msat$chloromin_scale)
+plotResiduals(msat_he_binomial_chloromin_sim, msat$logchlomin)
 
-chloromin_eff <- effect("chloromin_scale", residuals = TRUE, msat_he_binomial_chloromin)
+chloromin_eff <- effect("logchlomin", residuals = TRUE, msat_he_binomial_chloromin)
 plot(chloromin_eff, smooth.residuals = TRUE)
 
 ## chloroA min w/out rp ##
-msat_he_norp_binomial_chloromin <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + chloromin_scale + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_norp_binomial_chloromin <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + logchlomin + I(logchlomin^2) + (1|Family/Genus/spp) + (1|Source) + 
                                       (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                     control = glmerControl(optimizer = "bobyqa"))
 
@@ -1347,7 +1463,7 @@ plotQQunif(msat_he_norp_binomial_chloromin_sim)
 plotResiduals(msat_he_norp_binomial_chloromin_sim)
 
 #against chloroA min
-plotResiduals(msat_he_norp_binomial_chloromin_sim, msat$chloromin_scale)
+plotResiduals(msat_he_norp_binomial_chloromin_sim, msat$logchlomin)
 
-chloromin_eff <- effect("chloromin_scale", residuals = TRUE, msat_he_norp_binomial_chloromin)
+chloromin_eff <- effect("logchlomin", residuals = TRUE, msat_he_norp_binomial_chloromin)
 plot(chloromin_eff, smooth.residuals = TRUE)
