@@ -10,6 +10,7 @@ library(MuMIn)
 library(glmmTMB)
 library(DHARMa)
 library(effects)
+library(sjPlot)
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
@@ -129,6 +130,11 @@ mtdna_hd_binomial_sstmean <- glmer(cbind(success, failure) ~ bp_scale + range_po
                                   (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
+mtdna_hd_binomial_sstmean_CP <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmean + Pelagic_Coastal + 
+                                        Pelagic_Coastal:logsstmean + (1|Family/Genus/spp) + (1|Source) + 
+                                     (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
+                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
+
 #checking fit with DHARMa
 mtdna_hd_binomial_sstmean_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_sstmean, n = 1000, plot = F)
 plotQQunif(mtdna_hd_binomial_sstmean_sim)
@@ -140,6 +146,10 @@ plotResiduals(mtdna_hd_binomial_sstmean_sim, mtdna_small_He$sstmean_scale)
 #look at partial residuals
 sstmean_eff <- effect("logsstmean", residuals = TRUE, mtdna_hd_binomial_sstmean)
 plot(sstmean_eff, smooth.residuals = TRUE)
+
+#marginal effects
+CP_int_eff <- plot_model(mtdna_hd_binomial_sstmean_CP, type = "pred", terms = c("logsstmean [all]", "Pelagic_Coastal"))
+sst_eff <- plot_model(mtdna_hd_binomial_sstmean_CP, type = "pred", terms = "logsstmean [all]")
 
 ## sst mean w/out rp ##
 mtdna_hd_norp_binomial_sstmean <- glmer(cbind(success, failure) ~ bp_scale + logsstmean + (1|Family/Genus/spp) + (1|Source) + 
@@ -602,6 +612,11 @@ mtdna_pi_norp_linear_sstmean <- lmer(logpi ~ logsstmean + (1|Family/Genus/spp) +
                                   (1|Site), REML = FALSE, data = mtdna_small_pi, 
                                 na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
+mtdna_pi_norp_linear_sstmean_CP <- lmer(logpi ~ logsstmean + Pelagic_Coastal + Pelagic_Coastal:logsstmean + 
+                                          (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                                       (1|Site), REML = FALSE, data = mtdna_small_pi, 
+                                     na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
+
 #pull p-values
 coefs <- data.frame(coef(summary(mtdna_pi_norp_linear_sstmean)))
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
@@ -616,8 +631,12 @@ plotResiduals(mtdna_pi_norp_linear_sstmean_sim)
 plotResiduals(mtdna_pi_norp_linear_sstmean_sim, mtdna_small_pi$sstmean_scale)
 
 #look at partial residuals
-sstmean_eff <- effect("sstmean_scale", residuals = TRUE, mtdna_pi_norp_linear_sstmean)
+sstmean_eff <- effect("logsstmean", residuals = TRUE, mtdna_pi_norp_linear_sstmean_CP)
 plot(sstmean_eff, smooth.residuals = TRUE)
+
+#marginal effects
+CP_int_eff <- plot_model(mtdna_pi_norp_linear_sstmean_CP, type = "pred", terms = c("logsstmean [all]", "Pelagic_Coastal"))
+sst_eff <- plot_model(mtdna_pi_norp_linear_sstmean_CP, type = "pred", terms = "logsstmean [all]")
 
 #### sst range models ####
 ## sst range w/rp ##
@@ -1141,6 +1160,11 @@ msat_he_norp_binomial_sstmean <- glmer(cbind(success, failure) ~ PrimerNote + Cr
                                     (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                   control = glmerControl(optimizer = "bobyqa"))
 
+msat_he_norp_binomial_sstmean_CP <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + logsstmean + 
+                                            Pelagic_Coastal + Pelagic_Coastal:logsstmean + (1|Family/Genus/spp) + (1|Source) + 
+                                         (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
+                                       control = glmerControl(optimizer = "bobyqa"))
+
 #checking fit with DHARMa
 msat_he_norp_binomial_sstmean_sim <- simulateResiduals(fittedModel = msat_he_norp_binomial_sstmean, n = 1000, plot = F)
 plotQQunif(msat_he_norp_binomial_sstmean_sim)
@@ -1152,6 +1176,10 @@ plotResiduals(msat_he_norp_binomial_sstmean_sim, msat$sstmean_scale)
 #look at partial residuals
 sstmean_eff <- effect("logsstmean", residuals = TRUE, msat_he_norp_binomial_sstmean)
 plot(sstmean_eff, smooth.residuals = TRUE)
+
+#marginal effects
+CP_int_eff <- plot_model(msat_he_norp_binomial_sstmean_CP, type = "pred", terms = c("logsstmean [all]", "Pelagic_Coastal"))
+sst_eff <- plot_model(msat_he_norp_binomial_sstmean_CP, type = "pred", terms = "logsstmean [all]")
 
 ##### sst range model ####
 ## sst range w/rp ##

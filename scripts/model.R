@@ -10,6 +10,7 @@ library(MuMIn)
 library(glmmTMB)
 library(DHARMa)
 library(effects)
+library(sjPlot)
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
@@ -217,8 +218,11 @@ plotResiduals(binomial_lon_sim) #residuals against predicted value -- looking fo
 plotResiduals(binomial_lon_sim, mtdna_small_He$lon_scale)
 
 #look at partial residuals
-lon_eff <- effect("cos(lon_rad)", residuals = TRUE, binomial_lon_norp) #not sure how to do this...
+lon_eff <- effect("cos(lon_rad)", residuals = TRUE, binomial_lon) #not sure how to do this...
 plot(lon_eff, smooth.residuals = TRUE)
+
+#marginal effects
+lon_eff <- plot_model(binomial_lon, type = "pred", terms = "lon_rad [all]")
 
 #### abslat model ####
 binomial_abslat <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
@@ -226,6 +230,15 @@ binomial_abslat <- glmer(cbind(success, failure) ~ bp_scale + range_position + a
 
 binomial_abslat_norp <- glmer(cbind(success, failure) ~ bp_scale + abslat_scale + I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
                            (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
+
+#with CP interaction
+binomial_abslat_CP <- glmer(cbind(success, failure) ~ bp_scale + range_position + Pelagic_Coastal + abslat_scale  + I(abslat_scale^2) +
+                              abslat_scale:Pelagic_Coastal + I(abslat_scale^2):Pelagic_Coastal + (1|Family/Genus/spp) + (1|Source) + 
+                           (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
+
+binomial_abslat_norp_CP <- glmer(cbind(success, failure) ~ bp_scale + abslat_scale + I(abslat_scale^2) + 
+                                   abslat_scale:Pelagic_Coastal + I(abslat_scale^2):Pelagic_Coastal + (1|Family/Genus/spp) + (1|Source) + 
+                                (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
 
 #checking fit with DHARMa
 binomial_abslat_sim <- simulateResiduals(fittedModel = binomial_abslat, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
@@ -235,8 +248,12 @@ plotResiduals(binomial_abslat_sim) #residuals against predicted value -- looking
 plotResiduals(binomial_abslat_sim, mtdna_small_He$abslat_scale)
 
 #look at partial residuals
-abslat_eff <- effect("abslat_scale", residuals = TRUE, binomial_abslat_norp) #doesn't matter which abslat, reads together
+abslat_eff <- effect("abslat_scale", residuals = TRUE, binomial_abslat_CP) #doesn't matter which abslat, reads together
 plot(abslat_eff, smooth.residuals = TRUE)
+
+#marginal effect
+CP_int_eff <- plot_model(binomial_abslat_CP, type = "pred", terms = c("abslat_scale [all]", "Pelagic_Coastal [all]"))
+lat_eff <- plot_model(binomial_abslat_CP, type = "pred", terms = "abslat_scale [all]")
 
 #### lat & lon model ####
 binomial_lat_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
@@ -444,6 +461,10 @@ abslat_model_pi <- lmer(logpi ~ range_position + abslat_scale + I(abslat_scale^2
 abslat_model_pi_norp <- lmer(logpi ~ abslat_scale + I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                           (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
+abslat_model_pi_norp_CP <- lmer(logpi ~ abslat_scale + I(abslat_scale^2) + Pelagic_Coastal + Pelagic_Coastal:abslat_scale + 
+                               Pelagic_Coastal:I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
+                               (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+
 #checking fit with DHARMa
 abslat_model_pi_sim_output <- simulateResiduals(abslat_model_full_pi, plot = F)
 plotQQunif(abslat_model_pi_sim_output) #QQplot
@@ -453,7 +474,11 @@ plotResiduals(abslat_model_pi_sim_output) #residuals
 abslat_eff <- effect("abslat_scale", residuals = TRUE, abslat_model_pi_norp)
 plot(abslat_eff, smooth.residuals = TRUE)
 
-#l### on model ###
+#marginal effect
+CP_int_eff <- plot_model(abslat_model_pi_norp_CP, type = "pred", terms = c("abslat_scale [all]", "Pelagic_Coastal [all]"))
+lat_eff <- plot_model(lat_model_pi_norp, type = "pred", terms = "lat_scale [all]")
+
+### lon model ###
 lon_model_pi <- lmer(logpi ~ range_position + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
                             (1|Site), REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
@@ -720,13 +745,18 @@ plotResiduals(binomial_msat_lon_sim)
 lon_eff <- effect("sin(lon_rad)", residuals = TRUE, binomial_msat_lon_norp)
 plot(lon_eff, smooth.residuals = TRUE)
 
-#a### bslat model ####
+### abslat model ####
 binomial_msat_abslat <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + abslat_scale + 
                                   I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
                                   (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
 
 binomial_msat_abslat_norp <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + abslat_scale + 
-                                     I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
+                                        I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
+                                        (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
+
+binomial_msat_abslat_norp_CP <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + abslat_scale + 
+                                     I(abslat_scale^2) + Pelagic_Coastal + Pelagic_Coastal:abslat_scale + 
+                                       Pelagic_Coastal:I(abslat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
                                      (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail")
 
 #checking fit with DHARMa
@@ -737,6 +767,10 @@ plotResiduals(binomial_msat_abslat_sim)
 #look at partial residuals
 abslat_eff <- effect("abslat_scale", residuals = TRUE, binomial_msat_abslat_norp)
 plot(abslat_eff, smooth.residuals = TRUE)
+
+#marginal effects
+CP_int_eff <- plot_model(binomial_msat_abslat_norp_CP, type = "pred", terms = c("abslat_scale [all]", "Pelagic_Coastal [all]"))
+lat_eff <- plot_model(binomial_msat_abslat_norp_CP, type = "pred", terms = "abslat_scale [all]")
 
 #### lat & lon model ####
 binomial_msat_lat_lon <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + lat_scale + 
