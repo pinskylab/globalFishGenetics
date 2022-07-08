@@ -34,9 +34,6 @@ msat$abslat <- abs(msat$lat)
 ######## building models for mtdna Hd ########
 
 ######## check effect of independent variables ######## 
-  
-#subset mtdna bc are a few outliers with very high bp -- entire mtdna?
-mtdna_small <- subset(mtdna, as.numeric(mtdna$bp) < 2000)
 
 #subset mtdna to remove He = NA columns
 mtdna_small_He <- subset(mtdna_small, mtdna_small$He != "NA")

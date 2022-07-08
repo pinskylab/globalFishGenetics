@@ -1,8 +1,8 @@
 library(rfishbase)
 library(tidyverse)
 
-msat <- read.csv("output/msat_assembled_2.csv")
-mtdna <- read.csv("output/mtdna_assembled_2.csv")
+msat <- read.csv("output/msat_assembled.csv")
+mtdna <- read.csv("output/mtdna_assembled.csv")
 
 spps_msat <- msat[!duplicated(msat$spp), c('spp', 'CommonName')] #grab unique species and their common name
 spps_mtdna <- mtdna[!duplicated(mtdna$spp), c('spp','CommonName')]

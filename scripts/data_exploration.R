@@ -5,16 +5,13 @@ remove(list = ls())
 library(tidyverse)
 library(gridExtra)
 library(plotrix)
+library(here)
 
 #read in data
-mtdna <- read.csv("output/mtdna_assembled_2.csv", stringsAsFactors = FALSE)
+mtdna <- read.csv(here("output", "mtdna_assembled.csv"), stringsAsFactors = FALSE)
 
 mtdna$abslat <- abs(mtdna$lat)
 mtdna$abslon <- abs(mtdna$lon)
-
-#mtdna <- subset(mtdna, mtdna$He != "NA")
-#mtdna <- subset(mtdna, !is.na(mtdna$He))
-#mtdna <- mtdna[!is.na(mtdna$He), ]
 
 mtdna_nonapi <- subset(mtdna, mtdna$Pi != "NA")
 mtdna_nonapi_small <- subset(mtdna_nonapi, mtdna_nonapi$Pi < 0.2)
