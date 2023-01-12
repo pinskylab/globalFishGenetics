@@ -35,6 +35,24 @@ msat <- merge(msat, cp_info[, c('spp', 'Pelagic_Coastal', 'Genus', 'Family', 'No
 #subset mtdna bc are a few outliers with very high bp --- entire mtdna (mitogenome?)
 mtdna_small <-subset(mtdna, as.numeric(mtdna$bp) < 2000)
 
+##############################################################################################
+
+######## Check correlation in env variables ########
+
+#### msat ####
+
+## scatterplot of sst v. abslat ##
+msat$abslat <- abs(msat$lat)
+
+sstmean_abslat_plot <- ggplot(data = msat, aes(x = abslat, y = BO_dissox)) + 
+  geom_point(alpha = 0.5)
+sstmean_abslat_plot
+
+sstmean_abslat_r <- cor(msat$abslat, msat$BO_dissox, use = "complete.obs") #-0.935
+
+sstmean_He_plot <- ggplot(data = msat, aes(x = sst.BO_sstmean, y = He)) + geom_point(alpha = 0.5)
+sstmean_He_plot
+
 ####################################################################################################################
 
 ######## Building models for mtdna Hd ########
@@ -1137,9 +1155,11 @@ msat <- subset(msat, msat$logsstrange != "NaN")
 msat <- subset(msat, msat$logsstmax != "NaN")
 msat <- subset(msat, msat$logsstmin != "NaN")
 
+msat$lat_scale <- scale(msat$lat)
+
 ##### sst mean model ####
 ## sst mean w/rp ##
-msat_he_binomial_sstmean <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + range_position + logsstmean + (1|Family/Genus/spp) + (1|Source) + 
+msat_he_binomial_sstmean <- glmer(cbind(success, failure) ~ PrimerNote + CrossSpp + logsstmean + (1|Family/Genus/spp) + (1|Source) + 
                                  (1|Site) + (1|ID), family = binomial, data = msat, na.action = "na.fail", 
                                  control = glmerControl(optimizer = "bobyqa"))
 
