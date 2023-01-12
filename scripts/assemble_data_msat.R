@@ -386,6 +386,7 @@ dim(msat) #22697 rows
 x <- apply(msat[, grep('p[[:digit:]]+', names(msat))], MARGIN = 1, FUN = sumna)
 msat[which(x < 0.99), ] #6, all Em-07 in Antoro et al. 2006 Marine Biotechnology 8:17-26 --> checked paper, and allele freqs don't sum to 1 there either
 dim(msat) #22697 rows
+
 msat <- subset(msat, Source != "Antoro et al. 2006 Marine Biotechnology 8:17-26" | MarkerName != "Em-07") #remove Em-07 from dataset
 dim(msat) #22691 rows
 msat[which(x < 0.99 & is.na(msat$He)), ] #0
@@ -848,8 +849,146 @@ msat$lat[msat$Source == "Schmidt 2005 Dissertation" & msat$Site == "MAG96 (Irmin
   msat$lon[msat$Source == "Schmidt 2005 Dissertation" & msat$Site == "MAG96 (Irminger Sea)"] <- -28.2 #based on other coordinates at this site
 msat$lon[msat$Source == "Zarraonaindia et al. 2009 ICES J Mar Sci" & msat$Site == "LIONS"] <- 4.508017 #based on google maps
 msat$lon[msat$Source == "Hoarau et al. 2002 Mol Ecol" & msat$Site == "Bay of Vilaine"] <- -2.782727 #based on google maps
-msat$lon[msat$Source == "Larson et al. 2011 Cons Gen 12:679-690" & msat$Site == "Puget Sound, WA"] <- -122.36667 #based on google maps
-
+msat$lat[msat$Source == "Larson et al. 2011 Cons Gen 12:679-690" & msat$Site == "Puget Sound, WA"] <- 47.606949 #based on google maps
+  msat$lon[msat$Source == "Larson et al. 2011 Cons Gen 12:679-690" & msat$Site == "Puget Sound, WA"] <- -122.407869 #based on google maps
+msat$lat[msat$Source == "Anderson & Karel 2010 Fish Aq J" & msat$Site == "Sabine Lake"] <- 29.686301 #based on google maps
+  msat$lon[msat$Source == "Anderson & Karel 2010 Fish Aq J" & msat$Site == "Sabine Lake"] <- -93.832946 #based on google maps
+msat$lat[msat$Source == "Antoro et al. 2006 Marine Biotechnology 8:17-26" & msat$Site == "Trang"] <- 7.468683 #based on google maps
+  msat$lon[msat$Source == "Antoro et al. 2006 Marine Biotechnology 8:17-26" & msat$Site == "Trang"] <- 99.29126 #based on google maps
+msat$lat[msat$Source == "Bahri-Sfar et al. 2000 Proceedings of the Royal Society B 267:929-935" & msat$Site == "Northern Tunis lagoon"] <- 36.803542 #based on google maps
+  msat$lon[msat$Source == "Bahri-Sfar et al. 2000 Proceedings of the Royal Society B 267:929-935" & msat$Site == "Northern Tunis lagoon"] <- 10.326354 #based on google maps
+msat$lat[msat$Source == "Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS" & msat$Site == "Hunt's Inlet, BC"] <- 54.148063 #based on google maps
+  msat$lon[msat$Source == "Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS" & msat$Site == "Hunt's Inlet, BC"] <- -130.523557 #based on google maps
+  msat$lat[msat$Source == "Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS" & msat$Site == "Louscoone Inlet, BC"] <- 52.12305 #based on google maps
+  msat$lon[msat$Source == "Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS" & msat$Site == "Louscoone Inlet, BC"] <- -131.214599 #based on google maps
+  msat$lat[msat$Source == "Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS" & msat$Site == "Skaat Harbour, BC"] <- 52.40954 #based on google maps
+  msat$lon[msat$Source == "Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS" & msat$Site == "Skaat Harbour, BC"] <- -131.38896 #based on google maps
+  msat$lat[msat$Source == "Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS" & msat$Site == "Tomales Bay, CA"] <- 38.27215 #based on google maps
+  msat$lon[msat$Source == "Beacham et al. 2001 CSAS; Beacham et al. 2002 CSAS" & msat$Site == "Tomales Bay, CA"] <- -123.01157 #based on google maps
+msat$lat[msat$Source == "Bekkevold et al. 2005 Evolution" & msat$Site == "Kolding Fjord 02"] <- 55.502447 #based on google maps
+  msat$lon[msat$Source == "Bekkevold et al. 2005 Evolution" & msat$Site == "Kolding Fjord 02"] <- 9.651237 #based on 
+  msat$lat[msat$Source == "Bekkevold et al. 2005 Evolution" & msat$Site == "Limfjord 03"] <- 56.983754 #based on google maps
+  msat$lon[msat$Source == "Bekkevold et al. 2005 Evolution" & msat$Site == "Limfjord 03"] <- 10.359377 #based on 
+msat$lat[msat$Source == "Bouza et al. 2002 CJFAS" & msat$Site == "Vilagarcia"] <- 42.607834 #based on google maps
+  msat$lon[msat$Source == "Bouza et al. 2002 CJFAS" & msat$Site == "Vilagarcia"] <- -8.814009 #based on google maps
+msat$lat[msat$Source == "Bradbury et al. 2009 J Fish Bio" & msat$Site == "Holyrood Pond, St. Mary's Bay, and Foxtrap, Conception Bay (Newfoundland)"] <- 47.499221 #based on google maps
+  msat$lon[msat$Source == "Bradbury et al. 2009 J Fish Bio" & msat$Site == "Holyrood Pond, St. Mary's Bay, and Foxtrap, Conception Bay (Newfoundland)"] <- -53.055702 #based on google maps 
+  msat$lat[msat$Source == "Bradbury et al. 2009 J Fish Bio" & msat$Site == "Holyrood Pond, St. Mary's Bay, and Newman Sound, Bonavista Bay (Newfoundland)"] <- 48.819264 #based on google maps
+  msat$lon[msat$Source == "Bradbury et al. 2009 J Fish Bio" & msat$Site == "Holyrood Pond, St. Mary's Bay, and Newman Sound, Bonavista Bay (Newfoundland)"] <-  -53.414021 #based on google maps
+msat$lat[msat$Source == "Buonaccorsi et al. 2004 Mar Bio" & msat$Site == "Brookings, OR"] <- 42.100612 #based on google maps
+  msat$lon[msat$Source == "Buonaccorsi et al. 2004 Mar Bio" & msat$Site == "Brookings, OR"] <- -124.363406 #based on google maps
+  msat$lat[msat$Source == "Buonaccorsi et al. 2004 Mar Bio" & msat$Site == "Hardy Creek, CA"] <- 39.700243 #based on google maps
+  msat$lon[msat$Source == "Buonaccorsi et al. 2004 Mar Bio" & msat$Site == "Hardy Creek, CA"] <- -123.849132 #based on google maps
+  msat$lat[msat$Source == "Buonaccorsi et al. 2004 Mar Bio" & msat$Site == "San Diego, CA"] <-  32.796148 #based on google maps
+  msat$lon[msat$Source == "Buonaccorsi et al. 2004 Mar Bio" & msat$Site == "San Diego, CA"] <- -117.274361 #based on google maps
+msat$lat[msat$Source == "Buonaccorsi et al. 2005 Cons Gen" & msat$Site == "Ensenada, MX 2001"] <- 31.813247 #based on google maps
+  msat$lon[msat$Source == "Buonaccorsi et al. 2005 Cons Gen" & msat$Site == "Ensenada, MX 2001"] <- -116.73849 #based on google maps
+msat$lat[msat$Source == "Burford 2009 J Evol Biol" & msat$Site == "Avila, CA"] <- 35.160262 #based on google maps
+  msat$lon[msat$Source == "Burford 2009 J Evol Biol" & msat$Site == "Avila, CA"] <- -120.725973 #based on google maps
+  msat$lat[msat$Source == "Burford 2009 J Evol Biol" & msat$Site == "Ft. Ross, CA"] <- 38.495275 #based on google maps
+  msat$lon[msat$Source == "Burford 2009 J Evol Biol" & msat$Site == "Ft. Ross, CA"] <- -123.254294 #based on google maps
+  msat$lat[msat$Source == "Burford 2009 J Evol Biol" & msat$Site == "Pacific City, OR"] <-  45.220207 #based on google maps
+  msat$lon[msat$Source == "Burford 2009 J Evol Biol" & msat$Site == "Pacific City, OR"] <- -124.025876 #based on google maps
+msat$lat[msat$Source == "Chapman et al. 2002 Mar Biotech" & msat$Site == "Ashley River, SC"] <- 32.766778 #based on google maps
+  msat$lon[msat$Source == "Chapman et al. 2002 Mar Biotech" & msat$Site == "Ashley River, SC"] <- -79.93664 #based on google maps
+  msat$lat[msat$Source == "Chapman et al. 2002 Mar Biotech" & msat$Site == "Wando River, SC"] <- 32.807213 #based on google maps
+  msat$lon[msat$Source == "Chapman et al. 2002 Mar Biotech" & msat$Site == "Wando River, SC"] <- -79.91383 #based on google maps
+msat$lat[msat$Source == "Crivello et al. 2004 J Fish Bio" & msat$Site == "Niantic River, CT"] <- 41.319463 #based on google maps
+  msat$lon[msat$Source == "Crivello et al. 2004 J Fish Bio" & msat$Site == "Niantic River, CT"] <- -72.185354 #based on google maps
+msat$lat[msat$Source == "D'Anatro, Pereira & Lessa (2011) Environ. Biol. Fish 91:407-420" & msat$Site == "Laguna de Rocha"] <- -34.688445 #based on google maps
+  msat$lon[msat$Source == "D'Anatro, Pereira & Lessa (2011) Environ. Biol. Fish 91:407-420" & msat$Site == "Laguna de Rocha"] <- -54.245872 #based on google maps
+msat$lat[msat$Source == "Florin & Hoglund 2007 Mol Ecol" & msat$Site == "Gdynia"] <- 54.534548 #based on google maps
+  msat$lon[msat$Source == "Florin & Hoglund 2007 Mol Ecol" & msat$Site == "Gdynia"] <- 18.62135 #based on google maps
+  msat$lat[msat$Source == "Florin & Hoglund 2007 Mol Ecol" & msat$Site == "Gotland 2004"] <- 57.357056 #based on google maps
+  msat$lon[msat$Source == "Florin & Hoglund 2007 Mol Ecol" & msat$Site == "Gotland 2004"] <- 18.763634 #based on google maps
+  msat$lat[msat$Source == "Florin & Hoglund 2007 Mol Ecol" & msat$Site == "Latvia"] <- 56.424177 #based on google maps
+  msat$lon[msat$Source == "Florin & Hoglund 2007 Mol Ecol" & msat$Site == "Latvia"] <- 20.985281 #based on google maps
+msat$lat[msat$Source == "Galarza et al. 2009 CJFAS 66:1478-1490" & msat$Site == "Porticello"] <- 38.132188 #based on google maps
+  msat$lon[msat$Source == "Galarza et al. 2009 CJFAS 66:1478-1490" & msat$Site == "Porticello"] <- 13.571875 #based on google maps
+msat$lat[msat$Source == "Gold et al. 2010 Fish Res" & msat$Site == "Isla de Margarita"] <- 11.116422 #based on google maps
+  msat$lon[msat$Source == "Gold et al. 2010 Fish Res" & msat$Site == "Isla de Margarita"] <- -64.064255 #based on google maps
+msat$lat[msat$Source == "Gonzalez-Wanguemert et al. 2010 JEMBE" & msat$Site == "Faro"] <- 36.977872 #based on google maps
+  msat$lon[msat$Source == "Gonzalez-Wanguemert et al. 2010 JEMBE" & msat$Site == "Faro"] <- -7.961712 #based on google maps
+msat$lat[msat$Source == "Graves & McDowell 2006 Bull Mar Sci 79:469-482" & msat$Site == "Santos"] <- -24.033708 #based on google maps
+  msat$lon[msat$Source == "Graves & McDowell 2006 Bull Mar Sci 79:469-482" & msat$Site == "Santos"] <- -46.353149 #based on google maps
+msat$lat[msat$Source == "Hess et al. 2001 CJFAS 68:89-104" & msat$Site == "Crescent City, CA"] <- 41.739754 #based on google maps
+  msat$lon[msat$Source == "Hess et al. 2001 CJFAS 68:89-104" & msat$Site == "Crescent City, CA"] <- -124.214166 #based on google maps
+msat$lat[msat$Source == "Jorgensen et al. 2005 Mol Ecol" & msat$Site == "Bothnian Bay, Finnish side (FS02)"] <- 60.977692 #based on google maps
+  msat$lon[msat$Source == "Jorgensen et al. 2005 Mol Ecol" & msat$Site == "Bothnian Bay, Finnish side (FS02)"] <- 20.968159 #based on google maps
+  msat$lat[msat$Source == "Jorgensen et al. 2005 Mol Ecol" & msat$Site == "Bothnian Bay, Swedish side (SS02)"] <- 60.592956 #based on google maps
+  msat$lon[msat$Source == "Jorgensen et al. 2005 Mol Ecol" & msat$Site == "Bothnian Bay, Swedish side (SS02)"] <-  17.729939 #based on google maps
+msat$lat[msat$Source == "Karlsson et al. 2009 Mar Bio" & msat$Site == "Aransas"] <- 27.934264 #based on google maps
+  msat$lon[msat$Source == "Karlsson et al. 2009 Mar Bio" & msat$Site == "Aransas"] <- -96.921631 #based on google maps
+  msat$lat[msat$Source == "Karlsson et al. 2009 Mar Bio" & msat$Site == "Port Isabel"] <- 26.164982 #based on google maps
+  msat$lon[msat$Source == "Karlsson et al. 2009 Mar Bio" & msat$Site == "Port Isabel"] <- -97.237822 #based on google maps
+msat$lat[msat$Source == "LeClair et al. 2006 Trans of the Am Fish Soc 135:1631-1643" & msat$Site == "South Puget Sound, WA"] <- 47.177815 #based on google maps
+  msat$lon[msat$Source == "LeClair et al. 2006 Trans of the Am Fish Soc 135:1631-1643" & msat$Site == "South Puget Sound, WA"] <- -122.734525 #based on google maps
+msat$lat[msat$Source == "Limborg et al. 2009 MEPS" & msat$Site == "Belt Sea (BEL)"] <- 55.569365 #based on google maps
+  msat$lon[msat$Source == "Limborg et al. 2009 MEPS" & msat$Site == "Belt Sea (BEL)"] <- 10.541138 #based on google maps
+  msat$lat[msat$Source == "Limborg et al. 2009 MEPS" & msat$Site == "Northern Kattegat (KAT)"] <- 57.421479 #based on google maps
+  msat$lon[msat$Source == "Limborg et al. 2009 MEPS" & msat$Site == "Northern Kattegat (KAT)"] <- 10.559651 #based on google maps
+msat$lat[msat$Source == "Lundy et al. 2000 Mol Ecol" & msat$Site == "Bay of Biscay south 1999"] <- 43.717779 #based on google maps
+  msat$lon[msat$Source == "Lundy et al. 2000 Mol Ecol" & msat$Site == "Bay of Biscay south 1999"] <- -7.130774 #based on google maps
+msat$lat[msat$Source == "McCraney et al. 2010 Mol Ecol 19:3315-3327" & msat$Site == "Gannon Pond, CA"] <- 40.86991 #based on google maps
+  msat$lon[msat$Source == "McCraney et al. 2010 Mol Ecol 19:3315-3327" & msat$Site == "Gannon Pond, CA"] <- -124.175753 #based on google maps
+  msat$lat[msat$Source == "McCraney et al. 2010 Mol Ecol 19:3315-3327" & msat$Site == "Gannon Slough, CA"] <- 40.852669 #based on google maps
+  msat$lon[msat$Source == "McCraney et al. 2010 Mol Ecol 19:3315-3327" & msat$Site == "Gannon Slough, CA"] <- -124.182241 #based on google maps
+  msat$lat[msat$Source == "McCraney et al. 2010 Mol Ecol 19:3315-3327" & msat$Site == "Jacoby Creek, CA"] <- 40.862252 #based on google maps
+  msat$lon[msat$Source == "McCraney et al. 2010 Mol Ecol 19:3315-3327" & msat$Site == "Jacoby Creek, CA"] <- -124.183478 #based on google maps
+  msat$lat[msat$Source == "McCraney et al. 2010 Mol Ecol 19:3315-3327" & msat$Site == "McDaniel Slough, CA"] <- 40.868353 #based on google maps
+  msat$lon[msat$Source == "McCraney et al. 2010 Mol Ecol 19:3315-3327" & msat$Site == "McDaniel Slough, CA"] <- -124.170088 #based on google maps
+  msat$lat[msat$Source == "McCraney et al. 2010 Mol Ecol 19:3315-3327" & msat$Site == "Wood Creek, CA"] <- 40.810171 #based on google maps
+  msat$lon[msat$Source == "McCraney et al. 2010 Mol Ecol 19:3315-3327" & msat$Site == "Wood Creek, CA"] <- -124.212244 #based on google maps
+msat$lat[msat$Source == "McPherson et al. 2001 Journal of Fish Biology 59:356-370" & msat$Site == "Bras d'Or Lakes"] <- 46.371304 #based on google maps
+  msat$lon[msat$Source == "McPherson et al. 2001 Journal of Fish Biology 59:356-370" & msat$Site == "Bras d'Or Lakes"] <- -60.276712 #based on google maps
+msat$lat[msat$Source == "Mitchell 2006 Thesis" & msat$Site == "Case Inlet, WA 1999"] <- 47.239152 #based on google maps
+  msat$lon[msat$Source == "Mitchell 2006 Thesis" & msat$Site == "Case Inlet, WA 1999"] <- -122.663842 #based on google maps
+msat$lat[msat$Source == "Mobley et al. 2010 J Biogeography 37:1363-1377" & msat$Site == "Aransas Pass, TX"] <- 28.108717 #based on google mas
+  msat$lon[msat$Source == "Mobley et al. 2010 J Biogeography 37:1363-1377" & msat$Site == "Aransas Pass, TX"] <- -96.63383 #based on google maps
+  msat$lat[msat$Source == "Mobley et al. 2010 J Biogeography 37:1363-1377" & msat$Site == "Morehead City, NC"] <- 34.61275 #based on google mas
+  msat$lon[msat$Source == "Mobley et al. 2010 J Biogeography 37:1363-1377" & msat$Site == "Morehead City, NC"] <- -76.700871 #based on google maps
+  msat$lat[msat$Source == "Mobley et al. 2010 J Biogeography 37:1363-1377" & msat$Site == "St. Joseph Bay, FL"] <- 29.785717 #based on google mas
+  msat$lon[msat$Source == "Mobley et al. 2010 J Biogeography 37:1363-1377" & msat$Site == "St. Joseph Bay, FL"] <- -85.438702 #based on google maps
+msat$lat[msat$Source == "Nielsen et al. 2004 Mol Ecol" & msat$Site == "Belt Sea 2001b"] <- 55.06027 #based on google maps
+  msat$lon[msat$Source == "Nielsen et al. 2004 Mol Ecol" & msat$Site == "Belt Sea 2001b"] <- 10.798179 #based on google maps
+  msat$lat[msat$Source == "Nielsen et al. 2004 Mol Ecol" & msat$Site == "Central Kattegat 2001"] <- 56.583897 #based on google maps
+  msat$lon[msat$Source == "Nielsen et al. 2004 Mol Ecol" & msat$Site == "Central Kattegat 2001"] <- 10.448179 #based on google maps
+  msat$lat[msat$Source == "Nielsen et al. 2004 Mol Ecol" & msat$Site == "Northern Kattegat 2001"] <- 57.261885 #based on google maps
+  msat$lon[msat$Source == "Nielsen et al. 2004 Mol Ecol" & msat$Site == "Northern Kattegat 2001"] <-  10.607192 #based on google maps
+msat$lat[msat$Source == "O'Connell et al. 1998 J Fish Bio" & msat$Site == "Kodiak Island, AK"] <- 58.191321 #based on google maps
+  msat$lon[msat$Source == "O'Connell et al. 1998 J Fish Bio" & msat$Site == "Kodiak Island, AK"] <- -153.278154 #based on google maps
+msat$lat[msat$Source == "Plank et al. 2010 J Fish Bio 77:329-340" & msat$Site == "Gulf of California, CA"] <- 29.304995 #based on google maps
+  msat$lon[msat$Source == "Plank et al. 2010 J Fish Bio 77:329-340" & msat$Site == "Gulf of California, CA"] <- -122.655152 #based on google maps
+msat$lat[msat$Source == "Putte et al. 2009 Polar Biol 32:1731-1741" & msat$Site == "Larsen B Ice Shelf"] <- -66.539349 #based on google maps
+  msat$lon[msat$Source == "Putte et al. 2009 Polar Biol 32:1731-1741" & msat$Site == "Larsen B Ice Shelf"] <- -66.975285 #based on google maps
+msat$lat[msat$Source == "Romo et al. 2006 Fish Sci" & msat$Site == "Nagasaki"] <- 32.726931 #based on google maps
+  msat$lon[msat$Source == "Romo et al. 2006 Fish Sci" & msat$Site == "Nagasaki"] <- 129.792108 #based on google maps
+msat$lat[msat$Source == "Salas et al. 2009 Mar Biol 157:437-445" & msat$Site == "Cahuita"] <- 9.771318 #based on google maps
+  msat$lon[msat$Source == "Salas et al. 2009 Mar Biol 157:437-445" & msat$Site == "Cahuita"] <- -82.83332 #based on google maps
+msat$lat[msat$Source == "Sekino & Hara 2001 Mar Biotech" & msat$Site == "Hokkaido"] <- 42.995274 #based on google maps
+  msat$lon[msat$Source == "Sekino & Hara 2001 Mar Biotech" & msat$Site == "Hokkaido"] <- 140.268679 #based on google maps
+  msat$lat[msat$Source == "Sekino & Hara 2001 Mar Biotech" & msat$Site == "Niigata"] <- 37.5758 #based on google maps
+  msat$lon[msat$Source == "Sekino & Hara 2001 Mar Biotech" & msat$Site == "Niigata"] <- 138.631949 #based on google maps
+  msat$lat[msat$Source == "Sekino & Hara 2001 Mar Biotech" & msat$Site == "Tottori"] <- 35.549353 #based on google maps
+  msat$lon[msat$Source == "Sekino & Hara 2001 Mar Biotech" & msat$Site == "Tottori"] <- 13.77606 #based on google maps
+msat$lat[msat$Source == "Sellas et al. 2011 Cons Gen Res 3:609-611" & msat$Site == "Sarasota, FL"] <- 27.341885 #based on google maps
+  msat$lon[msat$Source == "Sellas et al. 2011 Cons Gen Res 3:609-611" & msat$Site == "Sarasota, FL"] <- -82.622105 #based on google maps
+msat$lat[msat$Source == "Small et al. 2005 TAFS" & msat$Site == "Cherry Point, WA 2003"] <- 48.858482 #based on google maps
+  msat$lon[msat$Source == "Small et al. 2005 TAFS" & msat$Site == "Cherry Point, WA 2003"] <- -122.77157 #based on google maps
+  msat$lat[msat$Source == "Small et al. 2005 TAFS" & msat$Site == "Squaxin Pass, WA 2002"] <- 47.170636 #based on google maps
+  msat$lon[msat$Source == "Small et al. 2005 TAFS" & msat$Site == "Squaxin Pass, WA 2002"] <- -122.637305 #based on google maps
+msat$lat[msat$Source == "Teske et al. 2010 Mar Biol 157:2029-2042" & msat$Site == "False Bay"] <- -34.221826 #based on google maps
+  msat$lon[msat$Source == "Teske et al. 2010 Mar Biol 157:2029-2042" & msat$Site == "False Bay"] <- 18.650836 #based on google maps
+msat$lat[msat$Source == "Tripp-Valdez et al. 2010 Fish Res 105:172-177" & msat$Site == "Topolobampo"] <- 25.551579 #based on google maps
+  msat$lon[msat$Source == "Tripp-Valdez et al. 2010 Fish Res 105:172-177" & msat$Site == "Topolobampo"] <- -109.150244 #based on google maps
+msat$lat[msat$Source == "Umino et al. 2009 Fish Sci 4:909-919" & msat$Site == "Owase Bay, Mie Prefecture"] <- 34.074843 #based on google maps
+  msat$lon[msat$Source == "Umino et al. 2009 Fish Sci 4:909-919" & msat$Site == "Owase Bay, Mie Prefecture"] <- -9.144507 #based on google maps
+msat$lat[msat$Source == "Was et al. 2010 Mar Bio" & msat$Site == "Galway Bay"] <- 53.204764 #based on google maps
+  msat$lon[msat$Source == "Was et al. 2010 Mar Bio" & msat$Site == "Galway Bay"] <- -9.144507 #based on google maps
+msat$lat[msat$Source == "Wilson 2006 Mol Ecol 15:809-824" & msat$Site == "San Diego Bay, CA"] <- 32.676035 #based on google maps
+  msat$lon[msat$Source == "Wilson 2006 Mol Ecol 15:809-824" & msat$Site == "San Diego Bay, CA"] <- -117.197796 #based on google maps
+  
+   
 #correct lat/long sites where not calculated properly originally
 msat$lat[msat$Source == "Chevolot et al. 2006 J Sea Research 56:305-316" & msat$Site == "North Thames Estuary"] <- 52.095 #needed to be averaged across collection points
   msat$lon[msat$Source == "Chevolot et al. 2006 J Sea Research 56:305-316" & msat$Site == "North Thames Estuary"] <- 2.04 #needed to be averaged across collection points
@@ -875,8 +1014,8 @@ msat$lat[msat$Source == "Chevolot et al. 2006 Mol Ecol 15:3693-3705" & msat$Site
   msat$lon[msat$Source == "Chevolot et al. 2006 Mol Ecol 15:3693-3705" & msat$Site == "Graciosa"] <- -28.00667 #needed to be averaged across collection points
   msat$lat[msat$Source == "Chevolot et al. 2006 Mol Ecol 15:3693-3705" & msat$Site == "Sao Miguel"] <- 37.7475 #needed to be averaged across collection points
   msat$lon[msat$Source == "Chevolot et al. 2006 Mol Ecol 15:3693-3705" & msat$Site == "Sao Miguel"] <- -25.6975 #needed to be averaged across collection points
-  msat$lat[msat$Source == "Chevolot et al. 2006 Mol Ecol 15:3693-3705" & msat$Site == "Terceira"] <- 38.675 #needed to be averaged across collection points
-  msat$lon[msat$Source == "Chevolot et al. 2006 Mol Ecol 15:3693-3705" & msat$Site == "Terceira"] <- -27.3125 #needed to be averaged across collection points
+  msat$lat[msat$Source == "Chevolot et al. 2006 Mol Ecol 15:3693-3705" & msat$Site == "Terceira"] <- 38.670711 #needed to be averaged across collection points
+  msat$lon[msat$Source == "Chevolot et al. 2006 Mol Ecol 15:3693-3705" & msat$Site == "Terceira"] <- -27.355072 #needed to be averaged across collection points
 msat$lat[msat$Source == "Pita et al. 2011 Continental Shelf Research 31:376-387" & msat$Site == "Atlantic Iberia"] <- 42.89583 #needed to be averaged across collection points
   msat$lon[msat$Source == "Pita et al. 2011 Continental Shelf Research 31:376-387" & msat$Site == "Atlantic Iberia"] <- -9.187495 #needed to be averaged across collection points
   msat$lat[msat$Source == "Pita et al. 2011 Continental Shelf Research 31:376-387" & msat$Site == "Bay of Biscay"] <- 43.511111 #needed to be averaged across collection points
@@ -1608,4 +1747,4 @@ summary(msatloci$He[inds]) #mean is 0.71
 ######## Format and write out ########
 
 #write out msat data (one locus per line)
-write.csv(msatloci, file = "output/msatloci.csv")
+write.csv(msatloci, file = "output/msatloci_assembled.csv")

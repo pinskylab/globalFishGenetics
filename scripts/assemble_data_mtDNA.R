@@ -313,18 +313,24 @@ mtdna$lat[mtdna$Source == "Rocha-Olivares Vetter 1999" & mtdna$Site == "Oregon"]
   mtdna$lon[mtdna$Source == "Rocha-Olivares Vetter 1999" & mtdna$Site == "Oregon"] <- -124.230677 #based on google maps
   mtdna$lat[mtdna$Source == "Rocha-Olivares Vetter 1999" & mtdna$Site == "California"] <- 38.384647 #based on google maps
   mtdna$lon[mtdna$Source == "Rocha-Olivares Vetter 1999" & mtdna$Site == "California"] <- -123.751836 #based on google maps
+  mtdna$lat[mtdna$Source == "Rocha-Olivares Vetter 1999" & mtdna$Site == "Fairweather Island, Gulf of Alaska"] <- 58.175171 #based on google maps
+  mtdna$lon[mtdna$Source == "Rocha-Olivares Vetter 1999" & mtdna$Site == "Fairweather Island, Gulf of Alaska"] <- -136.557556 #based on google maps
+  mtdna$lat[mtdna$Source == "Rocha-Olivares Vetter 1999" & mtdna$Site == "Sitka, Gulf of Alaska"] <- 57.037355 #based on google maps
+  mtdna$lon[mtdna$Source == "Rocha-Olivares Vetter 1999" & mtdna$Site == "Sitka, Gulf of Alaska"] <- -135.462987 #based on google maps
+  mtdna$lat[mtdna$Source == "Rocha-Olivares Vetter 1999" & mtdna$Site == "Vancouver Island, British Columbia"] <- 49.624768 #based on google maps
+  mtdna$lon[mtdna$Source == "Rocha-Olivares Vetter 1999" & mtdna$Site == "Vancouver Island, British Columbia"] <- -124.849541 #based on google maps
 mtdna$lat[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "San Diego"] <- 32.74804 #based on google maps
   mtdna$lon[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "San Diego"] <- -117.305393 #based on google maps
   mtdna$lat[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Los Angeles"] <- 33.854146 #based on google maps
   mtdna$lon[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Los Angeles"] <- -118.604253 #based on google maps
   mtdna$lat[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "San Dieguito"] <- 33.007198 #based on google maps
   mtdna$lon[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "San Dieguito"] <- -117.287726 #based on google maps
-  mtdna$lat[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Mission Bay"] <- 32.780676 #based on google maps
-  mtdna$lon[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Mission Bay"] <- -117.246316 #based on google maps
-  mtdna$lat[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Oceanside Harbor"] <- 33.208387 #based on google maps
-  mtdna$lon[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Oceanside Harbor"] <- -117.397507 #based on google maps
-  mtdna$lat[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "San Diego Bay"] <- 32.668495 #based on google maps
-  mtdna$lon[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "San Diego Bay"] <- -117.142071 #based on google maps
+  mtdna$lat[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Mission Bay"] <- 32.777789 #based on google maps
+  mtdna$lon[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Mission Bay"] <- -117.264859 #based on google maps
+  mtdna$lat[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Oceanside Harbor"] <- 33.192299 #based on google maps
+  mtdna$lon[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Oceanside Harbor"] <- -117.458968 #based on google maps
+  mtdna$lat[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "San Diego Bay"] <- 32.6339229 #based on google maps
+  mtdna$lon[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "San Diego Bay"] <- -117.190135 #based on google maps
   mtdna$lat[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Tijuana Estuary"] <- 32.529308 #based on google maps
   mtdna$lon[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Tijuana Estuary"] <- -117.132024 #based on google maps
   mtdna$lat[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Agua Hedionda"] <- 33.141301 #based on google maps
@@ -338,6 +344,10 @@ mtdna$lat[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Acade
   mtdna$lon[mtdna$Source == "Craig et al. 2011 Bulletin, Southern California Academy of Sciences 110:141-151" & mtdna$Site == "Bahia Magdelena"] <- -112.012381 #based on google maps
 mtdna$lat[mtdna$Source == "Sotka et al. 2005 Marine Biotechnology 7:223-230" & mtdna$Site == "Seattle"] <- 47.699 #based on paper coordinates
   mtdna$lon[mtdna$Source == "Sotka et al. 2005 Marine Biotechnology 7:223-230" & mtdna$Site == "Seattle"] <- -122.386667 #based on paper coordinates
+  mtdna$lat[mtdna$Source == "Sotka et al. 2005 Marine Biotechnology 7:223-230" & mtdna$Site == "Pt. George"] <- 48.620768 #based on paper coordinates
+  mtdna$lon[mtdna$Source == "Sotka et al. 2005 Marine Biotechnology 7:223-230" & mtdna$Site == "Pt. George"] <- -122.585878 #based on paper coordinates
+  mtdna$lat[mtdna$Source == "Sotka et al. 2005 Marine Biotechnology 7:223-230" & mtdna$Site == "Shaw Island"] <- 48.654406 #based on paper coordinates
+  mtdna$lon[mtdna$Source == "Sotka et al. 2005 Marine Biotechnology 7:223-230" & mtdna$Site == "Shaw Island"] <- -123.075304 #based on paper coordinates
 mtdna$lat[mtdna$Source == "Canino et al. 2010 Molecular Ecology 19:4339-4351" & mtdna$Site == "Puget Sound"] <- 47.583333 #based on paper coordinates
   mtdna$lat[mtdna$Source == "Canino et al. 2010 Molecular Ecology 19:4339-4351" & mtdna$Site == "Puget Sound"] <- -122.5 #based on paper coordinates
 mtdna$lat[mtdna$Source == "Lopez et al. 2010 BMC Genetics 11:34" & mtdna$Site == "SIN"] <- 23.055571 #based on google maps
@@ -349,7 +359,8 @@ mtdna$lat[mtdna$Source == "Lopez et al. 2010 BMC Genetics 11:34" & mtdna$Site ==
   mtdna$lat[mtdna$Source == "Lopez et al. 2010 BMC Genetics 11:34" & mtdna$Site == "CH"] <- 14.553582 #based on google maps
   mtdna$lon[mtdna$Source == "Lopez et al. 2010 BMC Genetics 11:34" & mtdna$Site == "CH"] <- -92.739448 #based on google maps
 mtdna$lon[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna$Site == "Magdalen Island, QUE"] <- -61.51 #based on paper coordinates (flipping sign)
-  mtdna$lon[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna$Site == "Mill River, PEI"] <- -64.08 #based on paper coordinates (flipping sign)
+  mtdna$lat[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna$Site == "Mill River, PEI"] <- 46.475675 #based on google maps
+  mtdna$lon[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna$Site == "Mill River, PEI"] <- -64.117766 #based on  google maps
   mtdna$lon[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna$Site == "Joggins, NS"] <- -64.29 #based on paper coordinates (flipping sign)
   mtdna$lon[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna$Site == "St. John, NB"] <- -66.08 #based on paper coordinates (flipping sign)
   mtdna$lon[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna$Site == "St. Andrews, NB"] <- -67.04 #based on paper coordinates (flipping sign)
@@ -372,7 +383,8 @@ mtdna$lon[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna
   mtdna$lon[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna$Site == "Folly Beach, SC"] <- -79.05 #based on paper coordinates (flipping sign)
   mtdna$lon[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna$Site == "Tybee Island, GA"] <- -80.57 #based on paper coordinates (flipping sign)
   mtdna$lon[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna$Site == "Jekyll Island, GA"] <- -81.26 #based on paper coordinates (flipping sign)
-  mtdna$lon[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna$Site == "St. Augustine Beach, FL"] <- -81.15 #based on paper coordinates (flipping sign)
+  mtdna$lat[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna$Site == "St. Augustine Beach, FL"] <- 29.430933 #based on google maps
+  mtdna$lon[mtdna$Source == "Mach et al. 2011 Marine Biology 158:515-530 " & mtdna$Site == "St. Augustine Beach, FL"] <- -81.073096 #based on google maps
 mtdna$lon[mtdna$Source == "Carr et al. 1995" & mtdna$Site == "Heart's Ease Ledge, near Random Island"] <- -53.463483 #based on google maps
   mtdna$lat[mtdna$Source == "Carr et al. 1995" & mtdna$Site == "Flatrock , east coast of Avalon Peninsula north of St. John's"] <- 47.713069 #based on google maps
   mtdna$lon[mtdna$Source == "Carr et al. 1995" & mtdna$Site == "Flatrock , east coast of Avalon Peninsula north of St. John's"] <- -52.696191 #based on google maps
@@ -389,6 +401,8 @@ mtdna$lat[mtdna$Source == "Cardenas et al. 2009 Fisheries Research 100:109-115" 
   mtdna$lon[mtdna$Source == "Cardenas et al. 2009 Fisheries Research 100:109-115" & mtdna$Site == "San Antonio"] <- -71.616667 #based on paper coordinates
 mtdna$lat[mtdna$Source == "Daly-Engel et al. 2012 Marine Biology 159:975-985" & mtdna$Site == "East Atlantic"] <- 3.833166 #based on google maps
   mtdna$lon[mtdna$Source == "Daly-Engel et al. 2012 Marine Biology 159:975-985" & mtdna$Site == "East Atlantic"] <- 7.926534 #based on google maps
+  mtdna$lat[mtdna$Source == "Daly-Engel et al. 2012 Marine Biology 159:975-985" & mtdna$Site == "San Blas"] <- 9.568288 #based on google maps
+  mtdna$lon[mtdna$Source == "Daly-Engel et al. 2012 Marine Biology 159:975-985" & mtdna$Site == "San Blas"] <- -78.710984 #based on google maps
 mtdna$lat[mtdna$Source == "Shui et. al 2009 Fish Science 75:593-600" & mtdna$Site == "NB"] <- 29.487855 #based on google maps
   mtdna$lon[mtdna$Source == "Shui et. al 2009 Fish Science 75:593-600" & mtdna$Site == "NB"] <- 122.258372 #based on google maps
 mtdna$lon[mtdna$Source == "Correia et al. 2012 Marine Biology 159:1509-1525" & mtdna$Site == "South Portugal"] <- -9.25 #based on paper coordinates
@@ -417,7 +431,9 @@ mtdna$lat[mtdna$Source == "Lemaire, Versini & Bonhomme 2005" & mtdna$Site == "TG
   mtdna$lon[mtdna$Source == "Lemaire, Versini & Bonhomme 2005" & mtdna$Site == "MNAD"] <- -2.906444 #based on google maps
   mtdna$lat[mtdna$Source == "Lemaire, Versini & Bonhomme 2005" & mtdna$Site == "MRBT"] <- 34.003488 #based on google maps
   mtdna$lon[mtdna$Source == "Lemaire, Versini & Bonhomme 2005" & mtdna$Site == "MRBT"] <- -6.921824 #based on google maps
-mtdna$lon[mtdna$Source == "Kochzius Blohm 2005" & mtdna$Site == "Northern Red Sea"] <- 34.179298 #based on google maps
+  mtdna$lat[mtdna$Source == "Lemaire, Versini & Bonhomme 2005" & mtdna$Site == "TISK"] <- 37.209644 #based on google maps
+  mtdna$lon[mtdna$Source == "Lemaire, Versini & Bonhomme 2005" & mtdna$Site == "TISK"] <- 9.025964 #based on google maps
+  mtdna$lon[mtdna$Source == "Kochzius Blohm 2005" & mtdna$Site == "Northern Red Sea"] <- 34.179298 #based on google maps
   mtdna$lat[mtdna$Source == "Kochzius Blohm 2005" & mtdna$Site == "Gulf of Aqaba"] <- 29.103332 #based on google maps
   mtdna$lon[mtdna$Source == "Kochzius Blohm 2005" & mtdna$Site == "Gulf of Aqaba"] <- 34.802618 #based on google maps
 mtdna$lat[mtdna$Source == "Coscia et al. 2012 Heredity 108:537-546" & mtdna$Site == "Spain"] <- 36.508689 #based on google maps
@@ -427,6 +443,10 @@ mtdna$lat[mtdna$Source == "Coscia et al. 2012 Heredity 108:537-546" & mtdna$Site
   mtdna$lat[mtdna$Source == "Coscia et al. 2012 Heredity 108:537-546" & mtdna$Site == "Ireland"] <- 52.120047 #based on google maps
   mtdna$lon[mtdna$Source == "Coscia et al. 2012 Heredity 108:537-546" & mtdna$Site == "Ireland"] <- -6.45999 #based on google maps
 mtdna$lon[mtdna$Source == "Francisco, Faria, Lengkeek et al. 2011" & mtdna$Site == "Cabo-do-Mundo"] <- -8.72211 #based on google maps
+  mtdna$lat[mtdna$Source == "Francisco, Faria, Lengkeek et al. 2011" & mtdna$Site == "Cadiz"] <- 36.579781 #based on google maps
+  mtdna$lon[mtdna$Source == "Francisco, Faria, Lengkeek et al. 2011" & mtdna$Site == "Cadiz"] <- -6.354163 #based on google maps
+  mtdna$lat[mtdna$Source == "Francisco, Faria, Lengkeek et al. 2011" & mtdna$Site == "Carantec"] <- 48.711922 #based on google maps
+  mtdna$lon[mtdna$Source == "Francisco, Faria, Lengkeek et al. 2011" & mtdna$Site == "Carantec"] <- -3.910381 #based on google maps
 mtdna$lat[mtdna$Source == "Kumar et al. 2012 Marine Biology Research 8:992-1002" | mtdna$Source == "Kumar et al. 2012 Conservation Genetics 13:1119-1131" & mtdna$Site == "Pondicherry"] <- 11.927044 #based on google maps
   mtdna$lon[mtdna$Source == "Kumar et al. 2012 Marine Biology Research 8:992-1002" | mtdna$Source == "Kumar et al. 2012 Conservation Genetics 13:1119-1131" & mtdna$Site == "Pondicherry"] <- 79.853967 #based on google maps
 mtdna$lat[mtdna$Source == "Chen et al. 2010 Zoological Studies 49: 270-282 " & mtdna$Site == "Autumn Taiwan"] <- 24.81293 #based on google maps
@@ -436,8 +456,8 @@ mtdna$lon[mtdna$Source == "Johnson et al. 2009 Copeia 3: 465-474" & mtdna$Site =
   mtdna$lon[mtdna$Source == "Johnson et al. 2009 Copeia 3: 465-474" & mtdna$Site == "Crown Memorial State Beach, CA (SF)"] <- -122.25 #based on google maps
 mtdna$lat[mtdna$Source == "Canino et al. 2010 Molecular Ecology 19:4339-4351" & mtdna$Site == "East China Sea"] <- 38.983333 #based on paper coordinates
   mtdna$lon[mtdna$Source == "Canino et al. 2010 Molecular Ecology 19:4339-4351" & mtdna$Site == "East China Sea"] <- 128.7 #based on paper coordinates
-  mtdna$lat[mtdna$Source == "Canino et al. 2010 Molecular Ecology 19:4339-4351" & mtdna$Site == "Kodiak Island (AK)"] <- 57.8 #based on paper coordinates
-  mtdna$lon[mtdna$Source == "Canino et al. 2010 Molecular Ecology 19:4339-4351" & mtdna$Site == "Kodiak Island (AK)"] <- -152.516667 #based on paper coordinates
+  mtdna$lat[mtdna$Source == "Canino et al. 2010 Molecular Ecology 19:4339-4351" & mtdna$Site == "Kodiak Island (AK)"] <- 57.735545 #based on google maps
+  mtdna$lon[mtdna$Source == "Canino et al. 2010 Molecular Ecology 19:4339-4351" & mtdna$Site == "Kodiak Island (AK)"] <- -152.373848 #based on google maps
   mtdna$lat[mtdna$Source == "Canino et al. 2010 Molecular Ecology 19:4339-4351" & mtdna$Site == "Unimak Pass (AK)"] <- 54.633333 #based on paper coordinates
   mtdna$lon[mtdna$Source == "Canino et al. 2010 Molecular Ecology 19:4339-4351" & mtdna$Site == "Unimak Pass (AK)"] <- -168.166667 #based on paper coordinates
   mtdna$lat[mtdna$Source == "Canino et al. 2010 Molecular Ecology 19:4339-4351" & mtdna$Site == "Hecate Strait"] <- 53.216667 #based on paper coordinates
@@ -556,7 +576,83 @@ mtdna$lat[mtdna$Source == "Evans et al. 2010 Fisheries Research 102:16-25" & mtd
 mtdna$lat[mtdna$Source == "Hickey et. al 2009 Molecular Ecology 18:680-697" & mtdna$Site == "New Plysmouth"] <-  -39.004456 #based on google maps
   mtdna$lon[mtdna$Source == "Hickey et. al 2009 Molecular Ecology 18:680-697" & mtdna$Site == "New Plysmouth"] <- 174.035392 #based on google maps
   mtdna$Site[mtdna$Source == "Hickey et. al 2009 Molecular Ecology 18:680-697" & mtdna$Site == "New Plysmouth"] <- "New Plymouth"
-
+mtdna$lat[mtdna$Source == "Anderson and Karel 2009 Marine and Coastal Fisheries: Dynamics, Management, and Ecosystem Science 1:121-132" & mtdna$Site == "SL"] <- 29.686301 #based on google maps
+  mtdna$lon[mtdna$Source == "Anderson and Karel 2009 Marine and Coastal Fisheries: Dynamics, Management, and Ecosystem Science 1:121-132" & mtdna$Site == "SL"] <- -93.832946 #based on google maps
+mtdna$lat[mtdna$Source == "Bowen & Grant 1997" & mtdna$Site == "Iquique"] <- -20.285195 #based on google maps
+  mtdna$lon[mtdna$Source == "Bowen & Grant 1997" & mtdna$Site == "Iquique"] <- -70.240529 #based on google maps
+  mtdna$lat[mtdna$Source == "Bowen & Grant 1997" & mtdna$Site == "San Diego, Southern California"] <- 32.648754 #based on google maps
+  mtdna$lon[mtdna$Source == "Bowen & Grant 1997" & mtdna$Site == "San Diego, Southern California"] <- -117.213337 #based on google maps
+mtdna$lat[mtdna$Source == "Cardenas et al. 2009 Fisheries Research 100:109-115" & mtdna$Site == "Iquique"] <- -20.285195 #based on google maps
+  mtdna$lon[mtdna$Source == "Cardenas et al. 2009 Fisheries Research 100:109-115" & mtdna$Site == "Iquique"] <- -70.240529 #based on google maps
+mtdna$lat[mtdna$Source == "Castillo-Olguin et al. 2012 Ciencias Marinas 38(4):635-652" & mtdna$Site == "Nayarit"] <- 21.16842 #based on google maps
+  mtdna$lon[mtdna$Source == "Castillo-Olguin et al. 2012 Ciencias Marinas 38(4):635-652" & mtdna$Site == "Nayarit"] <- -105.46868 #based on google maps
+  mtdna$lat[mtdna$Source == "Castillo-Olguin et al. 2012 Ciencias Marinas 38(4):635-652" & mtdna$Site == "Sinaloa"] <- 22.949148 #based on google maps
+  mtdna$lon[mtdna$Source == "Castillo-Olguin et al. 2012 Ciencias Marinas 38(4):635-652" & mtdna$Site == "Sinaloa"] <- -106.259761 #based on google maps
+mtdna$lat[mtdna$Source == "Cheng et al. 2011 Biochemical Systematics and Ecology 39:718-724" & mtdna$Site == "Ruian "] <- 27.031518 #based on google maps
+  mtdna$lon[mtdna$Source == "Cheng et al. 2011 Biochemical Systematics and Ecology 39:718-724" & mtdna$Site == "Ruian "] <- 120.330339 #baased on google maps
+mtdna$lat[mtdna$Source == "Chevolot et al. 2007 Mar Biol 151:1275-1286" & mtdna$Site == "Kattegat"] <- 57.600212 #based on google maps
+  mtdna$lon[mtdna$Source == "Chevolot et al. 2007 Mar Biol 151:1275-1286" & mtdna$Site == "Kattegat"] <- 10.682336 #based on google maps
+  mtdna$lat[mtdna$Source == "Chevolot et al. 2007 Mar Biol 151:1275-1286" & mtdna$Site == "Oxafjordur"] <- 66.335182 #based on google maps
+  mtdna$lon[mtdna$Source == "Chevolot et al. 2007 Mar Biol 151:1275-1286" & mtdna$Site == "Oxafjordur"] <- -16.779878 #based on google maps
+  mtdna$lat[mtdna$Source == "Chevolot et al. 2007 Mar Biol 151:1275-1286" & mtdna$Site == "Skagafjordur"] <- 66.291407 #based on google maps
+  mtdna$lon[mtdna$Source == "Chevolot et al. 2007 Mar Biol 151:1275-1286" & mtdna$Site == "Skagafjordur"] <- -17.229453 #based on google maps
+mtdna$lat[mtdna$Source == "Daley et al. 2012 Marine and Freshwater Research 63:708-714" & mtdna$Site == "Victoria"] <- -40.104311 #based on google maps
+  mtdna$lon[mtdna$Source == "Daley et al. 2012 Marine and Freshwater Research 63:708-714" & mtdna$Site == "Victoria"] <- 147.931332 #basd on google maps
+mtdna$lat[mtdna$Source == "Garcia-Rodriguez et al. 2011 Fisheries Research 107:169-176" & mtdna$Site == "Ensenada "] <- 31.821834 #based on google maps
+  mtdna$lon[mtdna$Source == "Garcia-Rodriguez et al. 2011 Fisheries Research 107:169-176" & mtdna$Site == "Ensenada "] <- -116.74386 #based on google maps
+mtdna$lat[mtdna$Source == "Goswami et. al 2009 Hydrobiologia 621:213-221" & mtdna$Site == "Kollam"] <- 8.868616 #based on google maps
+  mtdna$lon[mtdna$Source == "Goswami et. al 2009 Hydrobiologia 621:213-221" & mtdna$Site == "Kollam"] <- 76.577859 #based on google maps
+mtdna$lat[mtdna$Source == "Hickey et. al 2009 Molecular Ecology 18:680-697" & mtdna$Site == "Chatham Islands"] <- -43.796497 #based on google maps
+  mtdna$lon[mtdna$Source == "Hickey et. al 2009 Molecular Ecology 18:680-697" & mtdna$Site == "Chatham Islands"] <- -176.285205 #based on google maps
+mtdna$lat[mtdna$Source == "Hyde & Vetter 2009 Canadian Journal of Fisheries and Aquatic Sciences 66:1569-1581" & mtdna$Site == "Depoe Bay, Oregon"] <- 44.816667 #based on google maps
+  mtdna$lon[mtdna$Source == "Hyde & Vetter 2009 Canadian Journal of Fisheries and Aquatic Sciences 66:1569-1581" & mtdna$Site == "Depoe Bay, Oregon"] <- -124.090539 #based on google maps
+  mtdna$lat[mtdna$Source == "Hyde & Vetter 2009 Canadian Journal of Fisheries and Aquatic Sciences 66:1569-1581" & mtdna$Site == "Shelter Cove, Oregon"] <- 40.028397 #based on google maps
+  mtdna$lon[mtdna$Source == "Hyde & Vetter 2009 Canadian Journal of Fisheries and Aquatic Sciences 66:1569-1581" & mtdna$Site == "Shelter Cove, Oregon"] <- -124.083687 #based on google maps
+mtdna$lat[mtdna$Source == "Kumar et al. 2012 Conservation Genetics 13:1119-1131" & mtdna$Site == "Tuticorin"] <- 8.514448 #based on google maps
+  mtdna$lon[mtdna$Source == "Kumar et al. 2012 Conservation Genetics 13:1119-1131" & mtdna$Site == "Tuticorin"] <- 78.148665 #based on google maps
+mtdna$lat[mtdna$Source == "Menezez et al. 2012 Journal of Fish Biology 80:2198-2212" & mtdna$Site == "Pondicherry"] <- 11.594979 #based on google maps
+  mtdna$lon[mtdna$Source == "Menezez et al. 2012 Journal of Fish Biology 80:2198-2212" & mtdna$Site == "Pondicherry"] <- 79.812898 #based on google maps
+mtdna$lat[mtdna$Source == "Nance et. al 2011 PLoS One 6(7):1-12" & mtdna$Site == "MAZ"] <- 23.216408 #based on google maps
+  mtdna$lon[mtdna$Source == "Nance et. al 2011 PLoS One 6(7):1-12" & mtdna$Site == "MAZ"] <- -106.441885 #based on google maps
+mtdna$lat[mtdna$Source == "Neethling et. al 2008 BMC Evolutionary Biology 8:325" & mtdna$Site == "Haga Haga"] <- -32.764742 #bsed on google maps
+  mtdna$lon[mtdna$Source == "Neethling et. al 2008 BMC Evolutionary Biology 8:325" & mtdna$Site == "Haga Haga"] <- 28.254598 #based on google maps
+  mtdna$lat[mtdna$Source == "Neethling et. al 2008 BMC Evolutionary Biology 8:325" & mtdna$Site == "Jongensfontein"] <- -34.432198 #bsed on google maps
+  mtdna$lon[mtdna$Source == "Neethling et. al 2008 BMC Evolutionary Biology 8:325" & mtdna$Site == "Jongensfontein"] <- 21.344819 #based on google maps
+  mtdna$lat[mtdna$Source == "Neethling et. al 2008 BMC Evolutionary Biology 8:325" & mtdna$Site == "Port Alfred"] <- -33.615675 #bsed on google maps
+  mtdna$lon[mtdna$Source == "Neethling et. al 2008 BMC Evolutionary Biology 8:325" & mtdna$Site == "Port Alfred"] <- 26.899218 #based on google maps
+mtdna$lat[mtdna$Source == "Nunez et. al 2010 Revista de Biologia Marina y Oceanografia 45(1):565-573" & mtdna$Site == "Aysen"] <- -45.374055 #based on google maps
+  mtdna$lon[mtdna$Source == "Nunez et. al 2010 Revista de Biologia Marina y Oceanografia 45(1):565-573" & mtdna$Site == "Aysen"] <- -73.627466 #based on google maps
+mtdna$lat[mtdna$Source == "Palsson et. al 2009 Polar Biology 32:471-479" & mtdna$Site == "9"] <- 74.144419 #based on google maps
+  mtdna$lon[mtdna$Source == "Palsson et. al 2009 Polar Biology 32:471-479" & mtdna$Site == "9"] <- -19.791641 #based on google maps
+  mtdna$lat[mtdna$Source == "Palsson et. al 2009 Polar Biology 32:471-479" & mtdna$Site == "10"] <- 75.014057 #based on google maps
+  mtdna$lon[mtdna$Source == "Palsson et. al 2009 Polar Biology 32:471-479" & mtdna$Site == "10"] <- -19.537832 #based on google maps
+mtdna$lat[mtdna$Source == "Saito et. al 2008 Journal of Fish Biology 73:1937-1945" & mtdna$Site == "Joetsu"] <- 37.230622 #based on google maps
+  mtdna$lon[mtdna$Source == "Saito et. al 2008 Journal of Fish Biology 73:1937-1945" & mtdna$Site == "Joetsu"] <- 138.19126 #based on google maps
+mtdna$lat[mtdna$Source == "Santa Brigida et. al 2007 Brazilian Journal of Biology 67(4):919-924" & mtdna$Site == "Macapa"] <- 0.53635 #based on google maps
+  mtdna$lon[mtdna$Source == "Santa Brigida et. al 2007 Brazilian Journal of Biology 67(4):919-924" & mtdna$Site == "Macapa"] <- -49.824463 #based on google maps
+mtdna$lat[mtdna$Source == "Shigenobu et. al 2007 Fisheries Science 73:1104-1112" & mtdna$Site == "AKT"] <- 40.05258 #based on google maps
+  mtdna$lon[mtdna$Source == "Shigenobu et. al 2007 Fisheries Science 73:1104-1112" & mtdna$Site == "AKT"] <- 139.831335 #based on google maps
+  mtdna$lat[mtdna$Source == "Shigenobu et. al 2007 Fisheries Science 73:1104-1112" & mtdna$Site == "TTR"] <- 35.572204 #based on google maps
+  mtdna$lon[mtdna$Source == "Shigenobu et. al 2007 Fisheries Science 73:1104-1112" & mtdna$Site == "TTR"] <- 133.667041 #based on google maps
+mtdna$lat[mtdna$Source == "Teske et al. 2005" & mtdna$Site == "Pulai Estuary, Johor, Peninsular Malaysia"] <- 1.790253 #based on google maps
+  mtdna$lon[mtdna$Source == "Teske et al. 2005" & mtdna$Site == "Pulai Estuary, Johor, Peninsular Malaysia"] <- 102.80579 #based on google maps
+  mtdna$lat[mtdna$Source == "Teske et al. 2005" & mtdna$Site == "Tayabas Bay, Quezon"] <- 13.799611 #based on google maps
+  mtdna$lon[mtdna$Source == "Teske et al. 2005" & mtdna$Site == "Tayabas Bay, Quezon"] <- 121.649335 #based on google maps
+  mtdna$lat[mtdna$Source == "Teske et. al 2010 Marine Biology 157:2029-2042" & mtdna$Site == "False Bay"] <- -34.12184 #based on google maps
+  mtdna$lon[mtdna$Source == "Teske et. al 2010 Marine Biology 157:2029-2042" & mtdna$Site == "False Bay"] <- 18.664569 #based on google maps
+mtdna$lat[mtdna$Source == "Vis et al. 1997" & mtdna$Site == "Estuary of Gulf of St. Lawrence"] <- 49.00478 #based on google maps
+  mtdna$lon[mtdna$Source == "Vis et al. 1997" & mtdna$Site == "Estuary of Gulf of St. Lawrence"] <- -67.030212 #based on google maps
+  mtdna$lat[mtdna$Source == "Vis et al. 1997" & mtdna$Site == "Western Iceland"] <- 65.361062 #based on google maps
+  mtdna$lon[mtdna$Source == "Vis et al. 1997" & mtdna$Site == "Western Iceland"] <- -22.480626 #based on google maps
+mtdna$lat[mtdna$Source == "Whitney et. al 2012 Journal of Biogeography 39:1144-1156" & mtdna$Site == "Central GBR"] <- -20.065821 #based on google maps
+  mtdna$lon[mtdna$Source == "Whitney et. al 2012 Journal of Biogeography 39:1144-1156" & mtdna$Site == "Central GBR"] <- 148.5103 #based on google maps
+mtdna$lat[mtdna$Source == "Woodall et. al 2011 Journal of Fish Biology 78:1738-1756" & mtdna$Site == "Alicante"] <- 38.334933 #based on google maps
+  mtdna$lon[mtdna$Source == "Woodall et. al 2011 Journal of Fish Biology 78:1738-1756" & mtdna$Site == "Alicante"] <- -0.456393 #based on google maps
+  mtdna$lat[mtdna$Source == "Woodall et. al 2011 Journal of Fish Biology 78:1738-1756" & mtdna$Site == "Napoli"] <- 40.722512 #based on google maps
+  mtdna$lon[mtdna$Source == "Woodall et. al 2011 Journal of Fish Biology 78:1738-1756" & mtdna$Site == "Napoli"] <- 14.196295 #based on google maps
+mtdna$lat[mtdna$Source == "Xiao et. al 2010 Biochemical Genetics 48:402-417" | mtdna$Source == "Xiao et. al 2011 Genetics 139:187-198" & mtdna$Site == "Sea of Okhotsk"] <- 44.354565 #based on google maps
+  mtdna$lon[mtdna$Source == "Xiao et. al 2010 Biochemical Genetics 48:402-417" | mtdna$Source == "Xiao et. al 2011 Genetics 139:187-198" & mtdna$Site == "Sea of Okhotsk"] <- 143.812988 #based on google maps
+  
 ######## Check He ########
 
 #make sure no He <0 or >1 (all percentages)
@@ -750,7 +846,7 @@ mtdna$Hese[mtdna$Source == "Gnaither et al. 2011 PLoS ONE 6:1-13"] <- NA
 mtdna$Hese[mtdna$Source == "Gaither et al. 2012 Proceedings of the Royal Society B 279:3948-3957"] <- NA
 mtdna$Hese[mtdna$Source == "Garcia-Rodriguez et al. 2011 Fisheries Research 107:169-176" & mtdna$Site == "Bahia Magdalena" & mtdna$CollectionYear == 2006] <- 0.000269
   mtdna$Hese[mtdna$Source == "Garcia-Rodriguez et al. 2011 Fisheries Research 107:169-176" & mtdna$Site == "Bahia Magdalena" & mtdna$CollectionYear == 2007] <- 0.00181
-  mtdna$Hese[mtdna$Source == "Garcia-Rodriguez et al. 2011 Fisheries Research 107:169-176" & mtdna$Site == "Ensenada"] <- 0.000934
+  mtdna$Hese[mtdna$Source == "Garcia-Rodriguez et al. 2011 Fisheries Research 107:169-176" & mtdna$Site == "Ensenada "] <- 0.000934
 mtdna$Hese[mtdna$Source == "Gotoh et. al 2009 Genes Genetic Systems 84:287-295"] <- NA
 mtdna$Hese[mtdna$Source == "Hoolihan Anand Herwherden 2006" & mtdna$Site == "Bahrain"] <- 0.00195
   mtdna$Hese[mtdna$Source == "Hoolihan Anand Herwherden 2006" & mtdna$Site == "Bushehr"] <- 0.00558
@@ -1065,7 +1161,7 @@ mtdna$Pise[mtdna$Source == "Gnaither et al. 2011 PLoS ONE 6:1-13"] <- NA
 mtdna$Pise[mtdna$Source == "Gaither et al. 2012 Proceedings of the Royal Society B 279:3948-3957"] <- NA
 mtdna$Pise[mtdna$Source == "Garcia-Rodriguez et al. 2011 Fisheries Research 107:169-176" & mtdna$Site == "Bahia Magdalena" & mtdna$CollectionYear == 2006] <- 0.00103
   mtdna$Pise[mtdna$Source == "Garcia-Rodriguez et al. 2011 Fisheries Research 107:169-176" & mtdna$Site == "Bahia Magdalena" & mtdna$CollectionYear == 2007] <- 0.00165
-  mtdna$Pise[mtdna$Source == "Garcia-Rodriguez et al. 2011 Fisheries Research 107:169-176" & mtdna$Site == "Ensenada"] <- 0.00142
+  mtdna$Pise[mtdna$Source == "Garcia-Rodriguez et al. 2011 Fisheries Research 107:169-176" & mtdna$Site == "Ensenada "] <- 0.00142
 mtdna$Pi[mtdna$Source == "Gotoh et. al 2009 Genes Genetic Systems 84:287-295" & mtdna$Site == "CLM"] <- 0.00008
   mtdna$Pi[mtdna$Source == "Gotoh et. al 2009 Genes Genetic Systems 84:287-295" & mtdna$Site == "CMR"] <- 0.00198
   mtdna$Pi[mtdna$Source == "Gotoh et. al 2009 Genes Genetic Systems 84:287-295" & mtdna$Site == "JFL"] <- 0.00063
