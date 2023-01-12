@@ -9,14 +9,17 @@ Marine_Genetic_Diversity_Proj.RProj
 
 #output files to ignore
 output/model_dredge_results.xlsx
+output/spps
 
 #figures to ignore
 figures/*latlon_only*
 figures/*latlononly*
+figures/old_figures/*
 
 #extra stuff to ignore
 model_structure.pptx
 DHARMa_diagnostics.pptx
+paper_figures.pptx
 
 #supplemental figures
 supp_papersused2.docx
