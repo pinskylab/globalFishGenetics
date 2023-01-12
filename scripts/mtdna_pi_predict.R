@@ -17,6 +17,7 @@ library(plotrix)
 library(lme4)
 library(data.table)
 library(DescTools)
+library(sjPlot)
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
@@ -55,40 +56,39 @@ mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logpi != "Inf")
 ######## Build lat, abslat & lon models ########
 
 #### clean up data ####
+
 #scale geographic variables
 mtdna_small_pi$lat_scale <- scale(mtdna_small_pi$lat)
+  mtdna_small_pi$lat_scale <- as.numeric(mtdna_small_pi$lat_scale)
 mtdna_small_pi$abslat_scale <- scale(mtdna_small_pi$abslat)
+  mtdna_small_pi$abslat_scale <- as.numeric(mtdna_small_pi$abslat_scale)
 
 #convert lon to radians
 mtdna_small_pi$lon_360 <- mtdna_small_pi$lon + 180 #convert (-180,180) to (0,360)
 mtdna_small_pi$lon_rad <- (2*pi*mtdna_small_pi$lon_360)/360
 
 #### Models ####
-lat_model_pi <- lmer(logpi ~ lat_scale + I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + 
-                       (1|MarkerName) + (1|Site), REML = FALSE, 
-                     data = mtdna_small_pi, na.action = "na.fail", 
-                     control = lmerControl(optimizer = "bobyqa"))
 
-abslat_model_pi <- lmer(logpi ~ abslat_scale + I(abslat_scale^2) + (1|Family/Genus/spp) + 
-                          (1|Source) + (1|MarkerName) + (1|Site), REML = FALSE, 
-                        data = mtdna_small_pi, na.action = "na.fail", 
-                        control = lmerControl(optimizer = "bobyqa"))
+lat_model_pi <- lm(logpi ~ lat_scale + I(lat_scale^2), 
+                     data = mtdna_small_pi, na.action = "na.fail")
 
-abslat_CP_model_pi <- lmer(logpi ~ abslat_scale + I(abslat_scale^2) + Pelagic_Coastal + 
-                             Pelagic_Coastal:abslat_scale + Pelagic_Coastal:I(abslat_scale^2) + 
-                             (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + (1|Site), 
-                           REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", 
-                           control = lmerControl(optimizer = "bobyqa"))
+abslat_model_pi <- lm(logpi ~ abslat_scale + I(abslat_scale^2), 
+                        data = mtdna_small_pi, na.action = "na.fail")
 
-lon_model_pi <- lmer(logpi ~ sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + 
-                       (1|MarkerName) + (1|Site), REML = FALSE, data = mtdna_small_pi, 
-                     na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+#abslat_CP_model_pi <- lmer(logpi ~ abslat_scale + I(abslat_scale^2) + Pelagic_Coastal + 
+ #                            Pelagic_Coastal:abslat_scale + Pelagic_Coastal:I(abslat_scale^2) + 
+  #                           (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + (1|Site), 
+   #                        REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", 
+    #                       control = lmerControl(optimizer = "bobyqa"))
 
-lon_CP_model_pi <- lmer(logpi ~ sin(lon_rad) + cos(lon_rad) + Pelagic_Coastal + 
-                          Pelagic_Coastal:sin(lon_rad) + Pelagic_Coastal:cos(lon_rad) + 
-                          (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + (1|Site), 
-                        REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", 
-                        control = lmerControl(optimizer = "bobyqa"))
+lon_model_pi <- lm(logpi ~ sin(lon_rad) + cos(lon_rad), data = mtdna_small_pi, 
+                     na.action = "na.fail")
+
+#lon_CP_model_pi <- lmer(logpi ~ sin(lon_rad) + cos(lon_rad) + Pelagic_Coastal + 
+ #                         Pelagic_Coastal:sin(lon_rad) + Pelagic_Coastal:cos(lon_rad) + 
+  #                        (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + (1|Site), 
+   #                     REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", 
+    #                    control = lmerControl(optimizer = "bobyqa"))
 
 #############################################################################################################
 
@@ -96,69 +96,23 @@ lon_CP_model_pi <- lmer(logpi ~ sin(lon_rad) + cos(lon_rad) + Pelagic_Coastal +
 
 #### Predict ####
 
-## Build prediction dataframe ##
+#marginal effects
+abslat_eff <- plot_model(abslat_model_pi, type = "pred", 
+                         terms = "abslat_scale [all]")
 
-#get abslat values to predict at and scale
-abslat <- c(0, 10, 20, 30, 40, 50, 60, 70, 80) #need to scale this using the same scale mean and sd as in real dataset
-  abslat_scale <- (abslat - attr(mtdna_small_pi$abslat_scale, "scaled:center"))/
-    attr(mtdna_small_pi$abslat_scale, "scaled:scale")
+#pull out marginal effects dataframe
+abslat_eff_data <- as.data.frame(abslat_eff$data)
 
-#build general prediction dataframe
-#have to add a row for each variable in the model
-pi_abslat_predict_df <- as.data.frame(abslat_scale)
-  pi_abslat_predict_df$Family <- c(rep(0, times = 9)) #random effects just set to zero as not included in predictions
-  pi_abslat_predict_df$Genus <- c(rep(0, times = 9))
-  pi_abslat_predict_df$spp <- c(rep(0, times = 9))
-  pi_abslat_predict_df$Source <- c(rep(0, times = 9))
-  pi_abslat_predict_df$MarkerName <- c(rep(0, times = 9))
-  pi_abslat_predict_df$Site <- c(rep(0, times = 9))
-  pi_abslat_predict_df$X <- abslat #for plotting
+#unscale lat
+#use same scaled:center & scaled:scale from original data
+abslat_scale <- scale(mtdna_small_pi$abslat) #bc had to convert to numeric to run model/calculate marginal effects
+abslat_eff_data$abslat <- (abslat_eff_data$x * attr(abslat_scale, "scaled:scale")) + 
+  attr(abslat_scale, "scaled:center")
 
-#build prediction dataframe for pelagics
-Pel_pi_abslat_predict_df <- pi_abslat_predict_df
-  Pel_pi_abslat_predict_df$Pelagic_Coastal <- c(rep("Pelagic", times = 9))
-
-#build prediction dataframe for coastals
-Coast_pi_abslat_predict_df <- pi_abslat_predict_df
-  Coast_pi_abslat_predict_df$Pelagic_Coastal <- c(rep("Coastal", times = 9))
-
-## Predict for abslat ##
-  
-pi_predict_abslat <- predict(abslat_model_pi, pi_abslat_predict_df, re.form = NA) #re.form = NA means do NOT include random effects
-  pi_abslat_predict_df$predict_pi <- 10^(pi_predict_abslat) #unlog pi
-  
-Pel_pi_predict_abslat <- predict(abslat_CP_model_pi, Pel_pi_abslat_predict_df, re.form = NA)
-  Pel_pi_abslat_predict_df$predict_pi <- 10^(Pel_pi_predict_abslat) #unlog pi
-  
-Coast_pi_predict_abslat <- predict(abslat_model_pi, Coast_pi_abslat_predict_df, re.form = NA)
-  Coast_pi_abslat_predict_df$predict_pi <- 10^(Coast_pi_predict_abslat) #unlog pi
-
-#other variables -- just use average?
-#not interested in effect of range on regression necessarily, just account for it?
-
-## Bootstrap for confidence intervals ##
-#want to use bootMer on predicted dataset
-
-pi_abslat_boot <- bootMer(abslat_model_pi, 
-                          FUN=function(x)predict(x, pi_abslat_predict_df, re.form = NA), 
-                          nsim = 100)
-  pi_abslat_predict_df$lower_ci <- 10^(apply(pi_abslat_boot$t, 2, quantile, 0.025))
-  pi_abslat_predict_df$upper_ci <- 10^(apply(pi_abslat_boot$t, 2, quantile, 0.975))
-
-Pel_pi_abslat_boot <- bootMer(abslat_CP_model_pi, 
-                          FUN=function(x)predict(x, Pel_pi_abslat_predict_df, re.form = NA), 
-                          nsim = 100)
-  Pel_pi_abslat_predict_df$lower_ci <- 10^(apply(Pel_pi_abslat_boot$t, 2, quantile, 0.025))
-  Pel_pi_abslat_predict_df$upper_ci <- 10^(apply(Pel_pi_abslat_boot$t, 2, quantile, 0.975))
-
-Coast_pi_abslat_boot <- bootMer(abslat_CP_model_pi, 
-                          FUN=function(x)predict(x, Coast_pi_abslat_predict_df, re.form = NA), 
-                          nsim = 100)
-  Coast_pi_abslat_predict_df$lower_ci <- 10^(apply(Coast_pi_abslat_boot$t, 2, quantile, 0.025))
-  Coast_pi_abslat_predict_df$upper_ci <- 10^(apply(Coast_pi_abslat_boot$t, 2, quantile, 0.975))
-
-#for CP, bind pelagic and coastal dataframes back together
-CP_pi_abslat_predict_df <- rbind(Pel_pi_abslat_predict_df, Coast_pi_abslat_predict_df)
+#unlog pi
+abslat_eff_data$unlog_pi <- 10^(abslat_eff_data$predicted)
+  abslat_eff_data$unlog_conf.low <- 10^(abslat_eff_data$conf.low)
+  abslat_eff_data$unlog_conf.high <- 10^(abslat_eff_data$conf.high)
 
 #### Calculate means from raw data ####
 
@@ -177,29 +131,38 @@ for(i in 1:nrow(mtdna_small_pi)) {
 mtdna_small_pi$abslat_round <- as.factor(mtdna_small_pi$abslat_round)
 
 ## Calculate means and SE within each 10 degree band ##
-#written so calculates Pelagic & Coastal separately
 
 mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so can use data.table functions
 
 #calculate mean in each 10 degree band
-abslat_logpi_mean <- mtdna_small_pi[, mean(logpi), by = list(abslat_round, Pelagic_Coastal)]
-  colnames(abslat_logpi_mean) <- c("abslat", "Pelagic_Coastal", "logpi_mean")
-  abslat_logpi_mean$pi_mean <- 10^(abslat_logpi_mean$logpi_mean) #unlog mean
+abslat_pi_mean <- mtdna_small_pi[, mean(logpi), by = abslat_round]
+  colnames(abslat_pi_mean) <- c("abslat", "pi_mean")
+  abslat_pi_mean$pi_mean <- 10^(abslat_pi_mean$pi_mean) #unlog mean
 
 #calculate SE in each 10 degree band
-abslat_pi_SE <- mtdna_small_pi[, std.error(Pi), by = list(abslat_round, Pelagic_Coastal)]
-  colnames(abslat_pi_SE) <- c("abslat", "Pelagic_Coastal", "pi_SE")
+abslat_pi_SE <- mtdna_small_pi[, std.error(Pi), by = abslat_round]
+  colnames(abslat_pi_SE) <- c("abslat", "pi_SE")
+
+#count observations in each 10 degree band
+abslat_pi_count <- mtdna_small_pi[, .N, by = abslat_round]
+  colnames(abslat_pi_count) <- c("abslat", "pi_count")
 
 #merge mean and SE dataframes together
-abslat_pi_binned_means <- merge(abslat_logpi_mean, abslat_pi_SE, by = c("abslat", "Pelagic_Coastal"))
+abslat_pi_binned_means <- list(abslat_pi_mean, abslat_pi_SE, abslat_pi_count) %>% 
+  reduce(full_join, by = "abslat")
+abslat_pi_binned_means$abslat <- as.numeric(as.character(abslat_pi_binned_means$abslat))
   abslat_pi_binned_means <- abslat_pi_binned_means[order(abslat), ]
-  abslat_pi_binned_means$X <- c(5, 5, 15, 15, 25, 25, 35, 35, 45, 45, 55, 55, 65, 65, 75) #for plotting, plot in MIDDLE of 10 degree band
-
+  abslat_pi_binned_means$X <- abslat_pi_binned_means$abslat + 5 #for plotting, plot in MIDDLE of 10 degree band
+  
 #calculate error bars (standard error)
 abslat_pi_binned_means$mean_lowerSE <- abslat_pi_binned_means$pi_mean - 
   abslat_pi_binned_means$pi_SE
 abslat_pi_binned_means$mean_upperSE <- abslat_pi_binned_means$pi_mean + 
   abslat_pi_binned_means$pi_SE
+
+#add count bin for plotting (all < number, 201 = >200)
+abslat_pi_binned_means$count_bin <- c(201, 201, 201, 201, 201, 100, 50, 50)
+  abslat_pi_binned_means$count_bin <- factor(abslat_pi_binned_means$count_bin, levels = c(50, 100, 201))
 
 #### Plot abslat ####
 
@@ -210,25 +173,28 @@ colors <- c("10-degree binned means" = "#3F6DAA", "Regression" = "black")
 
 #plot
 mtdna_pi_abslat_plot_both <- ggplot() + 
-  #geom_point(data = mtdna_small_pi, aes(x = abslat, y = Pi, color = "Raw data"), 
-  #           size = 4, alpha = 0.25) + 
-  geom_line(data = pi_abslat_predict_df, 
-            aes(x = X, y = predict_pi, color = "Regression"), size = 2) + 
-  geom_ribbon(data = pi_abslat_predict_df, 
-              aes(x = X, ymin = lower_ci, ymax = upper_ci, color = "Regression"), alpha = 0.1) + 
+  geom_line(data = abslat_eff_data, 
+            aes(x = abslat, y = unlog_pi, color = "Regression"), size = 6) + 
+  geom_ribbon(data = abslat_eff_data, 
+              aes(x = abslat, ymin = unlog_conf.low, ymax = unlog_conf.high, color = "Regression"), alpha = 0.1) + 
   geom_point(data = abslat_pi_binned_means, 
-             aes(x = X, y = pi_mean, color = "10-degree binned means"), size = 8, shape = "square") + 
+             aes(x = X, y = pi_mean, color = "10-degree binned means", size = count_bin), shape = "square") + 
   geom_errorbar(data = abslat_pi_binned_means, 
                 aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "10-degree binned means"), width = 0.75, size = 1.5) + 
-  xlab("absolute latitude") + ylab("mtdna pi") + labs(color = "Legend") + 
-  scale_color_manual(values = colors)
-mtdna_pi_abslat_plot_annotated_both <- mtdna_pi_abslat_plot_both + theme_bw() + 
-  scale_y_continuous(limits = c(0, 0.03)) + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 26, face = "bold"), 
+                    color = "10-degree binned means"), width = 1.75, size = 3) + 
+  xlab("absolute latitude") + ylab("mtDNA pi") + labs(color = "Legend") + 
+  scale_color_manual(values = colors) + 
+  scale_y_continuous(limits = c(0, 0.0075)) + 
+  scale_size_manual(values = c(8, 12, 16), 
+                    labels = c("\u226450", "\u2264100", "\u2265200"))
+mtdna_pi_abslat_plot_annotated_both <- mtdna_pi_abslat_plot_both + coord_flip() + theme_bw() + 
+  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110, face = "bold"), 
         axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 20, color = "black"), 
-        legend.position = "top", legend.text = element_text(size = 18), 
+        axis.text = element_text(size = 100, color = "black"), 
+        axis.line = element_line(size = 2, color = "black"),
+        legend.position = "none", legend.box = "vertical", 
+        legend.text = element_text(size = 100), 
+        legend.key.size = unit(3, "cm"),
         legend.title = element_blank())
 mtdna_pi_abslat_plot_annotated_both
 
@@ -252,7 +218,7 @@ mtdna_pi_abslat_CP_plot_both <- ggplot() +
    xlab("absolute latitude") + ylab("mtdna pi") + labs(color = "Legend") + 
   scale_color_manual(values = colors_CP)
 mtdna_pi_abslat_CP_plot_annotated_both <- mtdna_pi_abslat_CP_plot_both + theme_bw() + 
-  scale_y_continuous(limits = c(0, 0.03)) + 
+  scale_y_continuous(limits = c(0, 0.015)) + 
   theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 26, face = "bold"), 
         axis.ticks = element_line(color = "black", size = 1), 
         axis.text = element_text(size = 20, color = "black"), 
@@ -374,68 +340,19 @@ mtdna_pi_lat_plot_annotated_both
 
 #### Predict ####
 
-## Build prediction dataframe ##
+#marginal effects
+lon_eff <- plot_model(lon_model_pi, type = "pred", 
+                         terms = "lon_rad [all]")
 
-#get lon values to predict at and transform to radians
-lon <- c(-180, -170, -160, -150, -140, -130, -120, -110, -100, -90, -80, -70, -60, -50, -40, -30, -20, -10, 
-         0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170)
-  lon_360 <- (lon + 180)
-  lon_rad <- (2*pi*lon)/360
+#pull out marginal effects dataframe
+lon_eff_data <- as.data.frame(lon_eff$data)
+  lon_eff_data$lon <- ((360*lon_eff_data$x)/(2*pi))-180
 
-#build general prediction dataframe
-#have to add a row for each variable in the model
-pi_lon_predict_df <- as.data.frame(lon_rad)
-  pi_lon_predict_df$Family <- c(rep(0, times = 9)) #random effects just set to zero as not included in predictions
-  pi_lon_predict_df$Genus <- c(rep(0, times = 9))
-  pi_lon_predict_df$spp <- c(rep(0, times = 9))
-  pi_lon_predict_df$Source <- c(rep(0, times = 9))
-  pi_lon_predict_df$MarkerName <- c(rep(0, times = 9))
-  pi_lon_predict_df$Site <- c(rep(0, times = 9))
-  pi_lon_predict_df$X <- lon #for plotting
-
-#build prediction dataframe for pelagics
-Pel_pi_lon_predict_df <- pi_lon_predict_df
-  Pel_pi_lon_predict_df$Pelagic_Coastal <- c(rep("Pelagic", times = 9))
-
-#build prediction dataframe for coastals
-Coast_pi_lon_predict_df <- pi_lon_predict_df
-  Coast_pi_lon_predict_df$Pelagic_Coastal <- c(rep("Coastal", times = 9))
-
-## Predict for lon ##
-
-pi_predict_lon <- predict(lon_model_pi, pi_lon_predict_df, re.form = NA) #re.form = NA means do NOT include random effects
-  pi_lon_predict_df$predict_pi <- 10^(pi_predict_lon) #unlog pi
-
-Pel_pi_predict_lon <- predict(lon_CP_model_pi, Pel_pi_lon_predict_df, re.form = NA)
-  Pel_pi_lon_predict_df$predict_pi <- 10^(Pel_pi_predict_lon) #unlog pi
+#unlog pi
+lon_eff_data$unlog_pi <- 10^(lon_eff_data$predicted)
+  lon_eff_data$unlog_conf.low <- 10^(lon_eff_data$conf.low)
+  lon_eff_data$unlog_conf.high <- 10^(lon_eff_data$conf.high)
   
-Coast_pi_predict_lon <- predict(lon_CP_model_pi, Coast_pi_lon_predict_df, re.form = NA)
-  Coast_pi_lon_predict_df$predict_pi <- 10^(Coast_pi_predict_lon) #unlog pi
-
-## Bootstrap for confidence intervals ##
-#want to use bootMer on predicted dataset
-
-pi_lon_boot <- bootMer(lon_model_pi, 
-                       FUN=function(x)predict(x, pi_lon_predict_df, re.form = NA), 
-                       nsim = 100)
-  pi_lon_predict_df$lower_ci <- 10^(apply(pi_lon_boot$t, 2, quantile, 0.025))
-  pi_lon_predict_df$upper_ci <- 10^(apply(pi_lon_boot$t, 2, quantile, 0.975))
-
-Pel_pi_lon_boot <- bootMer(lon_CP_model_pi, 
-                       FUN=function(x)predict(x, Pel_pi_lon_predict_df, re.form = NA), 
-                       nsim = 100)
-  Pel_pi_lon_predict_df$lower_ci <- 10^(apply(Pel_pi_lon_boot$t, 2, quantile, 0.025))
-  Pel_pi_lon_predict_df$upper_ci <- 10^(apply(Pel_pi_lon_boot$t, 2, quantile, 0.975))
-
-Coast_pi_lon_boot <- bootMer(lon_CP_model_pi, 
-                       FUN=function(x)predict(x, Coast_pi_lon_predict_df, re.form = NA), 
-                       nsim = 100)
-  Coast_pi_lon_predict_df$lower_ci <- 10^(apply(Coast_pi_lon_boot$t, 2, quantile, 0.025))
-  Coast_pi_lon_predict_df$upper_ci <- 10^(apply(Coast_pi_lon_boot$t, 2, quantile, 0.975))
- 
-#for CP, bind pelagic and coastal dataframes back together 
-CP_pi_lon_predict_df <- rbind(Pel_pi_lon_predict_df, Coast_pi_lon_predict_df)
-
 #### Calculate means from raw data ####
 
 ## Round lon DOWN to nearest multiple of 10 ##
@@ -453,34 +370,46 @@ for(i in 1:nrow(mtdna_small_pi)) {
 mtdna_small_pi$lon_round <- as.factor(mtdna_small_pi$lon_round)
 
 ## Calculate means and SE within each 10 degree band ##
-#written so calculates Pelagic & Coastal separately
 
 mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so can use data.table functions
 
 #calculate mean in each 10 degree band
-lon_logpi_mean <- mtdna_small_pi[, mean(logpi), by = list(lon_round, Pelagic_Coastal)]
-  colnames(lon_logpi_mean) <- c("lon", "Pelagic_Coastal", "logpi_mean")
-  lon_logpi_mean$pi_mean <- 10^(lon_logpi_mean$logpi_mean) #unlog mean
+lon_pi_mean <- mtdna_small_pi[, mean(logpi), by = lon_round]
+  colnames(lon_pi_mean) <- c("lon", "pi_mean")
+  lon_pi_mean$pi_mean <- 10^(lon_pi_mean$pi_mean) #unlog mean
 
 #calculate SE in each 10 degree band
-lon_pi_SE <- mtdna_small_pi[, std.error(Pi), by = list(lon_round, Pelagic_Coastal)]
-  colnames(lon_pi_SE) <- c("lon", "Pelagic_Coastal", "pi_SE")
+lon_pi_SE <- mtdna_small_pi[, std.error(Pi), by = lon_round]
+  colnames(lon_pi_SE) <- c("lon", "pi_SE")
+
+#count observations in each 10 degree band
+lon_pi_count <- mtdna_small_pi[, .N, by = lon_round]
+  colnames(lon_pi_count) <- c("lon", "pi_count")
 
 #merge mean and SE dataframes together
-lon_pi_binned_means <- merge(lon_logpi_mean, lon_pi_SE, by = c("lon", "Pelagic_Coastal"))
+lon_pi_binned_means <- list(lon_pi_mean, lon_pi_SE, lon_pi_count) %>% 
+  reduce(full_join, by = "lon")
+  lon_pi_binned_means$lon <- as.numeric(as.character(lon_pi_binned_means$lon))
   lon_pi_binned_means <- lon_pi_binned_means[order(lon), ]
-  lon_pi_binned_means$X <- c(-175, -175, -165, -155, -155, -145, -145, -135, -135, -125, -125, -115, -115, -105, -105, 
-                             -95, -95, -85, -85, -75, -75, -65, -65, -55, -55, -45, -45, -35, -35, -25, -25, -15, -15, -5, -5, 
-                             5, 5, 15, 15, 25, 25, 35, 35, 45, 45, 55, 55, 75, 75, 85, 85, 95, 95, 105, 105, 115, 115, 
-                             125, 125, 135, 135, 145, 145, 155, 155, 165, 165, 175, 175, 180) #180 is bc range goes to 180, so must be observation(s) at 180
-
+  lon_pi_binned_means$X <- lon_pi_binned_means$lon + 5 #for plotting, plot in MIDDLE of 10 degree band
+    lon_pi_binned_means$X[lon_pi_binned_means$lon == 180] <- 180 #these two are on the 180 line
+  
 #calculate error bars (standard error)
 lon_pi_binned_means$mean_lowerSE <- lon_pi_binned_means$pi_mean - 
   lon_pi_binned_means$pi_SE
+  lon_pi_binned_means$mean_lowerSE[lon_pi_binned_means$mean_lowerSE < 0] <- 0 #capping at 0 if goes negative
 lon_pi_binned_means$mean_upperSE <- lon_pi_binned_means$pi_mean + 
   lon_pi_binned_means$pi_SE
+  lon_pi_binned_means$mean_upperSE[lon_pi_binned_means$mean_upperSE > 0.015] <- 0.015 #capping at 0.015 for plotting
+  
+#add count bin for plotting (all < number, 201 = >200)
+lon_pi_binned_means$count_bin <- c(50, 50, 100, 50, 50, 100, 50, 50, 50, 100, 
+                                   100, 100, 50, 50, 50, 50, 50, 100, 50, 
+                                   100, 50, 50, 50, 50, 50, 50, 50, 50, 200, 201,
+                                   100, 200, 50, 50, 100, 5)
+lon_pi_binned_means$count_bin <- factor(lon_pi_binned_means$count_bin, levels = c(5, 50, 100, 200, 201))
 
-#### Plot lon ####
+#### Plot abslat ####
 
 ## With pelagic and coastal together ##
 
@@ -489,25 +418,28 @@ colors <- c("10-degree binned means" = "#3F6DAA", "Regression" = "black")
 
 #plot
 mtdna_pi_lon_plot_both <- ggplot() + 
-  #geom_point(data = mtdna_small_pi, aes(x = lon, y = Pi, color = "Raw data"), 
-  #           size = 4, alpha = 0.25) + 
-  geom_line(data = pi_lon_predict_df, 
-            aes(x = X, y = predict_pi, color = "Regression"), size = 2) + 
-  geom_ribbon(data = pi_lon_predict_df, 
-              aes(x = X, ymin = lower_ci, ymax = upper_ci), alpha = 0.1) + 
+  geom_line(data = lon_eff_data, 
+            aes(x = lon, y = unlog_pi, color = "Regression"), size = 6) + 
+  geom_ribbon(data = lon_eff_data, 
+              aes(x = lon, ymin = unlog_conf.low, ymax = unlog_conf.high, color = "Regression"), alpha = 0.1) + 
   geom_point(data = lon_pi_binned_means, 
-             aes(x = X, y = pi_mean, color = "10-degree binned means"), size = 8, shape = "square") + 
+             aes(x = X, y = pi_mean, color = "10-degree binned means", size = count_bin), shape = "square") + 
   geom_errorbar(data = lon_pi_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, color = "10-degree binned means"), 
-                width = 0.75, size = 1.5) + 
-  xlab("longitude") + ylab("mtdna pi") + labs(color = "Legend") + 
-  scale_color_manual(values = colors)
+                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
+                    color = "10-degree binned means"), width = 1.75, size = 3) + 
+  xlab("longitude") + ylab("mtDNA pi") + labs(color = "Legend") + 
+  scale_color_manual(values = colors) + 
+  scale_y_continuous(limits = c(0, 0.015)) + 
+  scale_size_manual(values = c(6, 8, 10, 12, 16), 
+                    labels = c("\u22645", "\u226450", "\u2264100", "\u2264200", "\u2265200"))
 mtdna_pi_lon_plot_annotated_both <- mtdna_pi_lon_plot_both + theme_bw() + 
-  scale_y_continuous(limits = c(0, 0.05)) + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 26, face = "bold"), 
+  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110, face = "bold"), 
         axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 20, color = "black"), 
-        legend.position = "top", legend.text = element_text(size = 18), 
+        axis.text = element_text(size = 100, color = "black"), 
+        axis.line = element_line(size = 2, color = "black"),
+        legend.position = "top", legend.box = "vertical", 
+        legend.text = element_text(size = 100), 
+        legend.key.size = unit(3, "cm"),
         legend.title = element_blank())
 mtdna_pi_lon_plot_annotated_both
 
@@ -551,19 +483,18 @@ mtdna_pi_lon_CP_plot_annotated_both
 
 ## Clean up dataframe ##
 
-#remove rows with SSTmin = NA
-mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$sst.BO_sstmin != "NA") #should look at where these are...
+#remove rows with SSTmean = NA
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$sst.BO_sstmean != "NA") #should look at where these are...
 
 #log transform sst data
-mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$sst.BO_sstmin != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  mtdna_small_pi$logsstmin <- log10(mtdna_small_pi$sst.BO_sstmin)
-  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstmin != "NaN")
+mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$sst.BO_sstmean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
+  mtdna_small_pi$logsstmean <- log10(mtdna_small_pi$sst.BO_sstmean)
+  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstmean != "NaN")
 
-## SST min models ##
+## SST mean models ##
   
-SSTmin_model_pi <- lmer(logpi ~ logsstmin + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + 
-                          (1|Site), REML = FALSE, data = mtdna_small_pi, 
-                        na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
+SSTmean_model_pi <- lm(logpi ~ logsstmean, data = mtdna_small_pi, 
+                        na.action = "na.fail") #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
 SSTmin_CP_model_pi <- lmer(logpi ~ logsstmin + Pelagic_Coastal + Pelagic_Coastal:logsstmin + 
                              (1|Family/Genus/spp) + (1|Source) + (1|MarkerName) + (1|Site), 
@@ -572,110 +503,70 @@ SSTmin_CP_model_pi <- lmer(logpi ~ logsstmin + Pelagic_Coastal + Pelagic_Coastal
 
 #### Predict ####
 
-## Build prediction data frame ##
+#marginal effects
+SSTmean_eff <- plot_model(SSTmean_model_pi, type = "pred", 
+                      terms = "logsstmean [all]")
 
-#get SST min values to predict at and logtransform
-#predict for SST min (range is 0.129 to 30.295 C)
-SSTmin <- c(.01, 5, 10, 15, 20, 25, 30, 35) #starting at .01 bc log10 of 0 is Inf
-  logsstmin <- log10(SSTmin)
+#pull out marginal effects dataframe
+SSTmean_eff_data <- as.data.frame(SSTmean_eff$data)
+  SSTmean_eff_data$sstmean <- 10^(SSTmean_eff_data$x)
 
-#build general prediction dataframe
-#have to add a row for each variable in the model
-pi_SSTmin_predict_df <- as.data.frame(logsstmin)
-  pi_SSTmin_predict_df$Family <- c(rep(0, times = 8)) #random effects just set to zero as not included in predictions
-  pi_SSTmin_predict_df$Genus <- c(rep(0, times = 8))
-  pi_SSTmin_predict_df$spp <- c(rep(0, times = 8))
-  pi_SSTmin_predict_df$Source <- c(rep(0, times = 8))
-  pi_SSTmin_predict_df$MarkerName <- c(rep(0, times = 8))
-  pi_SSTmin_predict_df$Site <- c(rep(0, times = 8))
-  pi_SSTmin_predict_df$X <- SSTmin #need this for plotting
+#unlog pi
+SSTmean_eff_data$unlog_pi <- 10^(SSTmean_eff_data$predicted)
+  SSTmean_eff_data$unlog_conf.low <- 10^(SSTmean_eff_data$conf.low)
+  SSTmean_eff_data$unlog_conf.high <- 10^(SSTmean_eff_data$conf.high)
 
-#build prediction dataframe for pelagics
-Pel_pi_SSTmin_predict_df <- pi_SSTmin_predict_df
-  Pel_pi_SSTmin_predict_df$Pelagic_Coastal <- c(rep("Pelagic", times = 8))
-
-#build prediction dataframe for coastals  
-Coast_pi_SSTmin_predict_df <- pi_SSTmin_predict_df
-  Coast_pi_SSTmin_predict_df$Pelagic_Coastal <- c(rep("Coastal", times = 8))  
-
-## Predict for SSTmin ##
-
-pi_predict_SSTmin <- predict(SSTmin_model_pi, pi_SSTmin_predict_df, re.form = NA) #re.form = NA means do NOT include random effects
-pi_SSTmin_predict_df$predict_pi <- 10^(pi_predict_SSTmin) #unlog pi
-
-Pel_pi_predict_SSTmin <- predict(SSTmin_CP_model_pi, Pel_pi_SSTmin_predict_df, re.form = NA)
-  Pel_pi_SSTmin_predict_df$predict_pi <- 10^(Pel_pi_predict_SSTmin) #unlog pi
-
-Coast_pi_predict_SSTmin <- predict(SSTmin_CP_model_pi, Coast_pi_SSTmin_predict_df, re.form = NA)
-  Coast_pi_SSTmin_predict_df$predict_pi <- 10^(Coast_pi_predict_SSTmin) #unlog pi
-
-## Bootstrap for confidence intervals ##
-#want to use bootMer on predicted dataset
-
-pi_SSTmin_boot <- bootMer(SSTmin_model_pi, 
-                       FUN=function(x)predict(x, pi_SSTmin_predict_df, re.form = NA), 
-                       nsim = 100)
-  pi_SSTmin_predict_df$lower_ci <- 10^(apply(pi_SSTmin_boot$t, 2, quantile, 0.025))
-  pi_SSTmin_predict_df$upper_ci <- 10^(apply(pi_SSTmin_boot$t, 2, quantile, 0.975))
-
-Pel_pi_SSTmin_boot <- bootMer(SSTmin_CP_model_pi, 
-                          FUN=function(x)predict(x, Pel_pi_SSTmin_predict_df, re.form = NA), 
-                          nsim = 100)
-  Pel_pi_SSTmin_predict_df$lower_ci <- 10^(apply(Pel_pi_SSTmin_boot$t, 2, quantile, 0.025))
-  Pel_pi_SSTmin_predict_df$upper_ci <- 10^(apply(Pel_pi_SSTmin_boot$t, 2, quantile, 0.975))
-
-Coast_pi_SSTmin_boot <- bootMer(SSTmin_CP_model_pi, 
-                          FUN=function(x)predict(x, Coast_pi_SSTmin_predict_df, re.form = NA), 
-                          nsim = 100)
-  Coast_pi_SSTmin_predict_df$lower_ci <- 10^(apply(Coast_pi_SSTmin_boot$t, 2, quantile, 0.025))
-  Coast_pi_SSTmin_predict_df$upper_ci <- 10^(apply(Coast_pi_SSTmin_boot$t, 2, quantile, 0.975))
-
-#for CP, bind pelagic and coastal dataframes back together
-CP_pi_SSTmin_predict_df <- rbind(Pel_pi_SSTmin_predict_df, Coast_pi_SSTmin_predict_df)
-  
 #### Calculate means from raw data ####
 
-## Round SSTmin DOWN to nearest multiple of 5 ##
+## Round SSTmean DOWN to nearest multiple of 5 ##
 
 #create column to fill with the rounded SSTmin
-mtdna_small_pi$SSTmin_round <- NA
+mtdna_small_pi$SSTmean_round <- NA
 
 #fill round column in
 for(i in 1:nrow(mtdna_small_pi)) {
   cat(paste(i, " ", sep = ''))
-  {mtdna_small_pi$SSTmin_round[i] <- DescTools::RoundTo(mtdna_small_pi$sst.BO_sstmin[i], 
+  {mtdna_small_pi$SSTmean_round[i] <- DescTools::RoundTo(mtdna_small_pi$sst.BO_sstmean[i], 
                                                         multiple = 5, FUN = floor)} #rounding DOWN (e.g. SSTmin 5-10 gets value of 5)
 }
 
-mtdna_small_pi$SSTmin_round <- as.factor(mtdna_small_pi$SSTmin_round)
+mtdna_small_pi$SSTmean_round <- as.factor(mtdna_small_pi$SSTmean_round)
 
-## Calculate means and SE within each 5 degree band ##
-#written so calculates Pelagic & Coastal means separately
+## Calculate means and SE within each 10 degree band ##
 
-mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so that can use data.table functions
+mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so can use data.table functions
 
-#calculate mean in each 5 degree band
-SSTmin_logpi_mean <- mtdna_small_pi[, mean(logpi), by = list(SSTmin_round, Pelagic_Coastal)]
-  colnames(SSTmin_logpi_mean) <- c("SSTmin", "Pelagic_Coastal", "logpi_mean")
-  SSTmin_logpi_mean$pi_mean <- 10^(SSTmin_logpi_mean$logpi_mean) #unlog mean
+#calculate mean in each 10 degree band
+SSTmean_pi_mean <- mtdna_small_pi[, mean(logpi), by = SSTmean_round]
+  colnames(SSTmean_pi_mean) <- c("SSTmean", "pi_mean")
+  SSTmean_pi_mean$pi_mean <- 10^(SSTmean_pi_mean$pi_mean) #unlog mean
 
-#calculate SE in each 5 degree band
-SSTmin_pi_SE <- mtdna_small_pi[, std.error(Pi), by = list(SSTmin_round, Pelagic_Coastal)]
-  colnames(SSTmin_pi_SE) <- c("SSTmin", "Pelagic_Coastal", "pi_SE")
+#calculate SE in each 10 degree band
+SSTmean_pi_SE <- mtdna_small_pi[, std.error(Pi), by = SSTmean_round]
+  colnames(SSTmean_pi_SE) <- c("SSTmean", "pi_SE")
+
+#count observations in each 10 degree band
+SSTmean_pi_count <- mtdna_small_pi[, .N, by = SSTmean_round]
+  colnames(SSTmean_pi_count) <- c("SSTmean", "pi_count")
 
 #merge mean and SE dataframes together
-SSTmin_pi_binned_means <- merge(SSTmin_logpi_mean, SSTmin_pi_SE, by = c("SSTmin", "Pelagic_Coastal"))
-SSTmin_pi_binned_means <- SSTmin_pi_binned_means[order(SSTmin), ]
-  SSTmin_pi_binned_means$X <- c(2.5, 2.5, 7.5, 7.5, 12.5, 12.5, 17.5, 
-                                17.5, 22.5, 22.5, 27.5, 27.5, 32.5) #for plotting, plot in MIDDLE of 5 C band
+SSTmean_pi_binned_means <- list(SSTmean_pi_mean, SSTmean_pi_SE, SSTmean_pi_count) %>% 
+  reduce(full_join, by = "SSTmean")
+  SSTmean_pi_binned_means$SSTmean <- as.numeric(as.character(SSTmean_pi_binned_means$SSTmean))
+  SSTmean_pi_binned_means <- SSTmean_pi_binned_means[order(SSTmean), ]
+  SSTmean_pi_binned_means$X <- SSTmean_pi_binned_means$SSTmean + 2.5 #for plotting, plot in MIDDLE of 5 degree band
 
-#add error bars (standard error)
-SSTmin_pi_binned_means$mean_lowerSE <- SSTmin_pi_binned_means$pi_mean - 
-  SSTmin_pi_binned_means$pi_SE
-SSTmin_pi_binned_means$mean_upperSE <- SSTmin_pi_binned_means$pi_mean + 
-  SSTmin_pi_binned_means$pi_SE
+#calculate error bars (standard error)
+SSTmean_pi_binned_means$mean_lowerSE <- SSTmean_pi_binned_means$pi_mean - 
+  SSTmean_pi_binned_means$pi_SE
+SSTmean_pi_binned_means$mean_upperSE <- SSTmean_pi_binned_means$pi_mean + 
+  SSTmean_pi_binned_means$pi_SE
 
-#### Plot SSTmin ####
+#add count bin for plotting (all < number, 201 = >200)
+SSTmean_pi_binned_means$count_bin <- c(50, 100, 201, 201, 201, 201, 50)
+SSTmean_pi_binned_means$count_bin <- factor(SSTmean_pi_binned_means$count_bin, levels = c(50, 100, 201))
+
+#### Plot SSTmean ####
 
 ## With pelagic and coastal together ##
 
@@ -683,28 +574,31 @@ SSTmin_pi_binned_means$mean_upperSE <- SSTmin_pi_binned_means$pi_mean +
 colors <- c("10-degree binned means" = "#3F6DAA", "Regression" = "black")
 
 #plot
-mtdna_pi_SSTmin_plot_both <- ggplot() + 
-  #geom_point(data = mtdna_small_pi, aes(x = sst.BO_sstmin, y = Pi, color = "Raw data"), 
-  #           size = 4, alpha = 0.25) + 
-  geom_line(data = pi_SSTmin_predict_df, 
-            aes(x = X, y = predict_pi, color = "Regression"), size = 2) + 
-  geom_ribbon(data = pi_SSTmin_predict_df, 
-              aes(x = X, ymin = lower_ci, ymax = upper_ci), alpha = 0.1) + 
-  geom_point(data = SSTmin_pi_binned_means, 
-             aes(x = X, y = pi_mean, color = "10-degree binned means"), size = 8, shape = "square") + 
-  geom_errorbar(data = SSTmin_pi_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, color = "10-degree binned means"), 
-                width = 0.75, size = 1.5) + 
-  xlab("SSTmin") + ylab("mtdna pi") + labs(color = "Legend") + 
-  scale_color_manual(values = colors)
-mtdna_pi_SSTmin_plot_annotated_both <- mtdna_pi_SSTmin_plot_both + theme_bw() + 
-  scale_y_continuous(limits = c(0, 0.02)) + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 26, face = "bold"), 
+mtdna_pi_SSTmean_plot_both <- ggplot() + 
+  geom_line(data = SSTmean_eff_data, 
+            aes(x = sstmean, y = unlog_pi, color = "Regression"), size = 6) + 
+  geom_ribbon(data = SSTmean_eff_data, 
+              aes(x = sstmean, ymin = unlog_conf.low, ymax = unlog_conf.high, color = "Regression"), alpha = 0.1) + 
+  geom_point(data = SSTmean_pi_binned_means, 
+             aes(x = X, y = pi_mean, color = "10-degree binned means", size = count_bin), shape = "square") + 
+  geom_errorbar(data = SSTmean_pi_binned_means, 
+                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
+                    color = "10-degree binned means"), width = 1.75, size = 3) + 
+  xlab("SST mean") + ylab("mtDNA pi") + labs(color = "Legend") + 
+  scale_color_manual(values = colors) + 
+  scale_y_continuous(limits = c(0, 0.015)) + 
+  scale_size_manual(values = c(8, 12, 16), 
+                    labels = c("\u226450", "\u2264100", "\u2265200"))
+mtdna_pi_SSTmean_plot_annotated_both <- mtdna_pi_SSTmean_plot_both + theme_bw() + 
+  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110, face = "bold"), 
         axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 20, color = "black"), 
-        legend.position = "top", legend.text = element_text(size = 18), 
+        axis.text = element_text(size = 100, color = "black"), 
+        axis.line = element_line(size = 2, color = "black"),
+        legend.position = "top", legend.box = "vertical", 
+        legend.text = element_text(size = 100), 
+        legend.key.size = unit(3, "cm"),
         legend.title = element_blank())
-mtdna_pi_SSTmin_plot_annotated_both
+mtdna_pi_SSTmean_plot_annotated_both
 
 ## With pelagic and coastal separately ##
 

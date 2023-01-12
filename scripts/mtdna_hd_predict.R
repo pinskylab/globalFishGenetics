@@ -17,6 +17,7 @@ library(plotrix)
 library(lme4)
 library(data.table)
 library(DescTools)
+library(sjPlot)
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
@@ -83,13 +84,6 @@ mtdna_small_hd$lon_360 <- mtdna_small_hd$lon + 180 #convert (-180,180) to (0,360
 mtdna_small_hd$success <- round(mtdna_small_hd$He*mtdna_small_hd$n) #essentially, number of heterozygotes
   mtdna_small_hd$failure <- round((1 - mtdna_small_hd$He)*mtdna_small_hd$n) #number of homozygotes
 
-#logtransform sst data
-mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$sst.BO_sstmean != "NA") #subset to only rows with sstmean data
-  
-mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$sst.BO_sstmean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  mtdna_small_hd$logsstmean <- log10(mtdna_small_hd$sst.BO_sstmean)
-  mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logsstmean != "NaN")
-
 #### Models ####
 #for prediction plots, do NOT want any random effects
 #also not using different (faster) optimizer
@@ -112,7 +106,7 @@ abslat_CP_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position +
                               Pelagic_Coastal:abslat_scale + Pelagic_Coastal:I(abslat_scale^2), 
                             family = binomial, data = mtdna_small_hd, na.action = "na.fail")
 
-lon_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position + lon, family = binomial, data = mtdna_small_hd, 
+lon_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position + sin(lon_rad) + cos(lon_rad), family = binomial, data = mtdna_small_hd, 
                       na.action = "na.fail")
 
 lon_CP_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position + sin(lon_rad) + 
@@ -132,6 +126,13 @@ lat_lon_CP_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position +
                            Pelagic_Coastal:cos(lon_rad), family = binomial, 
                          data = mtdna_small_hd, na.action = "na.fail")
 
+#logtransform sst data
+mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$sst.BO_sstmean != "NA") #subset to only rows with sstmean data
+
+mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$sst.BO_sstmean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
+  mtdna_small_hd$logsstmean <- log10(mtdna_small_hd$sst.BO_sstmean)
+  mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logsstmean != "NaN")
+
 sstmean_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position + logsstmean, 
                         family = binomial, data = mtdna_small_hd, na.action = "na.fail")
 
@@ -140,106 +141,67 @@ sstmean_CP_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position +
 
 #############################################################################################################
 
-######### Lat model figures #######
+######### Abs Lat model figures #######
 
 #### Predict ####
 
-## Build prediction dataframe ##
+#marginal effects
+abslat_eff <- plot_model(abslat_model_hd, type = "pred", 
+                      terms = "abslat_scale [all]")
 
-#get lat values to predict at and scale
-lat <- c(-80, -70, -60, -50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50, 60, 70, 80) #need to scale this using the same scale mean and sd as in real dataset get with attr(lat_scale, "scaled:center" or "scaled:scale")
-lat_scale <- (lat - 17.92099)/25.87939 #(lat - scale:center)/scale:scale
+#pull out marginal effects dataframe
+abslat_eff_data <- as.data.frame(abslat_eff$data)
 
-#build general prediction dataframe
-#have to add a row for each variable in the model
-hd_lat_predict_df <- as.data.frame(lat_scale)
-  hd_lat_predict_df$bp_scale <- 1.36619e-16 #mean from full dataset
-  hd_lat_predict_df$range_position <- 0.437127 #mean from full dataset
-  hd_lat_predict_df$lon_rad <- 3.443871 #mean from full dataset
-  hd_lat_predict_df$X <- lat #for plotting
-  
-#build prediction dataframe for pelagics
-Pel_hd_lat_predict_df <- hd_lat_predict_df
-  Pel_hd_lat_predict_df$Pelagic_Coastal <- "Pelagic"
-
-#build prediction dataframe for coastals
-Coast_hd_lat_predict_df <- hd_lat_predict_df
-  Coast_hd_lat_predict_df$Pelagic_Coastal <- "Coastal"
-  
-## Predict for lat ##
-#here, use type = "response" to get probability of success (probability of being heterozygote, ~hd)
-  
-hd_lat_predict_df$predict_hd <- predict(lat_model_hd, hd_lat_predict_df, type = "response")
-Pel_hd_lat_predict_df$predict_hd <- predict(lat_CP_model_hd, Pel_hd_lat_predict_df, type = "response")
-Coast_hd_lat_predict_df$predict_hd <- predict(lat_CP_model_hd, Coast_hd_lat_predict_df, type = "response")
-
-## Add confidence intervals ##
-#bootMer on predicted dataset (if mixed effects)
-#Boot on predicted dataset (if fixed effects only)
-
-hd_lat_boot <- Boot(lat_model_hd, f = function(x)predict(x, hd_lat_predict_df, 
-                                                         type = "response"), R = 100)
-  hd_lat_predict_df$lower_ci <- apply(hd_lat_boot$t, 2, quantile, 0.025)
-  hd_lat_predict_df$upper_ci <- apply(hd_lat_boot$t, 2, quantile, 0.975)
-
-Pel_hd_lat_boot <- Boot(lat_CP_model_hd, f = function(x)predict(x, Pel_hd_lat_predict_df, 
-                                                         type = "response"), R = 100)
-  Pel_hd_lat_predict_df$lower_ci <- apply(Pel_hd_lat_boot$t, 2, quantile, 0.025)
-  Pel_hd_lat_predict_df$upper_ci <- apply(Pel_hd_lat_boot$t, 2, quantile, 0.975)
-
-Coast_hd_lat_boot <- Boot(lat_CP_model_hd, f = function(x)predict(x, Coast_hd_lat_predict_df, 
-                                                         type = "response"), R = 100)
-  Coast_hd_lat_predict_df$lower_ci <- apply(Coast_hd_lat_boot$t, 2, quantile, 0.025)
-  Coast_hd_lat_predict_df$upper_ci <- apply(Coast_hd_lat_boot$t, 2, quantile, 0.975)
-  
-  
-#for CP, bind pelagic and coastal dataframes back together
-CP_hd_lat_predict_df <- rbind(Pel_hd_lat_predict_df, Coast_hd_lat_predict_df)
+#unscale lat
+#use same scaled:center & scaled:scale from original data
+abslat_scale <- scale(mtdna_small_hd$abslat) #bc had to convert to numeric to run model/calculate marginal effects
+abslat_eff_data$abslat <- (abslat_eff_data$x * attr(abslat_scale, "scaled:scale")) + 
+  attr(abslat_scale, "scaled:center")
 
 #### Calculate means from raw data ####
 
-## Round lat DOWN to nearest multiple of 10 ##
+## Round abslat DOWN to nearest multiple of 10 ##
 
 #create column to fill with the rounded abslat
-mtdna_small_hd$lat_round <- NA
+mtdna_small_hd$abslat_round <- NA
 
 #fill round column in
 for(i in 1:nrow(mtdna_small_hd)) {
   cat(paste(i, " ", sep = ''))
-  {mtdna_small_hd$lat_round[i] <- DescTools::RoundTo(mtdna_small_hd$lat[i], 
+  {mtdna_small_hd$abslat_round[i] <- DescTools::RoundTo(mtdna_small_hd$abslat[i], 
                                                         multiple = 10, FUN = floor)} #rounding DOWN (e.g. abslat 10-20 gets value of 10)
 }
 
-mtdna_small_hd$lat_round <- as.factor(mtdna_small_hd$lat_round)
+mtdna_small_hd$abslat_round <- as.factor(mtdna_small_hd$abslat_round)
 
 ## Calculate means and SE within each 10 degree band ##
 
 mtdna_small_hd <- data.table(mtdna_small_hd) #make data.table so can use data.table functions
 
 #calculate mean in each 10 degree band
-lat_hd_mean <- mtdna_small_hd[, mean(He), by = lat_round]
-CP_lat_hd_mean <- mtdna_small_hd[, mean(He), by = list(lat_round, Pelagic_Coastal)]
-  colnames(lat_hd_mean) <- c("lat", "hd_mean")
-  colnames(CP_lat_hd_mean) <- c("lat", "Pelagic_Coastal", "hd_mean")
+abslat_hd_mean <- mtdna_small_hd[, mean(He), by = abslat_round]
+CP_abslat_hd_mean <- mtdna_small_hd[, mean(He), by = list(abslat_round, Pelagic_Coastal)]
+  colnames(abslat_hd_mean) <- c("abslat", "hd_mean")
+  colnames(CP_abslat_hd_mean) <- c("abslat", "Pelagic_Coastal", "hd_mean")
 
 #calculate SE in each 10 degree band
-lat_hd_SE <- mtdna_small_hd[, std.error(He), by = lat_round]
-CP_lat_hd_SE <- mtdna_small_hd[, std.error(He), by = list(lat_round, Pelagic_Coastal)]
-  colnames(lat_hd_SE) <- c("lat", "hd_SE")
-  colnames(CP_lat_hd_SE) <- c("lat", "Pelagic_Coastal", "hd_SE")
+abslat_hd_SE <- mtdna_small_hd[, std.error(He), by = abslat_round]
+CP_abslat_hd_SE <- mtdna_small_hd[, std.error(He), by = list(abslat_round, Pelagic_Coastal)]
+  colnames(abslat_hd_SE) <- c("abslat", "hd_SE")
+  colnames(CP_abslat_hd_SE) <- c("abslat", "Pelagic_Coastal", "hd_SE")
   
 #count observations in each 10 degree band
-lat_hd_count <- mtdna_small_hd[, .N, by = lat_round]
-CP_lat_hd_count <- mtdna_small_hd[, .N, by = list(lat_round, Pelagic_Coastal)]
-  colnames(lat_hd_count) <- c("lat", "hd_count")
-  colnames(CP_lat_hd_count) <- c("lat", "Pelagic_Coastal", "hd_count")
+abslat_hd_count <- mtdna_small_hd[, .N, by = abslat_round]
+CP_abslat_hd_count <- mtdna_small_hd[, .N, by = list(abslat_round, Pelagic_Coastal)]
+  colnames(abslat_hd_count) <- c("abslat", "hd_count")
+  colnames(CP_abslat_hd_count) <- c("abslat", "Pelagic_Coastal", "hd_count")
 
 #merge mean and SE dataframes together
-lat_hd_binned_means <- list(lat_hd_mean, lat_hd_SE, lat_hd_count) %>% 
-  reduce(full_join, by = "lat")
-  lat_hd_binned_means$lat <- as.numeric(as.character(lat_hd_binned_means$lat))
-  lat_hd_binned_means <- lat_hd_binned_means[order(lat), ]
-  lat_hd_binned_means$X <- lat_hd_binned_means$lat + 5 #for plotting, plot in MIDDLE of 10 degree band
+abslat_hd_binned_means <- list(abslat_hd_mean, abslat_hd_SE, abslat_hd_count) %>% 
+  reduce(full_join, by = "abslat")
+  abslat_hd_binned_means$abslat <- as.numeric(as.character(abslat_hd_binned_means$abslat))
+  abslat_hd_binned_means <- abslat_hd_binned_means[order(abslat), ]
+  abslat_hd_binned_means$X <- abslat_hd_binned_means$abslat + 5 #for plotting, plot in MIDDLE of 10 degree band
 
 CP_lat_hd_binned_means <- merge(CP_lat_hd_mean, CP_lat_hd_SE, by = c("lat", "Pelagic_Coastal"))
   CP_lat_hd_binned_means <- merge(CP_lat_hd_binned_means, CP_lat_hd_count, by = c("lat", "Pelagic_Coastal"))
@@ -249,10 +211,10 @@ CP_lat_hd_binned_means <- merge(CP_lat_hd_mean, CP_lat_hd_SE, by = c("lat", "Pel
   CP_lat_hd_binned_means$X <- CP_lat_hd_binned_means$lat + 5 #for plotting, plot in MIDDLE of 10 degree band
 
 #calculate error bars (standard error)
-lat_hd_binned_means$mean_lowerSE <- lat_hd_binned_means$hd_mean - 
-  lat_hd_binned_means$hd_SE
-lat_hd_binned_means$mean_upperSE <- lat_hd_binned_means$hd_mean + 
-  lat_hd_binned_means$hd_SE
+abslat_hd_binned_means$mean_lowerSE <- abslat_hd_binned_means$hd_mean - 
+  abslat_hd_binned_means$hd_SE
+abslat_hd_binned_means$mean_upperSE <- abslat_hd_binned_means$hd_mean + 
+  abslat_hd_binned_means$hd_SE
 
 CP_lat_hd_binned_means$mean_lowerSE <- CP_lat_hd_binned_means$hd_mean - 
   CP_lat_hd_binned_means$hd_SE
@@ -260,39 +222,36 @@ CP_lat_hd_binned_means$mean_upperSE <- CP_lat_hd_binned_means$hd_mean +
   CP_lat_hd_binned_means$hd_SE
 
 #add count bin for plotting (all < number, 201 = >200)
-lat_hd_binned_means$count_bin <- c(5, 5, 5, 50, 100, 100, 200, 200, 200, 200, 201, 201, 200, 
-                                   100, 50, 50)
-  lat_hd_binned_means$count_bin <- factor(lat_hd_binned_means$count_bin, levels = c(5, 50, 100, 200, 201))
+abslat_hd_binned_means$count_bin <- c(201, 201, 201, 201, 200, 100, 50, 50)
+  abslat_hd_binned_means$count_bin <- factor(abslat_hd_binned_means$count_bin, levels = c(50, 100, 200, 201))
 
 CP_lat_hd_binned_means$count_bin <- c(5, 5, 5, 5, 50, 50, 50, 50, 100, 50, 200, 5, 100, 50, 200, 
                                       50, 200, 50, 201, 50, 201, 50, 200, 50, 100, 50, 50, 50, 50)
   CP_lat_hd_binned_means$count_bin <- factor(CP_lat_hd_binned_means$count_bin, levels = c(5, 50, 100, 200, 201))
 
-#### Plot lat ####
+#### Plot abslat ####
 
 ## With pelagic and coastal together ##
 
 #for legend
 colors <- c("10-degree binned means" = "#3F6DAA", "Regression" = "black")
-mtdna_small_hd$X <- mtdna_small_hd$lat
 
 #plot
-mtdna_hd_lat_plot_both <- ggplot() + 
-  geom_vline(xintercept = 0, linetype = "dotted", color = "grey", size = 3) + 
-  geom_smooth(data = hd_lat_predict_df, 
-            aes(x = X, y = predict_hd, color = "Regression"), size = 6) + 
-  geom_ribbon(data = hd_lat_predict_df, 
-             aes(x = X, ymin = lower_ci, ymax = upper_ci, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = lat_hd_binned_means, 
+mtdna_hd_abslat_plot_both <- ggplot() + 
+  geom_line(data = abslat_eff_data, 
+            aes(x = abslat, y = predicted, color = "Regression"), size = 6) + 
+  geom_ribbon(data = abslat_eff_data, 
+             aes(x = abslat, ymin = conf.low, ymax = conf.high, color = "Regression"), alpha = 0.1) + 
+  geom_point(data = abslat_hd_binned_means, 
              aes(x = X, y = hd_mean, color = "10-degree binned means", size = count_bin), shape = "square") + 
-  geom_errorbar(data = lat_hd_binned_means, 
+  geom_errorbar(data = abslat_hd_binned_means, 
                 aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
                     color = "10-degree binned means"), width = 1.75, size = 3) + 
-  xlab("latitude") + ylab("mtdna Hd") + labs(color = "Legend") + 
+  xlab("absolute latitude") + ylab("mtdna Hd") + labs(color = "Legend") + 
   scale_color_manual(values = colors) + 
-  scale_size_manual(values = c(6, 8, 12, 14, 16), 
-                    labels = c("\u22645", "\u226450", "\u2264100", "\u2264200", "\u2265200"))
-mtdna_hd_lat_plot_annotated_both <- mtdna_hd_lat_plot_both + theme_bw() + 
+  scale_size_manual(values = c(8, 12, 14, 16), 
+                    labels = c("\u226450", "\u2264100", "\u2264200", "\u2265200"))
+mtdna_hd_abslat_plot_annotated_both <- mtdna_hd_abslat_plot_both + theme_bw() + 
   theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 70, face = "bold"), 
         axis.ticks = element_line(color = "black", size = 1), 
         axis.text = element_text(size = 60, color = "black"), 
@@ -301,7 +260,7 @@ mtdna_hd_lat_plot_annotated_both <- mtdna_hd_lat_plot_both + theme_bw() +
         legend.text = element_text(size = 50), 
         legend.key.size = unit(3, "cm"),
         legend.title = element_blank())
-mtdna_hd_lat_plot_annotated_both
+mtdna_hd_abslat_plot_annotated_both
 
 ## With pelagic and coastal separate ##
 #for legend
@@ -336,72 +295,172 @@ mtdna_hd_lat_CP_plot_annotated_both
 
 #############################################################################################################
 
+######### Lat model figures #######
+
+#### Predict ####
+
+#marginal effects
+lat_eff <- plot_model(lat_model_hd, type = "pred", 
+                         terms = "lat_scale [all]")
+
+#pull out marginal effects dataframe
+lat_eff_data <- as.data.frame(lat_eff$data)
+
+#unscale lat
+#use same scaled:center & scaled:scale from original data
+lat_scale <- scale(mtdna_small_hd$lat) #sometimes, original scale in dataframe doesn't store attributes
+lat_eff_data$lat <- (lat_eff_data$x * attr(lat_scale, "scaled:scale")) + 
+  attr(lat_scale, "scaled:center")
+
+#### Calculate means from raw data ####
+
+## Round lat DOWN to nearest multiple of 10 ##
+
+#create column to fill with the rounded abslat
+mtdna_small_hd$lat_round <- NA
+
+#fill round column in
+for(i in 1:nrow(mtdna_small_hd)) {
+  cat(paste(i, " ", sep = ''))
+  {mtdna_small_hd$lat_round[i] <- DescTools::RoundTo(mtdna_small_hd$lat[i], 
+                                                     multiple = 10, FUN = floor)} #rounding DOWN (e.g. abslat 10-20 gets value of 10)
+}
+
+mtdna_small_hd$lat_round <- as.factor(mtdna_small_hd$lat_round)
+
+## Calculate means and SE within each 10 degree band ##
+
+mtdna_small_hd <- data.table(mtdna_small_hd) #make data.table so can use data.table functions
+
+#calculate mean in each 10 degree band
+lat_hd_mean <- mtdna_small_hd[, mean(He), by = lat_round]
+CP_lat_hd_mean <- mtdna_small_hd[, mean(He), by = list(lat_round, Pelagic_Coastal)]
+colnames(lat_hd_mean) <- c("lat", "hd_mean")
+colnames(CP_lat_hd_mean) <- c("lat", "Pelagic_Coastal", "hd_mean")
+
+#calculate SE in each 10 degree band
+lat_hd_SE <- mtdna_small_hd[, std.error(He), by = lat_round]
+CP_lat_hd_SE <- mtdna_small_hd[, std.error(He), by = list(lat_round, Pelagic_Coastal)]
+colnames(lat_hd_SE) <- c("lat", "hd_SE")
+colnames(CP_lat_hd_SE) <- c("lat", "Pelagic_Coastal", "hd_SE")
+
+#count observations in each 10 degree band
+lat_hd_count <- mtdna_small_hd[, .N, by = lat_round]
+CP_lat_hd_count <- mtdna_small_hd[, .N, by = list(lat_round, Pelagic_Coastal)]
+colnames(lat_hd_count) <- c("lat", "hd_count")
+colnames(CP_lat_hd_count) <- c("lat", "Pelagic_Coastal", "hd_count")
+
+#merge mean and SE dataframes together
+lat_hd_binned_means <- list(lat_hd_mean, lat_hd_SE, lat_hd_count) %>% 
+  reduce(full_join, by = "lat")
+lat_hd_binned_means$lat <- as.numeric(as.character(lat_hd_binned_means$lat))
+lat_hd_binned_means <- lat_hd_binned_means[order(lat), ]
+lat_hd_binned_means$X <- lat_hd_binned_means$lat + 5 #for plotting, plot in MIDDLE of 10 degree band
+
+CP_lat_hd_binned_means <- merge(CP_lat_hd_mean, CP_lat_hd_SE, by = c("lat", "Pelagic_Coastal"))
+CP_lat_hd_binned_means <- merge(CP_lat_hd_binned_means, CP_lat_hd_count, by = c("lat", "Pelagic_Coastal"))
+colnames(CP_lat_hd_binned_means) <- c("lat", "Pelagic_Coastal", "hd_mean", "hd_SE", "hd_count")
+CP_lat_hd_binned_means$lat <- as.numeric(as.character(CP_lat_hd_binned_means$lat))
+CP_lat_hd_binned_means <- CP_lat_hd_binned_means[order(lat), ]
+CP_lat_hd_binned_means$X <- CP_lat_hd_binned_means$lat + 5 #for plotting, plot in MIDDLE of 10 degree band
+
+#calculate error bars (standard error)
+lat_hd_binned_means$mean_lowerSE <- lat_hd_binned_means$hd_mean - 
+  lat_hd_binned_means$hd_SE
+lat_hd_binned_means$mean_upperSE <- lat_hd_binned_means$hd_mean + 
+  lat_hd_binned_means$hd_SE
+
+CP_lat_hd_binned_means$mean_lowerSE <- CP_lat_hd_binned_means$hd_mean - 
+  CP_lat_hd_binned_means$hd_SE
+CP_lat_hd_binned_means$mean_upperSE <- CP_lat_hd_binned_means$hd_mean + 
+  CP_lat_hd_binned_means$hd_SE
+
+#add count bin for plotting (all < number, 201 = >200)
+lat_hd_binned_means$count_bin <- c(5, 5, 5, 50, 100, 100, 200, 200, 200, 200, 201, 201, 200, 
+                                   100, 50, 50)
+lat_hd_binned_means$count_bin <- factor(lat_hd_binned_means$count_bin, levels = c(5, 50, 100, 200, 201))
+
+CP_lat_hd_binned_means$count_bin <- c(5, 5, 5, 5, 50, 50, 50, 50, 100, 50, 200, 5, 100, 50, 200, 
+                                      50, 200, 50, 201, 50, 201, 50, 200, 50, 100, 50, 50, 50, 50)
+CP_lat_hd_binned_means$count_bin <- factor(CP_lat_hd_binned_means$count_bin, levels = c(5, 50, 100, 200, 201))
+
+#### Plot lat ####
+
+## With pelagic and coastal together ##
+
+#for legend
+colors <- c("10-degree binned means" = "#3F6DAA", "Regression" = "black")
+mtdna_small_hd$X <- mtdna_small_hd$lat
+
+#plot
+mtdna_hd_lat_plot_both <- ggplot() + 
+  geom_vline(xintercept = 0, linetype = "dotted", color = "grey", size = 3) + 
+  geom_line(data = lat_eff_data, 
+              aes(x = lat, y = predicted, color = "Regression"), size = 6) + 
+  geom_ribbon(data = lat_eff_data, 
+              aes(x = lat, ymin = conf.low, ymax = conf.high, color = "Regression"), alpha = 0.1) + 
+  geom_point(data = lat_hd_binned_means, 
+             aes(x = X, y = hd_mean, color = "10-degree binned means", size = count_bin), shape = "square") + 
+  geom_errorbar(data = lat_hd_binned_means, 
+                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
+                    color = "10-degree binned means"), width = 1.75, size = 3) + 
+  xlab("latitude") + ylab("mtdna Hd") + labs(color = "Legend") + 
+  scale_color_manual(values = colors) + 
+  scale_size_manual(values = c(6, 8, 12, 14, 16), 
+                    labels = c("\u22645", "\u226450", "\u2264100", "\u2264200", "\u2265200"))
+mtdna_hd_lat_plot_annotated_both <- mtdna_hd_lat_plot_both + theme_bw() + 
+  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 70, face = "bold"), 
+        axis.ticks = element_line(color = "black", size = 1), 
+        axis.text = element_text(size = 60, color = "black"), 
+        axis.line = element_line(size = 2, color = "black"),
+        legend.position = "top", legend.box = "vertical", 
+        legend.text = element_text(size = 50), 
+        legend.key.size = unit(3, "cm"),
+        legend.title = element_blank())
+mtdna_hd_lat_plot_annotated_both
+
+## With pelagic and coastal separate ##
+#for legend
+colors_CP <- c(Coastal = "#3F6DAA", Pelagic = "black")
+
+#plot CP
+mtdna_hd_lat_CP_plot_both <- ggplot() + 
+  geom_vline(xintercept = 0, linetype = "dotted", color = "grey", size = 3) + 
+  geom_smooth(data = CP_hd_lat_predict_df, 
+              aes(x = X, y = predict_hd, color = Pelagic_Coastal), size = 6) + 
+  geom_ribbon(data = CP_hd_lat_predict_df, 
+              aes(x = X, ymin = lower_ci, ymax = upper_ci, color = Pelagic_Coastal), alpha = 0.1) + 
+  geom_point(data = CP_lat_hd_binned_means, 
+             aes(x = X, y = hd_mean, color = Pelagic_Coastal, size = count_bin), shape = "square") + 
+  geom_errorbar(data = CP_lat_hd_binned_means, 
+                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, color = Pelagic_Coastal), 
+                width = 1.75, size = 3) + 
+  xlab("latitude") + ylab("mtdna Hd") + labs(color = "Legend") + 
+  scale_color_manual(values = colors_CP) + 
+  scale_size_manual(values = c(6, 8, 12, 14, 16), 
+                    labels = c("\u22645", "\u226450", "\u2264100", "\u2264200", "\u2265200"))
+mtdna_hd_lat_CP_plot_annotated_both <- mtdna_hd_lat_CP_plot_both + theme_bw() + 
+  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 70, face = "bold"), 
+        axis.ticks = element_line(color = "black", size = 1), 
+        axis.text = element_text(size = 60, color = "black"), 
+        axis.line = element_line(size = 2, color = "black"),
+        legend.position = "top", legend.box = "vertical", 
+        legend.text = element_text(size = 50),
+        legend.key.size = unit(3, "cm"),
+        legend.title = element_blank())
+mtdna_hd_lat_CP_plot_annotated_both
+
+#############################################################################################################
+
 ######### Lon model figures #######
 
 #### Predict ####
 
 ## Build prediction dataframe ##
-binomial_lat_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + 
-                            Pelagic_Coastal + Pelagic_Coastal:lat_scale + Pelagic_Coastal:I(lat_scale^2) + Pelagic_Coastal:sin(lon_rad) + Pelagic_Coastal:cos(lon_rad) + 
-                            (1|Family/Genus/spp) + (1|Source) + 
-                            (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_hd, na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
-
-lon_eff <- plot_model(binomial_lat_lon, type = "pred", terms = c("lon_rad [all]", "Pelagic_Coastal [all]"))
+lon_eff <- plot_model(lon_model_hd, type = "pred", terms = "lon_rad [all]")
   lon_eff_data <- as.data.frame(lon_eff$data)
   lon_eff_data$lon <- ((360*lon_eff_data$x)/(2*pi))-180
   
-#get lon values to predict at and scale
-lon <- c(-180, -170, -160, -150, -140, -130, -120, -110, -100, -90, -80, -70, -60, -50, -40, -30, -20, -10, 
-         0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170)
-  lon_360 <- (lon + 180)
-  lon_rad <- (2*pi*lon_360)/360
-
-#build general prediction dataframe
-#have to add a row for each variable in the model
-hd_lon_predict_df <- as.data.frame(lon_rad)
-  hd_lon_predict_df$bp_scale <- 1.36619e-16 #mean from full dataset
-  hd_lon_predict_df$range_position <- 0.437127 #mean from full dataset
-  hd_lon_predict_df$lon_rad <- 1.25483e-17 #mean from full dataset
-  hd_lon_predict_df$X <- lon #for plotting
-
-#build prediction dataframe for pelagics
-Pel_hd_lon_predict_df <- hd_lon_predict_df
-  Pel_hd_lon_predict_df$Pelagic_Coastal <- "Pelagic"
-
-#build prediction dataframe for coastals
-Coast_hd_lon_predict_df <- hd_lon_predict_df
-  Coast_hd_lon_predict_df$Pelagic_Coastal <- "Coastal"
-
-## Predict for lon ##
-#here, use type = "response" to get probability of success (probability of being heterozygote, ~hd)
-
-hd_lon_predict_df$predict_hd <- predict(lon_model_hd, hd_lon_predict_df, type = "response")
-Pel_hd_lon_predict_df$predict_hd <- predict(lon_CP_model_hd, Pel_hd_lon_predict_df, type = "response")
-Coast_hd_lon_predict_df$predict_hd <- predict(lon_CP_model_hd, Coast_hd_lon_predict_df, type = "response")
-
-## Add confidence intervals ##
-#bootMer on predicted dataset (if mixed effects)
-#Boot on predicted dataset (if fixed effects only)
-
-hd_lon_boot <- Boot(lon_model_hd, f = function(x)predict(x, hd_lon_predict_df, 
-                                                         type = "response"), R = 100)
-  hd_lon_predict_df$lower_ci <- apply(hd_lon_boot$t, 2, quantile, 0.025)
-  hd_lon_predict_df$upper_ci <- apply(hd_lon_boot$t, 2, quantile, 0.975)
-
-Pel_hd_lon_boot <- Boot(lon_CP_model_hd, f = function(x)predict(x, Pel_hd_lon_predict_df, 
-                                                                type = "response"), R = 100)
-  Pel_hd_lon_predict_df$lower_ci <- apply(Pel_hd_lon_boot$t, 2, quantile, 0.025)
-  Pel_hd_lon_predict_df$upper_ci <- apply(Pel_hd_lon_boot$t, 2, quantile, 0.975)
-
-Coast_hd_lon_boot <- Boot(lon_CP_model_hd, f = function(x)predict(x, Coast_hd_lon_predict_df, 
-                                                                  type = "response"), R = 100)
-  Coast_hd_lon_predict_df$lower_ci <- apply(Coast_hd_lon_boot$t, 2, quantile, 0.025)
-  Coast_hd_lon_predict_df$upper_ci <- apply(Coast_hd_lon_boot$t, 2, quantile, 0.975)
-
-
-#for CP, bind pelagic and coastal dataframes back together
-CP_hd_lon_predict_df <- rbind(Pel_hd_lon_predict_df, Coast_hd_lon_predict_df)
-
 #### Calculate means from raw data ####
 
 ## Round lon DOWN to nearest multiple of 10 ##
@@ -477,7 +536,7 @@ CP_lon_hd_binned_means$count_bin <- c(50, 5, 50, 100, 5, 50, 5, 50, 5, 50, 5, 50
                                       50, 5, 50, 50, 100, 50, 50, 50, 50, 50, 50, 5, 50, 5, 50,
                                       50, 50, 50, 100, 5, 100, 5, 100, 50, 50, 5, 50, 5, 50, 5, 
                                       50, 50, 50, 50, 5, 50, 50, 5, 50, 5, 100, 50, 201, 50, 100, 
-                                      50, 100, 50, 50, 5, 50, 50, 50, 5)
+                                      50, 100, 50, 50, 5, 50, 50, 50, 50, 5)
 CP_lon_hd_binned_means$count_bin <- factor(CP_lon_hd_binned_means$count_bin, levels = c(5, 50, 100, 201))
 
 #### Plot lon ####
@@ -489,7 +548,7 @@ colors <- c("10-degree binned means" = "#3F6DAA", "Regression" = "black")
 
 #plot
 mtdna_hd_lon_plot_both <- ggplot() + 
-  geom_smooth(data = lon_eff_data, 
+  geom_line(data = lon_eff_data, 
               aes(x = lon, y = predicted, color = "Regression"), size = 6) + 
   geom_ribbon(data = lon_eff_data, 
               aes(x = lon, ymin = conf.low, ymax = conf.high, color = "Regression"), alpha = 0.1) + 
