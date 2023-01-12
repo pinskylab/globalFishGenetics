@@ -18,10 +18,10 @@ Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Greece,Crete
 Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Greece,Crete,35.054409,,,24.694832,,,1994,1,Pma1,1,50,2,0.966,,
 Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Greece,Crete,35.054409,,,24.694832,,,1994,1,Pma4,1,50,2,0.596,,
 Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Greece,Crete,35.054409,,,24.694832,,,1994,1,SaGT41a,1,51,2,0.455,,
-Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Morocco,Madeira,32.700411,,,-16.877083,,,1997-1998,1,GA2A,1,51,2,0.927,,
-Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Morocco,Madeira,32.700411,,,-16.877083,,,1997-1998,1,Pma1,1,50,2,0.971,,
-Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Morocco,Madeira,32.700411,,,-16.877083,,,1997-1998,1,Pma4,1,51,2,0.697,,
-Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Morocco,Madeira,32.700411,,,-16.877083,,,1997-1998,1,SaGT41a,1,51,2,0.472,,
+Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Morocco,Madeira,32.841287,,,-16.819405,,,1997-1998,1,GA2A,1,51,2,0.927,,
+Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Morocco,Madeira,32.841287,,,-16.819405,,,1997-1998,1,Pma1,1,50,2,0.971,,
+Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Morocco,Madeira,32.841287,,,-16.819405,,,1997-1998,1,Pma4,1,51,2,0.697,,
+Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Morocco,Madeira,32.841287,,,-16.819405,,,1997-1998,1,SaGT41a,1,51,2,0.472,,
 Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Spain,Azores,38.423307,,,-26.724766,,,1997-1998,1,GA2A,1,34,2,0.924,,
 Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Spain,Azores,38.423307,,,-26.724766,,,1997-1998,1,Pma1,1,32,2,0.954,,
 Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,0,Spain,Azores,38.423307,,,-26.724766,,,1997-1998,1,Pma3,1,30,2,0.873,,
@@ -631,7 +631,7 @@ Lutjanus campechanus,Red snapper,Saillant & Gold 2006 Fish Bull,0,USA,"Dauphin I
 Lutjanus campechanus,Red snapper,Saillant & Gold 2006 Fish Bull,0,USA,"Dauphin Island, AL 1995",30.1893,,,-87.4375,,,1995,1,Prs333,0,371,2,0.371,,
 Lutjanus campechanus,Red snapper,Saillant & Gold 2006 Fish Bull,0,USA,"Dauphin Island, AL 1995",30.1893,,,-87.4375,,,1995,1,Prs55,0,377,2,0.209,,
 Stegastes partitus,Bicolor damselfish,Salas et al. 2009 Mar Biol 157:437-445,0,Costa Rica,Uvita Island,9.997083,,,-83.011891,,,2006,1,SpAAC41,0,47,3,0.96,,
-Stegastes partitus,Bicolor damselfish,Salas et al. 2009 Mar Biol 157:437-445,0,Costa Rica,Cahuita,9.746956,,,-82.844306,,,2006,1,SpAAC41,0,48,3,0.96,,
+Stegastes partitus,Bicolor damselfish,Salas et al. 2009 Mar Biol 157:437-445,0,Costa Rica,Cahuita,9.777069,,,-82.839843,,,2006,1,SpAAC41,0,48,3,0.96,,
 Stegastes partitus,Bicolor damselfish,Salas et al. 2009 Mar Biol 157:437-445,0,Costa Rica,Manzanillo,9.635954,,,-82.660561,,,2006,1,SpAAC41,0,92,3,0.96,,
 Stegastes partitus,Bicolor damselfish,Salas et al. 2009 Mar Biol 157:437-445,0,Panama,Coral Key,9.244274,,,-82.136106,,,2006,1,SpAAC41,0,42,3,0.95,,
 Amphiprion frenatus,Tomato clownfish,Sato et al. (2014) Conservation Genet. Resour. 6:685-688,1,Philippines,Puerto Galera Bay,13,30,,120,57,,,1,Af-01,0,32,3,0.739,,
@@ -844,14 +844,14 @@ Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0
 Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Greece,Greece,37.039238,,,25.335706,,,2003,1,Sc13,0,20,2,0.813,,geo coordinates pulled from place name
 Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Greece,Greece,37.039238,,,25.335706,,,2003,1,Sc14,0,18,2,0.742,,geo coordinates pulled from place name
 Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Greece,Greece,37.039238,,,25.335706,,,2003,1,Sc15,0,22,2,0.168,,geo coordinates pulled from place name
-Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.148642,,,18.491607,,,2003,1,Sc03,0,30,2,0.689,,geo coordinates pulled from place name
-Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.148642,,,18.491607,,,2003,1,Sc04,0,30,2,0.834,,geo coordinates pulled from place name
-Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.148642,,,18.491607,,,2003,1,Sc06,0,30,2,0.892,,geo coordinates pulled from place name
-Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.148642,,,18.491607,,,2003,1,Sc11,0,30,2,0.242,,geo coordinates pulled from place name
-Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.148642,,,18.491607,,,2003,1,Sc12,0,30,2,0.507,,geo coordinates pulled from place name
-Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.148642,,,18.491607,,,2003,1,Sc13,0,30,2,0.846,,geo coordinates pulled from place name
-Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.148642,,,18.491607,,,2003,1,Sc14,0,30,2,0.843,,geo coordinates pulled from place name
-Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.148642,,,18.491607,,,2003,1,Sc15,0,30,2,0.241,,geo coordinates pulled from place name
+Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.151529,,,18.500877,,,2003,1,Sc03,0,30,2,0.689,,geo coordinates pulled from place name
+Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.151529,,,18.500877,,,2003,1,Sc04,0,30,2,0.834,,geo coordinates pulled from place name
+Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.151529,,,18.500877,,,2003,1,Sc06,0,30,2,0.892,,geo coordinates pulled from place name
+Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.151529,,,18.500877,,,2003,1,Sc11,0,30,2,0.242,,geo coordinates pulled from place name
+Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.151529,,,18.500877,,,2003,1,Sc12,0,30,2,0.507,,geo coordinates pulled from place name
+Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.151529,,,18.500877,,,2003,1,Sc13,0,30,2,0.846,,geo coordinates pulled from place name
+Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.151529,,,18.500877,,,2003,1,Sc14,0,30,2,0.843,,geo coordinates pulled from place name
+Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Otranto,40.151529,,,18.500877,,,2003,1,Sc15,0,30,2,0.241,,geo coordinates pulled from place name
 Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Sardinia,40.349903,,,9.807948,,,2003,1,Sc03,0,30,2,0.658,,geo coordinates pulled from place name
 Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Sardinia,40.349903,,,9.807948,,,2003,1,Sc04,0,30,2,0.773,,geo coordinates pulled from place name
 Serranus cabrilla,Comber,Schunter et al. (2011) Molecular Ecology 20:5167-5181,0,Italy,Sardinia,40.349903,,,9.807948,,,2003,1,Sc06,0,30,2,0.858,,geo coordinates pulled from place name
@@ -972,15 +972,15 @@ Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 
 Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Mangalore,12.92566,,,74.793353,,,2012-2014,1,SAR B-D09,1,96,2,0.96,,geo coordinates pulled from place name
 Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Mangalore,12.92566,,,74.793353,,,2012-2014,1,Sar1-D01,1,96,2,0.89,,geo coordinates pulled from place name
 Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Mangalore,12.92566,,,74.793353,,,2012-2014,1,Sar1-H11 (B),1,96,2,0.85,,geo coordinates pulled from place name
-Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Calicut,11.262898,,,75.76206,,,2012-2014,1,SAR B-D09,1,96,2,0.95,,geo coordinates pulled from place name
-Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Calicut,11.262898,,,75.76206,,,2012-2014,1,Sar1-D01,1,96,2,0.88,,geo coordinates pulled from place name
-Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Calicut,11.262898,,,75.76206,,,2012-2014,1,Sar1-H11 (B),1,96,2,0.71,,geo coordinates pulled from place name
-Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Kollam,8.874211,,,76.584773,,,2012-2014,1,SAR 9,1,96,2,0.92,,geo coordinates pulled from place name
-Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Kollam,8.874211,,,76.584773,,,2012-2014,1,SAR B-A08,1,96,2,0.81,,geo coordinates pulled from place name
-Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Kollam,8.874211,,,76.584773,,,2012-2014,1,SAR B-D09,1,96,2,0.95,,geo coordinates pulled from place name
-Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Kollam,8.874211,,,76.584773,,,2012-2014,1,Sar1-D01,1,96,2,0.88,,geo coordinates pulled from place name
-Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Kollam,8.874211,,,76.584773,,,2012-2014,1,Sar1-D06 (B),1,96,2,0.97,,geo coordinates pulled from place name
-Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Kollam,8.874211,,,76.584773,,,2012-2014,1,Sar1-H11 (B),1,96,2,0.82,,geo coordinates pulled from place name
+Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Calicut,11.272326,,,75.739401,,,2012-2014,1,SAR B-D09,1,96,2,0.95,,geo coordinates pulled from place name
+Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Calicut,11.272326,,,75.739401,,,2012-2014,1,Sar1-D01,1,96,2,0.88,,geo coordinates pulled from place name
+Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Calicut,11.272326,,,75.739401,,,2012-2014,1,Sar1-H11 (B),1,96,2,0.71,,geo coordinates pulled from place name
+Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Kollam,8.869292,,,76.576705,,,2012-2014,1,SAR 9,1,96,2,0.92,,geo coordinates pulled from place name
+Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Kollam,8.869292,,,76.576705,,,2012-2014,1,SAR B-A08,1,96,2,0.81,,geo coordinates pulled from place name
+Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Kollam,8.869292,,,76.576705,,,2012-2014,1,SAR B-D09,1,96,2,0.95,,geo coordinates pulled from place name
+Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Kollam,8.869292,,,76.576705,,,2012-2014,1,Sar1-D01,1,96,2,0.88,,geo coordinates pulled from place name
+Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Kollam,8.869292,,,76.576705,,,2012-2014,1,Sar1-D06 (B),1,96,2,0.97,,geo coordinates pulled from place name
+Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Kollam,8.869292,,,76.576705,,,2012-2014,1,Sar1-H11 (B),1,96,2,0.82,,geo coordinates pulled from place name
 Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Trivandrum,8.51195,,,76.878503,,,2012-2014,1,SAR 9,1,96,2,0.91,,geo coordinates pulled from place name
 Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Trivandrum,8.51195,,,76.878503,,,2012-2014,1,SAR B-A08,1,96,2,0.87,,geo coordinates pulled from place name
 Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,India,Trivandrum,8.51195,,,76.878503,,,2012-2014,1,SAR B-D09,1,96,2,0.95,,geo coordinates pulled from place name
@@ -1006,16 +1006,16 @@ Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 
 Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,Oman,Oman,19.485218,,,58.34233,,,2012-2014,1,Sar1-D06 (B),1,96,2,0.97,,geo coordinates pulled from place name
 Sardinella longiceps,Indian oil sardine,Sebastian et al. (2017) Conserv. Genet. 18:951-964,0,Oman,Oman,19.485218,,,58.34233,,,2012-2014,1,Sar1-H11 (B),1,96,2,0.93,,geo coordinates pulled from place name
 Sparus aurata,Gilthead sea bream,各gvi?-Bubi? et al. (2011) Aquaculture 318:309-315,0,Croatia,CBW2,43,23,48.27,16,25,37.53,2008,8,,0.25,50,2.1,0.74,,
-Sparus aurata,Gilthead sea bream,各gvi?-Bubi? et al. (2011) Aquaculture 318:309-315,0,Croatia,CMW,42,52,5.82,17,41,2.56,2009,8,,0.25,45,2.1,0.76,,
+Sparus aurata,Gilthead sea bream,各gvi?-Bubi? et al. (2011) Aquaculture 318:309-315,0,Croatia,CMW,43.07327,,,17.272057,,,2009,8,,0.25,45,2.1,0.76,,geo coordinates pulled from place name
 Seriola dumerili,Greater amberjack,各gvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,0,Italy,Castellammare del Golfo,38.0305,,,12.885584,,,,8,,0,20,2.4,0.65,,geo coordinates pulled from place name
 Seriola dumerili,Greater amberjack,各gvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,0,Italy,Porticello,38.086384,,,13.540633,,,,8,,0,20,2.4,0.62,,geo coordinates pulled from place name
 Seriola dumerili,Greater amberjack,各gvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,0,Italy,Sant' Agata di Militello,38.072689,,,14.631032,,,,8,,0,20,2.4,0.64,,geo coordinates pulled from place name
 Seriola dumerili,Greater amberjack,各gvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,0,Italy,Siracusa,37.067506,,,15.298534,,,,8,,0,16,2.4,0.67,,geo coordinates pulled from place name
 Seriola dumerili,Greater amberjack,各gvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,0,Italy,Selinunte,37.581297,,,12.825389,,,,8,,0,20,2.4,0.65,,geo coordinates pulled from place name
 Seriola dumerili,Greater amberjack,各gvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,0,Italy,Catania,37.474889,,,15.095026,,,,8,,0,20,2.4,0.68,,geo coordinates pulled from place name
-Seriola dumerili,Greater amberjack,各gvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,0,Italy,Scoglitti,36.894367,,,14.424074,,,,8,,0,14,2.4,0.62,,geo coordinates pulled from place name
+Seriola dumerili,Greater amberjack,各gvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,0,Italy,Scoglitti,36.892445,,,14.413431,,,,8,,0,14,2.4,0.62,,geo coordinates pulled from place name
 Seriola dumerili,Greater amberjack,各gvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,0,Spain,Alicante,38.344374,,,-0.460337,,,,8,,0,52,2.4,0.63,,geo coordinates pulled from place name
-Seriola dumerili,Greater amberjack,各gvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,0,Croatia,Split,43.502906,,,16.433634,,,,8,,0,57,2.4,0.64,,geo coordinates pulled from place name
+Seriola dumerili,Greater amberjack,各gvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,0,Croatia,Split,43.497178,,,16.431574,,,,8,,0,57,2.4,0.64,,geo coordinates pulled from place name
 Seriola dumerili,Greater amberjack,各gvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,0,Croatia,Dubrovnik,42.643672,,,18.093875,,,,8,,0,30,2.4,0.6,,geo coordinates pulled from place name
 Seriola dumerili,Greater amberjack,各gvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,0,Spain,Santa Cruz de Tenerife,28.448009,,,-16.267023,,,,8,,1,20,2.4,0.61,,geo coordinates pulled from place name
 Verasper variegatus,Spotted halibut,Sekino et al. (2011) Conserv. Genet. 12:139-159,0,Japan,Ise Bay,34.676347,,,136.730197,,,2007-2008,1,SpHb3B,0,18,2,0.21,,geo coordinates pulled from place name
@@ -1120,13 +1120,13 @@ Clupea pallasii,Pacific herring,Semenova et al. (2015) Polar Biol. 38:951-965,0,
 Clupea pallasii,Pacific herring,Semenova et al. (2015) Polar Biol. 38:951-965,0,Russia,Kara River,69,17.3,,65,30.2,,2008,1,Cpa113,0,11,4,0.736,,
 Clupea pallasii,Pacific herring,Semenova et al. (2015) Polar Biol. 38:951-965,0,Russia,Kara River,69,17.3,,65,30.2,,2008,1,Cpa4,0,11,4,0.731,,
 Clupea pallasii,Pacific herring,Semenova et al. (2015) Polar Biol. 38:951-965,0,Russia,Kara River,69,17.3,,65,30.2,,2008,1,Cha1020,1,11,4,0.918,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59,37,,151,14,,2011,1,Cpa110,0,20,4,0.492,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59,37,,151,14,,2011,1,Cpa113,0,19,4,0.92,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59,37,,151,14,,2011,1,Cpa4,0,21,4,0.887,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59,37,,151,14,,2011,1,Cpa7,0,21,4,0.946,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59,37,,151,14,,2011,1,Cpa27,0,20,4,0.779,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59,37,,151,14,,2011,1,Cha1059,1,21,4,0.774,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59,37,,151,14,,2011,1,Cha1020,1,19,4,0.907,,
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59.466301,,,151.189388,,,2011,1,Cpa110,0,20,4,0.492,,geo coordinates pulled from place name
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59.466301,,,151.189388,,,2011,1,Cpa113,0,19,4,0.92,,geo coordinates pulled from place name
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59.466301,,,151.189388,,,2011,1,Cpa4,0,21,4,0.887,,geo coordinates pulled from place name
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59.466301,,,151.189388,,,2011,1,Cpa7,0,21,4,0.946,,geo coordinates pulled from place name
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59.466301,,,151.189388,,,2011,1,Cpa27,0,20,4,0.779,,geo coordinates pulled from place name
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59.466301,,,151.189388,,,2011,1,Cha1059,1,21,4,0.774,,geo coordinates pulled from place name
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Nyuklin Spit),59.466301,,,151.189388,,,2011,1,Cha1020,1,19,4,0.907,,geo coordinates pulled from place name
 Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Yanskii),59,22,,150,7,,2011,1,Cpa110,0,42,4,0.503,,
 Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Yanskii),59,22,,150,7,,2011,1,Cpa113,0,41,4,0.919,,
 Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Taui Bay (Yanskii),59,22,,150,7,,2011,1,Cpa4,0,41,4,0.911,,
@@ -1140,13 +1140,13 @@ Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Rus
 Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Tunguska Bay,59,13,,143,6,,2011,1,Cpa27,0,26,4,0.774,,
 Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Tunguska Bay,59,13,,143,6,,2011,1,Cha1059,1,26,4,0.763,,
 Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Tunguska Bay,59,13,,143,6,,2011,1,Cha1020,1,26,4,0.917,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61,55,,159,14,,2011,1,Cpa110,0,24,4,0.488,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61,55,,159,14,,2011,1,Cpa113,0,24,4,0.921,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61,55,,159,14,,2011,1,Cpa4,0,22,4,0.898,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61,55,,159,14,,2011,1,Cpa7,0,24,4,0.945,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61,55,,159,14,,2011,1,Cpa27,0,24,4,0.794,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61,55,,159,14,,2011,1,Cha1059,1,21,4,0.744,,
-Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61,55,,159,14,,2011,1,Cha1020,1,23,4,0.935,,
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61.784798,,,159.093258,,,2011,1,Cpa110,0,24,4,0.488,,geo coordinates pulled from place name
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61.784798,,,159.093258,,,2011,1,Cpa113,0,24,4,0.921,,geo coordinates pulled from place name
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61.784798,,,159.093258,,,2011,1,Cpa4,0,22,4,0.898,,geo coordinates pulled from place name
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61.784798,,,159.093258,,,2011,1,Cpa7,0,24,4,0.945,,geo coordinates pulled from place name
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61.784798,,,159.093258,,,2011,1,Cpa27,0,24,4,0.794,,geo coordinates pulled from place name
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61.784798,,,159.093258,,,2011,1,Cha1059,1,21,4,0.744,,geo coordinates pulled from place name
+Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Gizhigin Bay,61.784798,,,159.093258,,,2011,1,Cha1020,1,23,4,0.935,,geo coordinates pulled from place name
 Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Central Sea of Okhotsk,57,,,150,17,,2014,1,Cpa110,0,50,4,0.503,,
 Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Central Sea of Okhotsk,57,,,150,17,,2014,1,Cpa113,0,45,4,0.901,,
 Clupea pallasii,Pacific herring,Semenova et al. (2018) Genetika 54:349-360,0,Russia,Central Sea of Okhotsk,57,,,150,17,,2014,1,Cpa4,0,49,4,0.898,,
@@ -1550,7 +1550,7 @@ Gadus macrocephalus,Pacific cod,Spies (2012) Transactions of the American Fisher
 Gadus macrocephalus,Pacific cod,Spies (2012) Transactions of the American Fisheries Society 141:1557-1573,0,USA,Pribilof Islands,56.83,,,-170,,,2004,1,GmoG5,1,77,2,0.6861,,
 Diplodus vulgaris,Two-banded sea bream,Steffani et al. (2015) Heredity 115:527-537,0,Portugal,Azores Islands,38.648413,,,-28.754449,,,2007-2008,9,,0.7,29,2,0.784,,geo coordinates pulled from place name
 Diplodus vulgaris,Two-banded sea bream,Steffani et al. (2015) Heredity 115:527-537,0,Portugal,Madeira Islands,32.709231,,,-16.517584,,,2008,9,,0.7,34,2,0.816,,geo coordinates pulled from place name
-Diplodus vulgaris,Two-banded sea bream,Steffani et al. (2015) Heredity 115:527-537,0,Portugal,Portugal South,37.08392,,,-8.29815,,,2008,9,,0.7,60,2,0.826,,geo coordinates pulled from place name
+Diplodus vulgaris,Two-banded sea bream,Steffani et al. (2015) Heredity 115:527-537,0,Portugal,Portugal South,37.069403,,,-8.301927,,,2008,9,,0.7,60,2,0.826,,geo coordinates pulled from place name
 Diplodus vulgaris,Two-banded sea bream,Steffani et al. (2015) Heredity 115:527-537,0,Italy,Malta Island,35.991052,,,14.424628,,,2007,9,,0.7,11,2,0.798,,geo coordinates pulled from place name
 Diplodus vulgaris,Two-banded sea bream,Steffani et al. (2015) Heredity 115:527-537,0,Spain,Balearic Islands,39.555655,,,2.65346,,,2007,9,,0.7,14,2,0.857,,geo coordinates pulled from place name
 Diplodus vulgaris,Two-banded sea bream,Steffani et al. (2015) Heredity 115:527-537,0,Italy,Palermo,38.200983,,,13.342867,,,2007,9,,0.7,28,2,0.885,,geo coordinates pulled from place name
@@ -1652,16 +1652,16 @@ Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0
 Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Offshore Darwin,-12.27774,,,130.602891,,,2012-2014,1,Prd049,0,16,3,0.176,,geo coordinates pulled from place name
 Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Offshore Darwin,-12.27774,,,130.602891,,,2012-2014,1,Prd036,0,16,3,0.646,,geo coordinates pulled from place name
 Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Offshore Darwin,-12.27774,,,130.602891,,,2012-2014,1,Prd024,0,16,3,0.604,,geo coordinates pulled from place name
-Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.50919,,,130.39396,,,2013-2015,1,Prd044,0,28,3,0.766,,geo coordinates pulled from place name
-Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.50919,,,130.39396,,,2013-2015,1,Prd042,0,28,3,0.724,,geo coordinates pulled from place name
-Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.50919,,,130.39396,,,2013-2015,1,Prd012,0,24,4,0.896,,geo coordinates pulled from place name
-Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.50919,,,130.39396,,,2013-2015,1,Prd046,0,28,3,0.376,,geo coordinates pulled from place name
-Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.50919,,,130.39396,,,2013-2015,1,Prd018,0,28,4,0.735,,geo coordinates pulled from place name
-Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.50919,,,130.39396,,,2013-2015,1,Prd020,0,28,3,0.75,,geo coordinates pulled from place name
-Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.50919,,,130.39396,,,2013-2015,1,Prd045,0,28,4,0.363,,geo coordinates pulled from place name
-Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.50919,,,130.39396,,,2013-2015,1,Prd049,0,28,3,0.256,,geo coordinates pulled from place name
-Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.50919,,,130.39396,,,2013-2015,1,Prd036,0,28,3,0.631,,geo coordinates pulled from place name
-Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.50919,,,130.39396,,,2013-2015,1,Prd024,0,28,3,0.388,,geo coordinates pulled from place name
+Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.579157,,,130.102822,,,2013-2015,1,Prd044,0,28,3,0.766,,geo coordinates pulled from place name
+Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.579157,,,130.102822,,,2013-2015,1,Prd042,0,28,3,0.724,,geo coordinates pulled from place name
+Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.579157,,,130.102822,,,2013-2015,1,Prd012,0,24,4,0.896,,geo coordinates pulled from place name
+Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.579157,,,130.102822,,,2013-2015,1,Prd046,0,28,3,0.376,,geo coordinates pulled from place name
+Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.579157,,,130.102822,,,2013-2015,1,Prd018,0,28,4,0.735,,geo coordinates pulled from place name
+Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.579157,,,130.102822,,,2013-2015,1,Prd020,0,28,3,0.75,,geo coordinates pulled from place name
+Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.579157,,,130.102822,,,2013-2015,1,Prd045,0,28,4,0.363,,geo coordinates pulled from place name
+Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.579157,,,130.102822,,,2013-2015,1,Prd049,0,28,3,0.256,,geo coordinates pulled from place name
+Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.579157,,,130.102822,,,2013-2015,1,Prd036,0,28,3,0.631,,geo coordinates pulled from place name
+Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Bathurst Island,-11.579157,,,130.102822,,,2013-2015,1,Prd024,0,28,3,0.388,,geo coordinates pulled from place name
 Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Melville Island,-11.777866,,,131.234806,,,2012-2015,1,Prd044,0,29,3,0.76,,geo coordinates pulled from place name
 Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Melville Island,-11.777866,,,131.234806,,,2012-2015,1,Prd023,0,29,3,0.845,,geo coordinates pulled from place name
 Protonibea diacanthus,Blackspotted croaker,Taillebois et al. (2017) 10:978-993,0,Australia,Melville Island,-11.777866,,,131.234806,,,2012-2015,1,Prd042,0,29,3,0.707,,geo coordinates pulled from place name
