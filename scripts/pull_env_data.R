@@ -40,10 +40,14 @@ chloroA <- load_layers(c("BO_chlomean", "BO_chlorange", "BO_chlomax", "BO_chlomi
 ######## Pull environmental data for each site ########
 
 #### mtdna #### 
-mtdna_env <- data.frame(X = mtdna$X, Site = mtdna$Site, 
+mtdna_env <- data.frame(X = mtdna$X, Site = mtdna$Site, lat = mtdna$lat, lon = mtdna$lon,
                         sst = extract(sst, mtdna[, c("lon", "lat")]), 
                         ox = extract(ox, mtdna[, c("lon", "lat")]), 
                         chloroA = extract(chloroA, mtdna[, c("lon", "lat")]))
+
+#check missing
+#if too close to shore, may not have data
+mtdna_missing <- subset(mtdna_env, is.na(sst.BO_sstmean)) #none, good
 
 write.csv(mtdna_env, "output/mtdna_env.csv")
 
@@ -52,5 +56,9 @@ msat_env <- data.frame(X = msat$X, Site = msat$Site,
                         sst = extract(sst, msat[, c("lon", "lat")]), 
                         ox = extract(ox, msat[, c("lon", "lat")]), 
                         chloroA = extract(chloroA, msat[, c("lon", "lat")]))
+
+#check missing
+#if too close to shore, may not have data
+msat_missing <- subset(msat_env, is.na(sst.BO_sstmean)) #none, good
 
 write.csv(msat_env, "output/msat_env.csv")
