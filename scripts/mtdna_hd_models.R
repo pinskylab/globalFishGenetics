@@ -72,7 +72,7 @@ mtdna_small_hd$abslat_scale <- as.numeric(scale(mtdna_small_hd$abslat))
 
 #convert lon to radians
 mtdna_small_hd$lon_360 <- mtdna_small_hd$lon + 180 #convert (-180,180) to (0,360)
-mtdna_small_hd$lon_rad <- (2*pi*mtdna_small_hd$lon_360)/360
+  mtdna_small_hd$lon_rad <- (2*pi*mtdna_small_hd$lon_360)/360
 
 #### Calculate environmental variables ####
 ## log transform sst data ##
@@ -174,7 +174,7 @@ plot_model(binomial_lat, type = "pred", pred.type = "re",
            terms = "lat_scale [all]")
 
 #### abslat model ####
-binomial_abslat <- glmer(cbind(success, failure) ~ bp_scale + abslat_scale + 
+binomial_abslat <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale + 
                            (1|Family/Genus/spp) + (1|Source) + (1|Site) + (1|MarkerName), 
                          family = binomial, data = mtdna_small_hd, 
                          na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
@@ -257,7 +257,7 @@ mtdna_hd_binomial_sstmean <- glmer(cbind(success, failure) ~ bp_scale + range_po
 mtdna_hd_binomial_sstmean_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_sstmean, n = 1000, plot = F)
 plotQQunif(mtdna_hd_binomial_sstmean_sim)
 plotResiduals(mtdna_hd_binomial_sstmean_sim)
-  plotResiduals(mtdna_hd_binomial_sstmean_sim, mtdna_small_hd$sstmean_scale)
+  plotResiduals(mtdna_hd_binomial_sstmean_sim, mtdna_small_hd$logsstmean)
 
 #marginal effects
 plot_model(mtdna_hd_binomial_sstmean, type = "pred", pred.type = "re",
@@ -273,7 +273,7 @@ mtdna_hd_binomial_sstrange <- glmer(cbind(success, failure) ~ bp_scale + range_p
 mtdna_hd_binomial_sstrange_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_sstrange, n = 1000, plot = F)
 plotQQunif(mtdna_hd_binomial_sstrange_sim)
 plotResiduals(mtdna_hd_binomial_sstrange_sim)
-  plotResiduals(mtdna_hd_binomial_sstrange_sim, mtdna_small_hd$sstrange_scale)
+  plotResiduals(mtdna_hd_binomial_sstrange_sim, mtdna_small_hd$logsstrange)
 
 #marginal effects
 plot_model(mtdna_hd_binomial_sstrange, type = "pred", pred.type = "re",
@@ -289,7 +289,7 @@ mtdna_hd_binomial_sstmax <- glmer(cbind(success, failure) ~ bp_scale + range_pos
 mtdna_hd_binomial_sstmax_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_sstmax, n = 1000, plot = F)
 plotQQunif(mtdna_hd_binomial_sstmax_sim)
 plotResiduals(mtdna_hd_binomial_sstmax_sim)
-  plotResiduals(mtdna_hd_binomial_sstmax_sim, mtdna_small_hd$sstmax_scale)
+  plotResiduals(mtdna_hd_binomial_sstmax_sim, mtdna_small_hd$logsstmax)
 
 #marginal effects
 plot_model(mtdna_hd_binomial_sstmean, type = "pred", pred.type = "re",
@@ -305,10 +305,10 @@ mtdna_hd_binomial_sstmin <- glmer(cbind(success, failure) ~ bp_scale + range_pos
 mtdna_hd_binomial_sstmin_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_sstmin, n = 1000, plot = F)
 plotQQunif(mtdna_hd_binomial_sstmin_sim)
 plotResiduals(mtdna_hd_binomial_sstmin_sim)
-  plotResiduals(mtdna_hd_binomial_sstmin_sim, mtdna_small_He$sstmin_scale)
+  plotResiduals(mtdna_hd_binomial_sstmin_sim, mtdna_small_He$logsstmin)
 
 #marginal effects
-plot_model(mtdna_hd_binomial_sstmean, type = "pred", pred.type = "re",
+plot_model(mtdna_hd_binomial_sstmin, type = "pred", pred.type = "re",
            terms = "logsstmin [all]")
 
 #### diss oxy mean model ####
@@ -321,7 +321,7 @@ mtdna_hd_binomial_dissox <- glmer(cbind(success, failure) ~ bp_scale + range_pos
 mtdna_hd_binomial_dissox_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_dissox, n = 1000, plot = F)
 plotQQunif(mtdna_hd_binomial_dissox_sim)
 plotResiduals(mtdna_hd_binomial_dissox_sim)
-  plotResiduals(mtdna_hd_binomial_dissox_sim, mtdna_small_hd$dissox_scale)
+  plotResiduals(mtdna_hd_binomial_dissox_sim, mtdna_small_hd$logdissox)
 
 #marginal effects
 plot_model(mtdna_hd_binomial_dissox, type = "pred", pred.type = "re",
