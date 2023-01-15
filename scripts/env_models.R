@@ -35,38 +35,19 @@ msat <- merge(msat, cp_info[, c('spp', 'Pelagic_Coastal', 'Genus', 'Family', 'No
 #subset mtdna bc are a few outliers with very high bp --- entire mtdna (mitogenome?)
 mtdna_small <-subset(mtdna, as.numeric(mtdna$bp) < 2000)
 
-##############################################################################################
-
-######## Check correlation in env variables ########
-
-#### msat ####
-
-## scatterplot of sst v. abslat ##
-msat$abslat <- abs(msat$lat)
-
-sstmean_abslat_plot <- ggplot(data = msat, aes(x = abslat, y = BO_dissox)) + 
-  geom_point(alpha = 0.5)
-sstmean_abslat_plot
-
-sstmean_abslat_r <- cor(msat$abslat, msat$BO_dissox, use = "complete.obs") #-0.935
-
-sstmean_He_plot <- ggplot(data = msat, aes(x = sst.BO_sstmean, y = He)) + geom_point(alpha = 0.5)
-sstmean_He_plot
-
 ####################################################################################################################
 
-######## Building models for mtdna Hd ########
-#following best model structure from model.R script
+######## mtDNA Hd models ########
 
-######## Cleaning mtdna Hd dataset ########
+#### Clean up dataframe ####
 #subset mtdna to remove He = NA columns
 mtdna_small_He <- subset(mtdna_small, mtdna_small$He != "NA")
 
-##### scaling bp & making sure numeric ####
+#scaling bp & making sure numeric
 mtdna_small_He$bp <- as.numeric(mtdna_small_He$bp)
-mtdna_small_He$bp_scale <- scale(as.numeric(mtdna_small_He$bp))
+  mtdna_small_He$bp_scale <- scale(as.numeric(mtdna_small_He$bp))
 
-#### calculating position in range ####
+#calculating position in range
 mtdna_small_He$Centroid <- as.numeric(mtdna_small_He$Centroid)
 mtdna_small_He$Half_RangeSize <- as.numeric(mtdna_small_He$Half_RangeSize)
 
@@ -83,213 +64,98 @@ mtdna_small_He$range_position[mtdna_small_He$range_position > 1] <- 1
 #subset to only those with range_position
 mtdna_small_He <- subset(mtdna_small_He, range_position != "NA")
 
-##### Calculating successes and failures ####
+#calculating successes and failures
 mtdna_small_He$success <- round(mtdna_small_He$He*mtdna_small_He$n)
 mtdna_small_He$failure<- round((1 - mtdna_small_He$He)*mtdna_small_He$n)
 
-######## Build null model (only includes nuisance variables) ########
-#variables to include: bp, position in spp range, (1|MarkerName), (1|Family/Genus/spp), (1|Source), (1|Site)
-#binomial model
+#### Build sst models (include sst variables) ####
+#following best model structure from model.R script
 
-##null w/rp ##
-mtdna_hd_binomial_null <- glmer(cbind(success, failure) ~ bp_scale + range_position + (1|Family/Genus/spp) + (1|Source) + 
-                         (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
+## log transform sst data ##
 
-#checking fit with DHARMa
-mtdna_hd_binomial_null_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_null, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(mtdna_hd_binomial_null_sim)
-plotResiduals(mtdna_hd_binomial_null_sim)
+##subset to only those with sst data
+mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstmean != "NA") #shouldn't remove any
 
-#against specific predictors
-plotResiduals(mtdna_hd_binomial_null_sim, mtdna_small_He$bp)
-plotResiduals(mtdna_hd_binomial_null_sim, mtdna_small_He$range_position)
-
-## null w/out rp ##
-mtdna_hd_norp_binomial_null <- glmer(cbind(success, failure) ~ bp_scale + (1|Family/Genus/spp) + (1|Source) + 
-                                  (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail")
-
-#checking fit with DHARMa
-mtdna_hd_norp_binomial_null_sim <- simulateResiduals(fittedModel = mtdna_norp_hd_binomial_null, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(mtdna_hd_norp_binomial_null_sim)
-plotResiduals(mtdna_hd_norp_binomial_null_sim)
-
-#against specific predictors
-plotResiduals(mtdna_hd_norp_binomial_null_sim, mtdna_small_He$bp)
-
-######## Build sst models (include sst variables) ########
-#variables to include: bp, position in spp range, sst predictor, (1|MarkerName), (1|Family/Genus/spp), (1|Source), (1|Site)
-#binomial model
-
-#logtransform sst data
-
-#subset to only those with sst data
-mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstmean != "NA") #should look at where these are...
-
-#### log transform sst data ####
+#log transform sst data
 mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstmean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstrange != 0)
-mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstmax != 0)
-mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstmin != 0)
+  mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstrange != 0)
+  mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstmax != 0)
+  mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$sst.BO_sstmin != 0)
 
 mtdna_small_He$logsstmean <- log10(mtdna_small_He$sst.BO_sstmean)
-mtdna_small_He$logsstrange <- log10(mtdna_small_He$sst.BO_sstrange)
-mtdna_small_He$logsstmax <- log10(mtdna_small_He$sst.BO_sstmax)
-mtdna_small_He$logsstmin <- log10(mtdna_small_He$sst.BO_sstmin)
+  mtdna_small_He$logsstrange <- log10(mtdna_small_He$sst.BO_sstrange)
+  mtdna_small_He$logsstmax <- log10(mtdna_small_He$sst.BO_sstmax)
+  mtdna_small_He$logsstmin <- log10(mtdna_small_He$sst.BO_sstmin)
 
 #remove logsst = NA columns
 mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logsstmean != "NaN")
-mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logsstrange != "NaN")
-mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logsstmax != "NaN")
-mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logsstmin != "NaN")
+  mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logsstrange != "NaN")
+  mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logsstmax != "NaN")
+  mtdna_small_He <- subset(mtdna_small_He, mtdna_small_He$logsstmin != "NaN")
 
-##### sst mean model ####
-## sst mean w/rp ##
-mtdna_hd_binomial_sstmean <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmean + (1|Family/Genus/spp) + (1|Source) + 
-                                  (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
+## sst mean model ##
+mtdna_hd_binomial_sstmean <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmean + 
+                                     (1|Family/Genus/spp) + (1|Source) + (1|Site) + (1|MarkerName), 
+                                   family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
-
-mtdna_hd_binomial_sstmean_CP <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmean + Pelagic_Coastal + 
-                                        Pelagic_Coastal:logsstmean + (1|Family/Genus/spp) + (1|Source) + 
-                                     (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
-                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
 #checking fit with DHARMa
 mtdna_hd_binomial_sstmean_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_sstmean, n = 1000, plot = F)
 plotQQunif(mtdna_hd_binomial_sstmean_sim)
 plotResiduals(mtdna_hd_binomial_sstmean_sim)
-
-#against sstmean
-plotResiduals(mtdna_hd_binomial_sstmean_sim, mtdna_small_He$sstmean_scale)
-
-#look at partial residuals
-sstmean_eff <- effect("logsstmean", residuals = TRUE, mtdna_hd_binomial_sstmean)
-plot(sstmean_eff, smooth.residuals = TRUE)
+  plotResiduals(mtdna_hd_binomial_sstmean_sim, mtdna_small_He$sstmean_scale)
 
 #marginal effects
-CP_int_eff <- plot_model(mtdna_hd_binomial_sstmean_CP, type = "pred", terms = c("logsstmean [all]", "Pelagic_Coastal"))
-sst_eff <- plot_model(mtdna_hd_binomial_sstmean_CP, type = "pred", terms = "logsstmean [all]")
+plot_model(mtdna_hd_binomial_sstmean, type = "pred", pred.type = "re",
+           terms = "logsstmean [all]")
 
-## sst mean w/out rp ##
-mtdna_hd_norp_binomial_sstmean <- glmer(cbind(success, failure) ~ bp_scale + logsstmean + (1|Family/Genus/spp) + (1|Source) + 
-                                     (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
-                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
-
-#checking fit with DHARMa
-mtdna_hd_norp_binomial_sstmean_sim <- simulateResiduals(fittedModel = mtdna_hd_norp_binomial_sstmean, n = 1000, plot = F)
-plotQQunif(mtdna_hd_norp_binomial_sstmean_sim)
-plotResiduals(mtdna_hd_norp_binomial_sstmean_sim)
-
-#against sstmean
-plotResiduals(mtdna_hd_norp_binomial_sstmean_sim, mtdna_small_He$sstmean_scale)
-
-#look at partial residuals
-sstmean_eff <- effect("logsstmean", residuals = TRUE, mtdna_hd_norp_binomial_sstmean)
-plot(sstmean_eff, smooth.residuals = TRUE)
-
-##### sst range model ####
-## sst range w/rp ##
-mtdna_hd_binomial_sstrange <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstrange + (1|Family/Genus/spp) + (1|Source) + 
-                                     (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
+## sst range model ##
+mtdna_hd_binomial_sstrange <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstrange + 
+                                      (1|Family/Genus/spp) + (1|Source) + (1|Site) + (1|MarkerName), 
+                                    family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                    control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
 #checking fit with DHARMa
 mtdna_hd_binomial_sstrange_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_sstrange, n = 1000, plot = F)
 plotQQunif(mtdna_hd_binomial_sstrange_sim)
 plotResiduals(mtdna_hd_binomial_sstrange_sim)
+  plotResiduals(mtdna_hd_binomial_sstrange_sim, mtdna_small_He$sstrange_scale)
 
-#against sstrange
-plotResiduals(mtdna_hd_binomial_sstrange_sim, mtdna_small_He$sstrange_scale)
+#marginal effects
+plot_model(mtdna_hd_binomial_sstrange, type = "pred", pred.type = "re",
+           terms = "logsstrange [all]")
 
-#look at partial residuals
-sstrange_eff <- effect("sstrange_scale", residuals = TRUE, mtdna_hd_binomial_sstrange)
-plot(sstrange_eff, smooth.residuals = TRUE)
-
-## sst range w/out rp ##
-mtdna_hd_norp_binomial_sstrange <- glmer(cbind(success, failure) ~ bp_scale + logsstrange + (1|Family/Genus/spp) + (1|Source) + 
-                                      (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
-                                    control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
-
-#checking fit with DHARMa
-mtdna_hd_norp_binomial_sstrange_sim <- simulateResiduals(fittedModel = mtdna_hd_norp_binomial_sstrange, n = 1000, plot = F)
-plotQQunif(mtdna_hd_norp_binomial_sstrange_sim)
-plotResiduals(mtdna_hd_norp_binomial_sstrange_sim)
-
-#against sstrange
-plotResiduals(mtdna_hd_norp_binomial_sstrange_sim, mtdna_small_He$sstrange_scale)
-
-#look at partial residuals
-sstrange_eff <- effect("sstrange_scale", residuals = TRUE, mtdna_hd_norp_binomial_sstrange)
-plot(sstrange_eff, smooth.residuals = TRUE)
-
-##### sst max model ####
-## sst max w/rp ##
-mtdna_hd_binomial_sstmax <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmax + (1|Family/Genus/spp) + (1|Source) + 
-                                      (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
+## sst max model ##
+mtdna_hd_binomial_sstmax <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmax + 
+                                    (1|Family/Genus/spp) + (1|Source) + (1|Site) + (1|MarkerName), 
+                                  family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                     control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
 #checking fit with DHARMa
 mtdna_hd_binomial_sstmax_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_sstmax, n = 1000, plot = F)
 plotQQunif(mtdna_hd_binomial_sstmax_sim)
 plotResiduals(mtdna_hd_binomial_sstmax_sim)
+  plotResiduals(mtdna_hd_binomial_sstmax_sim, mtdna_small_He$sstmax_scale)
 
-#against sstmean
-plotResiduals(mtdna_hd_binomial_sstmax_sim, mtdna_small_He$sstmax_scale)
+#marginal effects
+plot_model(mtdna_hd_binomial_sstmean, type = "pred", pred.type = "re",
+           terms = "logsstrange [all]")
 
-#look at partial residuals
-sstmax_eff <- effect("sstmax_scale", residuals = TRUE, mtdna_hd_binomial_sstmax)
-plot(sstmax_eff, smooth.residuals = TRUE)
-
-## sst max w/out rp ##
-mtdna_hd_norp_binomial_sstmax <- glmer(cbind(success, failure) ~ bp_scale + logsstmax + (1|Family/Genus/spp) + (1|Source) + 
-                                    (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
-                                  control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
-
-#checking fit with DHARMa
-mtdna_hd_norp_binomial_sstmax_sim <- simulateResiduals(fittedModel = mtdna_hd_norp_binomial_sstmax, n = 1000, plot = F)
-plotQQunif(mtdna_hd_norp_binomial_sstmax_sim)
-plotResiduals(mtdna_hd_norp_binomial_sstmax_sim)
-
-#against sstmean
-plotResiduals(mtdna_hd_norp_binomial_sstmax_sim, mtdna_small_He$sstmax_scale)
-
-#look at partial residuals
-sstmax_eff <- effect("sstmax_scale", residuals = TRUE, mtdna_hd_norp_binomial_sstmax)
-plot(sstmax_eff, smooth.residuals = TRUE)
-
-##### sst min model ####
-## sst min w/rp ##
-mtdna_hd_binomial_sstmin <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmin + (1|Family/Genus/spp) + (1|Source) + 
-                                      (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
+## sst min model ##
+mtdna_hd_binomial_sstmin <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmin + 
+                                    (1|Family/Genus/spp) + (1|Source) + (1|Site) + (1|MarkerName), 
+                                  family = binomial, data = mtdna_small_He, na.action = "na.fail", 
                                     control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
 #checking fit with DHARMa
 mtdna_hd_binomial_sstmin_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_sstmin, n = 1000, plot = F)
 plotQQunif(mtdna_hd_binomial_sstmin_sim)
 plotResiduals(mtdna_hd_binomial_sstmin_sim)
+  plotResiduals(mtdna_hd_binomial_sstmin_sim, mtdna_small_He$sstmin_scale)
 
-#against sstmin
-plotResiduals(mtdna_hd_binomial_sstmin_sim, mtdna_small_He$sstmin_scale)
-
-#look at partial residuals
-sstmin_eff <- effect("logsstmin", residuals = TRUE, mtdna_hd_binomial_sstmin)
-plot(sstmin_eff, smooth.residuals = TRUE)
-
-## sst min w/out rp ##
-mtdna_hd_norp_binomial_sstmin <- glmer(cbind(success, failure) ~ bp_scale + logsstmin + (1|Family/Genus/spp) + (1|Source) + 
-                                    (1|Site) + (1|MarkerName), family = binomial, data = mtdna_small_He, na.action = "na.fail", 
-                                  control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
-
-#checking fit with DHARMa
-mtdna_hd_norp_binomial_sstmin_sim <- simulateResiduals(fittedModel = mtdna_hd_norp_binomial_sstmin, n = 1000, plot = F)
-plotQQunif(mtdna_hd_norp_binomial_sstmin_sim)
-plotResiduals(mtdna_hd_norp_binomial_sstmin_sim)
-
-#against sstmin
-plotResiduals(mtdna_hd_norp_binomial_sstmin_sim, mtdna_small_He$sstmin_scale)
-
-#look at partial residuals
-sstmin_eff <- effect("logsstmin", residuals = TRUE, mtdna_hd_norp_binomial_sstmin)
-plot(sstmin_eff, smooth.residuals = TRUE)
+#marginal effects
+plot_model(mtdna_hd_binomial_sstmean, type = "pred", pred.type = "re",
+           terms = "logsstmin [all]")
 
 ######## Build oxygen models (include mean dissolved oxygen variable) ########
 #variables to include: bp, position in spp range, dissolved oxygen predictor, (1|MarkerName), (1|Family/Genus/spp), (1|Source), (1|Site)
