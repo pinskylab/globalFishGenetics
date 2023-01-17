@@ -146,7 +146,7 @@ sstmean_CP_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position +
 #### Predict ####
 
 #marginal effects
-abslat_eff <- plot_model(abslat_model_hd, type = "pred", 
+abslat_eff <- plot_model(abslat_model_hd, type = "pred", #pred.type = "re" incorporates random effects
                       terms = "abslat_scale [all]")
 
 #pull out marginal effects dataframe
