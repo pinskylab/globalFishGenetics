@@ -70,75 +70,18 @@ mtdna_small_pi$abslat <- abs(mtdna_small_pi$lat)
 
 #scale geographic variables
 mtdna_small_pi$lat_scale <- as.numeric(scale(mtdna_small_pi$lat))
-mtdna_small_pi$abslat_scale <- as.numeric(scale(mtdna_small_pi$abslat))
+  mtdna_small_pi$abslat_scale <- as.numeric(scale(mtdna_small_pi$abslat))
 
 #convert lon to radians
 mtdna_small_pi$lon_360 <- mtdna_small_pi$lon + 180 #convert (-180,180) to (0,360)
   mtdna_small_pi$lon_rad <- (2*pi*mtdna_small_pi$lon_360)/360
 
-#### Calculate environmental variables ####
-## log transform sst data ##
-#subset to only those with sst data
-#mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$sst.BO_sstmean != "NA") #shouldn't remove any
-#
-#mtdna_small_pi$logsstmean <- log10(mtdna_small_pi$sst.BO_sstmean)
-#  mtdna_small_pi$logsstrange <- log10(mtdna_small_pi$sst.BO_sstrange)
-#  mtdna_small_pi$logsstmax <- log10(mtdna_small_pi$sst.BO_sstmax)
-#  mtdna_small_pi$logsstmin <- log10(mtdna_small_pi$sst.BO_sstmin)
-#
-##remove logsst = NA columns
-#mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstmean != "NaN")
-#  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstrange != "NaN")
-#  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstmax != "NaN")
-#  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstmin != "NaN")
-#
-### log transform dissox data ##
-##subset to only those with dissox data
-#mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$BO_dissox != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-#
-#mtdna_small_pi$logdissox <- log10(mtdna_small_pi$BO_dissox)
-#
-##remove logdissox = NA columns
-#mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logdissox != "NaN")
-#
-### log transform chlorophyll A ##
-##subset to only those with chloroA data
-#mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlomean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-#  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlorange != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-#  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlomax != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-#  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlomin != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-#
-#mtdna_small_pi$logchlomean <- log10(mtdna_small_pi$sst.BO_sstmean)
-#  mtdna_small_pi$logchlorange <- log10(mtdna_small_pi$chloroA.BO_chlorange)
-#  mtdna_small_pi$logchlomax <- log10(mtdna_small_pi$chloroA.BO_chlomax)
-#  mtdna_small_pi$logchlomin <- log10(mtdna_small_pi$chloroA.BO_chlomin)
-#
-##remove logchlo = NA columns
-#mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlomean != "Inf" | 
-#                           mtdna_small_pi$logchlomean != "NaN")
-#  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlorange != "Inf" | 
-#                             mtdna_small_pi$logchlorange != "NaN")
-#  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlomax != "Inf" | 
-#                             mtdna_small_pi$logchlomax != "NaN")
-#  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlomin != "Inf" | 
-#                             mtdna_small_pi$logchlomin != "NaN")
-
-#############################################################################################################
-
-######## Build lat, abslat & lon models ########
-
-lat_model_pi <- lmer(logpi ~ lat_scale + I(lat_scale^2), data = mtdna_small_pi, 
-                     na.action = "na.fail")
-
-abslat_model_pi <- lm(logpi ~ abslat_scale, data = mtdna_small_pi, 
-                        na.action = "na.fail")
-
-lon_model_pi <- lmer(logpi ~ sin(lon_rad) + cos(lon_rad), data = mtdna_small_pi, 
-                     na.action = "na.fail")
-
 #############################################################################################################
 
 ######### Abslat figures #######
+
+abslat_model_pi <- lm(logpi ~ abslat_scale, data = mtdna_small_pi, 
+                      na.action = "na.fail")
 
 #### Predict ####
 #marginal effects
@@ -174,7 +117,6 @@ for(i in 1:nrow(mtdna_small_pi)) {
 mtdna_small_pi$abslat_round <- as.factor(mtdna_small_pi$abslat_round)
 
 ## Calculate means and SE within each 10 degree band ##
-
 mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so can use data.table functions
 
 #calculate mean in each 10 degree band
@@ -237,6 +179,9 @@ mtdna_pi_abslat_plot_annotated_both
 #############################################################################################################
 
 ######### Lat figures #######
+
+lat_model_pi <- lmer(logpi ~ lat_scale + I(lat_scale^2), data = mtdna_small_pi, 
+                     na.action = "na.fail")
 
 #### Predict ####
 #marginal effects
@@ -336,8 +281,10 @@ mtdna_pi_lat_plot_annotated_both
 
 ######## Lon figures ########
 
-#### Predict ####
+lon_model_pi <- lmer(logpi ~ sin(lon_rad) + cos(lon_rad), data = mtdna_small_pi, 
+                     na.action = "na.fail")
 
+#### Predict ####
 #marginal effects
 lon_eff <- plot_model(lon_model_pi, type = "pred", 
                          terms = "lon_rad [all]")
@@ -352,9 +299,7 @@ lon_eff_data$unlog_pi <- 10^(lon_eff_data$predicted)
   lon_eff_data$unlog_conf.high <- 10^(lon_eff_data$conf.high)
   
 #### Calculate means from raw data ####
-
 ## Round lon DOWN to nearest multiple of 10 ##
-
 #create column to fill with the rounded lon
 mtdna_small_pi$lon_round <- NA
 
@@ -368,7 +313,6 @@ for(i in 1:nrow(mtdna_small_pi)) {
 mtdna_small_pi$lon_round <- as.factor(mtdna_small_pi$lon_round)
 
 ## Calculate means and SE within each 10 degree band ##
-
 mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so can use data.table functions
 
 #calculate mean in each 10 degree band
@@ -799,7 +743,7 @@ mtdna_small_pi$chloroAmean_round <- NA
 for(i in 1:nrow(mtdna_small_pi)) {
   cat(paste(i, " ", sep = ''))
   {mtdna_small_pi$chloroAmean_round[i] <- DescTools::RoundTo(mtdna_small_pi$chloroA.BO_chlomean[i], 
-                                                        multiple = 10, FUN = floor)} #rounding DOWN
+                                                        multiple = 1, FUN = floor)} #rounding DOWN
 }
 
   mtdna_small_pi$chloroAmean_round <- as.factor(mtdna_small_pi$chloroAmean_round)
@@ -825,7 +769,7 @@ chloroAmean_pi_binned_means <- list(chloroAmean_pi_mean, chloroAmean_pi_SE, chlo
   reduce(full_join, by = "chloroAmean")
   chloroAmean_pi_binned_means$chloroAmean <- as.numeric(as.character(chloroAmean_pi_binned_means$chloroAmean))
   chloroAmean_pi_binned_means <- chloroAmean_pi_binned_means[order(chloroAmean), ]
-  chloroAmean_pi_binned_means$X <- chloroAmean_pi_binned_means$chloroAmean + 5 #for plotting, plot in MIDDLE of band
+  chloroAmean_pi_binned_means$X <- chloroAmean_pi_binned_means$chloroAmean + 0.5 #for plotting, plot in MIDDLE of band
 
 #calculate error bars (standard error)
 chloroAmean_pi_binned_means$mean_lowerSE <- chloroAmean_pi_binned_means$pi_mean - 
@@ -895,7 +839,7 @@ mtdna_small_pi$chloroArange_round <- NA
 for(i in 1:nrow(mtdna_small_pi)) {
   cat(paste(i, " ", sep = ''))
   {mtdna_small_pi$chloroArange_round[i] <- DescTools::RoundTo(mtdna_small_pi$chloroA.BO_chlorange[i], 
-                                                             multiple = 10, FUN = floor)} #rounding DOWN
+                                                             multiple = 1, FUN = floor)} #rounding DOWN
 }
 
   mtdna_small_pi$chloroArange_round <- as.factor(mtdna_small_pi$chloroArange_round)
@@ -921,7 +865,7 @@ chloroArange_pi_binned_means <- list(chloroArange_pi_mean, chloroArange_pi_SE, c
   reduce(full_join, by = "chloroArange")
   chloroArange_pi_binned_means$chloroArange <- as.numeric(as.character(chloroArange_pi_binned_means$chloroArange))
   chloroArange_pi_binned_means <- chloroArange_pi_binned_means[order(chloroArange), ]
-  chloroArange_pi_binned_means$X <- chloroArange_pi_binned_means$chloroArange + 5 #for plotting, plot in MIDDLE of band
+  chloroArange_pi_binned_means$X <- chloroArange_pi_binned_means$chloroArange + 0.5 #for plotting, plot in MIDDLE of band
 
 #calculate error bars (standard error)
 chloroArange_pi_binned_means$mean_lowerSE <- chloroArange_pi_binned_means$pi_mean - 
