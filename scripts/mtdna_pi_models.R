@@ -123,8 +123,8 @@ mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlomin != "Inf" |
 #no bp or range_position, models with those perform worse and they aren't significant predictors
 #spp not nested here bc get singular boundary fit otherwise
 
-null_model_pi <- lmer(logpi ~  (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
-                        (1|Site), REML = FALSE, data = mtdna_small_pi, 
+null_model_pi <- lmer(logpi ~  (1|Family/Genus) + (1|Source) + (1|MarkerName), 
+                      REML = FALSE, data = mtdna_small_pi, 
                       na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood
 
 #pull p-values
@@ -143,7 +143,7 @@ testDispersion(null_model_pi_sim_output)
 ######## Latitude & longitude models ########
 
 #### lat model ####
-lat_model_pi <- lmer(logpi ~ lat_scale + I(lat_scale^2) + (1|Family/Genus) + (1|Site) +  
+lat_model_pi <- lmer(logpi ~ lat_scale + I(lat_scale^2) + (1|Family/Genus) +   
                        (1|Source) + (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
                      na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
@@ -162,8 +162,8 @@ plot_model(lat_model_pi, type = "pred", pred.type = "re",
            terms = "lat_scale [all]")
 
 #### abslat model ####
-abslat_model_pi <- lmer(logpi ~ abslat_scale + (1|Family/Genus) + 
-                          (1|Source) + (1|MarkerName) + (1|Site), REML = FALSE, data = mtdna_small_pi, 
+abslat_model_pi <- lmer(logpi ~ abslat + (1|Family/Genus) + 
+                          (1|Source) + (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
                         na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
 #pull p-values
@@ -178,11 +178,11 @@ plotResiduals(abslat_model_pi_sim_output)
 
 #marginal effects
 plot_model(abslat_model_pi, type = "pred", pred.type = "re",
-           terms = "abslat_scale [all]")
+           terms = "abslat [all]")
 
 #### lon model ####
 lon_model_pi <- lmer(logpi ~ sin(lon_rad) + cos(lon_rad) + (1|Family/Genus) + (1|Source) + 
-                       (1|MarkerName) + (1|Site), REML = FALSE, data = mtdna_small_pi, 
+                       (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
                      na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
 #pull p-values
@@ -201,7 +201,7 @@ plot_model(lon_model_pi, type = "pred", pred.type = "re",
 
 #### lat & lon model ####
 lat_lon_model_pi <- lmer(logpi ~ lat_scale + I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + 
-                           (1|Family/Genus) + (1|Source) + (1|MarkerName) + (1|Site), 
+                           (1|Family/Genus) + (1|Source) + (1|MarkerName), 
                          REML = FALSE, data = mtdna_small_pi, na.action = "na.fail", 
                          control = lmerControl(optimizer = "bobyqa"))
 
@@ -225,7 +225,7 @@ plot_model(lat_lon_model_pi, type = "pred", pred.type = "re",
 
 #### abslat & lon model ####
 abslat_lon_model_pi <- lmer(logpi ~ abslat_scale + sin(lon_rad) + cos(lon_rad) + 
-                              (1|Family/Genus) + (1|Source) + (1|MarkerName) + (1|Site), REML = FALSE, 
+                              (1|Family/Genus) + (1|Source) + (1|MarkerName), REML = FALSE, 
                             data = mtdna_small_pi, na.action = "na.fail", 
                             control = lmerControl(optimizer = "bobyqa"))
 
@@ -252,8 +252,7 @@ plot_model(abslat_lon_model_pi, type = "pred", pred.type = "re",
 ######## Environmental models ########
 
 #### sst mean model ####
-mtdna_pi_linear_sstmean <- lmer(logpi ~ logsstmean + (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
-                                  (1|Site), REML = FALSE, data = mtdna_small_pi, 
+mtdna_pi_linear_sstmean <- lmer(logpi ~ logsstmean + (1|Family/Genus) + (1|Source) + (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
                                 na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
 #pull p-values
@@ -273,8 +272,7 @@ plot_model(mtdna_pi_linear_sstmean, type = "pred", pred.type = "re",
 
 #### sst range model ####
 mtdna_pi_linear_sstrange <- lmer(logpi ~ logsstrange + (1|Family/Genus) + 
-                                   (1|Source) + (1|MarkerName) + 
-                                   (1|Site), REML = FALSE, data = mtdna_small_pi, 
+                                   (1|Source) + (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
                                  na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
 #pull p-values
@@ -293,8 +291,7 @@ plot_model(mtdna_pi_linear_sstrange, type = "pred", pred.type = "re",
            terms = "logsstrange [all]")
 
 #### sst max model ####
-mtdna_pi_linear_sstmax <- lmer(logpi ~ logsstmax + (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
-                                 (1|Site), REML = FALSE, data = mtdna_small_pi, 
+mtdna_pi_linear_sstmax <- lmer(logpi ~ logsstmax + (1|Family/Genus) + (1|Source) + (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
                                na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
 #pull p-values
@@ -313,8 +310,7 @@ plot_model(mtdna_pi_linear_sstmax, type = "pred", pred.type = "re",
            terms = "logsstmax [all]")
 
 #### sst min model ####
-mtdna_pi_linear_sstmin <- lmer(logpi ~ logsstmin + (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
-                                 (1|Site), REML = FALSE, data = mtdna_small_pi, 
+mtdna_pi_linear_sstmin <- lmer(logpi ~ logsstmin + (1|Family/Genus) + (1|Source) + (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
                                na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
 #pull p-values
@@ -333,8 +329,7 @@ plot_model(mtdna_pi_linear_sstmin, type = "pred", pred.type = "re",
            terms = "logsstmin [all]")
 
 #### diss oxy mean model ####
-mtdna_pi_linear_dissox <- lmer(logpi ~ logdissox + (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
-                                 (1|Site), REML = FALSE, data = mtdna_small_pi, 
+mtdna_pi_linear_dissox <- lmer(logpi ~ logdissox + (1|Family/Genus) + (1|Source) + (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
                                na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
 #pull p-values
@@ -354,8 +349,8 @@ plot_model(mtdna_pi_linear_dissox, type = "pred", pred.type = "re",
 
 #### chloroA mean model ####
 mtdna_pi_linear_chloromean <- lmer(logpi ~ logchlomean + I(logchlomean^2) + (1|Family/Genus) + 
-                                     (1|Source) + (1|MarkerName) + 
-                                     (1|Site), REML = FALSE, data = mtdna_small_pi, 
+                                     (1|Source) + (1|MarkerName), 
+                                   REML = FALSE, data = mtdna_small_pi, 
                                    na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
 
 #pull p-values
@@ -375,7 +370,7 @@ plot_model(mtdna_pi_linear_chloromean, type = "pred", pred.type = "re",
 
 #### chloroA range model ####
 mtdna_pi_linear_chlororange <- lmer(logpi ~ logchlorange + I(logchlorange^2) + (1|Family/Genus) + 
-                                      (1|Source) + (1|MarkerName) + (1|Site), REML = FALSE, 
+                                      (1|Source) + (1|MarkerName), REML = FALSE, 
                                     data = mtdna_small_pi, na.action = "na.fail", 
                                     control = lmerControl(optimizer = "bobyqa"))
 
@@ -397,7 +392,7 @@ plot_model(mtdna_pi_linear_chlororange, type = "pred", pred.type = "re",
 
 #### chloroA max model ####
 mtdna_pi_linear_chloromax <- lmer(logpi ~  logchlomax + I(logchlomax^2) + (1|Family/Genus) + 
-                                    (1|Source) + (1|MarkerName) + (1|Site), REML = FALSE, 
+                                    (1|Source) + (1|MarkerName), REML = FALSE, 
                                   data = mtdna_small_pi, na.action = "na.fail", 
                                   control = lmerControl(optimizer = "bobyqa"))
 
@@ -418,7 +413,7 @@ plot_model(mtdna_pi_linear_chloromax, type = "pred", pred.type = "re",
 
 #### chloroA min model ####
 mtdna_pi_linear_chloromin <- lmer(logpi ~  logchlomin + I(logchlomin^2) + (1|Family/Genus) + (1|Source) + 
-                                    (1|MarkerName) + (1|Site), REML = FALSE, data = mtdna_small_pi, 
+                                    (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
                                   na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
 #pull p-values
