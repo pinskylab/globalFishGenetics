@@ -1641,7 +1641,7 @@ for(i in 1:nrow(spps2)){ #get code that specifies exact species on FB
 summary(spps2) #no NAs in SpecCode
 
 #check numbers of locations and species
-dim(latlon) #3017 locations
+dim(latlon) #2996 locations
 dim(spps2) #343 species
 
 #write out lat long and species data

@@ -1401,7 +1401,7 @@ spps2 <- rbind(spps2, branchy_b, branchy_j)
 spps2 <- spps2[order(spps2$spp), ] #re-order alphabetically
 
 #check numbers of locations and species
-dim(latlon) #1667 locations
+dim(latlon) #1660 locations
 dim(spps2) #262 species
 
 #write out lat long and species data
