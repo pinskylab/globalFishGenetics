@@ -125,8 +125,8 @@ mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logchlomean != "Inf" |
 
 ######## Null model ########
 
-binomial_null <- glmer(cbind(success, failure) ~ bp_scale + range_position + (1|Family/Genus/spp) + (1|Source) + 
-                         (1|Site) + (1|MarkerName), family = binomial, 
+binomial_null <- glmer(cbind(success, failure) ~ bp_scale + range_position + (1|Family/Genus/spp) + (1|Source) 
+                       + (1|MarkerName), family = binomial, 
                        data = mtdna_small_hd, na.action = "na.fail", 
                        control = glmerControl(optimizer = "bobyqa"))
 
@@ -159,7 +159,7 @@ plot_model(binomial_null, type = "pred", pred.type = "re",
 
 #### lat model ####
 binomial_lat <- glmer(cbind(success, failure) ~ bp_scale + range_position + lat_scale + 
-                        I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|Site) + (1|MarkerName), 
+                        I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
                       family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
                       control = glmerControl(optimizer = "bobyqa"))
 
@@ -175,7 +175,7 @@ plot_model(binomial_lat, type = "pred", pred.type = "re",
 
 #### abslat model ####
 binomial_abslat <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale + 
-                           (1|Family/Genus/spp) + (1|Source) + (1|Site) + (1|MarkerName), 
+                           (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
                          family = binomial, data = mtdna_small_hd, 
                          na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
 
@@ -190,7 +190,7 @@ plot_model(binomial_abslat, type = "pred", pred.type = "re",
 
 #### lon model ####
 binomial_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + sin(lon_rad) + cos(lon_rad) + 
-                        (1|Family/Genus/spp) + (1|Source) + (1|Site) + (1|MarkerName), 
+                        (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
                       family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
                       control = glmerControl(optimizer = "bobyqa"))
 
@@ -206,7 +206,7 @@ plot_model(binomial_lon, type = "pred", pred.type = "re",
 #### lat & lon model ####
 binomial_lat_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + lat_scale + 
                             I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + 
-                            (1|Source) + (1|Site) + (1|MarkerName), family = binomial, 
+                            (1|Source) + (1|MarkerName), family = binomial, 
                           data = mtdna_small_hd, na.action = "na.fail", 
                           control = glmerControl(optimizer = "bobyqa"))
 
@@ -224,9 +224,9 @@ plot_model(binomial_lat_lon, type = "pred", pred.type = "re",
            terms = "lon_rad [all]")
 
 #### abslat & lon model ###
-binomial_abslat_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale + 
+binomial_abslat_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale +
                                sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + 
-                               (1|Source) + (1|Site) + (1|MarkerName), family = binomial, 
+                               (1|Source) + (1|MarkerName), family = binomial, 
                              data = mtdna_small_hd, na.action = "na.fail", 
                              control = glmerControl(optimizer = "bobyqa"))
 
@@ -249,7 +249,7 @@ plot_model(binomial_abslat_lon, type = "pred", pred.type = "re",
 
 #### sst mean model ####
 mtdna_hd_binomial_sstmean <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmean + 
-                                     (1|Family/Genus/spp) + (1|Source) + (1|Site) + (1|MarkerName), 
+                                     (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
                                    family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
                                    control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -265,7 +265,7 @@ plot_model(mtdna_hd_binomial_sstmean, type = "pred", pred.type = "re",
 
 #### sst range model ####
 mtdna_hd_binomial_sstrange <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstrange + 
-                                      (1|Family/Genus/spp) + (1|Source) + (1|Site) + (1|MarkerName), 
+                                      (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
                                     family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
                                     control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -281,7 +281,7 @@ plot_model(mtdna_hd_binomial_sstrange, type = "pred", pred.type = "re",
 
 #### sst max model ####
 mtdna_hd_binomial_sstmax <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmax + 
-                                    (1|Family/Genus/spp) + (1|Source) + (1|Site) + (1|MarkerName), 
+                                    (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
                                   family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -297,7 +297,7 @@ plot_model(mtdna_hd_binomial_sstmean, type = "pred", pred.type = "re",
 
 #### sst min model ####
 mtdna_hd_binomial_sstmin <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmin + 
-                                    (1|Family/Genus/spp) + (1|Source) + (1|Site) + (1|MarkerName), 
+                                    (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
                                   family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -313,7 +313,7 @@ plot_model(mtdna_hd_binomial_sstmin, type = "pred", pred.type = "re",
 
 #### diss oxy mean model ####
 mtdna_hd_binomial_dissox <- glmer(cbind(success, failure) ~ bp_scale + range_position + logdissox + 
-                                    (1|Family/Genus/spp) + (1|Source) + (1|Site) + (1|MarkerName), 
+                                    (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
                                   family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -330,7 +330,7 @@ plot_model(mtdna_hd_binomial_dissox, type = "pred", pred.type = "re",
 #### chloroA mean model ####
 mtdna_hd_binomial_chloromean <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomean + 
                                         I(logchlomean^2) + (1|Family/Genus/spp) + (1|Source) + 
-                                        (1|Site) + (1|MarkerName), family = binomial, 
+                                        (1|MarkerName), family = binomial, 
                                       data = mtdna_small_hd, na.action = "na.fail", 
                                       control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -347,7 +347,7 @@ plot_model(mtdna_hd_binomial_chloromean, type = "pred", pred.type = "re",
 ##### chloroA range model ####
 mtdna_hd_binomial_chlororange <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlorange + 
                                          I(logchlorange^2) + (1|Family/Genus/spp) + (1|Source) + 
-                                         (1|Site) + (1|MarkerName), family = binomial, 
+                                         (1|MarkerName), family = binomial, 
                                        data = mtdna_small_hd, na.action = "na.fail", 
                                        control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -364,7 +364,7 @@ plot_model(mtdna_hd_binomial_chlororange, type = "pred", pred.type = "re",
 #### chloroA max model ####
 mtdna_hd_binomial_chloromax <- glmer(cbind(success, failure) ~ bp_scale + logchlomax + I(logchlomax^2) + 
                                        range_position + (1|Family/Genus/spp) + (1|Source) + 
-                                       (1|Site) + (1|MarkerName), family = binomial, 
+                                       (1|MarkerName), family = binomial, 
                                      data = mtdna_small_hd, na.action = "na.fail", 
                                      control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
@@ -381,7 +381,7 @@ plot_model(mtdna_hd_binomial_chloromax, type = "pred", pred.type = "re",
 #### chloroA min model ####
 mtdna_hd_binomial_chloromin <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomin + 
                                        I(logchlomin^2) + (1|Family/Genus/spp) + (1|Source) + 
-                                       (1|Site) + (1|MarkerName), family = binomial, 
+                                       (1|MarkerName), family = binomial, 
                                      data = mtdna_small_hd, na.action = "na.fail", 
                                      control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
 
