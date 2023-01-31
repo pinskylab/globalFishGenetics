@@ -83,7 +83,7 @@ mtdna_small_hd$lon_rad <- (2*pi*mtdna_small_hd$lon_360)/360
 
 ######### Abslat figures #######
 
-abslat_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position + abslat_scale + I(abslat_scale^2), 
+abslat_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position + abslat_scale, 
                       family = binomial, data = mtdna_small_hd, na.action = "na.fail")
 
 #### Predict ####
@@ -162,7 +162,7 @@ mtdna_hd_abslat_plot_both <- ggplot() +
   scale_color_manual(values = colors) + 
   scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
                         range = c(10, 20))
-mtdna_hd_abslat_plot_annotated_both <- mtdna_hd_abslat_plot_both + theme_bw() + coord_flip() + 
+mtdna_hd_abslat_plot_annotated_both <- mtdna_hd_abslat_plot_both + theme_bw() + #coord_flip() + 
   theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
         axis.ticks = element_line(color = "black", size = 1), 
         axis.text = element_text(size = 100, color = "black"), 
