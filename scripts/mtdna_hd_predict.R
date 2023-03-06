@@ -18,6 +18,7 @@ library(lme4)
 library(data.table)
 library(DescTools)
 library(sjPlot)
+library(splines)
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
@@ -83,8 +84,10 @@ mtdna_small_hd$lon_rad <- (2*pi*mtdna_small_hd$lon_360)/360
 
 ######### Abslat figures #######
 
-abslat_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position + abslat_scale, 
-                      family = binomial, data = mtdna_small_hd, na.action = "na.fail")
+abslat_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale + 
+                           (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
+                         family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
+                         control = glmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
@@ -118,67 +121,65 @@ for(i in 1:nrow(mtdna_small_hd)) {
 mtdna_small_hd <- data.table(mtdna_small_hd) #make data.table so can use data.table functions
 
 #calculate mean in each 10 degree band
-abslat_hd_mean <- mtdna_small_hd[, mean(He), by = abslat_round]
-  colnames(abslat_hd_mean) <- c("abslat", "hd_mean")
-
-#calculate SE in each 10 degree band
-abslat_hd_SE <- mtdna_small_hd[, std.error(He), by = abslat_round]
-  colnames(abslat_hd_SE) <- c("abslat", "hd_SE")
-
-#count observations in each 10 degree band
-abslat_hd_count <- mtdna_small_hd[, .N, by = abslat_round]
-  colnames(abslat_hd_count) <- c("abslat", "hd_count")
-
-#merge mean and SE dataframes together
-abslat_hd_binned_means <- list(abslat_hd_mean, abslat_hd_SE, abslat_hd_count) %>% 
-  reduce(full_join, by = "abslat")
-  abslat_hd_binned_means$abslat <- as.numeric(as.character(abslat_hd_binned_means$abslat))
-  abslat_hd_binned_means <- abslat_hd_binned_means[order(abslat), ]
-  abslat_hd_binned_means$X <- abslat_hd_binned_means$abslat + 5 #for plotting, plot in MIDDLE of 10 degree band
-
-#calculate error bars (standard error)
-abslat_hd_binned_means$mean_lowerSE <- abslat_hd_binned_means$hd_mean - 
-  abslat_hd_binned_means$hd_SE
-abslat_hd_binned_means$mean_upperSE <- abslat_hd_binned_means$hd_mean + 
-  abslat_hd_binned_means$hd_SE
+abslat_hd_median <- mtdna_small_hd[, median(He), by = abslat_round]
+  colnames(abslat_hd_median) <- c("abslat", "hd_median")
+  abslat_hd_median$abslat <- as.numeric(as.character(abslat_hd_median$abslat))
 
 #### Plot abslat ####
-#for legend
-colors <- c("10-degree binned means" = "#3F6DAA", "Regression" = "black")
 
-#plot
-mtdna_hd_abslat_plot_both <- ggplot() + 
-  geom_line(data = abslat_eff_data, 
-            aes(x = abslat, y = predicted, color = "Regression"), size = 6) + 
-  geom_ribbon(data = abslat_eff_data, 
-             aes(x = abslat, ymin = conf.low, ymax = conf.high, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = abslat_hd_binned_means, 
-             aes(x = X, y = hd_mean, color = "10-degree binned means", size = hd_count), shape = "square") + 
-  geom_errorbar(data = abslat_hd_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "10-degree binned means"), width = 1.75, size = 3) + 
-  xlab("absolute latitude") + ylab("mtdna Hd") + labs(color = "Legend") + 
-  scale_y_continuous(limits = c(0, 1.0)) + 
-  scale_color_manual(values = colors) + 
-  scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
-                        range = c(10, 20))
-mtdna_hd_abslat_plot_annotated_both <- mtdna_hd_abslat_plot_both + theme_bw() + #coord_flip() + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
-        axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 100, color = "black"), 
-        axis.line = element_line(size = 2, color = "black"),
-        legend.position = "top", legend.box = "vertical", 
-        legend.text = element_text(size = 100), 
-        legend.key.size = unit(3, "cm"),
-        legend.title = element_blank())
-mtdna_hd_abslat_plot_annotated_both
+#just geom_point
+mtdna_hd_abslat_plot_point <- ggplot() +
+  geom_jitter(data = mtdna_small_hd, aes(x = as.numeric(as.character(abslat_round)) + 5, y = He), 
+              fill = "#3F6DAA", color = "#3F6DAA", size = 8)+
+  geom_line(data = abslat_eff_data,
+            aes(x = abslat, y = predicted), color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = abslat_eff_data,
+              aes(x = abslat, ymin = conf.low, ymax = conf.high), color ="black", alpha = 0.1)+
+  scale_y_continuous(limits = c(0, 1))+
+  scale_x_continuous(breaks = c(5, 15, 25, 35, 45, 55, 65, 75))+
+  xlab("absolute latitude") + ylab("mtdna Hd") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title = element_text(size = 120),
+        axis.ticks = element_line(color = "black", size = 1),
+        axis.text = element_text(size = 120, color = "black"),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        legend.position = "none")
+mtdna_hd_abslat_plot_point
+  
+#violin plot, with or without boxplot within
+mtdna_small_hd$abslat_round_char <- as.factor(mtdna_small_hd$abslat_round)
+
+mtdna_hd_abslat_plot_violin <- ggplot() +
+  geom_violin(data= mtdna_small_hd, aes(x = abslat_round_char, y = He), 
+              fill = "#3F6DAA", color = "#3F6DAA") + #factor, plotted as 0-8 numerically
+  #geom_boxplot(data= mtdna_small_hd, aes(x = abslat_round_char, y = He), width = 0.2) +
+  geom_point(data = abslat_hd_median, aes(x = (abslat + 10)/10, y = hd_median), 
+             color = "darkblue", size = 24) + #to put on same scale as factors, divide by 10, adding 10 because 0 actually = factor of 1 (matches 0-10 round group) 
+  geom_line(data = abslat_eff_data,
+            aes(x = (abslat + 5)/10, y = predicted), col = "black", alpha = 0.3, linewidth = 10) + #dividing by 10 to put on same factor scale, have to add 5 because violin plots are midpoint of 10 degree bands
+  geom_ribbon(data = abslat_eff_data,
+              aes(x = (abslat + 5)/10, ymin = conf.low, ymax = conf.high), col = "black", alpha = 0.1)+
+  scale_x_discrete(labels = c(5, 15, 25, 35, 45, 55, 65, 75)) +
+  scale_y_continuous(limits = c(0, 1)) +
+  xlab("absolute latitude") + ylab("mtdna Hd") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title = element_text(size = 120),
+        axis.ticks = element_line(color = "black", size = 1),
+        axis.text = element_text(size = 120, color = "black"),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        legend.position = "none")
+mtdna_hd_abslat_plot_violin
 
 #############################################################################################################
 
 ######### Lat figures #######
 
-lat_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position + lat_scale + I(lat_scale^2), 
-                       family = binomial, data = mtdna_small_hd, na.action = "na.fail")
+lat_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + lat_scale + I(lat_scale^2) +
+                           (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
+                         family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
+                         control = glmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
@@ -212,72 +213,75 @@ for(i in 1:nrow(mtdna_small_hd)) {
 mtdna_small_hd <- data.table(mtdna_small_hd) #make data.table so can use data.table functions
 
 #calculate mean in each 10 degree band
-lat_hd_mean <- mtdna_small_hd[, mean(He), by = lat_round]
-colnames(lat_hd_mean) <- c("lat", "hd_mean")
-
-#calculate SE in each 10 degree band
-lat_hd_SE <- mtdna_small_hd[, std.error(He), by = lat_round]
-colnames(lat_hd_SE) <- c("lat", "hd_SE")
-
-#count observations in each 10 degree band
-lat_hd_count <- mtdna_small_hd[, .N, by = lat_round]
-colnames(lat_hd_count) <- c("lat", "hd_count")
-
-#merge mean and SE dataframes together
-lat_hd_binned_means <- list(lat_hd_mean, lat_hd_SE, lat_hd_count) %>% 
-  reduce(full_join, by = "lat")
-lat_hd_binned_means$lat <- as.numeric(as.character(lat_hd_binned_means$lat))
-lat_hd_binned_means <- lat_hd_binned_means[order(lat), ]
-lat_hd_binned_means$X <- lat_hd_binned_means$lat + 5 #for plotting, plot in MIDDLE of 10 degree band
-
-#calculate error bars (standard error)
-lat_hd_binned_means$mean_lowerSE <- lat_hd_binned_means$hd_mean - 
-  lat_hd_binned_means$hd_SE
-lat_hd_binned_means$mean_upperSE <- lat_hd_binned_means$hd_mean + 
-  lat_hd_binned_means$hd_SE
+lat_hd_median <- mtdna_small_hd[, median(He), by = lat_round]
+  colnames(lat_hd_median) <- c("lat", "hd_median")
+  lat_hd_median$lat <- as.numeric(as.character(lat_hd_median$lat))
 
 #### Plot lat ####
-#for legend
-colors <- c("10-degree binned means" = "#3F6DAA", "Regression" = "black")
 
-#plot
-mtdna_hd_lat_plot_both <- ggplot() + 
-  geom_line(data = lat_eff_data, 
-            aes(x = lat, y = predicted, color = "Regression"), size = 6) + 
-  geom_ribbon(data = lat_eff_data, 
-              aes(x = lat, ymin = conf.low, ymax = conf.high, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = lat_hd_binned_means, 
-             aes(x = X, y = hd_mean, color = "10-degree binned means", size = hd_count), shape = "square") + 
-  geom_errorbar(data = lat_hd_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "10-degree binned means"), width = 1.75, size = 3) + 
-  xlab("latitude") + ylab("mtdna Hd") + labs(color = "Legend") + 
-  scale_y_continuous(limits = c(0, 1.0)) + 
-  scale_color_manual(values = colors) + 
-  scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
-                        range = c(10, 20))
-mtdna_hd_lat_plot_annotated_both <- mtdna_hd_lat_plot_both + theme_bw() + #coord_flip() + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
-        axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 100, color = "black"), 
-        axis.line = element_line(size = 2, color = "black"),
-        legend.position = "top", legend.box = "vertical", 
-        legend.text = element_text(size = 100), 
-        legend.key.size = unit(3, "cm"),
-        legend.title = element_blank())
-mtdna_hd_lat_plot_annotated_both
+#just geom_point
+mtdna_hd_lat_plot_point <- ggplot() +
+  geom_jitter(data = mtdna_small_hd, aes(x = as.numeric(as.character(lat_round)) + 5, y = He), 
+              fill = "#3F6DAA", color = "#3F6DAA", size = 8)+
+  geom_line(data = lat_eff_data,
+            aes(x = lat, y = predicted), color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = lat_eff_data,
+              aes(x = lat, ymin = conf.low, ymax = conf.high), color ="black", alpha = 0.1)+
+  scale_y_continuous(limits = c(0, 1))+
+  scale_x_continuous(breaks = c(-75, -65, -55, -45, -35, -25, -15, -5, 5, 15, 25, 35, 45, 55, 65, 75))+
+  xlab("latitude") + ylab("mtdna Hd") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title = element_text(size = 120),
+        axis.ticks = element_line(color = "black", size = 1),
+        axis.text = element_text(size = 120, color = "black"),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        legend.position = "none")
+mtdna_hd_lat_plot_point
+
+#violin plot, with or without boxplot within
+mtdna_small_hd$lat_round_char <- as.factor(mtdna_small_hd$lat_round)
+
+mtdna_hd_lat_plot_violin <- ggplot() +
+  geom_violin(data= mtdna_small_hd, aes(x = lat_round_char, y = He), 
+              fill = "#3F6DAA", color = "#3F6DAA") + #factor, plotted as 0-8 numerically
+  #geom_boxplot(data= mtdna_small_hd, aes(x = lat_round_char, y = He), width = 0.2) +
+  geom_point(data = lat_hd_median, aes(x = (lat + 90)/10, y = hd_median), 
+             color = "darkblue", size = 24) + #to put on same scale as factors, divide by 10, adding 90 because -80 actually = factor of 1 (matches -80 - -70 round group) 
+  geom_line(data = lat_eff_data,
+            aes(x = (lat + 85)/10, y = predicted), col = "black", alpha = 0.3, linewidth = 10) + #dividing by 10 to put on same factor scale, have to add 85 because violin plots are midpoint of 10 degree bands
+  geom_ribbon(data = lat_eff_data,
+              aes(x = (lat + 85)/10, ymin = conf.low, ymax = conf.high), col = "black", alpha = 0.1)+
+  scale_x_discrete(labels = c(-75, -65, -55, -45, -35, -25, -15, -5, 5, 15, 25, 35, 45, 55, 65, 75)) +
+  scale_y_continuous(limits = c(0, 1)) +
+  xlab("latitude") + ylab("mtdna Hd") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title = element_text(size = 120),
+        axis.ticks = element_line(color = "black", size = 1),
+        axis.text = element_text(size = 120, color = "black"),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        legend.position = "none")
+mtdna_hd_lat_plot_violin
 
 #############################################################################################################
 
 ######### Lon figures #######
 
-lon_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position + sin(lon_rad) + cos(lon_rad), 
-                    family = binomial, data = mtdna_small_hd, na.action = "na.fail")
+lon_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + sin(lon_rad) + cos(lon_rad) +
+                        (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
+                      family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
+                      control = glmerControl(optimizer = "bobyqa"))
+
+lon_model_hd_spline <- glmer(cbind(success, failure) ~ bp_scale + range_position + ns(lon) + 
+                          (1|Family/Genus/spp) + (1|Source) + (1|MarkerName),
+                        family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
+                        control = glmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
-lon_eff <- plot_model(lon_model_hd, type = "pred",
-                      terms = "lon_rad [all]")
+lon_eff <- plot_model(lon_model_test, type = "pred",
+                      terms = "lon [all]")
 
 #pull out marginal effects dataframe
 lon_eff_data <- as.data.frame(lon_eff$data)
@@ -301,60 +305,63 @@ for(i in 1:nrow(mtdna_small_hd)) {
 mtdna_small_hd <- data.table(mtdna_small_hd) #make data.table so can use data.table functions
 
 #calculate mean in each 10 degree band
-lon_hd_mean <- mtdna_small_hd[, mean(He), by = lon_round]
-  colnames(lon_hd_mean) <- c("lon", "hd_mean")
-
-#calculate SE in each 10 degree band
-lon_hd_SE <- mtdna_small_hd[, std.error(He), by = lon_round]
-  colnames(lon_hd_SE) <- c("lon", "hd_SE")
-
-#count observations in each 10 degree band
-lon_hd_count <- mtdna_small_hd[, .N, by = lon_round]
-  colnames(lon_hd_count) <- c("lon", "hd_count")
-
-#merge mean and SE dataframes together
-lon_hd_binned_means <- list(lon_hd_mean, lon_hd_SE, lon_hd_count) %>% 
-  reduce(full_join, by = "lon")
-lon_hd_binned_means$lon <- as.numeric(as.character(lon_hd_binned_means$lon))
-  lon_hd_binned_means <- lon_hd_binned_means[order(lon), ]
-  lon_hd_binned_means$X <- lon_hd_binned_means$lon + 5 #for plotting, plot in MIDDLE of 10 degree band
-
-#calculate error bars (standard error)
-lon_hd_binned_means$mean_lowerSE <- lon_hd_binned_means$hd_mean - 
-  lon_hd_binned_means$hd_SE
-lon_hd_binned_means$mean_upperSE <- lon_hd_binned_means$hd_mean + 
-  lon_hd_binned_means$hd_SE
+lon_hd_median <- mtdna_small_hd[, median(He), by = lon_round]
+  colnames(lon_hd_median) <- c("lon", "hd_median")
+  lon_hd_median$lon <- as.numeric(as.character(lon_hd_median$lon))
+  lon_hd_median <- lon_hd_median[order(lon)]
 
 #### Plot lon ####
-#for legend
-colors <- c("10-degree binned means" = "#3F6DAA", "Regression" = "black")
 
-#plot
-mtdna_hd_lon_plot_both <- ggplot() + 
-  geom_line(data = lon_eff_data, 
-            aes(x = lon, y = predicted, color = "Regression"), size = 6) + 
-  geom_ribbon(data = lon_eff_data, 
-              aes(x = lon, ymin = conf.low, ymax = conf.high, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = lon_hd_binned_means, 
-             aes(x = X, y = hd_mean, color = "10-degree binned means", size = hd_count), shape = "square") + 
-  geom_errorbar(data = lon_hd_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "10-degree binned means"), width = 1.75, size = 3) + 
-  xlab("longitude") + ylab("mtdna Hd") + labs(color = "Legend") + 
-  scale_y_continuous(limits = c(0, 1.0)) + 
-  scale_color_manual(values = colors) + 
-  scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
-                        range = c(10, 20))
-mtdna_hd_lon_plot_annotated_both <- mtdna_hd_lon_plot_both + theme_bw() + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
-        axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 100, color = "black"), 
-        axis.line = element_line(size = 2, color = "black"),
-        legend.position = "top", legend.box = "vertical", 
-        legend.text = element_text(size = 100), 
-        legend.key.size = unit(3, "cm"),
-        legend.title = element_blank())
-mtdna_hd_lon_plot_annotated_both
+#just geom_point
+mtdna_hd_lon_plot_point <- ggplot() +
+  geom_jitter(data = mtdna_small_hd, aes(x = as.numeric(as.character(lon_round)) + 5, y = He), 
+              fill = "#3F6DAA", color = "#3F6DAA", size = 8)+
+  geom_line(data = lon_eff_data,
+            aes(x = x, y = predicted), color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = lon_eff_data,
+              aes(x = x, ymin = conf.low, ymax = conf.high), color ="black", alpha = 0.1)+
+  scale_y_continuous(limits = c(0, 1))+
+  scale_x_continuous(breaks = c(-175, -165, -155, -145, -135, -125, -115, -105, -95, -85, -75, -65, -55, 
+                                -45, -35, -25, -15, -5, 5, 15, 25, 35, 45, 55, 65, 75, 85, 95, 105, 115, 
+                                125, 135, 145, 155, 165, 175))+
+  xlab("longitude") + ylab("mtdna Hd") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title = element_text(size = 120),
+        axis.ticks = element_line(color = "black", size = 1),
+        axis.text = element_text(size = 120, color = "black"),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = "none")
+mtdna_hd_lon_plot_point
+
+#violin plot, with or without boxplot within
+mtdna_small_hd$lon_round_char <- as.factor(mtdna_small_hd$lon_round)
+
+mtdna_hd_lon_plot_violin <- ggplot() +
+  #geom_violin(data= mtdna_small_hd, aes(x = lon_round, y = He), 
+   #           fill = "#3F6DAA", color = "#3F6DAA") + #factor, plotted as 0-8 numerically
+  #geom_boxplot(data= mtdna_small_hd, aes(x = lon_round_char, y = He), width = 0.2) +
+  geom_point(data = lon_hd_median, aes(x = lon, y = hd_median), 
+             color = "darkblue", size = 24) + #to put on same scale as factors, divide by 10, adding 190 because -180 actually = factor of 1 (matches -180 - -170 round group) 
+  geom_line(data = lon_eff_data,
+            aes(x = (x + 185)/10, y = predicted), col = "black", alpha = 0.3, linewidth = 10) + #dividing by 10 to put on same factor scale, have to add 85 because violin plots are midpoint of 10 degree bands
+  geom_ribbon(data = lon_eff_data,
+              aes(x = (x + 185)/10, ymin = conf.low, ymax = conf.high), col = "black", alpha = 0.1)+
+  scale_x_discrete(labels = c(-175, -165, -155, -145, -135, -125, -115, -105, -95, -85, -75, -65, -55, 
+                              -45, -35, -25, -15, -5, 5, 15, 25, 35, 45, 55, 65, 75, 85, 95, 105, 115, 
+                              125, 135, 145, 155, 165, 175)) +
+  scale_y_continuous(limits = c(0.4, 1)) +
+  xlab("longitude") + ylab("mtdna Hd") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title = element_text(size = 120),
+        axis.ticks = element_line(color = "black", size = 1),
+        axis.text = element_text(size = 100, color = "black"),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        legend.position = "none")
+mtdna_hd_lon_plot_violin
 
 #############################################################################################################
 
@@ -410,17 +417,18 @@ mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logchlomean != "Inf" |
 
 ######### SST mean figures #######
 
-SSTmean_model_hd <- glm(cbind(success, failure) ~ bp_scale + range_position + logsstmean, 
-                    family = binomial, data = mtdna_small_hd, na.action = "na.fail")
+SSTmean_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + sst.BO_sstmean +  
+                        (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
+                        family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
+                        control = glmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
 SSTmean_eff <- plot_model(SSTmean_model_hd, type = "pred",
-                      terms = "logsstmean [all]")
+                      terms = "sst.BO_sstmean [all]")
 
 #pull out marginal effects dataframe
 SSTmean_eff_data <- as.data.frame(SSTmean_eff$data)
-  SSTmean_eff_data$sstmean <- 10^(SSTmean_eff_data$x)
 
 #### Calculate means from raw data ####
 ## Round lon DOWN to nearest multiple of 5 ##
@@ -439,61 +447,57 @@ for(i in 1:nrow(mtdna_small_hd)) {
 ## Calculate means and SE within each 5 degree band ##
 mtdna_small_hd <- data.table(mtdna_small_hd) #make data.table so can use data.table functions
 
-#calculate mean in each 5 degree band
-SSTmean_hd_mean <- mtdna_small_hd[, mean(He), by = SSTmean_round]
-  colnames(SSTmean_hd_mean) <- c("SSTmean", "hd_mean")
-
-#calculate SE in each 5 degree band
-SSTmean_hd_SE <- mtdna_small_hd[, std.error(He), by = SSTmean_round]
-  colnames(SSTmean_hd_SE) <- c("SSTmean", "hd_SE")
-
-#count observations in each 5 degree band
-SSTmean_hd_count <- mtdna_small_hd[, .N, by = SSTmean_round]
-  colnames(SSTmean_hd_count) <- c("SSTmean", "hd_count")
-
-#merge mean and SE dataframes together
-SSTmean_hd_binned_means <- list(SSTmean_hd_mean, SSTmean_hd_SE, SSTmean_hd_count) %>% 
-  reduce(full_join, by = "SSTmean")
-SSTmean_hd_binned_means$SSTmean <- as.numeric(as.character(SSTmean_hd_binned_means$SSTmean))
-  SSTmean_hd_binned_means <- SSTmean_hd_binned_means[order(SSTmean), ]
-  SSTmean_hd_binned_means$X <- SSTmean_hd_binned_means$SSTmean + 2.5 #for plotting, plot in MIDDLE of 5 degree band
-
-#calculate error bars (standard error)
-SSTmean_hd_binned_means$mean_lowerSE <- SSTmean_hd_binned_means$hd_mean - 
-  SSTmean_hd_binned_means$hd_SE
-SSTmean_hd_binned_means$mean_upperSE <- SSTmean_hd_binned_means$hd_mean + 
-  SSTmean_hd_binned_means$hd_SE
+#calculate median in each 5 degree band
+SSTmean_hd_median <- mtdna_small_hd[, median(He), by = SSTmean_round]
+  colnames(SSTmean_hd_median) <- c("SSTmean", "hd_median")
+  SSTmean_hd_median$SSTmean <- as.numeric(as.character(SSTmean_hd_median$SSTmean))
 
 #### Plot SSTmean ####
-#for legend
-colors <- c("5-degree binned means" = "#3F6DAA", "Regression" = "black")
 
-#plot
-mtdna_hd_SSTmean_plot_both <- ggplot() + 
-  geom_line(data = SSTmean_eff_data, 
-            aes(x = sstmean, y = predicted, color = "Regression"), size = 6) + 
-  geom_ribbon(data = SSTmean_eff_data, 
-              aes(x = sstmean, ymin = conf.low, ymax = conf.high, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = SSTmean_hd_binned_means, 
-             aes(x = X, y = hd_mean, color = "5-degree binned means", size = hd_count), shape = "square") + 
-  geom_errorbar(data = SSTmean_hd_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "5-degree binned means"), width = 1.75, size = 3) + 
-  xlab("SST mean") + ylab("mtdna Hd") + labs(color = "Legend") + 
-  scale_y_continuous(limits = c(0, 1.0)) + 
-  scale_color_manual(values = colors) + 
-  scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
-                        range = c(10, 20))
-mtdna_hd_SSTmean_plot_annotated_both <- mtdna_hd_SSTmean_plot_both + theme_bw() + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
-        axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 100, color = "black"), 
-        axis.line = element_line(size = 2, color = "black"),
-        legend.position = "top", legend.box = "vertical", 
-        legend.text = element_text(size = 100), 
-        legend.key.size = unit(3, "cm"),
-        legend.title = element_blank())
-mtdna_hd_SSTmean_plot_annotated_both
+#just geom_point
+mtdna_hd_sstmean_plot_point <- ggplot() +
+  geom_jitter(data = mtdna_small_hd, aes(x = as.numeric(as.character(SSTmean_round)) + 2.5, y = He), 
+              fill = "#3F6DAA", color = "#3F6DAA", size = 8)+
+  geom_line(data = SSTmean_eff_data,
+            aes(x = x, y = predicted), color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = SSTmean_eff_data,
+              aes(x = x, ymin = conf.low, ymax = conf.high), color ="black", alpha = 0.1)+
+  scale_y_continuous(limits = c(0, 1))+
+  scale_x_continuous(breaks = c(2.5, 5, 7.5, 10, 12.5, 15, 17.5, 20, 22.5, 25, 27.5, 30, 32.5))+
+  xlab("SST mean") + ylab("mtdna Hd") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title = element_text(size = 120),
+        axis.ticks = element_line(color = "black", size = 1),
+        axis.text = element_text(size = 120, color = "black"),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        legend.position = "none")
+mtdna_hd_sstmean_plot_point
+  
+#violin plot, with or without boxplot within
+mtdna_small_hd$sstmean_round_char <- as.factor(mtdna_small_hd$SSTmean_round)
+
+mtdna_hd_sstmean_plot_violin <- ggplot() +
+  geom_violin(data= mtdna_small_hd, aes(x = sstmean_round_char, y = He), 
+              fill = "#3F6DAA", color = "#3F6DAA") + #factor, plotted as 0-8 numerically
+  #geom_boxplot(data= mtdna_small_hd, aes(x = sstmean_round_char, y = He), width = 0.2) +
+  geom_point(data = SSTmean_hd_median, aes(x = (SSTmean + 5)/5, y = hd_median), 
+             color = "darkblue", size = 24) + #to put on same scale as factors, divide by 5, adding 5 because 0 actually = factor of 1 (matches 0 - 5 round group) 
+  geom_line(data = SSTmean_eff_data,
+            aes(x = (x + 2.5)/5, y = predicted), col = "black", alpha = 0.3, linewidth = 10) + #dividing by 10 to put on same factor scale, have to add 85 because violin plots are midpoint of 10 degree bands
+  geom_ribbon(data = SSTmean_eff_data,
+              aes(x = (x + 2.5)/5, ymin = conf.low, ymax = conf.high), col = "black", alpha = 0.1)+
+  scale_x_discrete(labels = c(2.5, 5, 7.5, 10, 12.5, 15, 17.5, 20, 22.5, 25, 27.5, 30, 32.5)) +
+  scale_y_continuous(limits = c(0, 1)) +
+  xlab("SST mean") + ylab("mtdna Hd") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title = element_text(size = 120),
+        axis.ticks = element_line(color = "black", size = 1),
+        axis.text = element_text(size = 120, color = "black"),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        legend.position = "none")
+mtdna_hd_sstmean_plot_violin
 
 ##################################################################################################################
 
@@ -681,15 +685,15 @@ mtdna_hd_dissox_plot_annotated_both
 
 ######## ChloroA mean figures ########
 
-chloroAmean_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomean + 
-                                I(logchlomean^2) + (1|Family/Genus/spp) + (1|Source) + 
+chloroAmean_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + chloroA.BO_chlomean + 
+                                I(chloroA.BO_chlomean^2) + (1|Family/Genus/spp) + (1|Source) + 
                                 (1|MarkerName), family = binomial, 
                                       data = mtdna_small_hd, na.action = "na.fail", 
                                       control = glmerControl(optimizer = "bobyqa"))
 #### Predict ####
 #marginal effects
 chloroAmean_eff <- plot_model(chloroAmean_model_hd, type = "pred", 
-                              terms = "logchlomean [all]")
+                              terms = "chloroA.BO_chlomean [all]")
 
 #pull out marginal effects dataframe
 chloroAmean_eff_data <- as.data.frame(chloroAmean_eff$data)
@@ -713,60 +717,56 @@ for(i in 1:nrow(mtdna_small_hd)) {
 mtdna_small_hd <- data.table(mtdna_small_hd) #make data.table so can use data.table functions
 
 #calculate mean in each band
-chloroAmean_hd_mean <- mtdna_small_hd[, mean(He), by = chloroAmean_round]
-  colnames(chloroAmean_hd_mean) <- c("chloroAmean", "hd_mean")
+chloroAmean_hd_median <- mtdna_small_hd[, median(He), by = chloroAmean_round]
+  colnames(chloroAmean_hd_median) <- c("chloroAmean", "hd_median")
+  chloroAmean_hd_median$chloroAmean <- as.numeric(as.character(chloroAmean_hd_median$chloroAmean))
 
-#calculate SE in each band
-chloroAmean_hd_SE <- mtdna_small_hd[, std.error(He), by = chloroAmean_round]
-  colnames(chloroAmean_hd_SE) <- c("chloroAmean", "hd_SE")
+#### Plot chloroAmean ####http://127.0.0.1:31005/graphics/plot_zoom_png?width=1274&height=890
 
-#count observations in each band
-chloroAmean_hd_count <- mtdna_small_hd[, .N, by = chloroAmean_round]
-  colnames(chloroAmean_hd_count) <- c("chloroAmean", "hd_count")
+#just geom_point
+mtdna_hd_chloromean_plot_point <- ggplot() +
+  geom_point(data = mtdna_small_hd, aes(x = chloroA.BO_chlomean, y = He), 
+              fill = "#3F6DAA", color = "#3F6DAA", size = 8)+
+  geom_line(data = chloroAmean_eff_data,
+            aes(x = x, y = predicted), color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = chloroAmean_eff_data,
+              aes(x = x, ymin = conf.low, ymax = conf.high), color ="black", alpha = 0.1)+
+  scale_y_continuous(limits = c(0, 1))+
+  scale_x_continuous(breaks = c(5, 15, 25, 35)) +
+  xlab("chlorophyll A mean") + ylab("mtdna Hd") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title = element_text(size = 120),
+        axis.ticks = element_line(color = "black", size = 1),
+        axis.text = element_text(size = 120, color = "black"),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        legend.position = "none")
+mtdna_hd_chloromean_plot_point
+  
+#violin plot, with or without boxplot within
+mtdna_small_hd$chloroAmean_round_char <- as.factor(mtdna_small_hd$chloroAmean_round)
 
-#merge mean and SE dataframes together
-chloroAmean_hd_binned_means <- list(chloroAmean_hd_mean, chloroAmean_hd_SE, chloroAmean_hd_count) %>% 
-  reduce(full_join, by = "chloroAmean")
-chloroAmean_hd_binned_means$chloroAmean <- as.numeric(as.character(chloroAmean_hd_binned_means$chloroAmean))
-  chloroAmean_hd_binned_means <- chloroAmean_hd_binned_means[order(chloroAmean), ]
-  chloroAmean_hd_binned_means$X <- chloroAmean_hd_binned_means$chloroAmean + 5 #for plotting, plot in MIDDLE of band
-
-#calculate error bars (standard error)
-chloroAmean_hd_binned_means$mean_lowerSE <- chloroAmean_hd_binned_means$hd_mean - 
-  chloroAmean_hd_binned_means$hd_SE
-chloroAmean_hd_binned_means$mean_upperSE <- chloroAmean_hd_binned_means$hd_mean + 
-  chloroAmean_hd_binned_means$hd_SE
-
-#### Plot chloroAmean ####
-#for legend
-colors <- c("Binned means" = "#3F6DAA", "Regression" = "black")
-
-#plot
-mtdna_hd_chloroAmean_plot_both <- ggplot() + 
-  geom_line(data = chloroAmean_eff_data, 
-            aes(x = chlomean, y = predicted, color = "Regression"), size = 6) + 
-  geom_ribbon(data = chloroAmean_eff_data, 
-              aes(x = chlomean, ymin = conf.low, ymax = conf.high, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = chloroAmean_hd_binned_means, 
-             aes(x = X, y = hd_mean, color = "Binned means", size = hd_count), shape = "square") + 
-  geom_errorbar(data = chloroAmean_hd_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "Binned means"), width = 1.75, size = 3) + 
-  xlab("Chloro A mean") + ylab("mtDNA Hd") + labs(color = "Legend") + 
-  scale_color_manual(values = colors) + 
-  scale_y_continuous(limits = c(0, 1.0)) + 
-  scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
-                        range = c(10, 20))
-mtdna_hd_chloroAmean_plot_annotated_both <- mtdna_hd_chloroAmean_plot_both + theme_bw() + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
-        axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 100, color = "black"), 
-        axis.line = element_line(size = 2, color = "black"),
-        legend.position = "top", legend.box = "vertical", 
-        legend.text = element_text(size = 100), 
-        legend.key.size = unit(3, "cm"),
-        legend.title = element_blank())
-mtdna_hd_chloroAmean_plot_annotated_both
+mtdna_hd_chloromean_plot_violin <- ggplot() +
+  geom_violin(data= mtdna_small_hd, aes(x = chloroAmean_round_char, y = He), 
+              fill = "#3F6DAA", color = "#3F6DAA") + #factor, plotted as 0-8 numerically
+  #geom_boxplot(data= mtdna_small_hd, aes(x = chloroAmean_round_char, y = He), width = 0.2) +
+  geom_point(data = chloroAmean_hd_median, aes(x = (chloroAmean + 10)/10, y = hd_median), 
+             color = "darkblue", size = 24) + #to put on same scale as factors, divide by 10, adding 90 because -80 actually = factor of 1 (matches -80 - -70 round group) 
+  geom_line(data = chloroAmean_eff_data,
+            aes(x = (chlomean + 5)/10, y = predicted), col = "black", alpha = 0.3, linewidth = 10) + #dividing by 10 to put on same factor scale, have to add 85 because violin plots are midpoint of 10 degree bands
+  geom_ribbon(data = chloroAmean_eff_data,
+              aes(x = (chlomean + 5)/10, ymin = conf.low, ymax = conf.high), col = "black", alpha = 0.1)+
+  scale_x_discrete(labels = c(5, 15, 25, 35)) +
+  scale_y_continuous(limits = c(0, 1)) +
+  xlab("chlorophyll A mean") + ylab("mtdna Hd") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title = element_text(size = 120),
+        axis.ticks = element_line(color = "black", size = 1),
+        axis.text = element_text(size = 120, color = "black"),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        legend.position = "none")
+mtdna_hd_chloromean_plot_violin
 
 #############################################################################################################
 
