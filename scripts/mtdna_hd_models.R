@@ -11,11 +11,14 @@ library(glmmTMB)
 library(DHARMa)
 library(effects)
 library(sjPlot)
+library(spdep)
+library(spatialreg)
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
 mtdna_env <- read.csv("output/mtdna_env.csv", stringsAsFactors = FALSE)
 cp_info <- read.csv("output/spp_combined_info.csv", stringsAsFactors = FALSE)
+load("mtdna_Hd_ME.Rdata") #for ME weights, so don't have to re-run every time
 
 #merge dataframes
 mtdna <- merge(mtdna, mtdna_env[, c('X', 'sst.BO_sstmean', 'sst.BO_sstrange', 'sst.BO_sstmax', 'sst.BO_sstmin', 
@@ -69,44 +72,21 @@ mtdna_small_hd$abslat <- abs(mtdna_small_hd$lat)
 #scale geographic variables
 mtdna_small_hd$lat_scale <- as.numeric(scale(mtdna_small_hd$lat))
 mtdna_small_hd$abslat_scale <- as.numeric(scale(mtdna_small_hd$abslat))
+mtdna_small_hd$lon_scale <- as.numeric(scale(mtdna_small_hd$lon))
 
 #convert lon to radians
 mtdna_small_hd$lon_360 <- mtdna_small_hd$lon + 180 #convert (-180,180) to (0,360)
   mtdna_small_hd$lon_rad <- (2*pi*mtdna_small_hd$lon_360)/360
 
 #### Calculate environmental variables ####
-## log transform sst data ##
-#subset to only those with sst data
-mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$sst.BO_sstmean != "NA") #shouldn't remove any
-
-mtdna_small_hd$logsstmean <- log10(mtdna_small_hd$sst.BO_sstmean)
-  mtdna_small_hd$logsstrange <- log10(mtdna_small_hd$sst.BO_sstrange)
-  mtdna_small_hd$logsstmax <- log10(mtdna_small_hd$sst.BO_sstmax)
-  mtdna_small_hd$logsstmin <- log10(mtdna_small_hd$sst.BO_sstmin)
-
-#remove logsst = NA columns
-mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logsstmean != "NaN")
-  mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logsstrange != "NaN")
-  mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logsstmax != "NaN")
-  mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logsstmin != "NaN")
-
-## log transform dissox data ##
-#subset to only those with dissox data
-mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$BO_dissox != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-
-mtdna_small_hd$logdissox <- log10(mtdna_small_hd$BO_dissox)
-
-#remove logdissox = NA columns
-mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logdissox != "NaN")
-
 ## log transform chlorophyll A ##
 #subset to only those with chloroA data
 mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$chloroA.BO_chlomean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$chloroA.BO_chlorange != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$chloroA.BO_chlomax != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$chloroA.BO_chlomin != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
+  mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$chloroA.BO_chlorange != 0)
+  mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$chloroA.BO_chlomax != 0)
+  mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$chloroA.BO_chlomin != 0)
 
-mtdna_small_hd$logchlomean <- log10(mtdna_small_hd$sst.BO_sstmean)
+mtdna_small_hd$logchlomean <- log10(mtdna_small_hd$chloroA.BO_chlomean)
   mtdna_small_hd$logchlorange <- log10(mtdna_small_hd$chloroA.BO_chlorange)
   mtdna_small_hd$logchlomax <- log10(mtdna_small_hd$chloroA.BO_chlomax)
   mtdna_small_hd$logchlomin <- log10(mtdna_small_hd$chloroA.BO_chlomin)
@@ -121,276 +101,417 @@ mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logchlomean != "Inf" |
   mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logchlomin != "Inf" | 
                              mtdna_small_hd$logchlomin != "NaN")
 
-#############################################################################################################
+#### Calculate weights ####
+#to account for spatial autocorrelation
+  
+#create matrix of geographic coordinates
+lonlat_mat <- cbind(mtdna_small_hd$lon, mtdna_small_hd$lat)
+  
+#groups into nearest neighbor groups
+hd_nb4 <- knearneigh(x = lonlat_mat, k = 4, longlat = TRUE) #creates matrix with the indices of points belonging to the sets of k nearest neighbors
+  hd_nb4 <- knn2nb(hd_nb4) #converts knn object to neighbors list (e.g. these indices in matrix group together spatially as nearest neighbors)
+  hd_nb4 <- make.sym.nb(hd_nb4) #checks for symmetry/transitivity
+  
+#calculate weights
+hd_wt4 <- nb2listw(hd_nb4, style = "W") #creates spatial weights
+
+#### Create coordinate dataframe for SAC tests ####
+#need to create grouping factor for observations with identical lat/lon
+mtdna_small_hd$latlonbins <- paste(round(mtdna_small_hd$lat, 0), "_", round(mtdna_small_hd$lon, 0), sep = "")
+mtdna_small_hd$coords <- paste(mtdna_small_hd$lat, "_", mtdna_small_hd$lon, sep = "")
+  coords <- as.data.frame(unique(coords))
+  colnames(coords) <- c("coords")
+
+#pull out unique coordinate for SAC test
+coords_unique <- coords %>% separate(coords, sep = "_", c("lat_unique", "lon_unique"))
+  x_unique <- coords_unique$lat_unique
+  y_unique <- coords_unique$lon_unique
+  
+#########################################################################################################################
 
 ######## Null model ########
 
-binomial_null <- glmer(cbind(success, failure) ~ bp_scale + range_position + (1|Family/Genus/spp) + (1|Source) 
-                       + (1|MarkerName), family = binomial, 
-                       data = mtdna_small_hd, na.action = "na.fail", 
+## null model ##
+null_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
+                         (1|Family/Genus) + (1|Source) + (1|MarkerName), 
+                       data = mtdna_small_hd, family = binomial,
+                       na.action = "na.fail", nAGQ = 0, #nAGQ = 0 & #nAGQ = 1 qualitatively the same, so using 0 bc conveges much faster
                        control = glmerControl(optimizer = "bobyqa"))
 
+## null model with SA ##
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484) #because bootstraps for ME
+
+#ME is a permutation bootstrap on Moran's I for regression residuals and picks which ones account for most autocorrelation
+null_ME <- ME(cbind(success, failure) ~ bp_scale + range_position,
+              data = mtdna_small_hd, family = binomial, listw = hd_wt4)
+
+null_model_hd_SA <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
+                            (1|Family/Genus) + (1|Source) + (1|MarkerName) + (1|latlonbins), 
+                          data = mtdna_small_hd, family = binomial,
+                          na.action = "na.fail", nAGQ = 0,
+                          control = glmerControl(optimizer = "bobyqa"))
+
 #check fit with DHARMa
-binomial_null_sim <- simulateResiduals(fittedModel = binomial_null, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_null_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
-plotResiduals(binomial_null_sim) #residuals against predicted value -- looking for uniformity
+null_model_hd_sim <- simulateResiduals(fittedModel = null_model_hd_SA, n = 1000, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(null_model_hd_sim) #QQplot --> looks like underdispersion? more residuals around 0.5, fewer in tail
+plotResiduals(null_model_hd_sim) #residuals against predicted value -- looking for uniformity
+  plotResiduals(null_model_hd_sim, mtdna_small_hd$bp_scale)
+  plotResiduals(null_model_hd_sim, mtdna_small_hd$range_position)
 
-#against bp & range position
-plotResiduals(binomial_null_sim, mtdna_small_hd$bp_scale)
-plotResiduals(binomial_null_sim, mtdna_small_hd$range_position)
-
-#test dispersion for binomial model
-testDispersion(binomial_null_sim)
-
-#marginal effects
-plot_model(binomial_null, type = "pred", pred.type = "re",
-           terms = "range_position [all]")
-plot_model(binomial_null, type = "pred", pred.type = "re",
-           terms = "bp_scale [all]")
-
-#plot partial residuals
-#bp_eff <- effect("bp_scale", residuals = TRUE, binomial_null)
-#  plot(bp_eff, smooth.residuals = TRUE)
-#x_bp <- as.data.frame(effects_bp_eff) #if want to turn these into ggplot
+#test for SAC
+sim_recalc <- recalculateResiduals(null_model_hd_sim, group = mtdna_small_hd$coords) #need to group same lat/lons together
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 ###################################################################################################################
 
 ######## Latitude & longitude models ########
 
 #### lat model ####
-binomial_lat <- glmer(cbind(success, failure) ~ bp_scale + range_position + lat_scale + 
-                        I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
-                      family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
-                      control = glmerControl(optimizer = "bobyqa"))
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484)
 
-#checking fit with DHARMa
-binomial_lat_sim <- simulateResiduals(fittedModel = binomial_lat, n = 1000, plot = F)
-plotQQunif(binomial_lat_sim)
-plotResiduals(binomial_lat_sim)
-  plotResiduals(binomial_lat_sim, mtdna_small_hd$lat_scale)
+lat_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + lat_scale + I(lat_scale^2),
+                data = mtdna_small_hd, family = binomial, listw = hd_wt4)
 
-#marginal effects
-plot_model(binomial_lat, type = "pred", pred.type = "re",
-           terms = "lat_scale [all]")
+## lat model##
+lat_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
+                           lat_scale + I(lat_scale^2) + (1|Family/Genus) + 
+                           (1|Source) + (1|MarkerName), 
+                         data = mtdna_small_hd, family = binomial,
+                         na.action = "na.fail", nAGQ = 0,
+                         control = glmerControl(optimizer = "bobyqa"))
+  
+## lat model with SA##
+lat_model_hd_SA <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
+                           lat_scale + I(lat_scale^2) + (1|Family/Genus) + 
+                           (1|Source) + (1|MarkerName) + (1|latlonbins), 
+                         data = mtdna_small_hd, family = binomial,
+                         na.action = "na.fail", nAGQ = 0,
+                         control = glmerControl(optimizer = "bobyqa"))
+  
+#check fit with DHARMa
+lat_model_hd_sim <- simulateResiduals(fittedModel = lat_model_hd_SA, n = 1000, plot = F)
+plotQQunif(lat_model_hd_sim)
+plotResiduals(lat_model_hd_sim)
+  plotResiduals(lat_model_hd_sim, mtdna_small_hd$lat_scale)
+  
+  #test for SAC
+  sim_recalc <- recalculateResiduals(lat_model_hd_sim, group = mtdna_small_hd$coords) #need to group same lat/lons together
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 #### abslat model ####
-binomial_abslat <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale + 
-                           (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
-                         family = binomial, data = mtdna_small_hd, 
-                         na.action = "na.fail", control = glmerControl(optimizer = "bobyqa"))
-
-#checking fit with DHARMa
-binomial_abslat_sim <- simulateResiduals(fittedModel = binomial_abslat, n = 1000, plot = F)
-plotResiduals(binomial_abslat_sim)
-  plotResiduals(binomial_abslat_sim, mtdna_small_hd$abslat_scale)
-
-#marginal effects
-plot_model(binomial_abslat, type = "pred", pred.type = "re",
-           terms = "abslat_scale [all]")
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484)
+  
+abslat_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + abslat_scale,
+               data = mtdna_small_hd, family = binomial, listw = hd_wt4)
+  
+## abslat model with SA ##
+abslat_model_hd_SA <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
+                              abslat_scale + (1|Family/Genus) + (1|Source) + 
+                              (1|MarkerName) + fitted(abslat_ME), 
+                            data = mtdna_small_hd, family = binomial,
+                            na.action = "na.fail", nAGQ = 0,
+                            control = glmerControl(optimizer = "bobyqa"))
+  
+#check fit with DHARMa
+abslat_model_hd_sim <- simulateResiduals(fittedModel = abslat_model_hd_SA, n = 1000, plot = F)
+plotQQunif(abslat_model_hd_sim)
+plotResiduals(abslat_model_hd_sim)
+  plotResiduals(abslat_model_hd_sim, mtdna_small_hd$abslat_scale)
 
 #### lon model ####
-binomial_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + sin(lon_rad) + cos(lon_rad) + 
-                        (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
-                      family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
-                      control = glmerControl(optimizer = "bobyqa"))
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484)
+  
+lon_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + bs(lon_scale),
+                  data = mtdna_small_hd, family = binomial, listw = hd_wt4)
+
+## lon model ##
+lon_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
+                          bs(lon_scale) + (1|Family/Genus) + (1|Source) + 
+                          (1|MarkerName),
+                        family = binomial, data = mtdna_small_hd, 
+                        na.action = "na.fail", nAGQ = 0,
+                        control = glmerControl(optimizer = "bobyqa"))
+
+## lon model with SA ##
+lon_model_hd_SA<- glmer(cbind(success, failure) ~ bp_scale + range_position + 
+                          bs(lon_scale) + (1|Family/Genus) + (1|Source) + 
+                          (1|MarkerName) + fitted(lon_ME),
+                        family = binomial, data = mtdna_small_hd, 
+                        na.action = "na.fail", nAGQ = 0,
+                        control = glmerControl(optimizer = "bobyqa"))
 
 #checking fit with DHARMa
-binomial_lon_sim <- simulateResiduals(fittedModel = binomial_lon, n = 1000, plot = F)
-plotResiduals(binomial_lon_sim)
-  plotResiduals(binomial_lon_sim, mtdna_small_hd$lon_scale)
+lon_model_hd_sim <- simulateResiduals(fittedModel = lon_model_hd_SA, n = 1000, plot = F)
+plotQQunif(lon_model_hd_sim)
+plotResiduals(lon_model_hd_sim)
+  plotResiduals(lon_model_hd_sim, mtdna_small_hd$lon_scale)
+  
 
-#marginal effects
-plot_model(binomial_lon, type = "pred", pred.type = "re",
-           terms = "lon_rad [all]")
+  sim_recalc <- recalculateResiduals(lon_model_hd_sim, group = mtdna_small_hd$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 #### lat & lon model ####
-binomial_lat_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + lat_scale + 
-                            I(lat_scale^2) + sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + 
-                            (1|Source) + (1|MarkerName), family = binomial, 
-                          data = mtdna_small_hd, na.action = "na.fail", 
-                          control = glmerControl(optimizer = "bobyqa"))
-
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484)
+  
+lat_lon_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + 
+                   lat_scale + I(lat_scale^2) + bs(lon_scale),
+               data = mtdna_small_hd, family = binomial, listw = hd_wt4)
+  
+## lat lon model with SA ##
+lat_lon_model_hd_SA <- glmer(cbind(success, failure) ~ bp_scale + range_position + bs(lon_scale) + 
+                               lat_scale + I(lat_scale^2) +(1|Family/Genus) + (1|Source) + 
+                               (1|MarkerName) + ,
+                             family = binomial, data = mtdna_small_hd, 
+                             na.action = "na.fail", nAGQ = 0,
+                             control = glmerControl(optimizer = "bobyqa"))
+  
 #checking fit with DHARMa
-binomial_lat_lon_sim <- simulateResiduals(fittedModel = binomial_lat_lon, n = 1000, plot = F)
-plotQQunif(binomial_lat_lon_sim)
-plotResiduals(binomial_lat_lon_sim)
-  plotResiduals(binomial_lat_lon_sim, mtdna_small_hd$lat_scale)
-  plotResiduals(binomial_lat_lon_sim, mtdna_small_hd$lon_rad)
-
-#marginal effects
-plot_model(binomial_lat_lon, type = "pred", pred.type = "re",
-           terms = "lat_scale [all]")
-plot_model(binomial_lat_lon, type = "pred", pred.type = "re",
-           terms = "lon_rad [all]")
+lat_lon_model_hd_sim <- simulateResiduals(fittedModel = lat_lon_model_hd_SA, n = 1000, plot = F)
+plotQQunif(lat_lon_model_hd_sim)
+  plotResiduals(lat_lon_model_hd_sim)
+  plotResiduals(lat_lon_model_hd_sim, mtdna_small_hd$lon_scale)
+  plotResiduals(lat_lon_model_hd_sim, mtdna_small_hd$lat_scale)
+  
+  sim_recalc <- recalculateResiduals(lat_lon_model_hd_sim, group = mtdna_small_hd$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 #### abslat & lon model ###
-binomial_abslat_lon <- glmer(cbind(success, failure) ~ bp_scale + range_position + abslat_scale +
-                               sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + 
-                               (1|Source) + (1|MarkerName), family = binomial, 
-                             data = mtdna_small_hd, na.action = "na.fail", 
-                             control = glmerControl(optimizer = "bobyqa"))
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484)
 
+abslat_lon_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + 
+                     abslat_scale + bs(lon_scale),
+                   data = mtdna_small_hd, family = binomial, listw = hd_wt4)
+  
+## labsat lon model with SA ##
+abslat_lon_model_hd_SA  <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
+                                   bs(lon_scale) + abslat_scale + (1|Family/Genus) + 
+                                   (1|Source) + (1|MarkerName) + fitted(abslat_lon_ME), 
+                                 family = binomial, data = mtdna_small_hd, 
+                                 na.action = "na.fail", nAGQ = 0, 
+                                 control = glmerControl(optimizer = "bobyqa"))
+  
 #checking fit with DHARMa
-binomial_abslat_lon_sim <- simulateResiduals(fittedModel = binomial_abslat_lon, n = 1000, plot = F)
-plotQQunif(binomial_abslat_lon_sim)
-plotResiduals(binomial_abslat_lon_sim)
-  plotResiduals(binomial_abslat_lon_sim, mtdna_small_hd$abslat_scale)
-  plotResiduals(binomial_abslat_lon_sim, mtdna_small_hd$lon_rad)
-
-#marginal effects
-plot_model(binomial_abslat_lon, type = "pred", pred.type = "re",
-           terms = "abslat_scale [all]")
-plot_model(binomial_abslat_lon, type = "pred", pred.type = "re",
-           terms = "lon_rad [all]")
+abslat_lon_model_hd_sim <- simulateResiduals(fittedModel = abslat_lon_model_hd_SA, n = 1000, plot = F)
+plotQQunif(abslat_lon_model_hd_sim)
+plotResiduals(abslat_lon_model_hd_sim)
+  plotResiduals(abslat_lon_model_hd_sim, mtdna_small_hd$lon_scale)
+  plotResiduals(abslat_lon_model_hd_sim, mtdna_small_hd$abslat_scale)
 
 ###################################################################################################################
 
 ######## Environmental models ########
 
 #### sst mean model ####
-mtdna_hd_binomial_sstmean <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmean + 
-                                     (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
-                                   family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
-                                   control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484)
+  
+sstmean_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + sst.BO_sstmean,
+                      data = mtdna_small_hd, family = binomial, listw = hd_wt4)
+
+## sstmean model with SA ##
+sstmean_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
+                               sst.BO_sstmean + (1|Family/Genus) + (1|Source) + 
+                               (1|MarkerName), 
+                             family = binomial, data = mtdna_small_hd, 
+                             na.action = "na.fail", nAGQ = 0,
+                             control = glmerControl(optimizer = "bobyqa"))
+
+## sstmean model with SA ##
+sstmean_model_hd_SA <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
+                               sst.BO_sstmean + (1|Family/Genus) + (1|Source) + 
+                               (1|MarkerName) + fitted(sstmean_ME), 
+                             family = binomial, data = mtdna_small_hd, 
+                             na.action = "na.fail", nAGQ = 0,
+                             control = glmerControl(optimizer = "bobyqa"))
 
 #checking fit with DHARMa
-mtdna_hd_binomial_sstmean_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_sstmean, n = 1000, plot = F)
-plotQQunif(mtdna_hd_binomial_sstmean_sim)
-plotResiduals(mtdna_hd_binomial_sstmean_sim)
-  plotResiduals(mtdna_hd_binomial_sstmean_sim, mtdna_small_hd$logsstmean)
-
-#marginal effects
-plot_model(mtdna_hd_binomial_sstmean, type = "pred", pred.type = "re",
-           terms = "logsstmean [all]")
+sstmean_model_hd_sim <- simulateResiduals(fittedModel = sstmean_model_hd_SA, n = 1000, plot = F)
+plotQQunif(sstmean_model_hd_sim)
+plotResiduals(sstmean_model_hd_sim)
+  plotResiduals(sstmean_model_hd_sim, mtdna_small_hd$sst.BO_sstmean)
+  
+  sim_recalc <- recalculateResiduals(sstmean_model_hd_sim, group = mtdna_small_hd$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 #### sst range model ####
-mtdna_hd_binomial_sstrange <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstrange + 
-                                      (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
-                                    family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
-                                    control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
-
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484)
+  
+sstrange_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + sst.BO_sstrange,
+                   data = mtdna_small_hd, family = binomial, listw = hd_wt4)
+  
+## sstrange model with SA ##
+sstrange_model_hd_SA <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
+                                sst.BO_sstrange + (1|Family/Genus) + (1|Source) + 
+                                (1|MarkerName) + fitted(sstrange_ME), 
+                              family = binomial, data = mtdna_small_hd, 
+                              na.action = "na.fail", nAGQ = 0,
+                              control = glmerControl(optimizer = "bobyqa"))
+  
 #checking fit with DHARMa
-mtdna_hd_binomial_sstrange_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_sstrange, n = 1000, plot = F)
-plotQQunif(mtdna_hd_binomial_sstrange_sim)
-plotResiduals(mtdna_hd_binomial_sstrange_sim)
-  plotResiduals(mtdna_hd_binomial_sstrange_sim, mtdna_small_hd$logsstrange)
-
-#marginal effects
-plot_model(mtdna_hd_binomial_sstrange, type = "pred", pred.type = "re",
-           terms = "logsstrange [all]")
+sstrange_model_hd_sim <- simulateResiduals(fittedModel = sstrange_model_hd_SA, n = 1000, plot = F)
+plotQQunif(sstrange_model_hd_sim)
+plotResiduals(sstrange_model_hd_sim)
+  plotResiduals(sstrange_model_hd_sim, mtdna_small_hd$sst.BO_sstrange)
 
 #### sst max model ####
-mtdna_hd_binomial_sstmax <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmax + 
-                                    (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
-                                  family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
-                                  control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
-
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484)
+  
+sstmax_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + sst.BO_sstmax,
+                    data = mtdna_small_hd, family = binomial, listw = hd_wt4)
+  
+## sstmax model with SA ##
+sstmax_model_hd_SA <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
+                              sst.BO_sstmax + (1|Family/Genus) + (1|Source) + 
+                              (1|MarkerName) + fitted(sstmax_ME), 
+                            family = binomial, data = mtdna_small_hd, 
+                            na.action = "na.fail", nAGQ = 0,
+                            control = glmerControl(optimizer = "bobyqa"))
+  
 #checking fit with DHARMa
-mtdna_hd_binomial_sstmax_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_sstmax, n = 1000, plot = F)
-plotQQunif(mtdna_hd_binomial_sstmax_sim)
-plotResiduals(mtdna_hd_binomial_sstmax_sim)
-  plotResiduals(mtdna_hd_binomial_sstmax_sim, mtdna_small_hd$logsstmax)
-
-#marginal effects
-plot_model(mtdna_hd_binomial_sstmean, type = "pred", pred.type = "re",
-           terms = "logsstrange [all]")
+sstmax_model_hd_sim <- simulateResiduals(fittedModel = sstmax_model_hd_SA, n = 1000, plot = F)
+plotQQunif(sstmax_model_hd_sim)
+plotResiduals(sstmax_model_hd_sim)
+  plotResiduals(sstmax_model_hd_sim, mtdna_small_hd$sst.BO_sstmax)
 
 #### sst min model ####
-mtdna_hd_binomial_sstmin <- glmer(cbind(success, failure) ~ bp_scale + range_position + logsstmin + 
-                                    (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
-                                  family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
-                                  control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484)
+  
+sstmin_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + sst.BO_sstmin,
+                  data = mtdna_small_hd, family = binomial, listw = hd_wt4)
+  
+## sstmin model with SA ##
+sstmin_model_hd_SA <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
+                              sst.BO_sstmin + (1|Family/Genus) + (1|Source) + 
+                              (1|MarkerName) + fitted(sstmin_ME), 
+                            family = binomial, data = mtdna_small_hd, 
+                            na.action = "na.fail", nAGQ = 0,
+                            control = glmerControl(optimizer = "bobyqa"))
 
 #checking fit with DHARMa
-mtdna_hd_binomial_sstmin_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_sstmin, n = 1000, plot = F)
-plotQQunif(mtdna_hd_binomial_sstmin_sim)
-plotResiduals(mtdna_hd_binomial_sstmin_sim)
-  plotResiduals(mtdna_hd_binomial_sstmin_sim, mtdna_small_He$logsstmin)
+sstmin_model_hd_sim <- simulateResiduals(fittedModel = sstmin_model_hd_SA, n = 1000, plot = F)
+plotQQunif(sstmin_model_hd_sim)
+plotResiduals(sstmin_model_hd_sim)
+  plotResiduals(sstmin_model_hd_sim, mtdna_small_hd$sst.BO_sstmin)
 
-#marginal effects
-plot_model(mtdna_hd_binomial_sstmin, type = "pred", pred.type = "re",
-           terms = "logsstmin [all]")
-
-#### diss oxy mean model ####
-mtdna_hd_binomial_dissox <- glmer(cbind(success, failure) ~ bp_scale + range_position + logdissox + 
-                                    (1|Family/Genus/spp) + (1|Source) + (1|MarkerName), 
-                                  family = binomial, data = mtdna_small_hd, na.action = "na.fail", 
-                                  control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
-
-#checking fit with DHARMa
-mtdna_hd_binomial_dissox_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_dissox, n = 1000, plot = F)
-plotQQunif(mtdna_hd_binomial_dissox_sim)
-plotResiduals(mtdna_hd_binomial_dissox_sim)
-  plotResiduals(mtdna_hd_binomial_dissox_sim, mtdna_small_hd$logdissox)
-
-#marginal effects
-plot_model(mtdna_hd_binomial_dissox, type = "pred", pred.type = "re",
-           terms = "logdissox [all]")
-
-#### chloroA mean model ####
-mtdna_hd_binomial_chloromean <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomean + 
-                                        I(logchlomean^2) + (1|Family/Genus/spp) + (1|Source) + 
-                                        (1|MarkerName), family = binomial, 
-                                      data = mtdna_small_hd, na.action = "na.fail", 
-                                      control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
+#### chloro mean model ####
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484)
+  
+chlomean_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + 
+                    logchlomean + I(logchlomean^2),
+                  data = mtdna_small_hd, family = binomial, listw = hd_wt4)
+  
+## chlomean model with SA ##
+chlomean_model_hd_SA <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomean + 
+                                I(logchlomean^2) + (1|Family/Genus) + (1|Source) + 
+                                (1|MarkerName) + fitted(chlomean_ME), 
+                              family = binomial, data = mtdna_small_hd, 
+                              na.action = "na.fail", nAGQ = 0,
+                              control = glmerControl(optimizer = "bobyqa"))
 
 #checking fit with DHARMa
-mtdna_hd_binomial_chloromean_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_chloromean, n = 1000, plot = F)
-plotQQunif(mtdna_hd_binomial_chloromean_sim)
-plotResiduals(mtdna_hd_binomial_chloromean_sim)
-  plotResiduals(mtdna_hd_binomial_chloromean_sim, mtdna_small_hd$logchlomean)
+chlomean_model_hd_sim <- simulateResiduals(fittedModel = chlomean_model_hd_SA, n = 1000, plot = F)
+plotQQunif(chlomean_model_hd_sim)
+plotResiduals(chlomean_model_hd_sim)
+  plotResiduals(chlomean_model_hd_sim, mtdna_small_hd$logchlomean)
 
-#marginal effects
-plot_model(mtdna_hd_binomial_chloromean, type = "pred", pred.type = "re",
-           terms = "logchlomean [all]")
+##### chloro range model ####
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484)
+  
+chlorange_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + 
+                      logchlorange + I(logchlorange^2),
+                    data = mtdna_small_hd, family = binomial, listw = hd_wt4)
+  
+## chlorange model with SA ##
+chlorange_model_hd_SA <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlorange + 
+                                 I(logchlorange^2) + (1|Family/Genus) + (1|Source) + 
+                                (1|MarkerName) + fitted(chlorange_ME), 
+                               family = binomial, data = mtdna_small_hd, 
+                               na.action = "na.fail", nAGQ = 0,
+                               control = glmerControl(optimizer = "bobyqa"))
+  
+#checking fit with DHARMa
+chlorange_model_hd_sim <- simulateResiduals(fittedModel = chlorange_model_hd_SA, n = 1000, plot = F)
+plotQQunif(chlorange_model_hd_sim)
+  plotResiduals(chlorange_model_hd_sim)
+  plotResiduals(chlorange_model_hd_sim, mtdna_small_hd$logchlorange)
+  
+  sim_recalc <- recalculateResiduals(chlorange_model_hd_sim, group = mtdna_small_hd$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
-##### chloroA range model ####
-mtdna_hd_binomial_chlororange <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlorange + 
-                                         I(logchlorange^2) + (1|Family/Genus/spp) + (1|Source) + 
-                                         (1|MarkerName), family = binomial, 
-                                       data = mtdna_small_hd, na.action = "na.fail", 
-                                       control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
+#### chloro max model ####
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484)
+  
+chlomax_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + 
+                       logchlomax + I(logchlomax^2),
+                     data = mtdna_small_hd, family = binomial, listw = hd_wt4)
+  
+## chlomax model with SA ##
+chlomax_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomax + 
+                               I(logchlomax^2) + (1|Family/Genus) + (1|Source) + 
+                               (1|MarkerName), 
+                             family = binomial, data = mtdna_small_hd, 
+                             na.action = "na.fail", nAGQ = 0,
+                             control = glmerControl(optimizer = "bobyqa"))
+
+mtdna_test <- mtdna_small_hd[1:20,]
+mtdna_small_hd$coords <- paste(round(mtdna_small_hd$lat, 0), "_", round(mtdna_small_hd$lon, 0), sep = "")
+coords <- as.data.frame(unique(mtdna_small_hd$coords))
+  colnames(coords) <- c("coords")
+coords_unique <- coords %>% separate(coords, sep = "_", c("lat_unique", "lon_unique"))
+x_unique <- coords_unique$lat_unique
+y_unique <- coords_unique$lon_unique
+
 
 #checking fit with DHARMa
-mtdna_hd_binomial_chlororange_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_chlororange, n = 1000, plot = F)
-plotQQunif(mtdna_hd_binomial_chlororange_sim)
-plotResiduals(mtdna_hd_binomial_chlororange_sim)
-  plotResiduals(mtdna_hd_binomial_chlororange_sim, mtdna_small_hdlogchlorange)
+chlomax_model_hd_sim <- simulateResiduals(fittedModel = chlomax_model_hd, n = 1000, plot = F)
+plotQQunif(chlomax_model_hd_sim)
+plotResiduals(chlomax_model_hd_sim)
+  plotResiduals(chlomax_model_hd_sim, mtdna_small_hd$logchlomax)
 
-#marginal effects
-plot_model(mtdna_hd_binomial_chlororange, type = "pred", pred.type = "re",
-           terms = "logchlorange [all]")
-
-#### chloroA max model ####
-mtdna_hd_binomial_chloromax <- glmer(cbind(success, failure) ~ bp_scale + logchlomax + I(logchlomax^2) + 
-                                       range_position + (1|Family/Genus/spp) + (1|Source) + 
-                                       (1|MarkerName), family = binomial, 
-                                     data = mtdna_small_hd, na.action = "na.fail", 
-                                     control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
-
+mtdna_test <- mtdna_small_hd[1:20,]
+  
+sim_recalc <- recalculateResiduals(chlomin_model_hd_sim, group = mtdna_small_hd$coords)
+testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
+  
+#### chloro min model ####
+#account for and remove spatial autocorrelation from residuals
+set.seed(8484)
+  
+chlomin_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + 
+                     logchlomin + I(logchlomin^2),
+                   data = mtdna_small_hd, family = binomial, listw = hd_wt4)
+  
+## chlomin model with SA ##
+chlomin_model_hd_SA <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomin + 
+                               I(logchlomin^2) + (1|Family/Genus) + (1|Source) + 
+                               (1|MarkerName) + fitted(chlomin_ME), 
+                             family = binomial, data = mtdna_small_hd, 
+                             na.action = "na.fail", nAGQ = 0,
+                             control = glmerControl(optimizer = "bobyqa"))
+  
 #checking fit with DHARMa
-mtdna_hd_binomial_chloromax_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_chloromax, n = 1000, plot = F)
-plotQQunif(mtdna_hd_binomial_chloromax_sim)
-plotResiduals(mtdna_hd_binomial_chloromax_sim)
-  plotResiduals(mtdna_hd_binomial_chloromax_sim, mtdna_small_hd$logchlomax)
-
-#marginal effects
-plot_model(mtdna_hd_binomial_chloromax, type = "pred", pred.type = "re",
-           terms = "logchlomax [all]")
-
-#### chloroA min model ####
-mtdna_hd_binomial_chloromin <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomin + 
-                                       I(logchlomin^2) + (1|Family/Genus/spp) + (1|Source) + 
-                                       (1|MarkerName), family = binomial, 
-                                     data = mtdna_small_hd, na.action = "na.fail", 
-                                     control = glmerControl(optimizer = "bobyqa")) #had to add bobyqa to converge
-
-#checking fit with DHARMa
-mtdna_hd_binomial_chloromin_sim <- simulateResiduals(fittedModel = mtdna_hd_binomial_chloromin, n = 1000, plot = F)
-plotQQunif(mtdna_hd_binomial_chloromin_sim)
-plotResiduals(mtdna_hd_binomial_chloromin_sim)
-  plotResiduals(mtdna_hd_binomial_chloromin_sim, mtdna_small_hdlogchlomin)
-
-#marginal effects
-plot_model(mtdna_hd_binomial_chloromin, type = "pred", pred.type = "re",
-           terms = "logchlomin [all]")
+chlomin_model_hd_sim <- simulateResiduals(fittedModel = chlomin_model_hd_SA, n = 1000, plot = F)
+plotQQunif(chlomin_model_hd_sim)
+plotResiduals(chlomin_model_hd_sim)
+  plotResiduals(chlomin_model_hd_sim, mtdna_small_hd$logchlomin)
+  
+######################################################################################################################
+  
+######## Save all ME ########
+#save all ME as an Rdata file so don't have to recreate every time
+save(list = c("null_ME", "lat_ME", "abslat_ME", "lon_ME", "lat_lon_ME", 
+              "abslat_lon_ME", "sstmean_ME", "sstrange_ME", "sstmax_ME", 
+              "sstmin_ME", "chlomean_ME", "chlorange_ME", "chlomax_ME", "chlomin_ME"), 
+     file = "mtdna_Hd_ME.Rdata")
