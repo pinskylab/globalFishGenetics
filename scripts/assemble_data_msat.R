@@ -11,9 +11,7 @@
 remove(list = ls())
 
 #load libraries
-library(rfishbase)
-library(maps)
-library(mapdata)
+library(tidyverse)
 
 #write basic functions
 calcHe <- function(x) { # calculate expected he from allele frequencies (does NOT check that freqs sum to 1)
@@ -469,7 +467,7 @@ msat <- subset(msat, Source != "Sala-Bozano et al. 2009 Mol Ecol" | Site != "Foc
 msat <- subset(msat, Source != "Feldheim et al. 2009 Mol. Ecol. Res. 9:639-644" | Site != "Caspian Sea, Niyazabad") #excluded bc in Caspian Sea
 msat <- subset(msat, Source != "Ma et al. 2011 Env Fish Bio" | Site != "Wuhan region, Yangtze River") #excluded bc in freshwater river
 msat <- subset(msat, Source != "Ding et al. 2009 Cons Gen") #exclude whole study bc is of Atlantic halibut but sampled off China (farmed?)
-dim(msat) #21695 rows	
+dim(msat) #21701 rows	
 
 #change minutes & seconds to negative if lat/long is negative
 msat$lat_min <- ifelse(msat$lat_deg < 0, -msat$lat_min, msat$lat_min) #imp so things sum properly in next step
@@ -528,7 +526,7 @@ msat <- subset(msat, spp != "Alosa alosa" & spp != "Alosa fallax" & spp != "Alos
                  spp != "Osmerus mordax" & spp != "Odontesthes argentinensis" & spp != "Platichthys flesus" & 
                  spp != "Platichthys stellatus" & spp != "Pomatoschistus microps" & spp != "Pomatoschistus minutus" &
                  spp != "Pungitius pungitius")
-dim(msat) #20855 rows
+dim(msat) #20861 rows
 
 ######## Fix common name mistakes ########
 
@@ -987,7 +985,6 @@ msat$lat[msat$Source == "Was et al. 2010 Mar Bio" & msat$Site == "Galway Bay"] <
   msat$lon[msat$Source == "Was et al. 2010 Mar Bio" & msat$Site == "Galway Bay"] <- -9.144507 #based on google maps
 msat$lat[msat$Source == "Wilson 2006 Mol Ecol 15:809-824" & msat$Site == "San Diego Bay, CA"] <- 32.676035 #based on google maps
   msat$lon[msat$Source == "Wilson 2006 Mol Ecol 15:809-824" & msat$Site == "San Diego Bay, CA"] <- -117.197796 #based on google maps
-  
    
 #correct lat/long sites where not calculated properly originally
 msat$lat[msat$Source == "Chevolot et al. 2006 J Sea Research 56:305-316" & msat$Site == "North Thames Estuary"] <- 52.095 #needed to be averaged across collection points
@@ -1057,9 +1054,9 @@ msat$lon[msat$Source == "Knutsen et al. 2007 Mol. Ecol. Notes 7:851-853"] <- 5.5
 msat[(msat$He<0 | msat$He>1) & !is.na(msat$He),c('spp', 'Source', 'Country', 'Site', 'He')]	#0
 
 #make sure not including any monomorphic loci
-dim(msat) #20855 rows
+dim(msat) #20861 rows
 msat <- subset(msat, He != 0)
-dim(msat) #20818 rows
+dim(msat) #20824 rows
 
 #make sure all instances have He
 inds <- is.na(msat$He)
@@ -1123,7 +1120,6 @@ msat$Hese[msat$Source == "Roques et al. 2002 Mar Bio" & msat$Site == "Saguenay R
   msat$Hese[msat$Source == "Roques et al. 2002 Mar Bio" & msat$Site == "Traenaegga"] <- 0.012
 
 #remove sites and/or loci not in HWE
-dim(msat) #20803 rows
 msat <- subset(msat, Source != "Antoro et al. 2006 Marine Biotechnology 8:17-26" | Site != "Nakornsrithammarat" | MarkerName != "Em-07")
   msat <- subset(msat, Source != "Antoro et al. 2006 Marine Biotechnology 8:17-26" | Site != "Trang" | MarkerName != "Em-07")
   msat <- subset(msat, Source != "Antoro et al. 2006 Marine Biotechnology 8:17-26" | Site != "Lampung" | MarkerName != "Em-07")
@@ -1526,7 +1522,7 @@ msat <- subset(msat, Source != "Zatcoff et al. 2004 Mar Bio" | spp != "Epinephel
   msat <- subset(msat, Source != "Zatcoff et al. 2004 Mar Bio" | spp != "Epinephelus morio" | Site != "North and South Carolina" | MarkerName != "Gag23" & MarkerName != "Mbo48")
 msat <- subset(msat, Source != "Zhao et al. 2009 Cons Gen: Epinephelus awoara" | MarkerName != "Epaw17" & MarkerName != "Epaw19" & MarkerName != "Epaw25" & MarkerName != "Epaw34" & MarkerName != "Epaw6")
 msat <- subset(msat, Source != "Zhao et al. 2009 Cons Gen: Epinephelus septemfasciatus" | MarkerName != "Ese33" & MarkerName != "Ese36" & MarkerName != "Ese43")
-dim(msat) #19894 rows
+dim(msat) #19900 rows
 
 ######## Check CrossSpp ########
 
@@ -1581,108 +1577,24 @@ msat[inds, ]
 #trim to just relevant columns
 msat <- msat[, c('spp', 'CommonName', 'Source', 'PrimerNote', 'Country', 'Site', 'lat', 'lon', 'stockid', 'CollectionYear', 
                  'NumMarkers', 'MarkerName', 'CrossSpp', 'n', 'Repeat', 'He', 'Hese', 'file')]
-dim(msat) #19894 x 18
+dim(msat) #19900 x 18
 
 #write out msat data (allow multiple loci per line)
 write.csv(msat, file = "output/msat_assembled.csv")
 
 #########################################################################################################################################
 
-######## Find Fishbase species names ########
-
-#create translation table to compare own data with FB
-fbdat <- data.frame(spp <- sort(unique(msat$spp)), fbsci = NA)
-colnames(fbdat) <- c("spp", "fbsci") #change col names
-
-#compare data to FB
-options(nwarnings = 400)
-nrow(fbdat) #343
-
-for(i in 1:nrow(fbdat)) {
-  cat(paste(i, " ", sep = ''))
-  {fbdat$fbsci[i] <- validate_names(as.character(fbdat$spp[i])) #check that sci names are correct --> look at synonyms
-  }
-}
-
-warnings() #all are about NAs introduced: FB has no match?
-
-#find rows where FB has a different name
-inds <- which(fbdat$spp != fbdat$fbsci)
-fbdat[inds, ] #0: should be, checked this earlier in script
-
-#write out species data
-write.csv(fbdat, file = "output/fbdat_msat.csv", row.names = FALSE)
-
-#########################################################################################################################################
-
-######## Write out data for appending env and trait data ########
-
-#grab unique lat/lon coordinates
-latlon <- msat[!duplicated(msat[, c('lat', 'lon')]), c('lat', 'lon')] #grab unique lat/lon combos
-latlon <- latlon[order(latlon$lat, latlon$lon), ] #order by lat then lon
-
-#grab unique species
-spps <- msat[!duplicated(msat$spp), c('spp', 'CommonName')] #grab unique species and their common name
-spps <- spps[order(spps$spp, spps$CommonName), ] #order by sci name
-spps2 <- cbind(spps, fbdat[, c('fbsci')]) #add FB scientific name
-colnames(spps2) <- c('spp', 'CommonName', 'fbsci') #set col names
-dim(spps) #343 x 2
-dim(spps2) #343 x 3
-
-#add FB SpecCode
-spps2$SpecCode <- NA #create empty column
-
-for(i in 1:nrow(spps2)){ #get code that specifies exact species on FB
-  cat(paste(i, " ", sep = ''))
-  spps2$SpecCode[i] <- as.numeric(species(spps2$fbsci[i], fields = 'SpecCode')$SpecCode)
-}
-
-#got 343 warnings --> seem to be just character coercing, okay
-summary(spps2) #no NAs in SpecCode
-
-#check numbers of locations and species
-dim(latlon) #2996 locations
-dim(spps2) #343 species
-
-#write out lat long and species data
-write.csv(latlon, file = paste('output/latlon_msat_', Sys.Date(), '.csv', sep = ''), row.names = FALSE) #this is what should build map on
-write.csv(spps2, file = paste('output/spps_msat_', Sys.Date(), '.csv', sep = ''), row.names = FALSE)
-
-#########################################################################################################################################
-
-######## Plot sampling locations ########
-
-#set up to stand alone if need be
-
-#load libraries
-library(maps)
-library(mapdata)
-
-#read in data
-msat <- read.csv('output/msat_assembled.csv')
-
-#create map of msat sampling locations
-#pdf("figures/map_msats.pdf")
-
-plot(msat$lon, msat$lat, col = "red", cex = 0.5, xlab = "Longitude", ylab = "Latitude", main = "Microsatellite data")
-maps::map(database = "world", add = TRUE, fill = TRUE, col = "grey", boundary = FALSE, interior = FALSE)
-points(msat$lon, msat$lat, col = "red", cex = 0.5)
-
-#dev.off()
-
-#########################################################################################################################################
-
 ######## Make duplicates of datapoints that are averages across multiple loci (so each row is one locus) ########
 
 #check to make sure that know NumMarkers for all data points
-dim(msat) #19894
+dim(msat) #19900
 inds <- !is.na(msat$NumMarkers) #only want instances where NumMarkers is known
-sum(inds) #19894
+sum(inds) #19900
 sum(!inds) #0
 
 #replicate rows so that each is one locus
 msatloci <- msat[inds, ][rep(row.names(msat[inds, ]), msat$NumMarkers[inds]), ]
-dim(msatloci) #28545 rows
+dim(msatloci) #28551 rows
 
 #keep original He
 msatloci$He_orig <- msatloci$He
@@ -1691,7 +1603,7 @@ summary(msat$He) #0.74
 
 #re-number so no duplicate row names
 rownames(msatloci) <- 1:nrow(msatloci)
-nrow(msatloci) #28545 rows
+nrow(msatloci) #28551 rows
 
 ######## Add SE to He where Hese is known ########
 
@@ -1714,7 +1626,7 @@ summary(msatloci$He_orig[inds]) #mean is 0.70
 summary(msatloci$He[inds]) #-0.29 to 2.01, mean = 0.70
 msatloci$He[msatloci$He > 1] = 1 #enforce He <= 1
 msatloci$He[msatloci$He < 0] = 0 #enforce He >= 0 -->  then exclude monomorphic loci
-summary(msatloci$He[inds]) #mean is 0.69
+summary(msatloci$He[inds]) #mean is 0.68
 msatloci <- subset(msatloci, He != 0)
 summary(msatloci$He[inds]) #mean is 0.69
 
@@ -1737,7 +1649,7 @@ msatloci$He[inds] <- msatloci$He_orig[inds] + e #add sd to the mean
 
 #check He distribution
 summary(msatloci$He_orig[inds]) #mean is 0.72
-summary(msatloci$He[inds]) #-0.46 to 1.77, mean = 0.72
+summary(msatloci$He[inds]) #-0.42 to 1.95, mean = 0.72
 msatloci$He[msatloci$He > 1] = 1 #enforce He <= 1
 msatloci$He[msatloci$He < 0] = 0 #enforce He >= 0 -->  then exclude monomorphic loci
 summary(msatloci$He[inds]) #mean is 0.70
