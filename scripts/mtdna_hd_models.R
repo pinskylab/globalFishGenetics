@@ -7,14 +7,11 @@ library(lme4)
 library(DHARMa)
 library(sjPlot)
 library(splines)
-library(spdep)
-library(spatialreg)
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
 mtdna_env <- read.csv("output/mtdna_env.csv", stringsAsFactors = FALSE)
 cp_info <- read.csv("output/spp_combined_info.csv", stringsAsFactors = FALSE)
-load("mtdna_Hd_ME.Rdata") #for ME weights, so don't have to re-run every time
 
 #merge dataframes
 mtdna <- merge(mtdna, mtdna_env[, c('X', 'sst.BO_sstmean', 'sst.BO_sstrange', 'sst.BO_sstmax', 'sst.BO_sstmin', 
@@ -92,26 +89,6 @@ mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logchlomean != "Inf" |
                              mtdna_small_hd$logchlomax != "NaN")
   mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logchlomin != "Inf" | 
                              mtdna_small_hd$logchlomin != "NaN")
-
-#### SAC variables ####
-#to account for spatial autocorrelation
-  
-## Spatial random effect ##
-#bin in 1 degree lat/lon bands
-mtdna_small_hd$latlonbins <- paste(round(mtdna_small_hd$lat, 0), "_", 
-                                   round(mtdna_small_hd$lon, 0), sep = "")
-  
-## Moran's eigenvectors ##
-#create matrix of geographic coordinates
-lonlat_mat <- cbind(mtdna_small_hd$lon, mtdna_small_hd$lat)
-  
-#groups into nearest neighbor groups
-hd_nb4 <- knearneigh(x = lonlat_mat, k = 4, longlat = TRUE) #creates matrix with the indices of points belonging to the sets of k nearest neighbors
-  hd_nb4 <- knn2nb(hd_nb4) #converts knn object to neighbors list (e.g. these indices in matrix group together spatially as nearest neighbors)
-  hd_nb4 <- make.sym.nb(hd_nb4) #checks for symmetry/transitivity
-  
-#calculate weights
-hd_wt4 <- nb2listw(hd_nb4, style = "W") #creates spatial weights
   
 #### Create coordinate dataframe for SAC tests ####
 #grouping factor for residuals -- need to identify which ones have the same lat/lon
@@ -133,26 +110,6 @@ null_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position +
                        data = mtdna_small_hd, family = binomial,
                        na.action = "na.fail", nAGQ = 0, #nAGQ = 0 & #nAGQ = 1 qualitatively the same, so using 0 bc converges much faster
                        control = glmerControl(optimizer = "bobyqa"))
-
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484) #because bootstraps for ME
-
-#null_ME <- ME(cbind(success, failure) ~ bp_scale + range_position,
-#              data = mtdna_small_pi, listw = hd_wt4) #ME is a permutation bootstrap on Moran's I for regression residuals and picks which ones account for most autocorrelation
-
-#models  
-null_model_hd_SA_RE <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                               (1|Family/Genus) + (1|Source) + (1|MarkerName) + (1|latlonbins), 
-                             data = mtdna_small_hd, family = binomial,
-                             na.action = "na.fail", nAGQ = 0,
-                             control = glmerControl(optimizer = "bobyqa"))
-
-null_model_hd_SA_ME <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                               (1|Family/Genus) + (1|Source) + (1|MarkerName) + fitted(null_ME), 
-                             data = mtdna_small_hd, family = binomial,
-                             na.action = "na.fail", nAGQ = 0,
-                             control = glmerControl(optimizer = "bobyqa"))
 
 #check fit with DHARMa
 null_model_hd_sim <- simulateResiduals(fittedModel = null_model_hd, plot = F) #creates "DHARMa" residuals from simulations
@@ -177,29 +134,6 @@ lat_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position +
                       na.action = "na.fail", nAGQ = 0,
                       control = glmerControl(optimizer = "bobyqa"))
   
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484)
-
-#lat_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + 
-#               lat_scale + I(lat_scale^2),
-#             data = mtdna_small_pi, listw = hd_wt4)
-
-#models
-lat_model_hd_SA_RE <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                              lat_scale + I(lat_scale^2) + (1|Family/Genus) + 
-                              (1|Source) + (1|MarkerName) + (1|latlonbins), 
-                            data = mtdna_small_hd, family = binomial,
-                            na.action = "na.fail", nAGQ = 0,
-                            control = glmerControl(optimizer = "bobyqa"))
-
-lat_model_hd_SA_ME <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                              lat_scale + I(lat_scale^2) + (1|Family/Genus) + 
-                              (1|Source) + (1|MarkerName) + fitted(lat_ME), 
-                            data = mtdna_small_hd, family = binomial,
-                            na.action = "na.fail", nAGQ = 0,
-                            control = glmerControl(optimizer = "bobyqa"))
-  
 #check fit with DHARMa
 lat_model_hd_sim <- simulateResiduals(fittedModel = lat_model_hd, plot = F)
 plotQQunif(lat_model_hd_sim)
@@ -217,29 +151,7 @@ abslat_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position +
                           data = mtdna_small_hd, family = binomial,
                           na.action = "na.fail", nAGQ = 0,
                           control = glmerControl(optimizer = "bobyqa"))
-  
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484)
-  
-#abslat_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + abslat_scale,
-#                data = mtdna_small_pi, listw = hd_wt4)
-  
-#models
-abslat_model_hd_SA_RE <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                              abslat_scale + (1|Family/Genus) + (1|Source) + 
-                              (1|MarkerName) + (1|latlonbins),
-                            data = mtdna_small_hd, family = binomial,
-                            na.action = "na.fail", nAGQ = 0,
-                            control = glmerControl(optimizer = "bobyqa"))
 
-abslat_model_hd_SA_ME <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                                 abslat_scale + (1|Family/Genus) + (1|Source) + 
-                                 (1|MarkerName) + fitted(abslat_ME),
-                               data = mtdna_small_hd, family = binomial,
-                               na.action = "na.fail", nAGQ = 0,
-                               control = glmerControl(optimizer = "bobyqa"))
-  
 #check fit with DHARMa
 abslat_model_hd_sim <- simulateResiduals(fittedModel = abslat_model_hd, plot = F)
 plotQQunif(abslat_model_hd_sim)
@@ -258,28 +170,6 @@ lon_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position +
                       na.action = "na.fail", nAGQ = 0,
                       control = glmerControl(optimizer = "bobyqa"))
 
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484)
-  
-#lon_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + bs(lon_scale),
-#             data = mtdna_small_pi, listw = hd_wt4)
-  
-#models
-lon_model_hd_SA_RE <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                              bs(lon_scale) + (1|Family/Genus) + (1|Source) + 
-                              (1|MarkerName) + (1|latlonbins),
-                            family = binomial, data = mtdna_small_hd, 
-                            na.action = "na.fail", nAGQ = 0,
-                            control = glmerControl(optimizer = "bobyqa"))
-
-lon_model_hd_SA_ME <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                              bs(lon_scale) + (1|Family/Genus) + (1|Source) + 
-                              (1|MarkerName) + fitted(lon_ME),
-                            family = binomial, data = mtdna_small_hd, 
-                            na.action = "na.fail", nAGQ = 0,
-                            control = glmerControl(optimizer = "bobyqa"))
-
 #checking fit with DHARMa
 lon_model_hd_sim <- simulateResiduals(fittedModel = lon_model_hd, plot = F)
 plotQQunif(lon_model_hd_sim)
@@ -297,29 +187,6 @@ lat_lon_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
                           family = binomial, data = mtdna_small_hd, 
                           na.action = "na.fail", nAGQ = 0,
                           control = glmerControl(optimizer = "bobyqa")) 
-
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484)
-
-#lat_lon_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + 
-#                   lat_scale + I(lat_scale^2) + bs(lon_scale),
-#                 data = mtdna_small_hd, family = binomial, listw = hd_wt4)
-  
-#models
-lat_lon_model_hd_SA_RE <- glmer(cbind(success, failure) ~ bp_scale + range_position + bs(lon_scale) + 
-                                  lat_scale + I(lat_scale^2) +(1|Family/Genus) + 
-                                  (1|Source) + (1|MarkerName) + (1|latlonbins),
-                                family = binomial, data = mtdna_small_hd, 
-                                na.action = "na.fail", nAGQ = 0,
-                                control = glmerControl(optimizer = "bobyqa"))
-
-lat_lon_model_hd_SA_ME <- glmer(cbind(success, failure) ~ bp_scale + range_position + bs(lon_scale) + 
-                                  lat_scale + I(lat_scale^2) +(1|Family/Genus) + 
-                                  (1|Source) + (1|MarkerName) + fitted(lat_lon_ME),
-                                family = binomial, data = mtdna_small_hd, 
-                                na.action = "na.fail", nAGQ = 0,
-                                control = glmerControl(optimizer = "bobyqa"))
   
 #checking fit with DHARMa
 lat_lon_model_hd_sim <- simulateResiduals(fittedModel = lat_lon_model_hd, plot = F)
@@ -339,29 +206,6 @@ abslat_lon_model_hd  <- glmer(cbind(success, failure) ~ bp_scale + range_positio
                                family = binomial, data = mtdna_small_hd, 
                                na.action = "na.fail", nAGQ = 0, 
                                control = glmerControl(optimizer = "bobyqa"))
-
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484)
-
-#abslat_lon_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + 
-#                      abslat_scale + bs(lon_scale),
-#                    data = mtdna_small_hd, family = binomial, listw = hd_wt4)
-  
-#models
-abslat_lon_model_hd_SA_RE  <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                                      bs(lon_scale) + abslat_scale + (1|Family/Genus) + 
-                                      (1|Source) + (1|MarkerName) + (1|latlonbins), 
-                                    family = binomial, data = mtdna_small_hd, 
-                                    na.action = "na.fail", nAGQ = 0, 
-                                    control = glmerControl(optimizer = "bobyqa"))
-
-abslat_lon_model_hd_SA_ME  <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                                      bs(lon_scale) + abslat_scale + (1|Family/Genus) + 
-                                      (1|Source) + (1|MarkerName) + fitted(abslat_lon_ME), 
-                                    family = binomial, data = mtdna_small_hd, 
-                                    na.action = "na.fail", nAGQ = 0, 
-                                    control = glmerControl(optimizer = "bobyqa"))
   
 #checking fit with DHARMa
 abslat_lon_model_hd_sim <- simulateResiduals(fittedModel = abslat_lon_model_hd, plot = F)
@@ -384,28 +228,6 @@ sstmean_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
                           family = binomial, data = mtdna_small_hd, 
                           na.action = "na.fail", nAGQ = 0,
                           control = glmerControl(optimizer = "bobyqa"))
-  
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484)
-
-#sstmean_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + sst.BO_sstmean,
-#                 data = mtdna_small_hd, family = binomial, listw = hd_wt4)
-
-#models
-sstmean_model_hd_SA_RE <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                                  sst.BO_sstmean + (1|Family/Genus) + (1|Source) + 
-                                  (1|MarkerName) + (1|latlonbins), 
-                                family = binomial, data = mtdna_small_hd, 
-                                na.action = "na.fail", nAGQ = 0,
-                                control = glmerControl(optimizer = "bobyqa"))
-
-sstmean_model_hd_SA_ME <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                                  sst.BO_sstmean + (1|Family/Genus) + (1|Source) + 
-                                  (1|MarkerName) + fitted(sstmean_ME), 
-                                family = binomial, data = mtdna_small_hd, 
-                                na.action = "na.fail", nAGQ = 0,
-                                control = glmerControl(optimizer = "bobyqa"))
 
 #checking fit with DHARMa
 sstmean_model_hd_sim <- simulateResiduals(fittedModel = sstmean_model_hd, plot = F)
@@ -424,28 +246,6 @@ sstrange_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position +
                             na.action = "na.fail", nAGQ = 0,
                             control = glmerControl(optimizer = "bobyqa"))
 
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484)
-
-#sstrange_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + sst.BO_sstrange,
-#                  data = mtdna_small_hd, family = binomial, listw = hd_wt4)
-  
-#models
-sstrange_model_hd_SA_RE <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                                   sst.BO_sstrange + (1|Family/Genus) + (1|Source) + 
-                                   (1|MarkerName) + (1|latlonbins), 
-                                 family = binomial, data = mtdna_small_hd, 
-                                 na.action = "na.fail", nAGQ = 0,
-                                 control = glmerControl(optimizer = "bobyqa"))
-
-sstrange_model_hd_SA_ME <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                                   sst.BO_sstrange + (1|Family/Genus) + (1|Source) + 
-                                   (1|MarkerName) + fitted(sstrange_ME), 
-                                 family = binomial, data = mtdna_small_hd, 
-                                 na.action = "na.fail", nAGQ = 0,
-                                 control = glmerControl(optimizer = "bobyqa"))
-  
 #checking fit with DHARMa
 sstrange_model_hd_sim <- simulateResiduals(fittedModel = sstrange_model_hd, plot = F)
 plotQQunif(sstrange_model_hd_sim)
@@ -463,28 +263,6 @@ sstmax_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + s
                           na.action = "na.fail", nAGQ = 0,
                           control = glmerControl(optimizer = "bobyqa"))
 
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484)
-
-#sstmax_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + sst.BO_sstmax,
-#                data = mtdna_small_hd, family = binomial, listw = hd_wt4)
-  
-#models
-sstmax_model_hd_SA_RE <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                                 sst.BO_sstmax + (1|Family/Genus) + (1|Source) + 
-                                 (1|MarkerName) + (1|latlonbins), 
-                               family = binomial, data = mtdna_small_hd, 
-                               na.action = "na.fail", nAGQ = 0,
-                               control = glmerControl(optimizer = "bobyqa"))
-
-sstmax_model_hd_SA_ME <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                                 sst.BO_sstmax + (1|Family/Genus) + (1|Source) + 
-                                 (1|MarkerName) + fitted(sstmax_ME), 
-                               family = binomial, data = mtdna_small_hd, 
-                               na.action = "na.fail", nAGQ = 0,
-                               control = glmerControl(optimizer = "bobyqa"))
-  
 #checking fit with DHARMa
 sstmax_model_hd_sim <- simulateResiduals(fittedModel = sstmax_model_hd, plot = F)
 plotQQunif(sstmax_model_hd_sim)
@@ -502,28 +280,6 @@ sstmin_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + s
                          na.action = "na.fail", nAGQ = 0,
                          control = glmerControl(optimizer = "bobyqa"))
   
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484)
-  
-#sstmin_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + sst.BO_sstmin,
-#                data = mtdna_small_hd, family = binomial, listw = hd_wt4)
-  
-#models
-sstmin_model_hd_SA_RE <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                                 sst.BO_sstmin + (1|Family/Genus) + (1|Source) + 
-                                 (1|MarkerName) + (1|latlonbins), 
-                               family = binomial, data = mtdna_small_hd, 
-                               na.action = "na.fail", nAGQ = 0,
-                               control = glmerControl(optimizer = "bobyqa"))
-
-sstmin_model_hd_SA_ME <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
-                                 sst.BO_sstmin + (1|Family/Genus) + (1|Source) + 
-                                 (1|MarkerName) + fitted(sstmin_ME), 
-                               family = binomial, data = mtdna_small_hd, 
-                               na.action = "na.fail", nAGQ = 0,
-                               control = glmerControl(optimizer = "bobyqa"))
-
 #checking fit with DHARMa
 sstmin_model_hd_sim <- simulateResiduals(fittedModel = sstmin_model_hd, plot = F)
 plotQQunif(sstmin_model_hd_sim)
@@ -541,30 +297,6 @@ chlomean_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position +
                             family = binomial, data = mtdna_small_hd, 
                             na.action = "na.fail", nAGQ = 0,
                             control = glmerControl(optimizer = "bobyqa"))
-  
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484)
-
-#chlomean_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + 
-#                    logchlomean + I(logchlomean^2),
-#                  data = mtdna_small_hd, family = binomial, listw = hd_wt4)
-  
-#models
-chlomean_model_hd_SA_RE <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomean + 
-                                   I(logchlomean^2) + (1|Family/Genus) + (1|Source) + 
-                                   (1|MarkerName) + (1|latlonbins), 
-                                 family = binomial, data = mtdna_small_hd, 
-                                 na.action = "na.fail", nAGQ = 0,
-                                 control = glmerControl(optimizer = "bobyqa"))
-
-
-chlomean_model_hd_SA_ME <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomean + 
-                                   I(logchlomean^2) + (1|Family/Genus) + (1|Source) + 
-                                   (1|MarkerName) + fitted(chlomean_ME), 
-                                 family = binomial, data = mtdna_small_hd, 
-                                 na.action = "na.fail", nAGQ = 0,
-                                 control = glmerControl(optimizer = "bobyqa"))
 
 #checking fit with DHARMa
 chlomean_model_hd_sim <- simulateResiduals(fittedModel = chlomean_model_hd, plot = F)
@@ -584,29 +316,6 @@ chlorange_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position 
                             na.action = "na.fail", nAGQ = 0,
                             control = glmerControl(optimizer = "bobyqa"))
   
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484)
-  
-#chlorange_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + 
-#                     logchlorange + I(logchlorange^2),
-#                   data = mtdna_small_hd, family = binomial, listw = hd_wt4)
-  
-#models
-chlorange_model_hd_SA_RE <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlorange + 
-                                    I(logchlorange^2) + (1|Family/Genus) + (1|Source) + 
-                                    (1|MarkerName) + (1|latlonbins), 
-                                  family = binomial, data = mtdna_small_hd, 
-                                  na.action = "na.fail", nAGQ = 0,
-                                  control = glmerControl(optimizer = "bobyqa"))
-
-chlorange_model_hd_SA_ME <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlorange + 
-                                    I(logchlorange^2) + (1|Family/Genus) + (1|Source) + 
-                                    (1|MarkerName) + fitted(chlorange_ME), 
-                                  family = binomial, data = mtdna_small_hd, 
-                                  na.action = "na.fail", nAGQ = 0,
-                                  control = glmerControl(optimizer = "bobyqa"))
-  
 #checking fit with DHARMa
 chlorange_model_hd_sim <- simulateResiduals(fittedModel = chlorange_model_hd, plot = F)
 plotQQunif(chlorange_model_hd_sim)
@@ -624,29 +333,6 @@ chlomax_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
                           family = binomial, data = mtdna_small_hd, 
                           na.action = "na.fail", nAGQ = 0,
                           control = glmerControl(optimizer = "bobyqa"))
-  
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484)
-  
-#chlomax_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + 
-#                   logchlomax + I(logchlomax^2),
-#                 data = mtdna_small_hd, family = binomial, listw = hd_wt4)
-  
-#models
-chlomax_model_hd_SA_RE <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomax + 
-                                  I(logchlomax^2) + (1|Family/Genus) + (1|Source) + 
-                                  (1|MarkerName) + (1|latlonbins), 
-                                family = binomial, data = mtdna_small_hd, 
-                                na.action = "na.fail", nAGQ = 0,
-                                control = glmerControl(optimizer = "bobyqa"))
-
-chlomax_model_hd_SA_ME <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomax + 
-                                  I(logchlomax^2) + (1|Family/Genus) + (1|Source) + 
-                                  (1|MarkerName) + fitted(chlomax_ME), 
-                                family = binomial, data = mtdna_small_hd, 
-                                na.action = "na.fail", nAGQ = 0,
-                                control = glmerControl(optimizer = "bobyqa"))
 
 #checking fit with DHARMa
 chlomax_model_hd_sim <- simulateResiduals(fittedModel = chlomax_model_hd, plot = F)
@@ -666,30 +352,7 @@ chlomin_model_hd <- glmer(cbind(success, failure) ~ bp_scale + range_position + 
                           na.action = "na.fail", nAGQ = 0,
                           control = glmerControl(optimizer = "bobyqa"))
 
-## with SAC ##
-#create MI eigenvectors
-set.seed(8484)
-  
-#chlomin_ME <- ME(cbind(success, failure) ~ bp_scale + range_position + 
-#                   logchlomin + I(logchlomin^2),
-#                 data = mtdna_small_hd, family = binomial, listw = hd_wt4)
-  
-#models
-chlomin_model_hd_SA_RE <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomin + 
-                                  I(logchlomin^2) + (1|Family/Genus) + (1|Source) + 
-                                  (1|MarkerName) + (1|latlonbins), 
-                                family = binomial, data = mtdna_small_hd, 
-                                na.action = "na.fail", nAGQ = 0,
-                                control = glmerControl(optimizer = "bobyqa"))
-
-chlomin_model_hd_SA_ME <- glmer(cbind(success, failure) ~ bp_scale + range_position + logchlomin + 
-                                  I(logchlomin^2) + (1|Family/Genus) + (1|Source) + 
-                                  (1|MarkerName) + fitted(chlomin_ME), 
-                                family = binomial, data = mtdna_small_hd, 
-                                na.action = "na.fail", nAGQ = 0,
-                                control = glmerControl(optimizer = "bobyqa"))
-  
-#checking fit with DHARMa
+  #checking fit with DHARMa
 chlomin_model_hd_sim <- simulateResiduals(fittedModel = chlomin_model_hd, plot = F)
 plotQQunif(chlomin_model_hd_sim)
 plotResiduals(chlomin_model_hd_sim)
@@ -698,12 +361,3 @@ plotResiduals(chlomin_model_hd_sim)
 #test for SAC
 sim_recalc <- recalculateResiduals(chlomin_model_hd_sim, group = mtdna_small_hd$coords)
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
-  
-######################################################################################################################
-  
-######## Save all ME ########
-#save all ME as an Rdata file so don't have to recreate every time
-save(list = c("null_ME", "lat_ME", "abslat_ME", "lon_ME", "lat_lon_ME", 
-              "abslat_lon_ME", "sstmean_ME", "sstrange_ME", "sstmax_ME", 
-              "sstmin_ME", "chlomean_ME", "chlorange_ME", "chlomax_ME", "chlomin_ME"), 
-     file = "mtdna_Hd_ME.Rdata")
