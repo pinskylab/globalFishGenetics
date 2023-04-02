@@ -3,19 +3,18 @@
 remove(list = ls())
 
 library(tidyverse)
-library(gridExtra)
-library(plotrix)
 library(lme4)
-library(MuMIn)
-library(glmmTMB)
 library(DHARMa)
-library(effects)
 library(sjPlot)
+library(splines)
+library(spdep)
+library(spatialreg)
 
 #read in data
 msat <- read.csv("output/msatloci_assembled.csv", stringsAsFactors = FALSE)
 msat_env <- read.csv("output/msat_env.csv", stringsAsFactors = FALSE)
 cp_info <- read.csv("output/spp_combined_info.csv", stringsAsFactors = FALSE)
+load("msat_He_ME.Rdata") #for ME weights, so don't have to re-run every time
 
 #merge dataframes
 msat <- cbind(msat[, -1], msat_env[, c('sst.BO_sstmean', 'sst.BO_sstrange', 'sst.BO_sstmax', 'sst.BO_sstmin', 
@@ -55,8 +54,11 @@ for (i in 1:nrow(msat)) { #calculate distance from range center as percentage (0
 msat_check <- subset(msat, msat$range_position > 1) #often right at aquamaps limit, round to 1 and keep
 msat$range_position[msat$range_position > 1] <- 1
 
+#subset to only those with range_position
+msat <- subset(msat, range_position != "NA")
+
 #add random effect for every unit
-msat$ID <- (1:28142)
+msat$ID <- (1:26733)
 
 #### Calculate success and failure ####
 msat$success <- round(msat$He*msat$n) #number of heterozygotes
@@ -69,36 +71,9 @@ msat$abslat <- abs(msat$lat)
 #scale geographic variables
 msat$lat_scale <- as.numeric(scale(msat$lat))
 msat$abslat_scale <- as.numeric(scale(msat$abslat))
-
-#convert lon to radians
-msat$lon_360 <- msat$lon + 180 #convert (-180,180) to (0,360)
-msat$lon_rad <- (2*pi*msat$lon_360)/360
+msat$lon_scale <- as.numeric(scale(msat$lon))
 
 #### Calculate environmental variables ####
-## log transform sst data ##
-#subset to only those with sst data
-msat <- subset(msat, msat$sst.BO_sstmean != "NA") #shouldn't remove any
-
-msat$logsstmean <- log10(msat$sst.BO_sstmean)
-  msat$logsstrange <- log10(msat$sst.BO_sstrange)
-  msat$logsstmax <- log10(msat$sst.BO_sstmax)
-  msat$logsstmin <- log10(msat$sst.BO_sstmin)
-
-#remove logsst = NA columns
-msat <- subset(msat, msat$logsstmean != "NaN")
-  msat <- subset(msat, msat$logsstrange != "NaN")
-  msat <- subset(msat, msat$logsstmax != "NaN")
-  msat <- subset(msat, msat$logsstmin != "NaN")
-
-## log transform dissox data ##
-#subset to only those with dissox data
-msat <- subset(msat, msat$BO_dissox != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-
-msat$logdissox <- log10(msat$BO_dissox)
-
-#remove logdissox = NA columns
-msat <- subset(msat, msat$logdissox != "NaN")
-
 ## log transform chlorophyll A ##
 #subset to only those with chloroA data
 msat <- subset(msat, msat$chloroA.BO_chlomean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
@@ -106,7 +81,7 @@ msat <- subset(msat, msat$chloroA.BO_chlomean != 0) #if any zeros will screw up 
   msat <- subset(msat, msat$chloroA.BO_chlomax != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
   msat <- subset(msat, msat$chloroA.BO_chlomin != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
 
-msat$logchlomean <- log10(msat$sst.BO_sstmean)
+msat$logchlomean <- log10(msat$chloroA.BO_chlomean)
   msat$logchlorange <- log10(msat$chloroA.BO_chlorange)
   msat$logchlomax <- log10(msat$chloroA.BO_chlomax)
   msat$logchlomin <- log10(msat$chloroA.BO_chlomin)
@@ -121,250 +96,614 @@ msat <- subset(msat, msat$logchlomax != "Inf" |
 msat <- subset(msat, msat$logchlomin != "Inf" | 
                  msat$logchlomin != "NaN")
 
-#############################################################################################################
+#### SAC variables ####
+#to account for spatial autocorrelation
+
+## Spatial random effect ##
+#bin in 1 degree lat/lon bands
+msat$latlonbins <- paste(round(msat$lat, 0), "_", 
+                         round(msat$lon, 0), sep = "")
+
+## Moran's eigenvectors ##
+#create matrix of geographic coordinates
+lonlat_mat <- cbind(msat$lon, msat$lat)
+
+#groups into nearest neighbor groups
+he_nb4 <- knearneigh(x = lonlat_mat, k = 4, longlat = TRUE) #creates matrix with the indices of points belonging to the sets of k nearest neighbors
+  he_nb4 <- knn2nb(he_nb4) #converts knn object to neighbors list (e.g. these indices in matrix group together spatially as nearest neighbors)
+  he_nb4 <- make.sym.nb(he_nb4) #checks for symmetry/transitivity
+
+#calculate weights
+he_wt4 <- nb2listw(he_nb4, style = "W") #creates spatial weights
+
+#### Create coordinate dataframe for SAC tests ####
+#grouping factor for residuals -- need to identify which ones have the same lat/lon
+msat$coords <- paste(msat$lat, "_", msat$lon, sep = "")
+  coords <- as.data.frame(unique(msat$coords))
+  colnames(coords) <- c("coords")
+
+#pull out unique coordinate for SAC test
+coords_unique <- coords %>% separate(coords, sep = "_", c("lat_unique", "lon_unique"))
+  x_unique <- coords_unique$lat_unique
+  y_unique <- coords_unique$lon_unique
+
+#############################################################################################################################
 
 ######## Null model ########
-#no repeat and no range_position
 
-binomial_msat_null <- glmer(cbind(success, failure) ~  CrossSpp + (1|Family/Genus/spp) + 
-                              (1|Source) + (1|ID), family = binomial, data = msat, 
-                            na.action = "na.fail", control = glmerControl(optimizer = "bobyqa")) #for some reason these ones keep throwing missing data error?
+null_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                         (1|Family/Genus) + (1|Source) + (1|ID),
+                       data = msat, family = binomial,
+                       na.action = "na.fail", nAGQ = 0, #nAGQ = 0 & #nAGQ = 1 qualitatively the same, so using 0 bc converges much faster
+                       control = glmerControl(optimizer = "bobyqa"))
+  
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484) #because bootstraps for ME
+
+null_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position,
+              data = msat, family = binomial, listw = he_wt4)
+
+#models
+null_model_he_SA_RE <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                               (1|Family/Genus) + (1|Source) + (1|ID) + (1|latlonbins),
+                             data = msat, family = binomial,
+                             na.action = "na.fail", nAGQ = 0, 
+                             control = glmerControl(optimizer = "bobyqa"))
+
+null_model_he_SA_ME <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                               (1|Family/Genus) + (1|Source) + (1|ID) + fitted(null_ME),
+                             data = msat, family = binomial,
+                             na.action = "na.fail", nAGQ = 0,
+                             control = glmerControl(optimizer = "bobyqa"))
 
 #checking fit with DHARMa
-binomial_msat_null_sim <- simulateResiduals(fittedModel = binomial_msat_null, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_msat_null_sim)
-plotResiduals(binomial_msat_null_sim)
-testDispersion(binomial_msat_null_sim)
+null_model_he_sim <- simulateResiduals(fittedModel = null_model_he, plot = F) #creates "DHARMa" residuals from simulations
+plotQQunif(null_model_he_sim)
+plotResiduals(null_model_he_sim)
+  plotResiduals(null_model_he_sim, msat$CrossSpp)
+  plotResiduals(null_model_he_sim, msat$range_position)
 
-#against CrossSpp
-plotResiduals(binomial_msat_null_sim, msat$CrossSpp)
+#test for SAC
+sim_recalc <- recalculateResiduals(null_model_he_sim, group = msat$coords) #need to group same lat/lons together
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
-#marginal effects
-plot_model(binomial_msat_null, type = "pred", pred.type = "re",
-           terms = "CrossSpp [all]")
-
+############################################################################################################################
+  
+######## Latitude & longitude models ########
+  
 #### lat model ####
-binomial_msat_lat <- glmer(cbind(success, failure) ~ CrossSpp + lat_scale + 
-                             I(lat_scale^2) + (1|Family/Genus/spp) + (1|Source) + (1|ID), 
-                           family = binomial, data = msat, na.action = "na.fail", 
-                           control = glmerControl(optimizer = "bobyqa"))
+lat_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                        lat_scale + I(lat_scale^2) + (1|Family/Genus) + 
+                        (1|Source) + (1|ID), 
+                      family = binomial, data = msat, 
+                      na.action = "na.fail", nAGQ = 0,
+                      control = glmerControl(optimizer = "bobyqa"))
 
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484)
+  
+lat_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position + 
+               lat_scale + I(lat_scale^2),
+              data = msat, family = binomial, listw = he_wt4)
+  
+#models
+lat_model_he_SA_RE <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                              lat_scale + I(lat_scale^2) + (1|Family/Genus) + 
+                              (1|Source) + (1|ID) + (1|latlonbins), 
+                            family = binomial, data = msat, 
+                            na.action = "na.fail", nAGQ = 0,
+                            control = glmerControl(optimizer = "bobyqa"))
+
+lat_model_he_SA_ME <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                              lat_scale + I(lat_scale^2) + (1|Family/Genus) + 
+                              (1|Source) + (1|ID) + fitted(lat_ME), 
+                            family = binomial, data = msat, 
+                            na.action = "na.fail", nAGQ = 0,
+                            control = glmerControl(optimizer = "bobyqa"))
+  
 #checking fit with DHARMa
-binomial_msat_lat_sim <- simulateResiduals(fittedModel = binomial_msat_lat, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_msat_lat_sim)
-plotResiduals(binomial_msat_lat_sim)
-  plotResiduals(binomial_msat_lat_sim, msat$lat_scale)
+lat_model_he_sim <- simulateResiduals(fittedModel = lat_model_he, plot = F)
+plotQQunif(lat_model_he_sim)
+plotResiduals(lat_model_he_sim)
+  plotResiduals(lat_model_he_sim, msat$lat_scale)
 
-#marginal effects
-plot_model(binomial_msat_lat, type = "pred", pred.type = "re",
-           terms = "lat_scale [all]")
+#test for SAC
+sim_recalc <- recalculateResiduals(lat_model_he_sim, group = msat$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 ### abslat model ####
-binomial_msat_abslat <- glmer(cbind(success, failure) ~ CrossSpp + abslat_scale + 
-                                (1|Family/Genus/spp) + (1|Source) + 
-                                (1|ID), family = binomial, data = msat, na.action = "na.fail", 
-                              control = glmerControl(optimizer = "bobyqa"))
+abslat_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + abslat_scale + 
+                           (1|Family/Genus) + (1|Source) + (1|ID), 
+                         family = binomial, data = msat, 
+                         na.action = "na.fail", nAGQ = 0,
+                         control = glmerControl(optimizer = "bobyqa"))
 
-#checking fit with DHARMa
-binomial_msat_abslat_sim <- simulateResiduals(fittedModel = binomial_msat_abslat, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_msat_abslat_sim)
-plotResiduals(binomial_msat_abslat_sim)
-  plotResiduals(binomial_msat_abslat_sim, msat$abslat_scale)
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484)
+  
+abslat_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position + abslat_scale,
+                data = msat, family = binomial, listw = he_wt4)
 
-#marginal effects
-plot_model(binomial_msat_abslat, type = "pred", pred.type = "re",
-           terms = "abslat_scale [all]")
-
-#### lon model ####
-binomial_msat_lon <- glmer(cbind(success, failure) ~ CrossSpp + sin(lon_rad) + cos(lon_rad) + 
-                             (1|Family/Genus/spp) + (1|Source) + (1|ID), 
-                           family = binomial, data = msat, na.action = "na.fail", 
-                           control = glmerControl(optimizer = "bobyqa"))
-
-#checking fit with DHARMa
-binomial_msat_lon_sim <- simulateResiduals(fittedModel = binomial_msat_lon, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_msat_lon_sim)
-plotResiduals(binomial_msat_lon_sim)
-  plotResiduals(binomial_msat_lon_sim, msat$lon_rad)
-
-#marginal effects
-plot_model(binomial_msat_lon, type = "pred", pred.type = "re",
-           terms = "lon_rad [all]")
-
-#### lat & lon model ####
-binomial_msat_lat_lon <- glmer(cbind(success, failure) ~  CrossSpp + lat_scale + I(lat_scale^2) + 
-                                 sin(lon_rad) + cos(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|ID), 
-                               family = binomial, data = msat, na.action = "na.fail",
+#models
+abslat_model_he_SA_RE <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                 abslat_scale + (1|Family/Genus) + (1|Source) + 
+                                 (1|ID) + (1|latlonbins), 
+                               family = binomial, data = msat, 
+                               na.action = "na.fail", nAGQ = 0,
                                control = glmerControl(optimizer = "bobyqa"))
 
+abslat_model_he_SA_ME <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                 abslat_scale + (1|Family/Genus) + (1|Source) + 
+                                 (1|ID) + fitted(abslat_ME), 
+                               family = binomial, data = msat, 
+                               na.action = "na.fail", nAGQ = 0,
+                               control = glmerControl(optimizer = "bobyqa"))
+  
 #checking fit with DHARMa
-binomial_msat_lat_lon_sim <- simulateResiduals(fittedModel = binomial_msat_lat_lon, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_msat_lat_lon_sim)
-plotResiduals(binomial_msat_lat_lon_sim)
-  plotResiduals(binomial_msat_lat_lon_sim, msat$lon_rad)
-  plotResiduals(binomial_msat_lat_lon_sim, msat$lat_scale)
+abslat_model_he_sim <- simulateResiduals(fittedModel = abslat_model_he, plot = F)
+plotQQunif(abslat_model_he_sim)
+plotResiduals(abslat_model_he_sim)
+  plotResiduals(abslat_model_he_sim, msat$abslat_scale)
 
-#marginal effects
-plot_model(binomial_msat_lat_lon, type = "pred", pred.type = "re",
-           terms = "lon_rad [all]")
-plot_model(binomial_msat_lat_lon, type = "pred", pred.type = "re",
-           terms = "lat_scale [all]")
+#test for SAC
+sim_recalc <- recalculateResiduals(abslat_model_he_sim, group = msat$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
+
+#### lon model ####
+lon_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + bs(lon_scale) + 
+                        (1|Family/Genus) + (1|Source) + (1|ID), 
+                      family = binomial, data = msat, 
+                      na.action = "na.fail", nAGQ = 0,
+                      control = glmerControl(optimizer = "bobyqa"))
+
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484)
+  
+lon_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position + bs(lon_scale),
+             data = msat, family = binomial, listw = he_wt4)
+  
+#models
+lon_model_he_SA_RE <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                              bs(lon_scale) + (1|Family/Genus) + 
+                              (1|Source) + (1|ID) + (1|latlonbins), 
+                            family = binomial, data = msat, 
+                            na.action = "na.fail", nAGQ = 0,
+                            control = glmerControl(optimizer = "bobyqa"))
+
+lon_model_he_SA_ME <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                              bs(lon_scale) + (1|Family/Genus) + 
+                              (1|Source) + (1|ID) + fitted(lon_ME), 
+                            family = binomial, data = msat, 
+                            na.action = "na.fail", nAGQ = 0,
+                            control = glmerControl(optimizer = "bobyqa"))
+  
+#checking fit with DHARMa
+lon_model_he_sim <- simulateResiduals(fittedModel = lon_model_he, plot = F)
+plotQQunif(lon_model_he_sim)
+plotResiduals(lon_model_he_sim)
+  plotResiduals(lon_model_he_sim, msat$lon_scale)
+
+#test for SAC
+sim_recalc <- recalculateResiduals(lon_model_he_sim, group = msat$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
+
+#### lat & lon model ####
+lat_lon_model_he <- glmer(cbind(success, failure) ~  CrossSpp + range_position + lat_scale + 
+                            I(lat_scale^2) + bs(lon_scale) + (1|Family/Genus) + 
+                            (1|Source) + (1|ID), 
+                          family = binomial, data = msat, 
+                          na.action = "na.fail", nAGQ = 0,
+                          control = glmerControl(optimizer = "bobyqa"))
+
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484)
+  
+lat_lon_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position + 
+                   bs(lon_scale) + lat_scale + I(lat_scale^2),
+                 data = msat, family = binomial, listw = he_wt4)
+  
+#models
+lat_lon_model_he_SA_RE <- glmer(cbind(success, failure) ~  CrossSpp + range_position + lat_scale + 
+                                  I(lat_scale^2) + bs(lon_scale) + (1|Family/Genus) + 
+                                  (1|Source) + (1|ID) + (1|latlonbins), 
+                                family = binomial, data = msat, 
+                                na.action = "na.fail", nAGQ = 0,
+                                control = glmerControl(optimizer = "bobyqa"))
+
+lat_lon_model_he_SA_ME <- glmer(cbind(success, failure) ~  CrossSpp + range_position + lat_scale + 
+                                  I(lat_scale^2) + bs(lon_scale) + (1|Family/Genus) + 
+                                  (1|Source) + (1|ID) + fitted(lat_lon_ME), 
+                                family = binomial, data = msat, 
+                                na.action = "na.fail", nAGQ = 0,
+                                control = glmerControl(optimizer = "bobyqa"))
+  
+#checking fit with DHARMa
+lat_lon_model_he_sim <- simulateResiduals(fittedModel = lat_lon_model_he, plot = F)
+plotQQunif(lat_lon_model_he_sim)
+plotResiduals(lat_lon_model_he_sim)
+  plotResiduals(lat_lon_model_he_sim, msat$lon_scale)
+  plotResiduals(lat_lon_model_he_sim, msat$lat_scale)
+
+#test for SAC
+sim_recalc <- recalculateResiduals(lat_lon_model_he_sim, group = msat$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 #### abslat & lon model ####
-binomial_msat_abslat_lon <- glmer(cbind(success, failure) ~ CrossSpp + abslat_scale +  
-                                    cos(lon_rad) + sin(lon_rad) + (1|Family/Genus/spp) + (1|Source) + (1|ID), 
-                                  family = binomial, data = msat, na.action = "na.fail", 
-                                  control = glmerControl(optimizer = "bobyqa"))
+abslat_lon_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                               abslat_scale +  bs(lon_scale) + (1|Family/Genus) + 
+                               (1|Source) + (1|ID), 
+                             family = binomial, data = msat, 
+                             na.action = "na.fail", nAGQ = 0,
+                             control = glmerControl(optimizer = "bobyqa"))
+
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484)
+
+abslat_lon_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position + 
+                      bs(lon_scale) + abslat_scale,
+                    data = msat, family = binomial, listw = he_wt4)
+  
+#models
+abslat_lon_model_he_SA_RE <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                     abslat_scale +  bs(lon_scale) + (1|Family/Genus) + 
+                                     (1|Source) + (1|ID) + (1|latlonbins), 
+                                   family = binomial, data = msat, 
+                                   na.action = "na.fail", nAGQ = 0,
+                                   control = glmerControl(optimizer = "bobyqa"))  
+
+abslat_lon_model_he_SA_ME <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                     abslat_scale +  bs(lon_scale) + (1|Family/Genus) + 
+                                     (1|Source) + (1|ID) + fitted(abslat_lon_ME), 
+                                   family = binomial, data = msat, 
+                                   na.action = "na.fail", nAGQ = 0,
+                                   control = glmerControl(optimizer = "bobyqa"))  
 
 #checking fit with DHARMa
-binomial_msat_abslat_lon_sim <- simulateResiduals(fittedModel = binomial_msat_abslat_lon, n = 250, plot = F) #creates "DHARMa" residuals from simulations
-plotQQunif(binomial_msat_abslat_lon_sim)
-plotResiduals(binomial_msat_abslat_lon_sim)
-  plotResiduals(binomial_msat_abslat_lon_sim, msat$lon_rad)
-  plotResiduals(binomial_msat_abslat_lon_sim, msat$abslat_scale)
+abslat_lon_model_he_sim <- simulateResiduals(fittedModel = abslat_lon_model_he, plot = F)
+plotQQunif(abslat_lon_model_he_sim)
+plotResiduals(abslat_lon_model_he_sim)
+  plotResiduals(abslat_lon_model_he_sim, msat$lon_scale)
+  plotResiduals(abslat_lon_model_he_sim, msat$abslat_scale)
 
-#marginal effects
-plot_model(binomial_msat_abslat_lon, type = "pred", pred.type = "re",
-           terms = "lon_rad [all]")
-plot_model(binomial_msat_abslat_lon, type = "pred", pred.type = "re",
-           terms = "abslat_scale [all]")
+#test for SAC
+sim_recalc <- recalculateResiduals(abslat_lon_model_he_sim, group = msat$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 ###################################################################################################################
 
 ######## Environmental models ########
 
 ##### sst mean model ####
-msat_he_binomial_sstmean <- glmer(cbind(success, failure) ~  CrossSpp + logsstmean + (1|Family/Genus/spp) + 
-                                    (1|Source) + (1|ID), family = binomial, data = msat, 
-                                  na.action = "na.fail", 
-                                  control = glmerControl(optimizer = "bobyqa"))
+sstmean_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + sst.BO_sstmean + 
+                            (1|Family/Genus) + (1|Source) + (1|ID), 
+                          family = binomial, data = msat, 
+                          na.action = "na.fail", nAGQ = 0,
+                          control = glmerControl(optimizer = "bobyqa"))
 
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484)
+  
+sstmean_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position + sst.BO_sstmean,
+                 data = msat, family = binomial, listw = he_wt4)
+
+#models
+sstmean_model_he_SA_RE <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                  sst.BO_sstmean + (1|Family/Genus) + (1|Source) + 
+                                  (1|ID) + (1|latlonbins), 
+                                family = binomial, data = msat, 
+                                na.action = "na.fail", nAGQ = 0,
+                                control = glmerControl(optimizer = "bobyqa"))
+
+sstmean_model_he_SA_ME <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                  sst.BO_sstmean + (1|Family/Genus) + (1|Source) + 
+                                  (1|ID) + fitted(sstmean_ME), 
+                                family = binomial, data = msat, 
+                                na.action = "na.fail", nAGQ = 0,
+                                control = glmerControl(optimizer = "bobyqa"))
+  
 #checking fit with DHARMa
-msat_he_binomial_sstmean_sim <- simulateResiduals(fittedModel = msat_he_binomial_sstmean, n = 1000, plot = F)
-plotQQunif(msat_he_binomial_sstmean_sim)
-plotResiduals(msat_he_binomial_sstmean_sim)
-  plotResiduals(msat_he_binomial_sstmean_sim, msat$logsstmean)
+sstmean_model_he_sim <- simulateResiduals(fittedModel = sstmean_model_he, plot = F)
+plotQQunif(sstmean_model_he_sim)
+plotResiduals(sstmean_model_he_sim)
+  plotResiduals(sstmean_model_he_sim, msat$sst.BO_sstmean)
 
-plot_model(msat_he_binomial_sstmean, type = "pred", pred.type = "re",
-           terms = "logsstmean [all]")
-
+#test for SAC
+sim_recalc <- recalculateResiduals(sstmean_model_he_sim, group = msat$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
+  
 #### sst range model ####
-msat_he_binomial_sstrange <- glmer(cbind(success, failure) ~ CrossSpp + logsstrange + (1|Family/Genus/spp) + 
-                                     (1|Source) + (1|ID), family = binomial, data = msat, 
-                                   na.action = "na.fail", 
-                                   control = glmerControl(optimizer = "bobyqa"))
+sstrange_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + sst.BO_sstrange + 
+                             (1|Family/Genus) + (1|Source) + (1|ID), 
+                           family = binomial, data = msat, 
+                           na.action = "na.fail", nAGQ = 0,
+                           control = glmerControl(optimizer = "bobyqa"))
 
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484)
+  
+sstrange_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position + sst.BO_sstrange,
+                   data = msat, family = binomial, listw = he_wt4)
+  
+#models
+sstrange_model_he_SA_RE <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                   sst.BO_sstrange + (1|Family/Genus) + (1|Source) + 
+                                   (1|ID) + (1|latlonbins), 
+                                 family = binomial, data = msat, 
+                                 na.action = "na.fail", nAGQ = 0,
+                                 control = glmerControl(optimizer = "bobyqa"))
+
+sstrange_model_he_SA_ME <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                   sst.BO_sstrange + (1|Family/Genus) + (1|Source) + 
+                                   (1|ID) + fitted(sstrange_ME), 
+                                 family = binomial, data = msat, 
+                                 na.action = "na.fail", nAGQ = 0,
+                                 control = glmerControl(optimizer = "bobyqa"))
+  
 #checking fit with DHARMa
-msat_he_binomial_sstrange_sim <- simulateResiduals(fittedModel = msat_he_binomial_sstrange, n = 1000, plot = F)
-plotQQunif(msat_he_binomial_sstrange_sim)
-plotResiduals(msat_he_binomial_sstrange_sim)
-  plotResiduals(msat_he_binomial_sstrange_sim, msat$logsstrange)
+sstrange_model_he_sim <- simulateResiduals(fittedModel = sstrange_model_he, plot = F)
+plotQQunif(sstrange_model_he_sim)
+plotResiduals(sstrange_model_he_sim)
+  plotResiduals(sstrange_model_he_sim, msat$sst.BO_sstrange)
 
-plot_model(msat_he_binomial_sstrange, type = "pred", pred.type = "re",
-           terms = "logsstrange [all]")
+#test for SAC
+sim_recalc <- recalculateResiduals(sstrange_model_he_sim, group = msat$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 #### sst max model ####
-## sst max w/rp ##
-msat_he_binomial_sstmax <- glmer(cbind(success, failure) ~ CrossSpp + logsstmax + (1|Family/Genus/spp) + 
-                                   (1|Source) + (1|ID), family = binomial, data = msat, 
-                                 na.action = "na.fail", 
-                                 control = glmerControl(optimizer = "bobyqa"))
+sstmax_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + sst.BO_sstmax + 
+                           (1|Family/Genus) + (1|Source) + (1|ID), 
+                         family = binomial, data = msat, 
+                         na.action = "na.fail", nAGQ = 0,
+                         control = glmerControl(optimizer = "bobyqa"))
+  
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484)
+  
+sstmax_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position + sst.BO_sstmax,
+                data = msat, family = binomial, listw = he_wt4)
+  
+#models
+sstmax_model_he_SA_RE <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                 sst.BO_sstmax + (1|Family/Genus) + (1|Source) + 
+                                 (1|ID) + (1|latlonbins), 
+                               family = binomial, data = msat, 
+                               na.action = "na.fail", nAGQ = 0,
+                               control = glmerControl(optimizer = "bobyqa"))
+
+sstmax_model_he_SA_ME <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                 sst.BO_sstmax + (1|Family/Genus) + (1|Source) + 
+                                 (1|ID) + fitted(sstmax_ME), 
+                               family = binomial, data = msat, 
+                               na.action = "na.fail", nAGQ = 0,
+                               control = glmerControl(optimizer = "bobyqa"))
 
 #checking fit with DHARMa
-msat_he_binomial_sstmax_sim <- simulateResiduals(fittedModel = msat_he_binomial_sstmax, n = 1000, plot = F)
-plotQQunif(msat_he_binomial_sstmax_sim)
-plotResiduals(msat_he_binomial_sstmax_sim)
-  plotResiduals(msat_he_binomial_sstmax_sim, msat$logsstmax)
+sstmax_model_he_sim <- simulateResiduals(fittedModel = sstmax_model_he, plot = F)
+plotQQunif(sstmax_model_he_sim)
+plotResiduals(sstmax_model_he_sim)
+  plotResiduals(sstmax_model_he_sim, msat$sst.BO_sstmax)
 
-plot_model(msat_he_binomial_sstmax, type = "pred", pred.type = "re",
-           terms = "logsstmax[all]")
+#test for SAC
+sim_recalc <- recalculateResiduals(sstmax_model_he_sim, group = msat$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 #### sst min model ####
-msat_he_binomial_sstmin <- glmer(cbind(success, failure) ~ CrossSpp + logsstmin + (1|Family/Genus/spp) + 
-                                   (1|Source) + (1|ID), family = binomial, data = msat, 
-                                 na.action = "na.fail", 
+sstmin_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + sst.BO_sstmin + 
+                           (1|Family/Genus) + (1|Source) + (1|ID), 
+                         family = binomial, data = msat, 
+                         na.action = "na.fail", nAGQ = 0,
+                         control = glmerControl(optimizer = "bobyqa"))
+
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484)
+  
+sstmin_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position + sst.BO_sstmin,
+                data = msat, family = binomial, listw = he_wt4)
+  
+#models
+sstmin_model_he_SA_RE <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                 sst.BO_sstmin + (1|Family/Genus) + (1|Source) + 
+                                 (1|ID) + (1|latlonbins), 
+                               family = binomial, data = msat, 
+                               na.action = "na.fail", nAGQ = 0,
+                               control = glmerControl(optimizer = "bobyqa"))
+  
+sstmin_model_he_SA_ME <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                 sst.BO_sstmin + (1|Family/Genus) + (1|Source) + 
+                                 (1|ID) + fitted(sstmin_ME), 
+                               family = binomial, data = msat, 
+                               na.action = "na.fail", nAGQ = 0,
+                               control = glmerControl(optimizer = "bobyqa"))
+
+#checking fit with DHARMa
+sstmin_model_he_sim <- simulateResiduals(fittedModel = sstmin_model_he, plot = F)
+plotQQunif(sstmin_model_he_sim)
+plotResiduals(sstmin_model_he_sim)
+  plotResiduals(sstmin_model_he_sim, msat$sst.BO_sstmin)
+
+#test for SAC
+sim_recalc <- recalculateResiduals(sstmin_model_he_sim, group = msat$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
+
+### chloro mean model ####
+chlomean_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                             logchlomean + I(logchlomean^2) + 
+                             (1|Family/Genus) + (1|Source) + (1|ID), 
+                           family = binomial, data = msat, 
+                           na.action = "na.fail", nAGQ = 0,
+                           control = glmerControl(optimizer = "bobyqa"))
+
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484)
+  
+chlomean_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position + 
+                    logchlomean + I(logchlomean^2),
+                  data = msat, family = binomial, listw = he_wt4)
+  
+#models
+chlomean_model_he_SA_RE <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                   logchlomean + I(logchlomean^2) + (1|Family/Genus) + 
+                                   (1|Source) + (1|ID) + (1|latlonbins), 
+                                 family = binomial, data = msat, 
+                                 na.action = "na.fail", nAGQ = 0,
                                  control = glmerControl(optimizer = "bobyqa"))
 
-#checking fit with DHARMa
-msat_he_binomial_sstmin_sim <- simulateResiduals(fittedModel = msat_he_binomial_sstmin, n = 1000, plot = F)
-plotQQunif(msat_he_binomial_sstmin_sim)
-plotResiduals(msat_he_binomial_sstmin_sim)
-  plotResiduals(msat_he_binomial_sstmin_sim, msat$logsstmin)
-
-plot_model(msat_he_binomial_sstmin, type = "pred", pred.type = "re",
-           terms = "logsstmin [all]")
-
-#### diss oxy mean model ####
-msat_he_binomial_dissox <- glmer(cbind(success, failure) ~ CrossSpp + logdissox + (1|Family/Genus/spp) + 
-                                   (1|Source) + (1|ID), family = binomial, data = msat, 
-                                 na.action = "na.fail", 
+chlomean_model_he_SA_ME <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                   logchlomean + I(logchlomean^2) + (1|Family/Genus) + 
+                                   (1|Source) + (1|ID) + fitted(chlomean_ME), 
+                                 family = binomial, data = msat, 
+                                 na.action = "na.fail", nAGQ = 0,
                                  control = glmerControl(optimizer = "bobyqa"))
-
+  
 #checking fit with DHARMa
-msat_he_binomial_dissox_sim <- simulateResiduals(fittedModel = msat_he_binomial_dissox, n = 1000, plot = F)
-plotQQunif(msat_he_binomial_dissox_sim)
-plotResiduals(msat_he_binomial_dissox_sim)
-  plotResiduals(msat_he_binomial_dissox_sim, msat$logdissox)
+chlomean_model_he_sim <- simulateResiduals(fittedModel = chlomean_model_he, plot = F)
+plotQQunif(chlomean_model_he_sim)
+plotResiduals(chlomean_model_he_sim)
+  plotResiduals(chlomean_model_he_sim, msat$logchlomean)
 
-plot_model(msat_he_binomial_dissox, type = "pred", pred.type = "re",
-           terms = "logdissox [all]")
+#test for SAC
+sim_recalc <- recalculateResiduals(chlomean_model_he_sim, group = msat$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
-#### chloroA mean model ####
-msat_he_binomial_chloromean <- glmer(cbind(success, failure) ~ CrossSpp + logchlomean + I(logchlomean^2) + 
-                                       (1|Family/Genus/spp) + (1|Source) + (1|ID), family = binomial, 
-                                     data = msat, na.action = "na.fail", 
-                                     control = glmerControl(optimizer = "bobyqa"))
+#### chloro range model ####
+chlorange_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                              logchlorange + I(logchlorange^2) + 
+                              (1|Family/Genus) + (1|Source) + (1|ID), 
+                            family = binomial, data = msat, 
+                            na.action = "na.fail", nAGQ = 0,
+                            control = glmerControl(optimizer = "bobyqa"))
 
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484)
+  
+chlorange_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position + 
+                     logchlorange + I(logchlorange^2),
+                   data = msat, family = binomial, listw = he_wt4)
+  
+#models
+chlorange_model_he_SA_RE <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                    logchlorange + I(logchlorange^2) + (1|Family/Genus) + 
+                                    (1|Source) + (1|ID) + (1|latlonbins), 
+                                  family = binomial, data = msat, 
+                                  na.action = "na.fail", nAGQ = 0,
+                                  control = glmerControl(optimizer = "bobyqa"))
+
+chlorange_model_he_SA_ME <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                    logchlorange + I(logchlorange^2) + (1|Family/Genus) + 
+                                    (1|Source) + (1|ID) + fitted(chlorange_ME), 
+                                  family = binomial, data = msat, 
+                                  na.action = "na.fail", nAGQ = 0,
+                                  control = glmerControl(optimizer = "bobyqa"))
+  
 #checking fit with DHARMa
-msat_he_binomial_chloromean_sim <- simulateResiduals(fittedModel = msat_he_binomial_chloromean, n = 1000, plot = F)
-plotQQunif(msat_he_binomial_chloromean_sim)
-plotResiduals(msat_he_binomial_chloromean_sim)
-  plotResiduals(msat_he_binomial_chloromean_sim, msat$logchlomean)
+chlorange_model_he_sim <- simulateResiduals(fittedModel = chlorange_model_he, plot = F)
+plotQQunif(chlorange_model_he_sim)
+plotResiduals(chlorange_model_he_sim)
+  plotResiduals(chlorange_model_he_sim, msat$logchlorange)
+  
+#test for SAC
+sim_recalc <- recalculateResiduals(chlorange_model_he_sim, group = msat$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
-plot_model(msat_he_binomial_chloromean, type = "pred", pred.type = "re",
-           terms = "logchlomean [all]")
+#### chloro max model ####
+chlomax_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                            logchlomax + I(logchlomax^2) + (1|Family/Genus) + 
+                            (1|Source) + (1|ID), 
+                          family = binomial, data = msat, 
+                          na.action = "na.fail", nAGQ = 0,
+                          control = glmerControl(optimizer = "bobyqa"))
 
-#### chloroA range model ####
-msat_he_binomial_chlororange <- glmer(cbind(success, failure) ~ CrossSpp + logchlorange + I(logchlorange^2) + 
-                                        (1|Family/Genus/spp) + (1|Source) + (1|ID), family = binomial, 
-                                      data = msat, na.action = "na.fail", 
-                                      control = glmerControl(optimizer = "bobyqa"))
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484)
+  
+chlomax_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position + 
+                   logchlomax + I(logchlomax^2),
+                 data = msat, family = binomial, listw = he_wt4)
+  
+#models
+chlomax_model_he_SA_RE <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                  logchlomax + I(logchlomax^2) + (1|Family/Genus) + 
+                                  (1|Source) + (1|ID) + (1|latlonbins), 
+                                family = binomial, data = msat, 
+                                na.action = "na.fail", nAGQ = 0,
+                                control = glmerControl(optimizer = "bobyqa"))
 
+chlomax_model_he_SA_ME <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                  logchlomax + I(logchlomax^2) + (1|Family/Genus) + 
+                                  (1|Source) + (1|ID) + fitted(chlomax_ME), 
+                                family = binomial, data = msat, 
+                                na.action = "na.fail", nAGQ = 0,
+                                control = glmerControl(optimizer = "bobyqa"))
+  
 #checking fit with DHARMa
-msat_he_binomial_chlororange_sim <- simulateResiduals(fittedModel = msat_he_binomial_chlororange, n = 1000, plot = F)
-plotQQunif(msat_he_binomial_chlororange_sim)
-plotResiduals(msat_he_binomial_chlororange_sim)
-  plotResiduals(msat_he_binomial_chlororange_sim, msat$logchlorange)
+chlomax_model_he_sim <- simulateResiduals(fittedModel = chlomax_model_he, plot = F)
+plotQQunif(chlomax_model_he_sim)
+plotResiduals(chlomax_model_he_sim)
+  plotResiduals(chlomax_model_he_sim, msat$logchlomax)
 
-plot_model(msat_he_binomial_chlororange, type = "pred", pred.type = "re",
-           terms = "logchlorange [all]")
-
-#### chloroA max model ####
-msat_he_binomial_chloromax <- glmer(cbind(success, failure) ~ CrossSpp + logchlomax + I(logchlomax^2) + 
-                                      (1|Family/Genus/spp) + (1|Source) + (1|ID), family = binomial, 
-                                    data = msat, na.action = "na.fail", 
-                                    control = glmerControl(optimizer = "bobyqa"))
-
-#checking fit with DHARMa
-msat_he_binomial_chloromax_sim <- simulateResiduals(fittedModel = msat_he_binomial_chloromax, n = 1000, plot = F)
-plotQQunif(msat_he_binomial_chloromax_sim)
-plotResiduals(msat_he_binomial_chloromax_sim)
-  plotResiduals(msat_he_binomial_chloromax_sim, msat$logchlomax)
-
-plot_model(msat_he_binomial_chloromax, type = "pred", pred.type = "re",
-           terms = "logchlomax [all]")
+#test for SAC
+sim_recalc <- recalculateResiduals(chlomax_model_he_sim, group = msat$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 #### chloroA min model ####
-msat_he_binomial_chloromin <- glmer(cbind(success, failure) ~ CrossSpp + logchlomin + I(logchlomin^2) + 
-                                      (1|Family/Genus/spp) + (1|Source) + (1|ID), family = binomial, 
-                                    data = msat, na.action = "na.fail", 
-                                    control = glmerControl(optimizer = "bobyqa"))
+chlomin_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                            logchlomin + I(logchlomin^2) + (1|Family/Genus) + 
+                            (1|Source) + (1|ID), 
+                          family = binomial, data = msat, 
+                          na.action = "na.fail", nAGQ = 0,
+                          control = glmerControl(optimizer = "bobyqa"))
 
+## with SAC ##
+#create MI eigenvectors
+set.seed(8484)
+  
+chlomin_ME <- ME(cbind(success, failure) ~ CrossSpp + range_position + 
+                   logchlomin + I(logchlomin^2),
+                 data = msat, family = binomial, listw = he_wt4)
+  
+#models
+chlomin_model_he_SA_RE <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                  logchlomin + I(logchlomin^2) + (1|Family/Genus) + 
+                                  (1|Source) + (1|ID) + (1|latlonbins), 
+                                family = binomial, data = msat, 
+                                na.action = "na.fail", nAGQ = 0,
+                                control = glmerControl(optimizer = "bobyqa"))
+
+chlomin_model_he_SA_ME <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
+                                  logchlomin + I(logchlomin^2) + (1|Family/Genus) + 
+                                  (1|Source) + (1|ID) + fitted(chlomin_ME), 
+                                family = binomial, data = msat, 
+                                na.action = "na.fail", nAGQ = 0,
+                                control = glmerControl(optimizer = "bobyqa"))
+  
 #checking fit with DHARMa
-msat_he_binomial_chloromin_sim <- simulateResiduals(fittedModel = msat_he_binomial_chloromin, n = 1000, plot = F)
-plotQQunif(msat_he_binomial_chloromin_sim)
-plotResiduals(msat_he_binomial_chloromin_sim)
-  plotResiduals(msat_he_binomial_chloromin_sim, msat$logchlomin)
+chlomin_model_he_sim <- simulateResiduals(fittedModel = chlomin_model_he, plot = F)
+plotQQunif(chlomin_model_he_sim)
+plotResiduals(chlomin_model_he_sim)
+  plotResiduals(chlomin_model_he_sim, msat$logchlomin)
 
-plot_model(msat_he_binomial_chloromin, type = "pred", pred.type = "re",
-           terms = "logchlomin [all]")
+#test for SAC
+sim_recalc <- recalculateResiduals(chlomin_model_he_sim, group = msat$coords)
+  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
+  
+######################################################################################################################
+  
+######## Save all ME ########
+#save all ME as an Rdata file so don't have to recreate every time
+save(list = c("null_ME", "lat_ME", "abslat_ME", "lon_ME", "lat_lon_ME", 
+                "abslat_lon_ME", "sstmean_ME", "sstrange_ME", "sstmax_ME", 
+                "sstmin_ME", "chlomean_ME", "chlorange_ME", "chlomax_ME", "chlomin_ME"), 
+       file = "msat_He_ME.Rdata")
