@@ -457,17 +457,18 @@ dim(msat) #21757 rows
 dim(msat) #21757 rows
 msat <- subset(msat, Source != "Cemal Turan (2015) Biochemical Systematics and Ecology 63: 174e182" | Site != "Bulgarian Varna Coast" 
                & Site != "Black Sea Igneada" & Site != "the Black Sea Samsun" & Site != "Black Sea Duzce" & Site != "Istanbul Bosporus " 
-               & Site != "the Black Sea Trabzon " & Site != "Marmara Sea BandÄ±rma") #excluded bc in Black Sea
+               & Site != "the Black Sea Trabzon " & Site != "Marmara Sea BandÄ±rma" & Site != "Marmara Sea Bandırma") #excluded bc in Black Sea
 msat <- subset(msat, Source != "Boissin et al. (2016) Molecular Ecology 25:2195-2209" | Country != "Ukraine" & Country != "Georgia" 
                & Country != "Bulgaria" & Country != "Romania") #excluded bc in Black Sea
 msat <- subset(msat, Source != "Boissin et al. (2016) Molecular Ecology 25:2195-2209" | Site != "Sinop" & Site != "Sile") #excluded bc in Black Sea
-msat <- subset(msat, Source != "L. C. Woodall et al. (2015) Conserv Genet 16:1139â€“1153" | Site != "VBU: Varna") #excluded bc in Black Sea
+msat <- subset(msat, Source != "L. C. Woodall et al. (2015) Conserv Genet 16:1139â€“1153" & Site != "VBU: Varna") #excluded bc in Black Sea
+  msat <- subset(msat, Source != "L. C. Woodall et al. (2015) Conserv Genet 16:1139–1153" | Site != "VBU: Varna") #same as above
 msat <- subset(msat, Source != "Miralles, Juanes & Garcia-Vazquez (2014) Transactions of the American Fisheries Society 143:1308-1315" | Site != "Istanbul") #excluded bc in Black Sea
 msat <- subset(msat, Source != "Sala-Bozano et al. 2009 Mol Ecol" | Site != "Foce Verde 07" & Site != "Foce Verde 06") #excluded bc in Black Sea
 msat <- subset(msat, Source != "Feldheim et al. 2009 Mol. Ecol. Res. 9:639-644" | Site != "Caspian Sea, Niyazabad") #excluded bc in Caspian Sea
 msat <- subset(msat, Source != "Ma et al. 2011 Env Fish Bio" | Site != "Wuhan region, Yangtze River") #excluded bc in freshwater river
 msat <- subset(msat, Source != "Ding et al. 2009 Cons Gen") #exclude whole study bc is of Atlantic halibut but sampled off China (farmed?)
-dim(msat) #21701 rows	
+dim(msat) #21695 rows	
 
 #change minutes & seconds to negative if lat/long is negative
 msat$lat_min <- ifelse(msat$lat_deg < 0, -msat$lat_min, msat$lat_min) #imp so things sum properly in next step
@@ -526,7 +527,7 @@ msat <- subset(msat, spp != "Alosa alosa" & spp != "Alosa fallax" & spp != "Alos
                  spp != "Osmerus mordax" & spp != "Odontesthes argentinensis" & spp != "Platichthys flesus" & 
                  spp != "Platichthys stellatus" & spp != "Pomatoschistus microps" & spp != "Pomatoschistus minutus" &
                  spp != "Pungitius pungitius")
-dim(msat) #20861 rows
+dim(msat) #20855 rows
 
 ######## Fix common name mistakes ########
 
@@ -1054,9 +1055,9 @@ msat$lon[msat$Source == "Knutsen et al. 2007 Mol. Ecol. Notes 7:851-853"] <- 5.5
 msat[(msat$He<0 | msat$He>1) & !is.na(msat$He),c('spp', 'Source', 'Country', 'Site', 'He')]	#0
 
 #make sure not including any monomorphic loci
-dim(msat) #20861 rows
+dim(msat) #20855 rows
 msat <- subset(msat, He != 0)
-dim(msat) #20824 rows
+dim(msat) #20818 rows
 
 #make sure all instances have He
 inds <- is.na(msat$He)
@@ -1522,7 +1523,7 @@ msat <- subset(msat, Source != "Zatcoff et al. 2004 Mar Bio" | spp != "Epinephel
   msat <- subset(msat, Source != "Zatcoff et al. 2004 Mar Bio" | spp != "Epinephelus morio" | Site != "North and South Carolina" | MarkerName != "Gag23" & MarkerName != "Mbo48")
 msat <- subset(msat, Source != "Zhao et al. 2009 Cons Gen: Epinephelus awoara" | MarkerName != "Epaw17" & MarkerName != "Epaw19" & MarkerName != "Epaw25" & MarkerName != "Epaw34" & MarkerName != "Epaw6")
 msat <- subset(msat, Source != "Zhao et al. 2009 Cons Gen: Epinephelus septemfasciatus" | MarkerName != "Ese33" & MarkerName != "Ese36" & MarkerName != "Ese43")
-dim(msat) #19900 rows
+dim(msat) #19894 rows
 
 ######## Check CrossSpp ########
 
@@ -1577,7 +1578,7 @@ msat[inds, ]
 #trim to just relevant columns
 msat <- msat[, c('spp', 'CommonName', 'Source', 'PrimerNote', 'Country', 'Site', 'lat', 'lon', 'stockid', 'CollectionYear', 
                  'NumMarkers', 'MarkerName', 'CrossSpp', 'n', 'Repeat', 'He', 'Hese', 'file')]
-dim(msat) #19900 x 18
+dim(msat) #19894 x 18
 
 #write out msat data (allow multiple loci per line)
 write.csv(msat, file = "output/msat_assembled.csv")
@@ -1587,14 +1588,14 @@ write.csv(msat, file = "output/msat_assembled.csv")
 ######## Make duplicates of datapoints that are averages across multiple loci (so each row is one locus) ########
 
 #check to make sure that know NumMarkers for all data points
-dim(msat) #19900
+dim(msat) #19894
 inds <- !is.na(msat$NumMarkers) #only want instances where NumMarkers is known
-sum(inds) #19900
+sum(inds) #19894
 sum(!inds) #0
 
 #replicate rows so that each is one locus
 msatloci <- msat[inds, ][rep(row.names(msat[inds, ]), msat$NumMarkers[inds]), ]
-dim(msatloci) #28551 rows
+dim(msatloci) #28545 rows
 
 #keep original He
 msatloci$He_orig <- msatloci$He
@@ -1603,7 +1604,7 @@ summary(msat$He) #0.74
 
 #re-number so no duplicate row names
 rownames(msatloci) <- 1:nrow(msatloci)
-nrow(msatloci) #28551 rows
+nrow(msatloci) #28545 rows
 
 ######## Add SE to He where Hese is known ########
 
@@ -1623,12 +1624,12 @@ for(i in inds) { #based on study-specific SE
 
 #check He distribution
 summary(msatloci$He_orig[inds]) #mean is 0.70
-summary(msatloci$He[inds]) #-0.29 to 2.01, mean = 0.70
+summary(msatloci$He[inds]) #-0.59 to 1.87, mean = 0.69
 msatloci$He[msatloci$He > 1] = 1 #enforce He <= 1
 msatloci$He[msatloci$He < 0] = 0 #enforce He >= 0 -->  then exclude monomorphic loci
 summary(msatloci$He[inds]) #mean is 0.68
 msatloci <- subset(msatloci, He != 0)
-summary(msatloci$He[inds]) #mean is 0.69
+summary(msatloci$He[inds]) #mean is 0.68
 
 ######## Add SE to He where Hese is not known ########
 
@@ -1649,7 +1650,7 @@ msatloci$He[inds] <- msatloci$He_orig[inds] + e #add sd to the mean
 
 #check He distribution
 summary(msatloci$He_orig[inds]) #mean is 0.72
-summary(msatloci$He[inds]) #-0.42 to 1.95, mean = 0.72
+summary(msatloci$He[inds]) #-0.34 to 1.72, mean = 0.72
 msatloci$He[msatloci$He > 1] = 1 #enforce He <= 1
 msatloci$He[msatloci$He < 0] = 0 #enforce He >= 0 -->  then exclude monomorphic loci
 summary(msatloci$He[inds]) #mean is 0.70
@@ -1659,4 +1660,5 @@ summary(msatloci$He[inds]) #mean is 0.71
 ######## Format and write out ########
 
 #write out msat data (one locus per line)
+#NOTE: these will vary slightly every time, because of the randomization of how per-locus He is calculated
 write.csv(msatloci, file = "output/msatloci_assembled.csv")

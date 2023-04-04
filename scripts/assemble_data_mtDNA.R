@@ -11,9 +11,7 @@
 remove(list = ls())
 
 #load libraries
-library(rfishbase)
-library(maps)
-library(mapdata)
+library(tidyverse)
 
 #read in data
 mtdna1 <- read.csv("data/mtDNA/Fishery lat mtDNA Complete Database.csv", stringsAsFactors = FALSE) #csv from previous msat assembly
@@ -68,13 +66,13 @@ inds <- duplicated(srdbmatch[, c('spp', 'Source', 'Country', 'Site', 'Collection
 inds2 <- duplicated(srdbmatch[, c('spp', 'Source', 'Country', 'Site', 'CollectionYear', 'lat_srdb', 'lon_srdb')])
 sum(inds)  #9
 sum(inds2) #9: matches at 9, means lat/lon is same for duplicated rows (checked --> duplicated bc diff markers at same location/species, OK to trim)
-nrow(srdbmatch) #329
+nrow(srdbmatch) #320
 srdbmatch <- srdbmatch[!inds, ] #trimming to unique rows (not trimming anything)
 nrow(srdbmatch) #320
 
 #merge SRDB stock info
-#sort(setdiff(srdbmatch$Source, mtdna$Source)) #papers in srdbmatch that aren't in msat (none)
-nrow(mtdna) #2117
+sort(setdiff(srdbmatch$Source, mtdna$Source)) #papers in srdbmatch that aren't in mtdna (none)
+nrow(mtdna) #2131
 mtdna <- merge(mtdna, srdbmatch[, c('spp', 'Source', 'Country', 'Site', 'CollectionYear', 'fbsci', 'stockid', 'lat_srdb', 'lon_srdb')], 
                all.x = TRUE, by = c('spp', 'Source', 'Country', 'Site', 'CollectionYear'))
 nrow(mtdna) #2117
@@ -100,16 +98,16 @@ mtdna$lat <- rowSums(cbind(mtdna$lat_deg, mtdna$lat_min/60, mtdna$lat_sec/3600),
 mtdna$lon <- rowSums(cbind(mtdna$lon_deg, mtdna$lon_min/60, mtdna$lon_sec/3600), na.rm = TRUE)
 
 #remove studies averaged across too broad a lat/lon range
-dim(mtdna) #2117 rows
+dim(mtdna) #2131 rows
 mtdna <- subset(mtdna, Source != "Keskin et al. 2012 Mitochondrial DNA 23(2):62-69") #remove bc all sites averaged together
 mtdna <- subset(mtdna, Source != "Le Port and Lavery. 2012 Journal of Heredity 103(2):174-185") #remove bc all sites averaged by country
 mtdna <- subset(mtdna, Site != "Western North Atlantic, US mid-Atlantic") #remove bc averaging across mid-Atlantic states
-dim(mtdna) #2102 rows
+dim(mtdna) #2116 rows
 
 #remove sites in black sea
-dim(mtdna) #2102 rows
+dim(mtdna) #2116 rows
 mtdna <- subset(mtdna, Site != "BS1" & Site != "BS2" & Site != "BS3" & Site != "BS4" & Site != "BL" & Site != "Black Sea (west)")
-dim(mtdna) #2096 rows
+dim(mtdna) #2110 rows
 
 ######## Fix species name mistakes ########
 
@@ -256,7 +254,7 @@ t(t(sort(unique(mtdna$spp)))) #print in one column (267 spp)
 t(t(sort(unique(mtdna$MarkerName)))) #print in one column (36 diff markers)
 
 #double-check source names
-t(t(sort(unique(mtdna$Source)))) #print in one column (240 studies)
+t(t(sort(unique(mtdna$Source)))) #print in one column (241 studies)
 
 #fix CollectionYear for studies where mis-reported
 mtdna$CollectionYear[mtdna$Source == "Sekino et. al 2011 Conservation Genetics 12:139-159" & mtdna$Site == "CYS" & mtdna$MarkerName == "control region"] <- "2004-2006"
@@ -1327,141 +1325,7 @@ mtdna[inds,]
 #trim to just relevant columns
 mtdna <- mtdna[ ,c('spp', 'CommonName', 'Source', 'Country', 'Site', 'lat', 'lon', 'stockid', 'CollectionYear', 
                    'MarkerName', 'n', 'bp', 'He', 'Hese', 'Pi', 'Pise', 'file')]
-dim(mtdna) #2038 x 17
+dim(mtdna) #2052 x 17
 
 #write out mtdna data (allow multiple loci per line)
 write.csv(mtdna, file='output/mtdna_assembled.csv')
-
-#########################################################################################################################################
-
-######## Find Fishbase species names ########
-
-#create translation table to compare own data with FB
-fbdat <- data.frame(spp <- sort(unique(mtdna$spp)), fbsci = NA)
-colnames(fbdat) <- c("spp", "fbsci") #change col names
-fbdat <- subset(fbdat, spp != "Branchiostoma belcheri" & spp != "Branchiostoma japonicum") #not in fishbase??
-
-#compare data to FB
-options(nwarnings = 300)
-nrow(fbdat) #260
-
-for(i in 1:nrow(fbdat)) {
-  cat(paste(i, " ", sep = ''))
-  {fbdat$fbsci[i] <- validate_names(as.character(fbdat$spp[i])) #check that sci names are correct --> look at synonyms
-  }
-}
-
-warnings() #none
-
-#find rows where FB has a different name
-inds <- which(fbdat$spp != fbdat$fbsci)
-fbdat[inds, ] #0: should be, checked this earlier in script
-
-#add Branchiostomas back in
-branchy_b <- c("Branchiostoma belcheri", "NA")
-branchy_j <- c("Branchiostoma japonicum", "NA")
-fbdat <- rbind(fbdat, branchy_b, branchy_j)
-fbdat <- fbdat[order(fbdat$spp), ] #re-order alphabetically
-
-#write out species data
-write.csv(fbdat, file = "output/fbdat_mtdna.csv", row.names = FALSE)
-
-#########################################################################################################################################
-
-######## Write out data for appending env and trait data ########
-
-#grab unique lat/lon coordinates
-latlon <- mtdna[!duplicated(mtdna[, c('lat', 'lon')]), c('lat', 'lon')] #grab unique lat/lon combos
-latlon <- latlon[order(latlon$lat, latlon$lon), ] #order by lat then lon
-
-#grab unique species
-spps <- mtdna[!duplicated(mtdna$spp), c('spp', 'CommonName')] #grab unique species and their common name
-spps <- spps[order(spps$spp, spps$CommonName), ] #order by sci name
-spps2 <- cbind(spps, fbdat[, c('fbsci')]) #add FB scientific name
-colnames(spps2) <- c('spp', 'COmmonName', 'fbsci') #set col names
-dim(spps) #262 x 2
-dim(spps2) #262 x 3
-
-#add FB SpecCode
-spps2$SpecCode <- NA #create empty column 
-spps2 <- subset(spps2, spp != "Branchiostoma belcheri" & spp != "Branchiostoma japonicum") #remove Branchiostoma again
-
-for(i in 1:nrow(spps2)) { #get code that specifies exact species on FB
-  cat(paste(i, " ", sep = ''))
-  spps2$SpecCode[i] <- as.numeric(species(spps2$fbsci[i], fields = 'SpecCode')$SpecCode)
-}
-
-#got 260 warnings --> seem to be just character coercing, okay
-summary(spps2) #no NAs in SpecCode
-
-#add Branchiostomas back in
-branchy_b <- c("Branchiostoma belcheri", "NA", "NA", "NA")
-branchy_j <- c("Branchiostoma japonicum", "NA", "NA", "NA")
-spps2 <- rbind(spps2, branchy_b, branchy_j)
-spps2 <- spps2[order(spps2$spp), ] #re-order alphabetically
-
-#check numbers of locations and species
-dim(latlon) #1660 locations
-dim(spps2) #262 species
-
-#write out lat long and species data
-write.csv(latlon, file = paste('output/latlon_mtdna_', Sys.Date(), '.csv', sep = ''), row.names = FALSE)
-write.csv(spps2, file = paste('output/spps_mtdna_', Sys.Date(), '.csv', sep = ''), row.names = FALSE)
-
-#########################################################################################################################################
-
-######## Plot sampling locations ########
-
-#set up to stand alone if need be
-
-#load libraries
-library(maps)
-library(mapdata)
-
-#read in data
-mtdna <- read.csv("output/mtdna_assembled.csv")
-
-#create map of mtdna sampling locations
-#pdf("figures/map_mtdna.pdf")
-#png("figures/map_mtdna.png", width = 2000, height = 1500)
-
-plot(mtdna$lon, mtdna$lat, col = "red", cex = 0.5, xlab = "Longitude", ylab = "Latitude", main = "Mitochondrial data")
-maps::map(database = "world", add = TRUE, fill = TRUE, col = "grey", boundary = FALSE, interior = FALSE)
-points(mtdna$lon, mtdna$lat, col = "red", cex = 0.5)
-
-#dev.off()
-
-#########################################################################################################################################
-
-######## Add life history traits ########
-
-######## Add body size ########
-
-#add body size from FB
-fbdat$maxlength <- NA #create column to fill in
-
-#pull out Branchiostoma data
-Branchiostoma_info <- subset(fbdat, spp == "Branchiostoma belcheri" | spp == "Branchiostoma japonicum") #pull Branchiostoma info to add in later
-fbdat_exBranchi <- subset(fbdat, spp != "Branchiostoma belcheri" & spp != "Branchiostoma japonicum") #remove Branchiostoma info to query FB w/out errors
-
-for (i in 1:nrow(fbdat_exBranchi)) { #get length data
-  cat(paste(i, " ", sep = ''))
-  fbdat_exBranchi$maxlength[i] <- as.numeric(species(fbdat_exBranchi$fbsci[i], fields = 'Length')$Length)
-  if(is.na(fbdat_exBranchi$maxlength[i])) { #if male maxlength is NA, use female maxlength
-    fbdat_exBranchi$maxlength[i] <- as.numeric(species(fbdat_exBranchi$fbsci[i], fields = 'LengthFemale')$LengthFemale)
-  }
-}
-
-summary(fbdat)
-
-#add Branchiostomas back in
-fbdat <- rbind(fbdat_exBranchi, Branchiostoma_info)
-fbdat <- fbdat[order(fbdat$spp), ] #re-order alphabetically
-
-#add trait data to full mtdna dataframe
-mtdna_traitdata <- merge(mtdna, fbdat[, c('spp', 'maxlength')], all.x = TRUE)
-dim(mtdna) #2038 x 18
-dim(mtdna_traitdata) #2038 x 19
-
-#write out mtdna with species trait data
-write.csv(mtdna_traitdata, file = paste("output/mtdnaTD_", Sys.Date(), ".csv", sep = ''))
