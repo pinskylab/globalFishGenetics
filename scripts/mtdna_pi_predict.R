@@ -13,11 +13,10 @@ remove(list = ls())
 
 #load libraries
 library(tidyverse)
-library(plotrix)
 library(lme4)
 library(data.table)
-library(DescTools)
 library(sjPlot)
+library(splines)
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
@@ -57,6 +56,9 @@ for (i in 1:nrow(mtdna_small_pi)) { #calculate distance from range center as per
 mtdna_check <- subset(mtdna_small_pi, mtdna_small_pi$range_position > 1) #often right at aquamaps limit, round to 1 and keep
 mtdna_small_pi$range_position[mtdna_small_pi$range_position > 1] <- 1
 
+#subset to only those with range_position
+mtdna_small_pi <- subset(mtdna_small_pi, range_position != "NA")
+
 #### Log transform pi ####
 mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$Pi != 0) #if any zeros will screw up log transformation (log10(0) is undefined, also probably shouldn't be there anyway)
   mtdna_small_pi$logpi <- log10(mtdna_small_pi$Pi)
@@ -70,18 +72,64 @@ mtdna_small_pi$abslat <- abs(mtdna_small_pi$lat)
 
 #scale geographic variables
 mtdna_small_pi$lat_scale <- as.numeric(scale(mtdna_small_pi$lat))
-  mtdna_small_pi$abslat_scale <- as.numeric(scale(mtdna_small_pi$abslat))
-
-#convert lon to radians
-mtdna_small_pi$lon_360 <- mtdna_small_pi$lon + 180 #convert (-180,180) to (0,360)
-  mtdna_small_pi$lon_rad <- (2*pi*mtdna_small_pi$lon_360)/360
+mtdna_small_pi$abslat_scale <- as.numeric(scale(mtdna_small_pi$abslat))
+mtdna_small_pi$lon_scale <- as.numeric(scale(mtdna_small_pi$lon))  
 
 #############################################################################################################
 
-######### Abslat figures #######
+######## Range position figure ########
 
-abslat_model_pi <- lm(logpi ~ abslat_scale, data = mtdna_small_pi, 
-                      na.action = "na.fail")
+null_model_pi <- lmer(logpi ~ range_position + (1|Family/Genus) + 
+                        (1|Source) + (1|MarkerName),
+                      data = mtdna_small_pi, na.action = "na.fail", 
+                      control = lmerControl(optimizer = "bobyqa"))
+
+#### Predict ####
+#marginal effects
+rangepos_eff <- plot_model(null_model_pi, type = "pred", 
+                           terms = "range_position [all]")
+
+#pull out marginal effects dataframe
+rangepos_eff_data <- as.data.frame(rangepos_eff$data)
+
+#unlog pi
+rangepos_eff_data$unlog_pi <- 10^(rangepos_eff_data$predicted)
+rangepos_eff_data$unlog_conf.low <- 10^(rangepos_eff_data$conf.low)
+rangepos_eff_data$unlog_conf.high <- 10^(rangepos_eff_data$conf.high)
+
+#### Plot range position ####
+
+mtdna_pi_rangepos_plot <- ggplot() +
+  geom_line(data = rangepos_eff_data,
+            aes(x = x, y = unlog_pi), 
+            color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = rangepos_eff_data,
+              aes(x = x, ymin = unlog_conf.low, ymax = unlog_conf.high),
+              color ="black", alpha = 0.1) +
+  geom_rug(data = mtdna_small_pi, mapping = aes(x = range_position), 
+           color = "#282828", inherit.aes = FALSE) + 
+  annotate("text", x = 0.05, y = 0.0078, label = "A", size =90) + 
+  ylim(0, 0.008) + xlim(0, 1) +
+  xlab("Range Position") + ylab("π (mtDNA)") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 130, vjust = -1.8),
+        axis.title.y = element_text(size = 130, vjust = 5),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 130, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 130, color = "black", margin = margin(r = 30)),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        plot.margin = unit(c(1,1.8,3,6), "cm"),
+        legend.position = "none")
+mtdna_pi_rangepos_plot
+
+#####################################################################################################################
+
+######### Abslat figure #######
+
+abslat_model_pi <- lmer(logpi ~ range_position + abslat_scale + (1|Family/Genus) +   
+                          (1|Source) + (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
+                        na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
@@ -102,7 +150,7 @@ abslat_eff_data$unlog_pi <- 10^(abslat_eff_data$predicted)
   abslat_eff_data$unlog_conf.low <- 10^(abslat_eff_data$conf.low)
   abslat_eff_data$unlog_conf.high <- 10^(abslat_eff_data$conf.high)
 
-#### Calculate means from raw data ####
+#### Calculate medians from raw data ####
 ## Round abslat DOWN to nearest multiple of 10 ##
 #create column to fill with the rounded abslat
 mtdna_small_pi$abslat_round <- NA
@@ -116,72 +164,50 @@ for(i in 1:nrow(mtdna_small_pi)) {
 
 mtdna_small_pi$abslat_round <- as.factor(mtdna_small_pi$abslat_round)
 
-## Calculate means and SE within each 10 degree band ##
+## Calculate medians within each 10 degree band ##
 mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so can use data.table functions
 
-#calculate mean in each 10 degree band
-abslat_pi_mean <- mtdna_small_pi[, mean(logpi), by = abslat_round]
-  colnames(abslat_pi_mean) <- c("abslat", "pi_mean")
-  abslat_pi_mean$pi_mean <- 10^(abslat_pi_mean$pi_mean) #unlog mean
-
-#calculate SE in each 10 degree band
-abslat_pi_SE <- mtdna_small_pi[, std.error(Pi), by = abslat_round]
-  colnames(abslat_pi_SE) <- c("abslat", "pi_SE")
-
-#count observations in each 10 degree band
-abslat_pi_count <- mtdna_small_pi[, .N, by = abslat_round]
-  colnames(abslat_pi_count) <- c("abslat", "pi_count")
-
-#merge mean and SE dataframes together
-abslat_pi_binned_means <- list(abslat_pi_mean, abslat_pi_SE, abslat_pi_count) %>% 
-  reduce(full_join, by = "abslat")
-abslat_pi_binned_means$abslat <- as.numeric(as.character(abslat_pi_binned_means$abslat))
-  abslat_pi_binned_means <- abslat_pi_binned_means[order(abslat), ]
-  abslat_pi_binned_means$X <- abslat_pi_binned_means$abslat + 5 #for plotting, plot in MIDDLE of 10 degree band
-  
-#calculate error bars (standard error)
-abslat_pi_binned_means$mean_lowerSE <- abslat_pi_binned_means$pi_mean - 
-  abslat_pi_binned_means$pi_SE
-abslat_pi_binned_means$mean_upperSE <- abslat_pi_binned_means$pi_mean + 
-  abslat_pi_binned_means$pi_SE
+#calculate median in each 10 degree band
+abslat_pi_median <- mtdna_small_pi[, median(Pi), by = abslat_round]
+  colnames(abslat_pi_median) <- c("abslat", "pi_median")
+  abslat_pi_median$abslat <- as.numeric(as.character(abslat_pi_median$abslat))
 
 #### Plot abslat ####
-#for legend
-colors <- c("10-degree binned means" = "#3F6DAA", "Regression" = "black")
 
-#plot
-mtdna_pi_abslat_plot_both <- ggplot() + 
-  geom_line(data = abslat_eff_data, 
-            aes(x = abslat, y = unlog_pi, color = "Regression"), size = 6) + 
-  geom_ribbon(data = abslat_eff_data, 
-              aes(x = abslat, ymin = unlog_conf.low, ymax = unlog_conf.high, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = abslat_pi_binned_means, 
-             aes(x = X, y = pi_mean, color = "10-degree binned means", size = pi_count), shape = "square") + 
-  geom_errorbar(data = abslat_pi_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "10-degree binned means"), width = 1.75, size = 3) + 
-  xlab("absolute latitude") + ylab("mtDNA pi") + labs(color = "Legend") + 
-  scale_y_continuous(limits = c(0, 0.0075)) + 
-  scale_color_manual(values = colors) +
-  scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
-             range = c(10, 20))
-mtdna_pi_abslat_plot_annotated_both <- mtdna_pi_abslat_plot_both + theme_bw() + coord_flip() + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
-        axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 100, color = "black"), 
-        axis.line = element_line(size = 2, color = "black"),
-        legend.position = "top", legend.box = "vertical", 
-        legend.text = element_text(size = 100), 
-        legend.key.size = unit(3, "cm"),
-        legend.title = element_blank())
-mtdna_pi_abslat_plot_annotated_both
+#violin plot
+mtdna_pi_abslat_plot_violin <- ggplot() +
+  geom_violin(data= mtdna_small_pi, aes(x = abslat_round, y = Pi), 
+              fill = "#768e92", color = "#768e92") + #factor, plotted as 0-8 numerically
+  geom_point(data = abslat_pi_median, aes(x = (abslat + 10)/10, y = pi_median), 
+             color = "#3d4e50", size = 24) + #to put on same scale as factors, divide by 10, adding 10 because 0 actually = factor of 1 (matches 0-10 round group) 
+  geom_line(data = abslat_eff_data,
+            aes(x = (abslat + 5)/10, y = unlog_pi), col = "black", alpha = 0.3, linewidth = 10) + #dividing by 10 to put on same factor scale, have to add 5 because violin plots are midpoint of 10 degree bands
+  geom_ribbon(data = abslat_eff_data,
+              aes(x = (abslat + 5)/10, ymin = unlog_conf.low, ymax = unlog_conf.high), 
+              col = "black", alpha = 0.1) +
+  annotate("text", x = 8, y = 0.0145, label = "A", size = 90) +
+  scale_y_continuous(limits = c(0, 0.015)) + 
+  scale_x_discrete(labels = c(5, 15, 25, 35, 45, 55, 65, 75)) +
+  xlab("Absolute Latitude") + ylab("π (mtDNA)") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 130, vjust = -1.6),
+        axis.title.y = element_text(size = 130, vjust = 5),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 130, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 130, color = "black", margin = margin(r = 30)),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        plot.margin = unit(c(1,1.8,3,6), "cm"),
+        legend.position = "none")
+mtdna_pi_abslat_plot_violin
 
 #############################################################################################################
 
-######### Lat figures #######
+######### Lat figure #######
 
-lat_model_pi <- lmer(logpi ~ lat_scale + I(lat_scale^2), data = mtdna_small_pi, 
-                     na.action = "na.fail")
+lat_model_pi <- lmer(logpi ~ range_position + lat_scale + I(lat_scale^2) + (1|Family/Genus) +   
+                          (1|Source) + (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
+                        na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
@@ -202,7 +228,7 @@ lat_eff_data$unlog_pi <- 10^(lat_eff_data$predicted)
 lat_eff_data$unlog_conf.low <- 10^(lat_eff_data$conf.low)
 lat_eff_data$unlog_conf.high <- 10^(lat_eff_data$conf.high)
 
-#### Calculate means from raw data ####
+#### Calculate medians from raw data ####
 ## Round lat DOWN to nearest multiple of 10 ##
 #create column to fill with the rounded abslat
 mtdna_small_pi$lat_round <- NA
@@ -216,89 +242,93 @@ for(i in 1:nrow(mtdna_small_pi)) {
 
 mtdna_small_pi$lat_round <- as.factor(mtdna_small_pi$lat_round)
 
-##Calculate means and SE within each 10 degree band ##
-
+## Calculate medians and MADs within each 10 degree band ##
 mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so can use data.table functions
 
-#calculate mean in each 10 degree band
-lat_pi_mean <- mtdna_small_pi[, mean(logpi), by = list(lat_round)]
-  colnames(lat_pi_mean) <- c("lat", "pi_mean")
-  lat_pi_mean$pi_mean <- 10^(lat_pi_mean$pi_mean)
+#calculate median in each 10 degree band
+lat_pi_median <- mtdna_small_pi[, median(Pi), by = lat_round]
+  colnames(lat_pi_median) <- c("lat", "pi_median")
 
-#calculate SE in each 10 degree band
-lat_pi_SE <- mtdna_small_pi[, std.error(Pi), by = list(lat_round)] 
-  colnames(lat_pi_SE) <- c("lat", "pi_SE")
+#calculate MAD in each 10 degree band
+lat_pi_MAD <- mtdna_small_pi[, mad(Pi), by = lat_round] #median absolute deviation (less affected by outliers, measure of dispersion around median = spread of observations in a dataset)
+  colnames(lat_pi_MAD) <- c("lat", "pi_MAD")
 
 #count observations in each 10 degree band
 lat_pi_count <- mtdna_small_pi[, .N, by = lat_round]
   colnames(lat_pi_count) <- c("lat", "pi_count")
 
 #merge mean and SE dataframes together
-lat_pi_binned_means <- list(lat_pi_mean, lat_pi_SE, lat_pi_count) %>% 
+lat_pi_binned_medians <- list(lat_pi_median, lat_pi_MAD, lat_pi_count) %>% 
   reduce(full_join, by = "lat")
-lat_pi_binned_means$lat <- as.numeric(as.character(lat_pi_binned_means$lat))
-  lat_pi_binned_means <- lat_pi_binned_means[order(lat), ]
-  lat_pi_binned_means$X <- lat_pi_binned_means$lat + 5 #for plotting, plot in MIDDLE of 10 degree band
+lat_pi_binned_medians$lat <- as.numeric(as.character(lat_pi_binned_medians$lat))
+lat_pi_binned_medians <- lat_pi_binned_medians[order(lat), ]
+lat_pi_binned_medians$X <- lat_pi_binned_medians$lat + 5 #for plotting, plot in MIDDLE of 10 degree band
 
-#calculate error bars (standard error)
-lat_pi_binned_means$mean_lowerSE <- lat_pi_binned_means$pi_mean - 
-  lat_pi_binned_means$pi_SE
-lat_pi_binned_means$mean_upperSE <- lat_pi_binned_means$pi_mean + 
-  lat_pi_binned_means$pi_SE
+#calculate error bars (MAD, variance around median)
+lat_pi_binned_medians$median_lowerMAD <- lat_pi_binned_medians$pi_median - 
+  lat_pi_binned_medians$pi_MAD
+  lat_pi_binned_medians$median_lowerMAD[lat_pi_binned_medians$median_lowerMAD < 0] <- 0.000001 #bound at ~0 for plotting
+lat_pi_binned_medians$median_upperMAD <- lat_pi_binned_medians$pi_median + 
+  lat_pi_binned_medians$pi_MAD
 
 #### Plot lat ####
-#for legend
-colors <- c("10-degree binned means" = "#3F6DAA", "Regression" = "black")
 
-#plot
-mtdna_pi_lat_plot_both <- ggplot() + 
-  geom_line(data = lat_eff_data, 
-            aes(x = lat, y = unlog_pi, color = "Regression"), size = 6) + 
-  geom_ribbon(data = lat_eff_data, 
-              aes(x = lat, ymin = unlog_conf.low, ymax = unlog_conf.high, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = lat_pi_binned_means, 
-             aes(x = X, y = pi_mean, color = "10-degree binned means", size = pi_count), shape = "square") + 
-  geom_errorbar(data = lat_pi_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "10-degree binned means"), width = 1.75, size = 3) + 
-  xlab("latitude") + ylab("mtDNA pi") + labs(color = "Legend") + 
-  scale_y_continuous(limits = c(0, 0.01)) + 
-  scale_color_manual(values = colors) + 
-  scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
-                        range = c(10, 20))
-mtdna_pi_lat_plot_annotated_both <- mtdna_pi_lat_plot_both + theme_bw() + coord_flip() + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
-        axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 100, color = "black"), 
-        axis.line = element_line(size = 2, color = "black"),
-        legend.position = "top", legend.box = "vertical", 
-        legend.text = element_text(size = 100), 
-        legend.key.size = unit(3, "cm"),
-        legend.title = element_blank())
-mtdna_pi_lat_plot_annotated_both
+mtdna_pi_lat_plot <- ggplot() +
+  geom_point(data = lat_pi_binned_medians, 
+             aes(x = X, y = pi_median), color = "darkblue", shape = "circle", size = 24) + 
+  geom_errorbar(data = lat_pi_binned_medians, 
+                aes(x = X, ymin = median_lowerMAD, ymax = median_upperMAD), 
+                color = "darkblue", width = 0, linewidth = 3) + 
+  geom_line(data = lat_eff_data,
+            aes(x = lat, y = unlog_pi), color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = lat_eff_data,
+              aes(x = lat, ymin = unlog_conf.low, ymax = unlog_conf.high), 
+              color ="black", alpha = 0.1) +
+  annotate("text", x = -70, y = 0.0145, label = "A", size = 100) +
+  scale_x_continuous(breaks = seq(-80, 80, 20)) +
+  scale_y_continuous(limits = c(0, 0.015)) + 
+  xlab("Latitude") + ylab("π (mtDNA)") +
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 160, vjust = -1.6),
+        axis.title.y = element_text(size = 160, vjust = 5),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        plot.margin = unit(c(1,1.8,3,6), "cm"),
+        legend.position = "none")
+mtdna_pi_lat_plot
 
 #####################################################################################################
 
-######## Lon figures ########
+######## Lon figure ########
 
-lon_model_pi <- lmer(logpi ~ sin(lon_rad) + cos(lon_rad), data = mtdna_small_pi, 
-                     na.action = "na.fail")
+lon_model_pi_spline <- lmer(logpi ~ range_position + bs(lon_scale) + 
+                               (1|Family/Genus) + (1|Source) + (1|MarkerName),
+                            data = mtdna_small_pi, na.action = "na.fail", 
+                             control = lmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
-lon_eff <- plot_model(lon_model_pi, type = "pred", 
-                         terms = "lon_rad [all]")
+lon_eff <- plot_model(lon_model_pi_spline, type = "eff",
+                         terms = "lon_scale [all]")
 
 #pull out marginal effects dataframe
 lon_eff_data <- as.data.frame(lon_eff$data)
-  lon_eff_data$lon <- ((360*lon_eff_data$x)/(2*pi))-180
+
+#unscale lon
+#use same scaled:center & scaled:scale from original data
+lon_scale <- scale(mtdna_small_pi$lon) #bc had to convert to numeric to run model/calculate marginal effects
+lon_eff_data$lon <- (lon_eff_data$x * attr(lon_scale, "scaled:scale")) + 
+  attr(lon_scale, "scaled:center")
 
 #unlog pi
 lon_eff_data$unlog_pi <- 10^(lon_eff_data$predicted)
   lon_eff_data$unlog_conf.low <- 10^(lon_eff_data$conf.low)
   lon_eff_data$unlog_conf.high <- 10^(lon_eff_data$conf.high)
   
-#### Calculate means from raw data ####
+#### Calculate medians from raw data ####
 ## Round lon DOWN to nearest multiple of 10 ##
 #create column to fill with the rounded lon
 mtdna_small_pi$lon_round <- NA
@@ -312,96 +342,70 @@ for(i in 1:nrow(mtdna_small_pi)) {
 
 mtdna_small_pi$lon_round <- as.factor(mtdna_small_pi$lon_round)
 
-## Calculate means and SE within each 10 degree band ##
+## Calculate medians and MADs within each 10 degree band ##
 mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so can use data.table functions
 
-#calculate mean in each 10 degree band
-lon_pi_mean <- mtdna_small_pi[, mean(logpi), by = lon_round]
-  colnames(lon_pi_mean) <- c("lon", "pi_mean")
-  lon_pi_mean$pi_mean <- 10^(lon_pi_mean$pi_mean) #unlog mean
+#calculate median in each 10 degree band
+lon_pi_median <- mtdna_small_pi[, median(Pi), by = lon_round]
+colnames(lon_pi_median) <- c("lon", "pi_median")
 
-#calculate SE in each 10 degree band
-lon_pi_SE <- mtdna_small_pi[, std.error(Pi), by = lon_round]
-  colnames(lon_pi_SE) <- c("lon", "pi_SE")
+#calculate MAD in each 10 degree band
+lon_pi_MAD <- mtdna_small_pi[, mad(Pi), by = lon_round] #median absolute deviation (less affected by outliers, measure of dispersion around median = spread of observations in a dataset)
+colnames(lon_pi_MAD) <- c("lon", "pi_MAD")
 
 #count observations in each 10 degree band
 lon_pi_count <- mtdna_small_pi[, .N, by = lon_round]
-  colnames(lon_pi_count) <- c("lon", "pi_count")
+colnames(lon_pi_count) <- c("lon", "pi_count")
 
 #merge mean and SE dataframes together
-lon_pi_binned_means <- list(lon_pi_mean, lon_pi_SE, lon_pi_count) %>% 
+lon_pi_binned_medians <- list(lon_pi_median, lon_pi_MAD, lon_pi_count) %>% 
   reduce(full_join, by = "lon")
-  lon_pi_binned_means$lon <- as.numeric(as.character(lon_pi_binned_means$lon))
-  lon_pi_binned_means <- lon_pi_binned_means[order(lon), ]
-  lon_pi_binned_means$X <- lon_pi_binned_means$lon + 5 #for plotting, plot in MIDDLE of 10 degree band
-    lon_pi_binned_means$X[lon_pi_binned_means$lon == 180] <- 180 #these two are on the 180 line
-  
-#calculate error bars (standard error)
-lon_pi_binned_means$mean_lowerSE <- lon_pi_binned_means$pi_mean - 
-  lon_pi_binned_means$pi_SE
-  lon_pi_binned_means$mean_lowerSE[lon_pi_binned_means$mean_lowerSE < 0] <- 0 #capping at 0 if goes negative
-lon_pi_binned_means$mean_upperSE <- lon_pi_binned_means$pi_mean + 
-  lon_pi_binned_means$pi_SE
-  lon_pi_binned_means$mean_upperSE[lon_pi_binned_means$mean_upperSE > 0.015] <- 0.015 #capping at 0.015 for plotting
+lon_pi_binned_medians$lon <- as.numeric(as.character(lon_pi_binned_medians$lon))
+lon_pi_binned_medians <- lon_pi_binned_medians[order(lon), ]
+lon_pi_binned_medians$X <- lon_pi_binned_medians$lon + 5 #for plotting, plot in MIDDLE of 10 degree band
+lon_pi_binned_medians$lon[lon_pi_binned_medians$lon == 185] <- 180 #bc nothing above 180
+
+#calculate error bars (MAD, variance around median)
+lon_pi_binned_medians$median_lowerMAD <- lon_pi_binned_medians$pi_median - 
+  lon_pi_binned_medians$pi_MAD
+  lon_pi_binned_medians$median_lowerMAD[lon_pi_binned_medians$median_lowerMAD < 0] <- 0.000001
+lon_pi_binned_medians$median_upperMAD <- lon_pi_binned_medians$pi_median + 
+  lon_pi_binned_medians$pi_MAD
+  lon_pi_binned_medians$median_upperMAD[lon_pi_binned_medians$median_upperMAD > 0.015] <- 0.01499999 #for plotting
 
 #### Plot lon ####
-#for legend
-colors <- c("10-degree binned means" = "#3F6DAA", "Regression" = "black")
 
-#plot
-mtdna_pi_lon_plot_both <- ggplot() + 
-  geom_line(data = lon_eff_data, 
-            aes(x = lon, y = unlog_pi, color = "Regression"), size = 6) + 
-  geom_ribbon(data = lon_eff_data, 
-              aes(x = lon, ymin = unlog_conf.low, ymax = unlog_conf.high, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = lon_pi_binned_means, 
-             aes(x = X, y = pi_mean, color = "10-degree binned means", size = pi_count), shape = "square") + 
-  geom_errorbar(data = lon_pi_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "10-degree binned means"), width = 1.75, size = 3) + 
-  xlab("longitude") + ylab("mtDNA pi") + labs(color = "Legend") + 
-  scale_color_manual(values = colors) + 
+mtdna_pi_lon_plot <- ggplot() +
+  geom_point(data = lon_pi_binned_medians, 
+             aes(x = X, y = pi_median), color = "darkblue", shape = "circle", size = 24) + 
+  geom_errorbar(data = lon_pi_binned_medians, 
+                aes(x = X, ymin = median_lowerMAD, ymax = median_upperMAD), 
+                color = "darkblue", width = 0, linewidth = 3) + 
+  geom_line(data = lon_eff_data,
+            aes(x = lon, y = unlog_pi), color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = lon_eff_data,
+              aes(x = lon, ymin = unlog_conf.low, ymax = unlog_conf.high), 
+              color ="black", alpha = 0.1)  + 
+  annotate("text", x = -175, y = 0.0145, label = "A", size = 100) +
+  scale_x_continuous(breaks = seq(-180, 180, 20)) +
   scale_y_continuous(limits = c(0, 0.015)) + 
-  scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
-                        range = c(10, 20))
-mtdna_pi_lon_plot_annotated_both <- mtdna_pi_lon_plot_both + theme_bw() + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
-        axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 100, color = "black"), 
-        axis.line = element_line(size = 2, color = "black"),
-        legend.position = "top", legend.box = "vertical", 
-        legend.text = element_text(size = 100), 
-        legend.key.size = unit(3, "cm"),
-        legend.title = element_blank())
-mtdna_pi_lon_plot_annotated_both
+  xlab("Longitude") + ylab("π (mtDNA)") +
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 160, vjust = -1.6),
+        axis.title.y = element_text(size = 160, vjust = 5),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30), 
+                                   angle = 90, vjust = 0.5, hjust=1),
+        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        plot.margin = unit(c(1,1.8,3,6), "cm"),
+        legend.position = "none")
+mtdna_pi_lon_plot
 
 #############################################################################################################
 
 ######## Calculate environmental variables ########
-
-#### log transform sst data ####
-#subset to only those with sst data
-mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$sst.BO_sstmean != "NA") #shouldn't remove any
-
-mtdna_small_pi$logsstmean <- log10(mtdna_small_pi$sst.BO_sstmean)
-  mtdna_small_pi$logsstrange <- log10(mtdna_small_pi$sst.BO_sstrange)
-  mtdna_small_pi$logsstmax <- log10(mtdna_small_pi$sst.BO_sstmax)
-  mtdna_small_pi$logsstmin <- log10(mtdna_small_pi$sst.BO_sstmin)
-
-#remove logsst = NA columns
-mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstmean != "NaN")
-  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstrange != "NaN")
-  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstmax != "NaN")
-  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logsstmin != "NaN")
-
-#### log transform dissox data ####
-#subset to only those with dissox data
-mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$BO_dissox != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-
-mtdna_small_pi$logdissox <- log10(mtdna_small_pi$BO_dissox)
-
-#remove logdissox = NA columns
-mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logdissox != "NaN")
 
 #### log transform chlorophyll A ####
 #subset to only those with chloroA data
@@ -410,7 +414,7 @@ mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlomean != 0
   mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlomax != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
   mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlomin != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
 
-mtdna_small_pi$logchlomean <- log10(mtdna_small_pi$sst.BO_sstmean)
+mtdna_small_pi$logchlomean <- log10(mtdna_small_pi$chloroA.BO_chlomean)
   mtdna_small_pi$logchlorange <- log10(mtdna_small_pi$chloroA.BO_chlorange)
   mtdna_small_pi$logchlomax <- log10(mtdna_small_pi$chloroA.BO_chlomax)
   mtdna_small_pi$logchlomin <- log10(mtdna_small_pi$chloroA.BO_chlomin)
@@ -427,394 +431,250 @@ mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlomean != "Inf" |
 
 #######################################################################################################
 
-######## SST mean figures ########
+######## SST mean figure ########
 
-SSTmean_model_pi <- lm(logpi ~ logsstmean, data = mtdna_small_pi, 
-                        na.action = "na.fail")
+SSTmean_model_pi <- lmer(logpi ~ range_position + sst.BO_sstmean + 
+                              (1|Family/Genus) + (1|Source) + (1|MarkerName),
+                            data = mtdna_small_pi, na.action = "na.fail", 
+                            control = lmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
 SSTmean_eff <- plot_model(SSTmean_model_pi, type = "pred", 
-                      terms = "logsstmean [all]")
+                      terms = "sst.BO_sstmean [all]")
 
 #pull out marginal effects dataframe
 SSTmean_eff_data <- as.data.frame(SSTmean_eff$data)
-  SSTmean_eff_data$sstmean <- 10^(SSTmean_eff_data$x)
 
 #unlog pi
 SSTmean_eff_data$unlog_pi <- 10^(SSTmean_eff_data$predicted)
   SSTmean_eff_data$unlog_conf.low <- 10^(SSTmean_eff_data$conf.low)
   SSTmean_eff_data$unlog_conf.high <- 10^(SSTmean_eff_data$conf.high)
 
-#### Calculate means from raw data ####
-## Round SSTmean DOWN to nearest multiple of 5 ##
-#create column to fill with the rounded SSTmean
-mtdna_small_pi$SSTmean_round <- NA
-
-#fill round column in
-for(i in 1:nrow(mtdna_small_pi)) {
-  cat(paste(i, " ", sep = ''))
-  {mtdna_small_pi$SSTmean_round[i] <- DescTools::RoundTo(mtdna_small_pi$sst.BO_sstmean[i], 
-                                                        multiple = 5, FUN = floor)} #rounding DOWN (e.g. SSTmean 5-10 gets value of 5)
-}
-
-mtdna_small_pi$SSTmean_round <- as.factor(mtdna_small_pi$SSTmean_round)
-
-## Calculate means and SE within each 5 degree band ##
-mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so can use data.table functions
-
-#calculate mean in each 5 degree band
-SSTmean_pi_mean <- mtdna_small_pi[, mean(logpi), by = SSTmean_round]
-  colnames(SSTmean_pi_mean) <- c("SSTmean", "pi_mean")
-  SSTmean_pi_mean$pi_mean <- 10^(SSTmean_pi_mean$pi_mean) #unlog mean
-
-#calculate SE in each 5 degree band
-SSTmean_pi_SE <- mtdna_small_pi[, std.error(Pi), by = SSTmean_round]
-  colnames(SSTmean_pi_SE) <- c("SSTmean", "pi_SE")
-
-#count observations in each 5 degree band
-SSTmean_pi_count <- mtdna_small_pi[, .N, by = SSTmean_round]
-  colnames(SSTmean_pi_count) <- c("SSTmean", "pi_count")
-
-#merge mean and SE dataframes together
-SSTmean_pi_binned_means <- list(SSTmean_pi_mean, SSTmean_pi_SE, SSTmean_pi_count) %>% 
-  reduce(full_join, by = "SSTmean")
-  SSTmean_pi_binned_means$SSTmean <- as.numeric(as.character(SSTmean_pi_binned_means$SSTmean))
-  SSTmean_pi_binned_means <- SSTmean_pi_binned_means[order(SSTmean), ]
-  SSTmean_pi_binned_means$X <- SSTmean_pi_binned_means$SSTmean + 2.5 #for plotting, plot in MIDDLE of 5 degree band
-
-#calculate error bars (standard error)
-SSTmean_pi_binned_means$mean_lowerSE <- SSTmean_pi_binned_means$pi_mean - 
-  SSTmean_pi_binned_means$pi_SE
-SSTmean_pi_binned_means$mean_upperSE <- SSTmean_pi_binned_means$pi_mean + 
-  SSTmean_pi_binned_means$pi_SE
-
 #### Plot SSTmean ####
-#for legend
-colors <- c("5-degree binned means" = "#3F6DAA", "Regression" = "black")
 
-#plot
-mtdna_pi_SSTmean_plot_both <- ggplot() + 
-  geom_line(data = SSTmean_eff_data, 
-            aes(x = sstmean, y = unlog_pi, color = "Regression"), size = 6) + 
-  geom_ribbon(data = SSTmean_eff_data, 
-              aes(x = sstmean, ymin = unlog_conf.low, ymax = unlog_conf.high, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = SSTmean_pi_binned_means, 
-             aes(x = X, y = pi_mean, color = "5-degree binned means", size = pi_count), shape = "square") + 
-  geom_errorbar(data = SSTmean_pi_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "5-degree binned means"), width = 1.75, size = 3) + 
-  xlab("SST mean") + ylab("mtDNA pi") + labs(color = "Legend") + 
-  scale_color_manual(values = colors) + 
-  scale_y_continuous(limits = c(0, 0.012)) + 
-  scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
-                        range = c(10, 20))
-mtdna_pi_SSTmean_plot_annotated_both <- mtdna_pi_SSTmean_plot_both + theme_bw() + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
-        axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 100, color = "black"), 
-        axis.line = element_line(size = 2, color = "black"),
-        legend.position = "top", legend.box = "vertical", 
-        legend.text = element_text(size = 100), 
-        legend.key.size = unit(3, "cm"),
-        legend.title = element_blank())
-mtdna_pi_SSTmean_plot_annotated_both
+mtdna_pi_sstmean_plot <- ggplot() +
+  geom_line(data = SSTmean_eff_data,
+            aes(x = x, y = unlog_pi), color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = SSTmean_eff_data,
+              aes(x = x, ymin = unlog_conf.low, ymax = unlog_conf.high), 
+              color ="black", alpha = 0.1) +
+  geom_rug(data = mtdna_small_pi, mapping = aes(x = sst.BO_sstmean), 
+           color = "#282828", inherit.aes = FALSE) + 
+  annotate("text", x = 1, y = 0.0078, label = "A", size = 100) + 
+  ylim(0, 0.008) + xlim(0, 30) +
+  xlab("Mean SST (°C)") + ylab("π (mtDNA)") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 160, vjust = -2),
+        axis.title.y = element_text(size = 160, vjust = 5),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        plot.margin = unit(c(1,1.8,3,6), "cm"),
+        legend.position = "none")
+mtdna_pi_sstmean_plot
 
 #############################################################################################################
 
-######## SST min models ########
+######## SST range figure ########
 
-SSTmin_model_pi <- lmer(logpi ~ logsstmin + (1|Family/Genus) + (1|Source) + (1|MarkerName), 
-                        REML = FALSE, data = mtdna_small_pi, 
-                                   na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+SSTrange_model_pi <- lmer(logpi ~ range_position + sst.BO_sstrange + 
+                           (1|Family/Genus) + (1|Source) + (1|MarkerName),
+                         data = mtdna_small_pi, na.action = "na.fail", 
+                         control = lmerControl(optimizer = "bobyqa"))
+
+#### Predict ####
+#marginal effects
+SSTrange_eff <- plot_model(SSTrange_model_pi, type = "pred", 
+                          terms = "sst.BO_sstrange [all]")
+
+#pull out marginal effects dataframe
+SSTrange_eff_data <- as.data.frame(SSTrange_eff$data)
+
+#unlog pi
+SSTrange_eff_data$unlog_pi <- 10^(SSTrange_eff_data$predicted)
+SSTrange_eff_data$unlog_conf.low <- 10^(SSTrange_eff_data$conf.low)
+SSTrange_eff_data$unlog_conf.high <- 10^(SSTrange_eff_data$conf.high)
+
+#### Plot SSTrange ####
+
+mtdna_pi_sstrange_plot <- ggplot() +
+  geom_line(data = SSTrange_eff_data, aes(x = x, y = unlog_pi), 
+            color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = SSTrange_eff_data,
+              aes(x = x, ymin = unlog_conf.low, ymax = unlog_conf.high), 
+              color ="black", alpha = 0.1) +
+  geom_rug(data = mtdna_small_pi, mapping = aes(x = sst.BO_sstrange), 
+           color = "#282828", inherit.aes = FALSE) + 
+  annotate("text", x = 1, y = 0.0078, label = "A", size = 100) + 
+  ylim(0, 0.008) + xlim(0, 30) +
+  xlab("SST Range (°C)") + ylab("π (mtDNA)") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 160, vjust = -1.8),
+        axis.title.y = element_text(size = 160, vjust = 5),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        plot.margin = unit(c(1,1.8,3,6), "cm"),
+        legend.position = "none")
+mtdna_pi_sstrange_plot
+
+#############################################################################################################
+
+######## SST max figure ########
+
+SSTmax_model_pi <- lmer(logpi ~ range_position + sst.BO_sstmax + 
+                            (1|Family/Genus) + (1|Source) + (1|MarkerName),
+                          data = mtdna_small_pi, na.action = "na.fail", 
+                          control = lmerControl(optimizer = "bobyqa"))
+
+#### Predict ####
+#marginal effects
+SSTmax_eff <- plot_model(SSTmax_model_pi, type = "pred", 
+                           terms = "sst.BO_sstmax [all]")
+
+#pull out marginal effects dataframe
+SSTmax_eff_data <- as.data.frame(SSTmax_eff$data)
+
+#unlog pi
+SSTmax_eff_data$unlog_pi <- 10^(SSTmax_eff_data$predicted)
+SSTmax_eff_data$unlog_conf.low <- 10^(SSTmax_eff_data$conf.low)
+SSTmax_eff_data$unlog_conf.high <- 10^(SSTmax_eff_data$conf.high)
+
+#### Plot SSTmax ####
+
+mtdna_pi_sstmax_plot <- ggplot() +
+  geom_line(data = SSTmax_eff_data, aes(x = x, y = unlog_pi), 
+            color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = SSTmax_eff_data,
+              aes(x = x, ymin = unlog_conf.low, ymax = unlog_conf.high), 
+              color ="black", alpha = 0.1) +
+  geom_rug(data = mtdna_small_pi, mapping = aes(x = sst.BO_sstmax), 
+           color = "#282828", inherit.aes = FALSE) + 
+  annotate("text", x = 1, y = 0.0078, label = "D", size = 100) + 
+  ylim(0, 0.008) + xlim(0, 30) +
+  xlab("Maximum SST (°C)") + ylab("π (mtDNA)") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 160, vjust = -1.8),
+        axis.title.y = element_text(size = 160, vjust = 5),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        plot.margin = unit(c(1,1.8,3,6), "cm"),
+        legend.position = "none")
+mtdna_pi_sstmax_plot
+
+#############################################################################################################
+
+######## SST min figure ########
+
+SSTmin_model_pi <- lmer(logpi ~ range_position + sst.BO_sstmin + 
+                          (1|Family/Genus) + (1|Source) + (1|MarkerName),
+                        data = mtdna_small_pi, na.action = "na.fail", 
+                        control = lmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
 SSTmin_eff <- plot_model(SSTmin_model_pi, type = "pred", 
-                          terms = "logsstmin [all]")
+                         terms = "sst.BO_sstmin [all]")
 
 #pull out marginal effects dataframe
 SSTmin_eff_data <- as.data.frame(SSTmin_eff$data)
-SSTmin_eff_data$sstmin <- 10^(SSTmin_eff_data$x)
 
 #unlog pi
 SSTmin_eff_data$unlog_pi <- 10^(SSTmin_eff_data$predicted)
 SSTmin_eff_data$unlog_conf.low <- 10^(SSTmin_eff_data$conf.low)
 SSTmin_eff_data$unlog_conf.high <- 10^(SSTmin_eff_data$conf.high)
 
-#### Calculate means from raw data ####
-## Round SSTmin DOWN to nearest multiple of 5 ##
-#create column to fill with the rounded SSTmin
-mtdna_small_pi$SSTmin_round <- NA
-
-#fill round column in
-for(i in 1:nrow(mtdna_small_pi)) {
-  cat(paste(i, " ", sep = ''))
-  {mtdna_small_pi$SSTmin_round[i] <- DescTools::RoundTo(mtdna_small_pi$sst.BO_sstmin[i], 
-                                                         multiple = 5, FUN = floor)} #rounding DOWN (e.g. SSTmin 5-10 gets value of 5)
-}
-
-mtdna_small_pi$SSTmin_round <- as.factor(mtdna_small_pi$SSTmin_round)
-
-## Calculate means and SE within each 5 degree band ##
-mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so can use data.table functions
-
-#calculate mean in each 5 degree band
-SSTmin_pi_mean <- mtdna_small_pi[, mean(logpi), by = SSTmin_round]
-colnames(SSTmin_pi_mean) <- c("SSTmin", "pi_mean")
-SSTmin_pi_mean$pi_mean <- 10^(SSTmin_pi_mean$pi_mean) #unlog mean
-
-#calculate SE in each 5 degree band
-SSTmin_pi_SE <- mtdna_small_pi[, std.error(Pi), by = SSTmin_round]
-colnames(SSTmin_pi_SE) <- c("SSTmin", "pi_SE")
-
-#count observations in each 5 degree band
-SSTmin_pi_count <- mtdna_small_pi[, .N, by = SSTmin_round]
-colnames(SSTmin_pi_count) <- c("SSTmin", "pi_count")
-
-#merge mean and SE dataframes together
-SSTmin_pi_binned_means <- list(SSTmin_pi_mean, SSTmin_pi_SE, SSTmin_pi_count) %>% 
-  reduce(full_join, by = "SSTmin")
-SSTmin_pi_binned_means$SSTmin <- as.numeric(as.character(SSTmin_pi_binned_means$SSTmin))
-  SSTmin_pi_binned_means <- SSTmin_pi_binned_means[order(SSTmin), ]
-  SSTmin_pi_binned_means$X <- SSTmin_pi_binned_means$SSTmin + 2.5 #for plotting, plot in MIDDLE of 5 degree band
-
-#calculate error bars (standard error)
-SSTmin_pi_binned_means$mean_lowerSE <- SSTmin_pi_binned_means$pi_mean - 
-  SSTmin_pi_binned_means$pi_SE
-SSTmin_pi_binned_means$mean_upperSE <- SSTmin_pi_binned_means$pi_mean + 
-  SSTmin_pi_binned_means$pi_SE
-
 #### Plot SSTmin ####
-#for legend
-colors <- c("5-degree binned means" = "#3F6DAA", "Regression" = "black")
 
-#plot
-mtdna_pi_SSTmin_plot_both <- ggplot() + 
-  geom_line(data = SSTmin_eff_data, 
-            aes(x = sstmin, y = unlog_pi, color = "Regression"), size = 6) + 
-  geom_ribbon(data = SSTmin_eff_data, 
-              aes(x = sstmin, ymin = unlog_conf.low, ymax = unlog_conf.high, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = SSTmin_pi_binned_means, 
-             aes(x = X, y = pi_mean, color = "5-degree binned means", size = pi_count), shape = "square") + 
-  geom_errorbar(data = SSTmin_pi_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "5-degree binned means"), width = 1.75, size = 3) + 
-  xlab("SST min") + ylab("mtDNA pi") + labs(color = "Legend") + 
-  scale_color_manual(values = colors) + 
-  scale_y_continuous(limits = c(0, 0.012)) + 
-  scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
-                        range = c(10, 20))
-mtdna_pi_SSTmin_plot_annotated_both <- mtdna_pi_SSTmin_plot_both + theme_bw() + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
-        axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 100, color = "black"), 
-        axis.line = element_line(size = 2, color = "black"),
-        legend.position = "top", legend.box = "vertical", 
-        legend.text = element_text(size = 100), 
-        legend.key.size = unit(3, "cm"),
-        legend.title = element_blank())
-mtdna_pi_SSTmin_plot_annotated_both
-
-###########################################################################################################
-
-######## Dissox figures ########
-
-dissox_model_pi <- lmer(logpi ~ logdissox + (1|Family/Genus) + (1|Source) + (1|MarkerName), 
-                        REML = FALSE, data = mtdna_small_pi, 
-                        na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
-
-#### Predict ####
-#marginal effects
-dissox_eff <- plot_model(dissox_model_pi, type = "pred", 
-                         terms = "logdissox [all]")
-
-#pull out marginal effects dataframe
-dissox_eff_data <- as.data.frame(dissox_eff$data)
-dissox_eff_data$dissox <- 10^(dissox_eff_data$x)
-
-#unlog pi
-dissox_eff_data$unlog_pi <- 10^(dissox_eff_data$predicted)
-dissox_eff_data$unlog_conf.low <- 10^(dissox_eff_data$conf.low)
-dissox_eff_data$unlog_conf.high <- 10^(dissox_eff_data$conf.high)
-
-#### Calculate means from raw data ####
-## Round dissox DOWN to nearest multiple of 5 ##
-#create column to fill with the rounded dissox
-mtdna_small_pi$dissox_round <- NA
-
-#fill round column in
-for(i in 1:nrow(mtdna_small_pi)) {
-  cat(paste(i, " ", sep = ''))
-  {mtdna_small_pi$dissox_round[i] <- DescTools::RoundTo(mtdna_small_pi$BO_dissox[i], 
-                                                        multiple = 0.5, FUN = floor)} #rounding DOWN
-}
-
-  mtdna_small_pi$dissox_round <- as.factor(mtdna_small_pi$dissox_round)
-
-## Calculate means and SE within each 0.5 band ##
-mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so that can use data.table functions
-
-#calculate mean in each 0.5 band
-dissox_pi_mean <- mtdna_small_pi[, mean(logpi), by = dissox_round]
-  colnames(dissox_pi_mean) <- c("dissox", "logpi_mean")
-  dissox_pi_mean$pi_mean <- 10^(dissox_pi_mean$logpi_mean) #unlog mean
-
-#calculate SE in each 0.5 band  
-dissox_pi_SE <- mtdna_small_pi[, std.error(Pi), by = dissox_round]
-  colnames(dissox_pi_SE) <- c("dissox", "pi_SE")
-  
-#count observations in each 0.5 band
-dissox_pi_count <- mtdna_small_pi[, .N, by = dissox_round]
-  colnames(dissox_pi_count) <- c("dissox", "pi_count")
-
-#merge mean and SE dataframes together
-dissox_pi_binned_means <- list(dissox_pi_mean, dissox_pi_SE, dissox_pi_count) %>% 
-  reduce(full_join, by = "dissox")
-  dissox_pi_binned_means$dissox <- as.numeric(as.character(dissox_pi_binned_means$dissox))
-  dissox_pi_binned_means <- dissox_pi_binned_means[order(dissox), ]
-  dissox_pi_binned_means$X <- dissox_pi_binned_means$dissox + 0.25 #for plotting, plot in MIDDLE of 0.5 band
-  
-#add error bars (standard error)
-dissox_pi_binned_means$mean_lowerSE <- dissox_pi_binned_means$pi_mean - 
-  dissox_pi_binned_means$pi_SE
-dissox_pi_binned_means$mean_upperSE <- dissox_pi_binned_means$pi_mean + 
-  dissox_pi_binned_means$pi_SE
-
-#### Plot dissox ####
-#for legend
-colors <- c("Binned means" = "#3F6DAA", "Regression" = "black")
-
-#plot
-mtdna_pi_dissox_plot_both <- ggplot() + 
-  geom_line(data = dissox_eff_data, 
-            aes(x = dissox, y = unlog_pi, color = "Regression"), size = 6) + 
-  geom_ribbon(data = dissox_eff_data, 
-              aes(x = dissox, ymin = unlog_conf.low, ymax = unlog_conf.high, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = dissox_pi_binned_means, 
-             aes(x = X, y = pi_mean, color = "Binned means", size = pi_count), shape = "square") + 
-  geom_errorbar(data = dissox_pi_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "Binned means"), width = 0.5, size = 3) + 
-  xlab("Dissolved Oxygen Mean") + ylab("mtDNA pi") + labs(color = "Legend") + 
-  scale_color_manual(values = colors) + 
-  scale_y_continuous(limits = c(0, 0.012)) + 
-  scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
-                        range = c(10, 20))
-mtdna_pi_dissox_plot_annotated_both <- mtdna_pi_dissox_plot_both + theme_bw() + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
-        axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 100, color = "black"), 
-        axis.line = element_line(size = 2, color = "black"),
-        legend.position = "top", legend.box = "vertical", 
-        legend.text = element_text(size = 100), 
-        legend.key.size = unit(3, "cm"),
-        legend.title = element_blank())
-mtdna_pi_dissox_plot_annotated_both
+mtdna_pi_sstmin_plot <- ggplot() +
+  geom_line(data = SSTmin_eff_data, aes(x = x, y = unlog_pi), 
+            color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = SSTmin_eff_data,
+              aes(x = x, ymin = unlog_conf.low, ymax = unlog_conf.high), 
+              color ="black", alpha = 0.1) +
+  geom_rug(data = mtdna_small_pi, mapping = aes(x = sst.BO_sstmin), 
+           color = "#282828", inherit.aes = FALSE) + 
+  annotate("text", x = 1, y = 0.0078, label = "G", size = 100) + 
+  ylim(0, 0.008) + xlim(0, 30) +
+  xlab("Minimum SST (°C)") + ylab("π (mtDNA)") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 160, vjust = -1.8),
+        axis.title.y = element_text(size = 160, vjust = 5),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        plot.margin = unit(c(1,1.8,3,6), "cm"),
+        legend.position = "none")
+mtdna_pi_sstmin_plot
 
 #############################################################################################################
 
-######## ChloroA mean figures ########
+######## ChloroA mean figure ########
 
-chloroAmean_model_pi <- lmer(logpi ~ logchlomean + I(logchlomean^2) + (1|Family/Genus) + (1|Source) + 
+chloroAmean_model_pi <- lmer(logpi ~ range_position + logchlomean + I(logchlomean^2) + 
+                              (1|Family/Genus) + (1|Source) + 
                               (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
-                            na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
+                             na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
 chloroAmean_eff <- plot_model(chloroAmean_model_pi, type = "pred", 
-                         terms = "logchlomean [all]")
+                             terms = "logchlomean [all]")
 
 #pull out marginal effects dataframe
 chloroAmean_eff_data <- as.data.frame(chloroAmean_eff$data)
-  chloroAmean_eff_data$chlomean <- 10^(chloroAmean_eff_data$x)
+chloroAmean_eff_data$chlomean <- 10^(chloroAmean_eff_data$x)
 
 #unlog pi
 chloroAmean_eff_data$unlog_pi <- 10^(chloroAmean_eff_data$predicted)
-  chloroAmean_eff_data$unlog_conf.low <- 10^(chloroAmean_eff_data$conf.low)
-  chloroAmean_eff_data$unlog_conf.high <- 10^(chloroAmean_eff_data$conf.high)
+chloroAmean_eff_data$unlog_conf.low <- 10^(chloroAmean_eff_data$conf.low)
+chloroAmean_eff_data$unlog_conf.high <- 10^(chloroAmean_eff_data$conf.high)
 
-#### Calculate means from raw data ####
-## Round chlomean DOWN to nearest multiple of 10 ##
-#create column to fill with the rounded chlomean
-mtdna_small_pi$chloroAmean_round <- NA
+#### plot chlomean ####
 
-#fill round column in
-for(i in 1:nrow(mtdna_small_pi)) {
-  cat(paste(i, " ", sep = ''))
-  {mtdna_small_pi$chloroAmean_round[i] <- DescTools::RoundTo(mtdna_small_pi$chloroA.BO_chlomean[i], 
-                                                        multiple = 1, FUN = floor)} #rounding DOWN
-}
-
-  mtdna_small_pi$chloroAmean_round <- as.factor(mtdna_small_pi$chloroAmean_round)
-
-## Calculate means and SE within each band ##
-mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so can use data.table functions
-
-#calculate mean in each band
-chloroAmean_pi_mean <- mtdna_small_pi[, mean(logpi), by = chloroAmean_round]
-  colnames(chloroAmean_pi_mean) <- c("chloroAmean", "pi_mean")
-  chloroAmean_pi_mean$pi_mean <- 10^(chloroAmean_pi_mean$pi_mean) #unlog mean
-
-#calculate SE in each band
-  chloroAmean_pi_SE <- mtdna_small_pi[, std.error(Pi), by = chloroAmean_round]
-  colnames(chloroAmean_pi_SE) <- c("chloroAmean", "pi_SE")
-
-#count observations in each band
-chloroAmean_pi_count <- mtdna_small_pi[, .N, by = chloroAmean_round]
-  colnames(chloroAmean_pi_count) <- c("chloroAmean", "pi_count")
-
-#merge mean and SE dataframes together
-chloroAmean_pi_binned_means <- list(chloroAmean_pi_mean, chloroAmean_pi_SE, chloroAmean_pi_count) %>% 
-  reduce(full_join, by = "chloroAmean")
-  chloroAmean_pi_binned_means$chloroAmean <- as.numeric(as.character(chloroAmean_pi_binned_means$chloroAmean))
-  chloroAmean_pi_binned_means <- chloroAmean_pi_binned_means[order(chloroAmean), ]
-  chloroAmean_pi_binned_means$X <- chloroAmean_pi_binned_means$chloroAmean + 0.5 #for plotting, plot in MIDDLE of band
-
-#calculate error bars (standard error)
-chloroAmean_pi_binned_means$mean_lowerSE <- chloroAmean_pi_binned_means$pi_mean - 
-  chloroAmean_pi_binned_means$pi_SE
-chloroAmean_pi_binned_means$mean_upperSE <- chloroAmean_pi_binned_means$pi_mean + 
-  chloroAmean_pi_binned_means$pi_SE
-
-#### Plot chloroAmean ####
-#for legend
-colors <- c("Binned means" = "#3F6DAA", "Regression" = "black")
-
-#plot
-mtdna_pi_chloroAmean_plot_both <- ggplot() + 
-  geom_line(data = chloroAmean_eff_data, 
-            aes(x = chlomean, y = unlog_pi, color = "Regression"), size = 6) + 
-  geom_ribbon(data = chloroAmean_eff_data, 
-              aes(x = chlomean, ymin = unlog_conf.low, ymax = unlog_conf.high, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = chloroAmean_pi_binned_means, 
-             aes(x = X, y = pi_mean, color = "Binned means", size = pi_count), shape = "square") + 
-  geom_errorbar(data = chloroAmean_pi_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "Binned means"), width = 1.75, size = 3) + 
-  xlab("Chloro A mean") + ylab("mtDNA pi") + labs(color = "Legend") + 
-  scale_color_manual(values = colors) + 
-  scale_y_continuous(limits = c(0, 0.012)) + 
-  scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
-                        range = c(10, 20))
-mtdna_pi_chloroAmean_plot_annotated_both <- mtdna_pi_chloroAmean_plot_both + theme_bw() + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
-        axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 100, color = "black"), 
-        axis.line = element_line(size = 2, color = "black"),
-        legend.position = "top", legend.box = "vertical", 
-        legend.text = element_text(size = 100), 
-        legend.key.size = unit(3, "cm"),
-        legend.title = element_blank())
-mtdna_pi_chloroAmean_plot_annotated_both
+mtdna_pi_chloromean_plot <- ggplot() +
+  geom_line(data = chloroAmean_eff_data,
+            aes(x = chlomean, y = unlog_pi), 
+            color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = chloroAmean_eff_data,
+              aes(x = chlomean, ymin = unlog_conf.low, ymax = unlog_conf.high), 
+              color ="black", alpha = 0.1)+
+  geom_rug(data = mtdna_small_pi, mapping = aes(x = chloroA.BO_chlomean), 
+           color = "#282828", inherit.aes = FALSE) + 
+  annotate("text", x = 0.12, y = 0.0078, label = "D", size = 100) + 
+  ylim(0, 0.008) +
+  scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
+  xlab(bquote("Mean Chlorophyll"~(mg/m^3))) + ylab("π (mtDNA)") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 160, vjust = -1.6),
+        axis.title.y = element_text(size = 160, vjust = 5),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        plot.margin = unit(c(1,1.8,3,6), "cm"),
+        legend.position = "none")
+mtdna_pi_chloromean_plot
 
 #############################################################################################################
 
-######## ChloroA range figures ########
+######## ChloroA range figure ########
 
-chloroArange_model_pi <- lmer(logpi ~ logchlorange + I(logchlorange^2) + (1|Family/Genus) + (1|Source) + 
+chloroArange_model_pi <- lmer(logpi ~ range_position + logchlorange + I(logchlorange^2) + 
+                               (1|Family/Genus) + (1|Source) + 
                                (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
-                             na.action = "na.fail", control = lmerControl(optimizer = "bobyqa")) #want REML = FALSE as want maximum-likelihood, bp doesn't have to be scaled here --> should scale it?
+                              na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
@@ -827,79 +687,132 @@ chloroArange_eff_data$chlorange <- 10^(chloroArange_eff_data$x)
 
 #unlog pi
 chloroArange_eff_data$unlog_pi <- 10^(chloroArange_eff_data$predicted)
-  chloroArange_eff_data$unlog_conf.low <- 10^(chloroArange_eff_data$conf.low)
-  chloroArange_eff_data$unlog_conf.high <- 10^(chloroArange_eff_data$conf.high)
+chloroArange_eff_data$unlog_conf.low <- 10^(chloroArange_eff_data$conf.low)
+chloroArange_eff_data$unlog_conf.high <- 10^(chloroArange_eff_data$conf.high)
 
-#### Calculate means from raw data ####
-## Round chlomrange DOWN to nearest multiple of 10 ##
-#create column to fill with the rounded chlomean
-mtdna_small_pi$chloroArange_round <- NA
+#### plot chlorange ####
 
-#fill round column in
-for(i in 1:nrow(mtdna_small_pi)) {
-  cat(paste(i, " ", sep = ''))
-  {mtdna_small_pi$chloroArange_round[i] <- DescTools::RoundTo(mtdna_small_pi$chloroA.BO_chlorange[i], 
-                                                             multiple = 1, FUN = floor)} #rounding DOWN
-}
+mtdna_pi_chlororange_plot <- ggplot() +
+  geom_line(data = chloroArange_eff_data,
+            aes(x = chlorange, y = unlog_pi), 
+            color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = chloroArange_eff_data,
+              aes(x = chlorange, ymin = unlog_conf.low, ymax = unlog_conf.high), 
+              color ="black", alpha = 0.1)+
+  geom_rug(data = mtdna_small_pi, mapping = aes(x = chloroA.BO_chlorange),
+           color = "#282828", inherit.aes = FALSE) + 
+  annotate("text", x = 0.12, y = 0.0078, label = "A", size = 100) + 
+  ylim(0, 0.008) +
+  scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
+  xlab(bquote("Chlorophyll Range"~(mg/m^3))) + ylab("π (mtDNA)") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 160, vjust = -1.6),
+        axis.title.y = element_text(size = 160, vjust = 5),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        plot.margin = unit(c(1,1.8,3,6), "cm"),
+        legend.position = "none")
+mtdna_pi_chlororange_plot
 
-  mtdna_small_pi$chloroArange_round <- as.factor(mtdna_small_pi$chloroArange_round)
+#############################################################################################################
 
-## Calculate means and SE within each band ##
-mtdna_small_pi <- data.table(mtdna_small_pi) #make data.table so can use data.table functions
+######## ChloroA max figure ########
 
-#calculate mean in each band
-chloroArange_pi_mean <- mtdna_small_pi[, mean(logpi), by = chloroArange_round]
-  colnames(chloroArange_pi_mean) <- c("chloroArange", "pi_mean")
-  chloroArange_pi_mean$pi_mean <- 10^(chloroArange_pi_mean$pi_mean) #unlog mean
+chloroAmax_model_pi <- lmer(logpi ~ range_position + logchlomax + I(logchlomax^2) + 
+                              (1|Family/Genus) + (1|Source) + 
+                              (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
+                            na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
-#calculate SE in each band
-chloroArange_pi_SE <- mtdna_small_pi[, std.error(Pi), by = chloroArange_round]
-  colnames(chloroArange_pi_SE) <- c("chloroArange", "pi_SE")
+#### Predict ####
+#marginal effects
+chloroAmax_eff <- plot_model(chloroAmax_model_pi, type = "pred", 
+                         terms = "logchlomax [all]")
 
-#count observations in each band
-chloroArange_pi_count <- mtdna_small_pi[, .N, by = chloroArange_round]
-  colnames(chloroArange_pi_count) <- c("chloroArange", "pi_count")
+#pull out marginal effects dataframe
+chloroAmax_eff_data <- as.data.frame(chloroAmax_eff$data)
+  chloroAmax_eff_data$chlomax <- 10^(chloroAmax_eff_data$x)
 
-#merge mean and SE dataframes together
-chloroArange_pi_binned_means <- list(chloroArange_pi_mean, chloroArange_pi_SE, chloroArange_pi_count) %>% 
-  reduce(full_join, by = "chloroArange")
-  chloroArange_pi_binned_means$chloroArange <- as.numeric(as.character(chloroArange_pi_binned_means$chloroArange))
-  chloroArange_pi_binned_means <- chloroArange_pi_binned_means[order(chloroArange), ]
-  chloroArange_pi_binned_means$X <- chloroArange_pi_binned_means$chloroArange + 0.5 #for plotting, plot in MIDDLE of band
+#unlog pi
+chloroAmax_eff_data$unlog_pi <- 10^(chloroAmax_eff_data$predicted)
+  chloroAmax_eff_data$unlog_conf.low <- 10^(chloroAmax_eff_data$conf.low)
+  chloroAmax_eff_data$unlog_conf.high <- 10^(chloroAmax_eff_data$conf.high)
 
-#calculate error bars (standard error)
-chloroArange_pi_binned_means$mean_lowerSE <- chloroArange_pi_binned_means$pi_mean - 
-  chloroArange_pi_binned_means$pi_SE
-chloroArange_pi_binned_means$mean_upperSE <- chloroArange_pi_binned_means$pi_mean + 
-  chloroArange_pi_binned_means$pi_SE
+#### plot chlomax ####
 
-#### Plot chloroArange ####
-#for legend
-colors <- c("Binned means" = "#3F6DAA", "Regression" = "black")
+mtdna_pi_chloromax_plot <- ggplot() +
+  geom_line(data = chloroAmax_eff_data,
+            aes(x = chlomax, y = unlog_pi), 
+            color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = chloroAmax_eff_data,
+              aes(x = chlomax, ymin = unlog_conf.low, ymax = unlog_conf.high), 
+              color ="black", alpha = 0.1)+
+  geom_rug(data = mtdna_small_pi, mapping = aes(x = chloroA.BO_chlomax), 
+           color = "#282828", inherit.aes = FALSE) + 
+  annotate("text", x = 0.12, y = 0.0078, label = "D", size = 100) + 
+  ylim(0, 0.008) +
+  scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
+  xlab(bquote("Maximum Chlorophyll"~(mg/m^3))) + ylab("π (mtDNA)") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 160, vjust = -1.6),
+        axis.title.y = element_text(size = 160, vjust = 5),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        plot.margin = unit(c(1,1.8,3,6), "cm"),
+        legend.position = "none")
+mtdna_pi_chloromax_plot
 
-#plot
-mtdna_pi_chloroArange_plot_both <- ggplot() + 
-  geom_line(data = chloroArange_eff_data, 
-            aes(x = chlorange, y = unlog_pi, color = "Regression"), size = 6) + 
-  geom_ribbon(data = chloroArange_eff_data, 
-              aes(x = chlorange, ymin = unlog_conf.low, ymax = unlog_conf.high, color = "Regression"), alpha = 0.1) + 
-  geom_point(data = chloroArange_pi_binned_means, 
-             aes(x = X, y = pi_mean, color = "Binned means", size = pi_count), shape = "square") + 
-  geom_errorbar(data = chloroArange_pi_binned_means, 
-                aes(x = X, ymin = mean_lowerSE, ymax = mean_upperSE, 
-                    color = "Binned means"), width = 1.75, size = 3) + 
-  xlab("Chloro A range") + ylab("mtDNA pi") + labs(color = "Legend") + 
-  scale_color_manual(values = colors) + 
-  scale_y_continuous(limits = c(0, 0.012)) + 
-  scale_size_continuous(breaks = c(5, 50, 100, 200, 500), 
-                        range = c(10, 20))
-mtdna_pi_chloroArange_plot_annotated_both <- mtdna_pi_chloroArange_plot_both + theme_bw() + 
-  theme(panel.border = element_rect(size = 1), axis.title = element_text(size = 110), 
-        axis.ticks = element_line(color = "black", size = 1), 
-        axis.text = element_text(size = 100, color = "black"), 
-        axis.line = element_line(size = 2, color = "black"),
-        legend.position = "top", legend.box = "vertical", 
-        legend.text = element_text(size = 100), 
-        legend.key.size = unit(3, "cm"),
-        legend.title = element_blank())
-mtdna_pi_chloroArange_plot_annotated_both
+#############################################################################################################
+
+######## ChloroA min figure ########
+
+chloroAmin_model_pi <- lmer(logpi ~ range_position + logchlomin + I(logchlomin^2) + 
+                                (1|Family/Genus) + (1|Source) + 
+                                (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
+                            na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+
+#### Predict ####
+#marginal effects
+chloroAmin_eff <- plot_model(chloroAmin_model_pi, type = "pred", 
+                               terms = "logchlomin [all]")
+
+#pull out marginal effects dataframe
+chloroAmin_eff_data <- as.data.frame(chloroAmin_eff$data)
+chloroAmin_eff_data$chlomin <- 10^(chloroAmin_eff_data$x)
+
+#unlog pi
+chloroAmin_eff_data$unlog_pi <- 10^(chloroAmin_eff_data$predicted)
+chloroAmin_eff_data$unlog_conf.low <- 10^(chloroAmin_eff_data$conf.low)
+chloroAmin_eff_data$unlog_conf.high <- 10^(chloroAmin_eff_data$conf.high)
+
+#### plot chlomin ####
+
+mtdna_pi_chloromin_plot <- ggplot() +
+  geom_line(data = chloroAmin_eff_data,
+            aes(x = chlomin, y = unlog_pi), 
+            color ="black", alpha = 0.3, linewidth = 10) +
+  geom_ribbon(data = chloroAmin_eff_data,
+              aes(x = chlomin, ymin = unlog_conf.low, ymax = unlog_conf.high), 
+              color ="black", alpha = 0.1)+
+  geom_rug(data = mtdna_small_pi, mapping = aes(x = chloroA.BO_chlomin), 
+           color = "#282828", inherit.aes = FALSE) + 
+  annotate("text", x = 0.12, y = 0.0078, label = "G", size = 100) + 
+  ylim(0, 0.008) +
+  scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
+  xlab(bquote("Minimum Chlorophyll"~(mg/m^3))) + ylab("π (mtDNA)") + 
+  theme(panel.background = element_blank(),
+        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 160, vjust = -1.6),
+        axis.title.y = element_text(size = 160, vjust = 5),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
+        axis.line = element_line(linewidth = 4, color = "black"),
+        plot.margin = unit(c(1,1.8,3,6), "cm"),
+        legend.position = "none")
+mtdna_pi_chloromin_plot
