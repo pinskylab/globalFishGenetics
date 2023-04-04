@@ -1,0 +1,240 @@
+spp,CommonName,Source,Country,Site,lat,lon,He,Hd,Pi
+Abudefduf saxatilis,Sergeant-major,Piñeros et al. (2015) Evol. Biol. 42:235-249,Mexico,Veracruz,19.19958333,-96.06944444,0.84,1,0.007
+Abudefduf saxatilis,Sergeant-major,Piñeros et al. (2015) Evol. Biol. 42:235-249,Mexico,Lobos Island,21.49705556,-97.22708333,0.833,0.98,0.009
+Abudefduf saxatilis,Sergeant-major,Piñeros et al. (2015) Evol. Biol. 42:235-249,Mexico,Cozumel Island,20.44069444,-87.00227778,0.8275,1,0.006
+Abudefduf saxatilis,Sergeant-major,Piñeros et al. (2015) Evol. Biol. 42:235-249,Mexico,Antón Lizardo,19.09922222,-95.94169444,0.827273,0.99,0.008
+Abudefduf saxatilis,Sergeant-major,Piñeros et al. (2015) Evol. Biol. 42:235-249,Mexico,Contoy Island,21.47205556,-86.78886111,0.825,0.99,0.007
+Abudefduf saxatilis,Sergeant-major,Piñeros et al. (2015) Evol. Biol. 42:235-249,Mexico,Tuxpan,21.02702778,-97.19913889,0.823434,0.99,0.005
+Abudefduf saxatilis,Sergeant-major,Piñeros et al. (2015) Evol. Biol. 42:235-249,Mexico,Xcalak,18.32597222,-87.81569444,0.811818,1,0.007
+Amphiprion latezonatus,Wide-band anemonefish,Steinberg et al. (2016) Coral Reefs 35:959-970,Australia,Norfolk Island,-29.064285,167.969025,0.73437,0.703,0.00444
+Amphiprion latezonatus,Wide-band anemonefish,Steinberg et al. (2016) Coral Reefs 35:959-970,Australia,North Solitary Island,-29.928474,153.39195,0.701249,0.75,0.00463
+Amphiprion latezonatus,Wide-band anemonefish,Steinberg et al. (2016) Coral Reefs 35:959-970,Australia,Lord Howe Island,-31.546557,159.067709,0.612128,0.742,0.00612
+Anoplopoma fimbria,Sablefish,M. A. Tripp-Valdez et al. (2012) J. Appl. Ichthyol. 28: 516â€“523,USA,Bering Sea,56.08461111,-173.0347583,0.885,0.467,0.00146
+Anoplopoma fimbria,Sablefish,M. A. Tripp-Valdez et al. (2012) J. Appl. Ichthyol. 28: 516â€“523,USA,Gulf of Alaska,54.08461111,-134.0001833,0.8675,0.758,0.0027
+Anoplopoma fimbria,Sablefish,M. A. Tripp-Valdez et al. (2012) J. Appl. Ichthyol. 28: 516â€“523,Mexico,San Quintin,30.44166667,-116.4308333,0.8575,0.371,0.0015
+Anoplopoma fimbria,Sablefish,M. A. Tripp-Valdez et al. (2012) J. Appl. Ichthyol. 28: 516â€“523,USA,Oregon,45.83555556,-124.8016667,0.8475,0.5,0.0015
+Chaetodon lunulatus,Oval butterflyfish,"Waldrop et al. (2016) Journal of Biogeography (J. Biogeogr.) 43, 1116â€“1129",Federated States of Micronesia,Pohnpei,6.776914,158.22045,0.848246,0.782,0.005
+Chaetodon lunulatus,Oval butterflyfish,"Waldrop et al. (2016) Journal of Biogeography (J. Biogeogr.) 43, 1116â€“1129",Japan,Okinawa,25.913046,127.386328,0.831417,0.643,0.004
+Chaetodon lunulatus,Oval butterflyfish,"Waldrop et al. (2016) Journal of Biogeography (J. Biogeogr.) 43, 1116â€“1129",USA,Johnston Atoll,16.743755,-169.506005,0.809462,0.516,0.004
+Chaetodon lunulatus,Oval butterflyfish,"Waldrop et al. (2016) Journal of Biogeography (J. Biogeogr.) 43, 1116â€“1129",Republic of Kiribati,Kanton Island,-2.812398,-171.669692,0.807308,0.695,0.004
+Chaetodon lunulatus,Oval butterflyfish,"Waldrop et al. (2016) Journal of Biogeography (J. Biogeogr.) 43, 1116â€“1129",French Polynesia,Moâ€™orea,-17.550348,-149.892961,0.786507,0.669,0.005
+Chaetodon lunulatus,Oval butterflyfish,"Waldrop et al. (2016) Journal of Biogeography (J. Biogeogr.) 43, 1116â€“1129",Palau,Palau,7.405348,134.426378,0.74875,0.471,0.004
+Chaetodon lunulatus,Oval butterflyfish,"Waldrop et al. (2016) Journal of Biogeography (J. Biogeogr.) 43, 1116â€“1129",Australia,Christmas Island,-10.442526,105.617976,0.73191,0.867,0.005
+Chaetodon lunulatus,Oval butterflyfish,"Waldrop et al. (2016) Journal of Biogeography (J. Biogeogr.) 43, 1116â€“1129",Fiji,Fiji,-17.275826,178.484452,0.721615,0.602,0.004
+Chaetodon lunulatus,Oval butterflyfish,"Waldrop et al. (2016) Journal of Biogeography (J. Biogeogr.) 43, 1116â€“1129",Republic of Kiribati,Kiribati,1.858167,-157.325127,0.659011,0.589,0.004
+Chaetodon tricinctus,Three-striped butterflyfish,Martin H. van der Meer et al. (2013) Ecology and Evolution; 3(6): 1653â€“ 1666,Australia,NI: Norfolk Island,-29.018106,167.969907,0.684286,0.173,0.001
+Chaetodon tricinctus,Three-striped butterflyfish,Martin H. van der Meer et al. (2013) Ecology and Evolution; 3(6): 1653â€“ 1666,Australia,ER: Elizabeth Reef,-29.947218,159.071477,0.667294,0.251,0.001
+Chaetodon tricinctus,Three-striped butterflyfish,Martin H. van der Meer et al. (2013) Ecology and Evolution; 3(6): 1653â€“ 1666,Australia,MR: Middleton Reef,-29.45198,159.092087,0.628889,0.197,0.001
+Chaetodon tricinctus,Three-striped butterflyfish,Martin H. van der Meer et al. (2013) Ecology and Evolution; 3(6): 1653â€“ 1666,Australia,LHI: Lord Howe Island,-31.552884,159.061608,0.620526,0.925,0.008
+Chaetodon trifasciatus,Melon butterflyfish,"Waldrop et al. (2016) Journal of Biogeography (J. Biogeogr.) 43, 1116â€“1129",British Indian Ocean Territory,Diego Garcia,-7.313127,72.449617,0.75599,0.672,0.001
+Chaetodon trifasciatus,Melon butterflyfish,"Waldrop et al. (2016) Journal of Biogeography (J. Biogeogr.) 43, 1116â€“1129",Republic of Seychelles,Seychelles,-5.644941,55.512566,0.734366,0.795,0.088
+Chaetodon trifasciatus,Melon butterflyfish,"Waldrop et al. (2016) Journal of Biogeography (J. Biogeogr.) 43, 1116â€“1129",Australia,Christmas Island,-10.442526,105.617976,0.600278,0.802,0.01
+Chrysoblephus laticeps,Roman seabream,Teske et al. 2010 Mar Biol 157:2029-2042,South Africa,Tsitsikamma NP,-34.03777778,23.92722222,0.8693,1,0.008
+Chrysoblephus laticeps,Roman seabream,Teske et al. 2010 Mar Biol 157:2029-2042,South Africa,False Bay,-34.221826,18.650836,0.861593,1,0.007
+Chrysoblephus laticeps,Roman seabream,Teske et al. 2010 Mar Biol 157:2029-2042,South Africa,Plettenberg Bay,-34.02,23.82222222,0.858912,1,0.011
+Chrysoblephus laticeps,Roman seabream,Teske et al. 2010 Mar Biol 157:2029-2042,South Africa,Alphard Banks,-35.03333333,20.86666667,0.854756,1,0.006
+Chrysoblephus laticeps,Roman seabream,Teske et al. 2010 Mar Biol 157:2029-2042,South Africa,Bird Island,-33.83333333,26.3,0.843342,1,0.006
+Coryphaenoides mediterraneus,Mediterranean grenadier,Catrino et al. (2017) PLoS ONE 12:e0174988,Atlantic,MAR_2,51.83334,-29.9833,0.492512,0.6,0.0011
+Coryphaenoides mediterraneus,Mediterranean grenadier,Catrino et al. (2017) PLoS ONE 12:e0174988,Atlantic,ROC_11,57,-9.5,0.46642,0.119,2.00E-04
+Coryphaenoides mediterraneus,Mediterranean grenadier,Catrino et al. (2017) PLoS ONE 12:e0174988,Atlantic,MAR_3,42.911111,-29.2387,0.384095,0.542,0.0012
+Diplodus sargus,White seabream,González-Wangüemert & Pérez-Ruzafa (2012) Marine Ecology 33:337-349,Spain,Galicia,43.156176,-9.248618,0.623584,0.5507,0.0011
+Diplodus sargus,White seabream,González-Wangüemert & Pérez-Ruzafa (2012) Marine Ecology 33:337-349,France,Banyuls,42.485514,3.132556,0.5755,0.5513,0.0021
+Diplodus sargus,White seabream,González-Wangüemert & Pérez-Ruzafa (2012) Marine Ecology 33:337-349,Spain,Murcia,37.633937,-0.690469,0.4995,0.5604,0.0016
+Diplodus sargus,White seabream,González-Wangüemert & Pérez-Ruzafa (2012) Marine Ecology 33:337-349,Portugal,Quarteira,37.069387,-8.116706,0.4801,0.5524,9.00E-04
+Engraulis australis,Australian anchovy,Silva et al. (2017) Scientific Reports 7:2983,New Zealand,New Zealand,-36.7,175,0.9361,0.709,0.001
+Engraulis australis,Australian anchovy,Silva et al. (2017) Scientific Reports 7:2983,Australia,Australia,-35,151,0.854214,0.998,0.007
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho (2014) J. Biogeogr. 41:1171-1182",Spain,Málaga,36.6,-4.3,0.922302,1,0.007
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho (2014) J. Biogeogr. 41:1171-1182",Ghana,Ghana,5.6,0,0.900311,1,0.006
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho (2014) J. Biogeogr. 41:1171-1182",Spain,Canary Islands,28.3,-15,0.888503,0.996,0.007
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho (2014) J. Biogeogr. 41:1171-1182",Guinea-Bissau,Guinea-Bissau,9.7,-14.2,0.886396,1,0.006
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho (2014) J. Biogeogr. 41:1171-1182",Norway,Norway,59,10.6,0.8764,0.953,0.009
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho (2014) J. Biogeogr. 41:1171-1182",Poland,Poland,54.6,16.5,0.841366,0.917,0.014
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho (2014) J. Biogeogr. 41:1171-1182",Portugal,Portugal - South,37.1,-8.4,0.833734,0.995,0.011
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho (2014) J. Biogeogr. 41:1171-1182",Portugal,Portugal - North,40.7,-8.8,0.784369,0.997,0.013
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho (2014) J. Biogeogr. 41:1171-1182",Morocco,Tangier,35.9,-5.9,0.769172,0.423,0.003
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho (2014) J. Biogeogr. 41:1171-1182",France,Bay of Biscay,43.5,-2.9,0.700485,0.98,0.015
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho (2014) J. Biogeogr. 41:1171-1182",England,English Channel,50.8,0.1,0.619096,0.963,0.01
+Engraulis encrasicolus,European anchovy,"Silva, Horne & Castilho (2014) J. Biogeogr. 41:1171-1182",Senegal,Senegal,14.8,-17.6,0.29021,1,0.006
+Engraulis eurystole,Silver anchovy,"Silva, Horne & Castilho (2014) J. Biogeogr. 41:1171-1182",USA,USA,41.5,-66.1,0.887034,0.909,0.004
+Engraulis japonicus,Japanese anchovy,Silva et al. (2017) Scientific Reports 7:2983,Japan,Japan,35.6,139.9,0.731634,1,0.011
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Belize,Caye Glory,17.085249,-88.004423,0.91,0.758,8.00E-04
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Puerto Rico,Bajo de Sico,18.36675,-67.322104,0.8965,0.844,0.0064
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Cayman Islands,Grand Cayman,19.328892,-81.24625,0.889571,0.893,5.00E-04
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Belize,Turneffe Atoll,17.459385,-87.825963,0.887286,0.7,6.00E-04
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Cayman Islands,Cayman Brac,19.72793,-79.800771,0.884125,0.732,8.00E-04
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Cayman Islands,Little Cayman,19.695225,-80.035899,0.883375,0.776,0.0011
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Bahamas,Lee Stocking,23.770428,-76.098692,0.88,0.5,0.0035
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Turks and Caicos,South Caicos,21.515252,-71.518613,0.87925,0.823,0.0053
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,USA,Florida Keys,24.746784,-81.259858,0.879125,0.817,0.0011
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Belize,Lighthouse Reef,17.356735,-87.541501,0.87675,0.667,5.00E-04
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Antigua and Barbuda,Antigua,17.170679,-61.792306,0.876625,0.954,0.007
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Mexico,Chinchorro Bank,19.095585,-87.119374,0.8755,0.857,0.0071
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Cuba,Pardon del Medio,21.934272,-82.785453,0.874,0.721,0.0032
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Bahamas,Dog Rocks,24.79922,-76.880862,0.872667,0.833,0.0088
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Bahamas,Long Island,23.211032,-75.100589,0.8715,0.834,0.0052
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Belize,Glover's Reef,16.500698,-87.783205,0.8695,0.852,0.007
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,US Virgin Islands,Grammanik Bank,18.188237,-64.96134,0.869,0.737,0.0089
+Epinephelus striatus,Nassau grouper,Jackson et al. (2014) PLoS ONE 9:e97508,Cuba,Corona San Carlos,22.681722,-83.966266,0.867375,0.78,9.00E-04
+Genypterus capensis,Kingklip,Henriques et al. (2017) Fisheries Research 187:86-95,South Africaq,Cape Town,-33.877604,18.294857,0.757931,0.843,0.009
+Genypterus capensis,Kingklip,Henriques et al. (2017) Fisheries Research 187:86-95,South Africa,Western Agulhas Bank,-34.903,18.890625,0.692454,0.86,0.008
+Ginglymostoma cirratum,Nurse shark,"Karl, Castro & Garla (2012) Mar. Biol. 159:489-498",Bahamas,Bimini,24.75214,-79.868046,0.60875,0.43,4.00E-04
+Ginglymostoma cirratum,Nurse shark,"Karl, Castro & Garla (2012) Mar. Biol. 159:489-498",USA,Florida,29.373901,-83.214979,0.57625,0.16,1.00E-04
+Ginglymostoma cirratum,Nurse shark,"Karl, Castro & Garla (2012) Mar. Biol. 159:489-498",Belize,Glover's Reef,16.801889,-87.783076,0.56875,0.49,4.00E-04
+Ginglymostoma cirratum,Nurse shark,"Karl, Castro & Garla (2012) Mar. Biol. 159:489-498",Brazil,Brazilian Islands,-3.84798,-33.0999,0.5625,0.43,4.00E-04
+Ginglymostoma cirratum,Nurse shark,"Karl, Castro & Garla (2012) Mar. Biol. 159:489-498",Brazil,Natal,-5.810832,-35.176941,0.508333,0.56,5.00E-04
+Hippoglossus stenolepis,Pacific halibut,Nielsen et al. 2010 Cons Gen 11:999-1012,USA,Bering Sea,57.158,-170.174,0.81469,0.8,0.0064
+Hippoglossus stenolepis,Pacific halibut,Nielsen et al. 2010 Cons Gen 11:999-1012,USA,"Gulf of Alaska, AK",59.689926,-149.319647,0.75027,0.8446,0.0073
+Katsuwonus pelamis,Skipjack tuna,Dammannagoda et al. (2011) Canadian Journal of Fisheries and Aquatic Sciences 68:210-223,Sri Lanka,Tangalle,5.7,81.23333333,0.774667,0.431,0.002
+Katsuwonus pelamis,Skipjack tuna,Dammannagoda et al. (2011) Canadian Journal of Fisheries and Aquatic Sciences 68:210-223,Sri Lanka,Kalmunei,7.133333333,82.48333333,0.769,0.797,0.011
+Katsuwonus pelamis,Skipjack tuna,Dammannagoda et al. (2011) Canadian Journal of Fisheries and Aquatic Sciences 68:210-223,Sri Lanka,Negombo,6.95,79.3,0.7322,0.706,0.005
+Katsuwonus pelamis,Skipjack tuna,Dammannagoda et al. (2011) Canadian Journal of Fisheries and Aquatic Sciences 68:210-223,Maldives,Maldives,4.333333333,73.15,0.699,0.649,0.01
+Katsuwonus pelamis,Skipjack tuna,Dammannagoda et al. (2011) Canadian Journal of Fisheries and Aquatic Sciences 68:210-223,Sri Lanka,Weligama,5.566666667,80.3,0.616,0.8,0.006
+Katsuwonus pelamis,Skipjack tuna,Dammannagoda et al. (2011) Canadian Journal of Fisheries and Aquatic Sciences 68:210-223,India,Laccadive,11.01666667,72.51666667,0.58,0.733,0.007
+Katsuwonus pelamis,Skipjack tuna,Dammannagoda et al. (2011) Canadian Journal of Fisheries and Aquatic Sciences 68:210-223,Sri Lanka,Trincomalee,8.966666667,81.85,0.567333,0.669,0.005
+Lethrinus harak,Thumbprint emperor,Healey et al. (2018) Ecology and Evolution 8:2182-2195,Mauritius,Mahebourg,-20.373201,57.701236,0.573657,0.42,8.00E-04
+Lethrinus harak,Thumbprint emperor,Healey et al. (2018) Ecology and Evolution 8:2182-2195,Madagascar,Belo sur Mer,-20.736556,44.001401,0.516032,0.47,0.009
+Lethrinus harak,Thumbprint emperor,Healey et al. (2018) Ecology and Evolution 8:2182-2195,Mozambique,Pemba,-12.980302,40.508458,0.498264,0.39,0.008
+Lethrinus harak,Thumbprint emperor,Healey et al. (2018) Ecology and Evolution 8:2182-2195,Tanzania,Zanzibar,-6.186947,39.189472,0.455925,0.63,0.0015
+Lethrinus mahsena,Sky emperor,Healey et al. (2018) Ecology and Evolution 8:2182-2195,Mozambique,Maputo,-25.978367,32.601069,0.595508,0.6,0.0018
+Lethrinus mahsena,Sky emperor,Healey et al. (2018) Ecology and Evolution 8:2182-2195,Mauritius,Mahebourg,-20.373201,57.701236,0.56181,0.54,0.0017
+Lethrinus mahsena,Sky emperor,Healey et al. (2018) Ecology and Evolution 8:2182-2195,Tanzania,Zanzibar,-6.186947,39.189472,0.5344,0.57,0.0016
+Lethrinus mahsena,Sky emperor,Healey et al. (2018) Ecology and Evolution 8:2182-2195,Madagascar,Belo sur Mer,-20.736556,44.001401,0.444136,0.6,0.0012
+Lethrinus nebulosus,Spangled emperor,Healey et al. (2018) ICES Journal of Marine Science 75:1465-1472,Madagascar,St. Marie,-16.882706,49.899465,0.683044,0.996,0.0492
+Lethrinus nebulosus,Spangled emperor,Healey et al. (2018) ICES Journal of Marine Science 75:1465-1472,Mauritius,Mauritius,-20.373201,57.701236,0.665494,0.992,0.0471
+Lithognathus mormyrus,Sand steenbras,Sala-Bozano et al. 2009 Mol Ecol,Greece,Iraklio 08,35.34388889,25.11999722,0.882049,0.98,0.0335
+Lithognathus mormyrus,Sand steenbras,Sala-Bozano et al. 2009 Mol Ecol,Spain,L'Estartit 06,42.03616111,3.206119445,0.831238,0.889,0.0161
+Lithognathus mormyrus,Sand steenbras,Sala-Bozano et al. 2009 Mol Ecol,Spain,Malaga 06,36.33730556,-5.217694445,0.80548,0.916,0.0182
+Lithognathus mormyrus,Sand steenbras,Sala-Bozano et al. 2009 Mol Ecol,Spain,Cadiz 06,36.55769444,-6.266861111,0.765126,0.602,0.0696
+Lithognathus mormyrus,Sand steenbras,Sala-Bozano et al. 2009 Mol Ecol,Croatia,Duce 07,43.43,16.59,0.74269,0.895,0.0358
+Lithognathus mormyrus,Sand steenbras,Sala-Bozano et al. 2009 Mol Ecol,South Africa,Durban 08,-29.86,31.04333333,0.612447,0.967,0.0511
+Lutjanus analis,Mutton snapper,Carson et al. (2011) Fishery Bulletin 109:416-428,USA,Florida Keys,24.729533,-81.045198,0.602667,0.835,0.003
+Lutjanus analis,Mutton snapper,Carson et al. (2011) Fishery Bulletin 109:416-428,Puerto Rico,Puerto Rico - East,18.295481,-65.56024,0.6005,0.873,0.004
+Lutjanus analis,Mutton snapper,Carson et al. (2011) Fishery Bulletin 109:416-428,Puerto Rico,Puerto Rico - West,18.238386,-67.22658,0.597938,0.818,0.004
+Lutjanus analis,Mutton snapper,Carson et al. (2011) Fishery Bulletin 109:416-428,US Virgin Islands,St. Thomas,18.298976,-64.971265,0.59075,0.818,0.004
+Lutjanus analis,Mutton snapper,Carson et al. (2011) Fishery Bulletin 109:416-428,US Virgin Islands,St. Croix,17.71147,-64.92009,0.562267,0.835,0.003
+Lutjanus synagris,Lane snapper,Gold et al. (2011) North American Journal of Fisheries Management 31:209-223,USA,Puerto Rico - West,18.240994,-67.178514,0.634176,NA,0.0024
+Lutjanus synagris,Lane snapper,Gold et al. (2011) North American Journal of Fisheries Management 31:209-223,US Virgin Islands,St. Croix,17.71096,-64.883654,0.629118,NA,0.0024
+Lutjanus synagris,Lane snapper,Gold et al. (2011) North American Journal of Fisheries Management 31:209-223,USA,Puerto Rico - East,18.338544,-65.629248,0.627529,NA,0.0044
+Lutjanus synagris,Lane snapper,Gold et al. (2011) North American Journal of Fisheries Management 31:209-223,USA,Florida Keys,24.721971,-81.040391,0.623875,NA,0.0046
+Lutjanus synagris,Lane snapper,Gold et al. (2011) North American Journal of Fisheries Management 31:209-223,US Virgin Islands,St. Thomas,18.339066,-64.940841,0.616471,NA,0.0029
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva et al. (2015) J. Biogeogr. 42:2402-2413,Kiribati,Palmyra,5.87,-162.08,0.81352,0.83,0.002
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva et al. (2015) J. Biogeogr. 42:2402-2413,Cook Islands,Rarotonga,-21.23,-159.78,0.7385,0.96,0.004
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva et al. (2015) J. Biogeogr. 42:2402-2413,Saudi Arabia,Jeddah,21.49,39.11,0.698236,0.83,0.005
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva et al. (2015) J. Biogeogr. 42:2402-2413,Madagascar,Madagascar,-25.32,46.17,0.696293,0.88,0.006
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva et al. (2015) J. Biogeogr. 42:2402-2413,Japan,Yoron,27.05,128.43,0.685514,0.68,0.002
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva et al. (2015) J. Biogeogr. 42:2402-2413,USA,Big Island,20.071581,-155.054492,0.653689,0.52,0.002
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva et al. (2015) J. Biogeogr. 42:2402-2413,Sudan,Sudan,21.02,37.13,0.597509,0.76,0.005
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva et al. (2015) J. Biogeogr. 42:2402-2413,Djibouti,Djibouti,11.75,43.21,0.576386,0.87,0.005
+Mulloidichthys flavolineatus,Yellowstripe goatfish,Fernandez-Silva et al. (2015) J. Biogeogr. 42:2402-2413,USA,Johnston Atoll,16.73,-169.53,0.568823,0.68,0.003
+Naso unicornis,Bluespine unicornfish,Horne et al. (2013) Journal of Heredity 104:532-546,Guam,Ipan,13.357055,144.776311,0.913124,1,0.0924
+Naso unicornis,Bluespine unicornfish,Horne et al. (2013) Journal of Heredity 104:532-546,Guam,Saipan,15.204038,145.703072,0.835243,1,0.0817
+Naso unicornis,Bluespine unicornfish,Horne et al. (2013) Journal of Heredity 104:532-546,Guam,Cocos,13.236148,144.659409,0.791872,1,0.0841
+Naso unicornis,Bluespine unicornfish,Horne et al. (2013) Journal of Heredity 104:532-546,Guam,Pago,13.421846,144.79253,0.766634,1,0.0813
+Naso unicornis,Bluespine unicornfish,Horne et al. (2013) Journal of Heredity 104:532-546,Guam,Asan,13.475981,144.714029,0.765151,1,0.0857
+Naso unicornis,Bluespine unicornfish,Horne et al. (2013) Journal of Heredity 104:532-546,Guam,Tanguison,13.543596,144.807226,0.746866,0.99,0.0821
+Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,Morocco,Madeira,32.841287,-16.819405,0.76675,0.995,0.014
+Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,Spain,Azores,38.423307,-26.724766,0.7336,1,0.013
+Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,USA,South Carolina,32.802165,-79.369516,0.7005,0.996,0.01
+Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,USA,Gulf of Mexico/Louisiana,29.435157,-91.684289,0.680667,0.987,0.01
+Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,USA,North Carolina,34.72727,-76.398599,0.680167,0.991,0.011
+Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,USA,"Gulf of Mexico/Panama City, FL",30.058322,-85.745327,0.6466,0.984,0.008
+Pagrus pagrus,Red porgy,Ball et al. 2007 Mar. Biol. 150:1321-1332,USA,Georgia,31.178176,-81.09245,0.5855,1,0.008
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie (2016) Fisheries Research 174:19-29",New Zealand,Cook Strait,-41.311154,174.366215,0.793444,0.88,0.0117
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie (2016) Fisheries Research 174:19-29",New Zealand,Chatham Islands,-43.894525,-176.339511,0.772,0.878,0.00934
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie (2016) Fisheries Research 174:19-29",New Zealand,Leigh,-36.130485,174.883838,0.767,0.894,0.01153
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie (2016) Fisheries Research 174:19-29",New Zealand,Hawkes Bay,-39.30441,177.12095,0.766333,0.957,0.0137
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie (2016) Fisheries Research 174:19-29",New Zealand,Makara,-41.204712,174.658736,0.746667,0.805,0.01131
+Polyprion oxygeneios,Hapuku wreckfish,"Lane, Symonds & Ritchie (2016) Fisheries Research 174:19-29",New Zealand,Otago,-46.094429,170.316048,0.694,0.808,0.01216
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,Australia,Ashmore Reef,-12.230032,123.057945,0.683629,0.63,0.002
+Pristipomoides filamentosus,Crimson jobfish,Mzingirwa et al. (2019) Molecular Biology Reports 46:5079-5088,Tanzania,Dar es Salaam,-6.761671,39.302398,0.6725,0.731,0.003
+Pristipomoides filamentosus,Crimson jobfish,Mzingirwa et al. (2019) Molecular Biology Reports 46:5079-5088,South Africa,Durban,-29.85868,31.02184,0.666,0.745,0.002
+Pristipomoides filamentosus,Crimson jobfish,Mzingirwa et al. (2019) Molecular Biology Reports 46:5079-5088,Mauritius,Petite Riveire,-20.17045,57.396358,0.665,0.863,0.005
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,Australia,Rowley Shoals,-17.332104,119.166924,0.647777,0.59,0.0018
+Pristipomoides filamentosus,Crimson jobfish,Mzingirwa et al. (2019) Molecular Biology Reports 46:5079-5088,Seychelles,Mahé,-4.682669,55.470369,0.6212,0.429,0.002
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,Tonga,Tonga,-19.826651,-175.399157,0.581851,0.63,6.00E-04
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,Seychelles,Seychelles,-4.407126,55.579861,0.58078,0.61,0.0019
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,Australia,Christmas Island,-10.483247,105.661577,0.578225,0.81,0.0024
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,O'ahu,21.263735,-157.953564,0.566745,0.2,4.00E-04
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,Guam,13.413257,144.754451,0.526346,0.71,0.0017
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,Hawai'i Island,19.376702,-156.165775,0.51493,0.13,3.00E-04
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,Maui,20.916348,-156.007028,0.510806,0.26,6.00E-04
+Pristipomoides filamentosus,Crimson jobfish,Mzingirwa et al. (2019) Molecular Biology Reports 46:5079-5088,Madagascar,Toliara,-23.351619,43.685494,0.507,0.902,0.011
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,Australia,Scott Reef,-13.998959,121.833548,0.4875,0.68,0.0018
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,Moloka'i,21.145671,-157.022115,0.477644,0.23,5.00E-04
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,Lana'i,2.841474,-156.921641,0.473293,0.2,4.00E-04
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,Penguin Banks,21.09622,-157.487217,0.449335,0.26,6.00E-04
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,Pioneer,26,-173.4583333,0.444375,0.11,2.00E-04
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,Brooks Banks,24.19,-167.03,0.419136,0.29,6.00E-04
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,St. Rogatien,24.3,-164.1,0.405685,0.24,5.00E-04
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,Maro,25.415619,-170.59,0.38899,0.11,2.00E-04
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,Gardner,24.998942,-167.998788,0.38326,0.29,6.00E-04
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,Kaua'i,22.226048,-159.702885,0.359473,0.29,6.00E-04
+Pristipomoides filamentosus,Crimson jobfish,Gaither et al. (2011) PLoS ONE 6:e28913,USA,North Hampton,25.334341,-172.066753,0.353879,0.18,4.00E-04
+Rhincodon typus,Whale shark,Vignaud et al. (2014) Molecular Ecology 23: 2590â€“2601 ,Seychelles,Seychelles,-4.687201,55.426936,0.683624,0.948,0.01062
+Rhincodon typus,Whale shark,Vignaud et al. (2014) Molecular Ecology 23: 2590â€“2601 ,Djibouti,Djibouti,11.768108,43.317952,0.656768,0.925,0.01069
+Rhincodon typus,Whale shark,Vignaud et al. (2014) Molecular Ecology 23: 2590â€“2601 ,Mexico,Isla Holbox,21.540856,-87.268451,0.592697,0.752,0.00755
+Scomberomorus commerson,Narrow-barred Spanish mackerel,Fauvelot & Borsa (2011) Biological Journal of the Linnean Society 104:886-902,Australia,New Caledonia,-19.74806,163.667181,0.580286,0.817,0.041
+Scomberomorus commerson,Narrow-barred Spanish mackerel,Fauvelot & Borsa (2011) Biological Journal of the Linnean Society 104:886-902,Indonesia,West Papua,-0.878832,131.219416,0.568125,0.929,0.023
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer (2016) PeerJ 4:e2583",Mexico,Bahía Guaymas,27.91833333,-110.8988889,0.766222,0.947,0.0051
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer (2016) PeerJ 4:e2583",Mexico,Puerto Libertad,29.90416667,-112.6830556,0.751667,0.931,0.0043
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer (2016) PeerJ 4:e2583",Mexico,Puerto Peñasco,31.31666667,-113.5369444,0.739,0.955,0.005
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer (2016) PeerJ 4:e2583",Mexico,Bahía Kino,28.83194444,-111.9408333,0.735222,0.924,0.0047
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer (2016) PeerJ 4:e2583",Mexico,San Felipe,31.0275,-114.8352778,0.731333,0.966,0.0048
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer (2016) PeerJ 4:e2583",Mexico,Huatabampo,26.8275,-119.6422222,0.720444,0.947,0.0051
+Scomberomorus concolor,Monterey Spanish mackerel,"Magallón-Gayón, Diaz-Jaimes & Uribe-Alcocer (2016) PeerJ 4:e2583",Mexico,Santa Clara,31.680239,-114.508133,0.67675,0.952,0.005
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"Cannon Beach, OR 2",45.69968,-124.50905,0.695231,0.664,0.0011
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"San Francisco, CA 1",38.075,-123.45167,0.8729,0.388,6.00E-04
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"San Luis Obispo, CA",35.15105,-120.82881,0.842376,0.413,5.00E-04
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"Santa Barbara, CA",34.34948,-119.60536,0.817665,0.378,5.00E-04
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"San Francisco, CA 2",37.87756,-123.04324,0.79719,0.429,7.00E-04
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"Salisbury Sound, AK",57.35284,-135.90911,0.777726,0.714,0.0013
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"Cannon Beach, OR 1",45.90849,-124.46891,0.760783,0.669,0.0012
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"Port Orford, OR",42.72806,-124.67289,0.760319,0.52,9.00E-04
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"Santa Cruz, CA",36.81341,-122.12877,0.706344,0.54,8.00E-04
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"Fort Bragg, CA",39.48122,-123.85387,0.689074,0.525,8.00E-04
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"Florence, OR",43.9759,-124.65957,0.680193,0.628,0.0011
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,Canada,"N. Vancouver Island, BC",50.875,-129.25,0.657774,0.64,0.0011
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"Neah Bay, WA",48.50554,-125.79765,0.627921,0.666,0.0012
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"San Miguel Island, CA",34.09976,-120.54119,0.624718,0.286,3.00E-04
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"Astoria, OR",46.075,-124.51761,0.61245,0.533,9.00E-04
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"Eureka, CA",40.40833,-124.555,0.585982,0.7,0.001
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,Canada,"S. Vancouver Island, BC",49.12402,-126.67894,0.578754,0.517,9.00E-04
+Sebastes flavidus,Yellowtail rockfish,Hess et al. 2001 CJFAS 68:89-104,USA,"Craig, AK",54.76883,-133.78431,0.57012,0.663,0.0013
+Seriola dumerili,Greater amberjack,Šegvi?-Bubi? et al. (2016) Fisheries Research 179:271-279,Spain,Santa Cruz de Tenerife,28.448009,-16.267023,0.567511,0.71,NA
+Solea solea,Common sole,Cuveliers et al. (2012) Mar. Biol. 159:1239-1253,England,Celtic Sea,50.81666667,-5.016666667,0.772625,0.813,0.0031
+Solea solea,Common sole,Cuveliers et al. (2012) Mar. Biol. 159:1239-1253,Netherlands,Wadden Sea,52.96972222,4.943055556,0.76525,0.795,0.0045
+Solea solea,Common sole,Cuveliers et al. (2012) Mar. Biol. 159:1239-1253,Netherlands,Scheldt estuary,51.39722222,4.116388889,0.7562,0.871,0.0049
+Solea solea,Common sole,Cuveliers et al. (2012) Mar. Biol. 159:1239-1253,France,Bay of Biscay,46.88333333,-2.783333333,0.745125,0.754,0.0041
+Solea solea,Common sole,Cuveliers et al. (2012) Mar. Biol. 159:1239-1253,Ireland,Irish Sea,52.21666667,-5.333333333,0.7435,0.794,0.0048
+Solea solea,Common sole,Cuveliers et al. (2012) Mar. Biol. 159:1239-1253,Germany,Ger_North Sea,54.52,7.889722222,0.731889,0.815,0.0044
+Solea solea,Common sole,Cuveliers et al. (2012) Mar. Biol. 159:1239-1253,Denmark,Kattegat,57.15861111,11.64777778,0.73,0.825,0.0061
+Solea solea,Common sole,Cuveliers et al. (2012) Mar. Biol. 159:1239-1253,France,Eng_English Channel,50.78166667,1.484444444,0.728,0.778,0.0053
+Solea solea,Common sole,Cuveliers et al. (2012) Mar. Biol. 159:1239-1253,Denmark,Kagerrak,58.16194444,9.508888889,0.719889,0.95,0.0066
+Sparus aurata,Gilthead seabream,Coscia et al. (2012) Heredity 108:537-546,Spain,Cadiz,36.529559,-6.288647,0.791687,0.647,0.00176
+Sparus aurata,Gilthead seabream,Coscia et al. (2012) Heredity 108:537-546,France,Ille d'Oleron,45.961896,-1.266064,0.707474,0.742,0.0024
+Sparus aurata,Gilthead seabream,Coscia et al. (2012) Heredity 108:537-546,Portugal,Aveiro,40.657906,-8.780584,0.700867,0.668,0.00181
+Sparus aurata,Gilthead seabream,Coscia et al. (2012) Heredity 108:537-546,Ireland,Wexford,52.337185,-6.453363,0.607378,0.8,0.0026
+Sphyrna lewini,Scalloped hammerhead,Nance et al. (2011) PLoS ONE 6:e21459,Panama,Gulf of Panama,7.01,-78.19,0.811643,0.5714,0.001
+Sphyrna lewini,Scalloped hammerhead,Nance et al. (2011) PLoS ONE 6:e21459,Panama,Cebaco Island,7.55,-81,0.805467,0.5686,0.0012
+Sphyrna lewini,Scalloped hammerhead,Nance et al. (2011) PLoS ONE 6:e21459,Panama,Santa Catalina,7.56,-81.3,0.79425,0.5974,0.0013
+Sphyrna lewini,Scalloped hammerhead,Nance et al. (2011) PLoS ONE 6:e21459,Mexico,Mazatlan,23.215777,-106.456305,0.788643,0.4156,8.00E-04
+Sphyrna lewini,Scalloped hammerhead,Nance et al. (2011) PLoS ONE 6:e21459,Mexico,La Paz,24.2,-110.4,0.775867,0.4412,8.00E-04
+Sphyrna lewini,Scalloped hammerhead,Nance et al. (2011) PLoS ONE 6:e21459,Costa Rica,Tarcoles,9.8,-84.8,0.75314,0.6158,0.0013
+Sphyrna lewini,Scalloped hammerhead,"Castillo-Olguín,Uribe-Alcocer & Díaz-Jaimes (2012) Ciencias Marinas 38:635-652",Mexico,Sinaloa,23.51666667,-106.7166667,0.555,0.415,0.007
+Syngnathus leptorhynchus,Bay pipefish,Wilson 2006 Mol Ecol 15:809-824,USA,"San Diego Bay, CA",32.676035,-117.197796,0.942833,0.5789,0.0056
+Thalassoma bifasciatum,Bluehead,"Haney, Silliman, & Rand 2007 Heredity 98:294-302",US Virgin Islands,"Jack Bay, St Croix",17.747,-64.580394,0.88,0.989,0.021
+Thalassoma bifasciatum,Bluehead,"Haney, Silliman, & Rand 2007 Heredity 98:294-302",Bahamas,San Salvador,23.926,-74.576531,0.88,0.982,0.019
+Thalassoma bifasciatum,Bluehead,"Haney, Silliman, & Rand 2007 Heredity 98:294-302",US Virgin Islands,"Northstar Bay, St Croix",17.763,-64.837462,0.87,0.981,0.018
+Thalassoma bifasciatum,Bluehead,"Haney, Silliman, & Rand 2007 Heredity 98:294-302",US Virgin Islands,"Grapetree Bay, St Croix",17.746,-64.591657,0.855,0.987,0.019
+Thalassoma bifasciatum,Bluehead,"Haney, Silliman, & Rand 2007 Heredity 98:294-302",US Virgin Islands,"Butler Bay, St Croix",17.75,-64.895827,0.77,0.993,0.02
+Thunnus albacares,Yellowfin tuna,Dammannagoda et al. 2008 Fish Res,Sri Lanka,Kirinda,6.283333333,82.38333333,0.9325,0.721,0.002
+Thunnus albacares,Yellowfin tuna,Dammannagoda et al. 2008 Fish Res,Sri Lanka,Weligama,5.566666667,80.3,0.896,0.521,0.002
+Thunnus albacares,Yellowfin tuna,Dammannagoda et al. 2008 Fish Res,Sri Lanka,Negombo,6.95,79.3,0.881,0.595,0.002
+Thunnus albacares,Yellowfin tuna,Dammannagoda et al. 2008 Fish Res,Sri Lanka,Kandakuliya,8.333333333,79.2,0.851,0.722,0.002
+Thunnus albacares,Yellowfin tuna,Dammannagoda et al. 2008 Fish Res,Maldives,Maldives,-4.333333333,73.15,0.811333,0.507,0.001
+Thunnus albacares,Yellowfin tuna,Dammannagoda et al. 2008 Fish Res,Sri Lanka,Trincomalee,8.966666667,81.85,0.803667,0.317,0.001
+Thunnus albacares,Yellowfin tuna,Dammannagoda et al. 2008 Fish Res,Sri Lanka,Tangalle,5.7,81.23333333,0.794667,0.117,0
+Trachurus murphyi,Chilean jack mackerel,Cardenas et al. 2009 Fish Res,Chile,Talcahuano,-39.63333333,-75.28333333,0.86,0.22,4.00E-04
+Trachurus murphyi,Chilean jack mackerel,Cardenas et al. 2009 Fish Res,Chile,Iquique,-20.96666667,-70.3,0.843333,0.36,7.00E-04
+Trachurus murphyi,Chilean jack mackerel,Cardenas et al. 2009 Fish Res,Chile,San Antonio,-33.58333333,-71.61666667,0.8325,0.51,8.00E-04
+Trachurus murphyi,Chilean jack mackerel,Cardenas et al. 2009 Fish Res,New Zealand,New Zealand,-37.25,178.1166667,0.816667,0.15,2.00E-04
