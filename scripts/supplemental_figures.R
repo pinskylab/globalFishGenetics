@@ -47,10 +47,13 @@ mtdna_small_pi <- subset(mtdna_small, mtdna_small$Pi != "NA")
 
 #### Hd v pi plot ####
 
+hd_pi_corr <- cor(x = mtdna_small$Pi, y = mtdna_small$He, use = "complete.obs", method = "spearman") #r= 0.8179
+
 hd_pi_plot <- ggplot() + 
   geom_point(data = mtdna_small, aes(x = Pi, y = He), 
              alpha = 0.5, size = 8, color = "#0E3C45") + 
   annotate("text", x = 0.00011, y = 0.98, label = "A", size = 20) + 
+  annotate("text", x = 0.03, y = 0.02, label = "r = 0.9178", size = 12) +
   scale_x_continuous(trans = "log10", limits = c(0.0001, 0.1), labels = scales::label_log()) +
   ylim(0, 1) +
   xlab("π (mtDNA)") + ylab(bquote(H[d]~"(mtDNA)")) + 
@@ -66,10 +69,13 @@ hd_pi_plot
 #### He v pi plot ####
 #uses shared study dataframe bc combined mtdna, msat
 
+he_pi_corr <- cor(x = shared_studies$Pi, y = shared_studies$He, use = "complete.obs", method = "spearman") #r= 0.2416
+
 he_pi_plot <- ggplot() + 
   geom_point(data = shared_studies, aes(x = Pi, y = He), 
              alpha = 0.5, size = 8, color = "#0E3C45") + 
   annotate("text", x = 0.00011, y = 0.98, label = "B", size = 20) + 
+  annotate("text", x = 0.03, y = 0.02, label = "r = 0.2416", size = 12) +
   scale_x_continuous(trans = "log10", limits = c(0.0001, 0.1), labels = scales::label_log()) +
   ylim(0, 1) +
   xlab("π (mtDNA)") + ylab(bquote(H[e]~"(nucDNA)")) + 
@@ -85,10 +91,13 @@ he_pi_plot
 #### He v Hd plot ####
 #uses shared study dataframe bc combined mtdna, msat
 
+he_hd_corr <- cor(x = shared_studies$Hd, y = shared_studies$He, use = "complete.obs", method = "spearman") #r= 0.3492
+
 he_hd_plot <- ggplot() + 
   geom_point(data = shared_studies, aes(x = Hd, y = He), 
              alpha = 0.5, size = 8, color = "#0E3C45") + 
   annotate("text", x = 0.02, y = 0.98, label = "C", size = 20) + 
+  annotate("text", x = 0.85, y = 0.02, label = "r = 0.3492", size = 12) +
   xlim(0, 1) + 
   ylim(0, 1) +
   xlab(bquote(H[d]~"(mtDNA)")) + ylab(bquote(H[e]~"(nucDNA)")) + 
