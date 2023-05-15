@@ -1,16 +1,19 @@
 # .gitignore
+
+#temp data to ignore
 .Rhistory
 .Rproj.user
-Marial_Stuff/*
 .RData
 Marine_Genetic_Diversity_Proj.RProj
 *tmp
 ~$*
 
+#ignore Marial's files
+Marial_Stuff/*
+
 #output files to ignore
 output/boot*csv
 output/*cis*csv
-
 
 #extra stuff to ignore
 model_structure.pptx
@@ -22,7 +25,9 @@ DataFiltering_Pipeline.pptx
 #supplemental figures
 supp_papersused2.docx
 
-#scripts to ignore for now (not using)
+#scripts to ignore (not using)
 scripts/covariable_exploration.R
+scripts/data_exploration.R
 scripts/*gam.R
 scripts/*leverage.R
+scripts/tax*_trends.R
