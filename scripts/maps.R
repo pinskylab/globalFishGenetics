@@ -26,6 +26,16 @@ msat <- cbind(msat[, -1], msat_env[, c('sst.BO_sstmean', 'sst.BO_sstrange', 'sst
 world_map <- map_data("world") %>% 
   filter(! long > 180)
 
+mtdna_small <-subset(mtdna, as.numeric(mtdna$bp) < 2000)
+
+msat_tropics <- msat %>%
+  filter(lat >= -23.4 & lat <= 23.4) %>%
+  distinct(lat, lon, .keep_all = TRUE)
+
+mtdna_tropics <- mtdna_small %>%
+  filter(lat >= -23.4 & lat <= 23.4) %>%
+  distinct(lat, lon, .keep_all = TRUE)
+
 ################################################################################################################################################
 
 ######## Create msat maps ########
