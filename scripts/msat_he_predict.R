@@ -484,8 +484,8 @@ msat_he_sstmean_plot <- ggplot() +
               color ="black", alpha = 0.1) +
   geom_rug(data = msat, mapping = aes(x = sst.BO_sstmean), 
            color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 1, y = 0.985, label = "C", size = 100) + 
-  ylim(c(0.5, 1.0)) + xlim(0, 30) +
+  annotate("text", x = 1, y = 0.842, label = "C", size = 100) + 
+  ylim(0.65, 0.85) + xlim(0, 30) +
   xlab("Mean SST (°C)") + ylab(bquote(H[e]~"(nucDNA)")) + 
   theme(panel.background = element_blank(),
         panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
@@ -659,10 +659,10 @@ msat_he_chloromean_plot <- ggplot() +
               color ="black", alpha = 0.1) +
   geom_rug(data = msat, mapping = aes(x = chloroA.BO_chlomean), 
            color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 0.12, y = 0.97, label = "F", size = 100) + 
-    ylim(0.5, 1.0) +
+  annotate("text", x = 0.12, y = 0.842, label = "F", size = 100) + 
+    ylim(0.65, 0.85) +
     scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
-    xlab(bquote("Mean Chlorophyll"~(mg/m^3))) + ylab(bquote(H[e]~"(mtDNA)")) + 
+    xlab(bquote("Mean Chlorophyll"~(mg/m^3))) + ylab(bquote(H[e]~"(nucDNA)")) + 
     theme(panel.background = element_blank(),
           panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
           axis.title.x = element_text(size = 160, vjust = -1.6),
@@ -708,7 +708,7 @@ msat_he_chlororange_plot <- ggplot() +
   annotate("text", x = 0.12, y = 0.985, label = "C", size = 100) + 
   ylim(0.5, 1.0) +
   scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
-  xlab(bquote("Chlorophyll Range"~(mg/m^3))) + ylab(bquote(H[e]~"(mtDNA)")) + 
+  xlab(bquote("Chlorophyll Range"~(mg/m^3))) + ylab(bquote(H[e]~"(nucDNA)")) + 
   theme(panel.background = element_blank(),
         panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
         axis.title.x = element_text(size = 160, vjust = -1.6),
@@ -754,7 +754,7 @@ msat_he_chloromax_plot <- ggplot() +
   annotate("text", x = 0.12, y = 0.985, label = "F", size = 100) + 
   ylim(0.5, 1.0) +
   scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
-  xlab(bquote("Maximum Chlorophyll"~(mg/m^3))) + ylab(bquote(H[e]~"(mtDNA)")) + 
+  xlab(bquote("Maximum Chlorophyll"~(mg/m^3))) + ylab(bquote(H[e]~"(nucDNA)")) + 
   theme(panel.background = element_blank(),
         panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
         axis.title.x = element_text(size = 160, vjust = -1.6),
@@ -800,7 +800,7 @@ msat_he_chloromin_plot <- ggplot() +
     annotate("text", x = 0.12, y = 0.985, label = "I", size = 100) + 
     ylim(0.5, 1.0) +
     scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
-    xlab(bquote("Minimum Chlorophyll"~(mg/m^3))) + ylab(bquote(H[e]~"(mtDNA)")) + 
+    xlab(bquote("Minimum Chlorophyll"~(mg/m^3))) + ylab(bquote(H[e]~"(nucDNA)")) + 
     theme(panel.background = element_blank(),
           panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
           axis.title.x = element_text(size = 160, vjust = -1.6),
