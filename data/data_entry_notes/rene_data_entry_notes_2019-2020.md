@@ -1,7 +1,7 @@
 01.01.2020
 
 Malin shared GitHub repository with me on Pinsky lab site that has all work currently done on this project by past undergraduates
-	* Cloned to local computer under name: Pinsky_Lab/Marine_Genetic_Diversity_Proj
+* Cloned to local computer under name: Pinsky_Lab/Marine_Genetic_Diversity_Proj
 
 01.03.2020
 
