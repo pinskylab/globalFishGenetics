@@ -1,11 +1,19 @@
+###################################### Script for Creating Coefficient 95% CIs  #######################################################
 
+#read in data from the bootstrapping scripts
+#calculate 95% CIs (where need be)
+#create figures summarizing (supplemental figures for manuscript)
+
+##########################################################################################################################################
+
+######## Set-up ########
 remove(list = ls())
-getwd()
 
+#load libraries
 library(here)
 library(tidyverse)
 
-#read in data
+#read in mtDNA data
 pi_cis <- read.csv(here("output", "cis_pi.csv"))
   pi_cis <- pi_cis[,-1] #drop first --> same as fourth column
   pi_cis$metric <- c("pi")
@@ -16,7 +24,7 @@ hd_cis_geo <- read.csv(here("output", "cis_hd_geo.csv"))
   hd_cis_geo <- hd_cis_geo[,-1]
   hd_cis_geo$metric <- c("hd")
 
-#msat
+#read in msat data
 he_null_cis <- read.csv(here("output", "boot_he_null.csv"))
 he_abslat_cis <- read.csv(here("output", "boot_he_abslat.csv"))
 he_lat_cis <- read.csv(here("output", "boot_he_lat.csv"))
@@ -30,9 +38,13 @@ he_chlorange_cis <- read.csv(here("output", "boot_he_chlororange.csv"))
 he_chlomax_cis <- read.csv(here("output", "boot_he_chloromax.csv"))
 he_chlomin_cis <- read.csv(here("output", "boot_he_chloromin.csv"))
 
-#fix he dataframe
+##########################################################################################################################################
+
+######## Clean up data ########
+
+## create he dataframe (bc haven't calculated CIs here yet) ##
 he_cis <- as.data.frame(c(rep("he", 20)))
-  he_cis$X2.5ci <- c(quantile(he_null_cis$range_position, c(0.025)), 
+  he_cis$X2.5ci <- c(quantile(he_null_cis$range_position, c(0.025)), #calculate quantiles for each model df
                      quantile(he_null_cis$CrossSpp, c(0.025)),
                      quantile(he_lat_cis$lat_scale, c(0.025)), 
                      quantile(he_lat_cis$I.lat_scale.2., c(0.025)), 
@@ -86,9 +98,9 @@ he_cis <- as.data.frame(c(rep("he", 20)))
 #merge all dataframes together  
 all_cis <- rbind(pi_cis, hd_cis_geo, hd_cis_env, he_cis)
 
-########################################################################################################
+##################################################################################################################################
 
-## lat lon comparisons ##
+######## lat lon comparisons ########
 
 #remove extra information
 cis_latlon <- subset(all_cis, all_cis$model == "lat" | all_cis$model == "abslat"| 
@@ -96,13 +108,14 @@ cis_latlon <- subset(all_cis, all_cis$model == "lat" | all_cis$model == "abslat"
   cis_latlon <- subset(cis_latlon, cis_latlon$fixef != "(Intercept)" & 
                          cis_latlon$fixef != "sigma" & cis_latlon$fixef != "range_position" & 
                          cis_latlon$fixef != "bp_scale")
+
 #add means (coefficients from "real" model)
 #pi -> hd -> he: lat, lat^2, abslat, bslon1, bslon2, bslon3
 cis_latlon$mean <- c(-0.038, -0.008, -0.046, 0.145, 0.310, 0.086, 
                      -0.270, 0.034, -0.158, 0.215, 1.500, 0.360, 
                      -0.024, -0.006, -0.020, 0.192, 0.128, 0.127)
  
-#plot 
+## plot ## 
 cis_latlon$fixef <- factor(cis_latlon$fixef, level = c("bs(lon_scale)3", "bs(lon_scale)2", "bs(lon_scale)1", 
                                                        "(lat_scale^2)", "lat_scale", "abslat_scale"))
 
@@ -130,9 +143,9 @@ latlon_cis_plot <- ggplot(data = cis_latlon) +
         plot.margin = unit(c(1,1,1,1), "cm"),)
 latlon_cis_plot
 
-########################################################################################################
+##################################################################################################################################
 
-## SST comparisons ##
+######## SST comparisons ########
 
 #remove extra information
 cis_sst <- subset(all_cis, all_cis$model == "sstmean" | all_cis$model == "sstrange"| 
@@ -140,17 +153,17 @@ cis_sst <- subset(all_cis, all_cis$model == "sstmean" | all_cis$model == "sstran
   cis_sst <- subset(cis_sst, cis_sst$fixef != "(Intercept)" & 
                       cis_sst$fixef != "sigma" & cis_sst$fixef != "bp_scale" & 
                       cis_sst$fixef != "range_position")
-#add means
+  
+#add means (coefficients from "real" model)
 #pi -> hd -> he: mean, range, max, min
 cis_sst$mean <- c(0.007, -0.003, 0.006, 0.005, 
                   0.031, -0.001, 0.030, 0.020,
                   0.0007, -0.005, -0.003, 0.003)
 
-#plot 
+## plot ##
 cis_sst$fixef <- factor(cis_sst$fixef, level = c("sst.BO_sstmin", "sst.BO_sstmax", 
                                                  "sst.BO_sstrange", "sst.BO_sstmean"))
 
-#plot
 sst_cis_plot <- ggplot(data = cis_sst) + 
   geom_hline(aes(yintercept = 0), 
              color = "black", linewidth = 2, linetype = "dashed") +
@@ -174,9 +187,9 @@ sst_cis_plot <- ggplot(data = cis_sst) +
         plot.margin = unit(c(1,1,1,1), "cm"),)
 sst_cis_plot 
 
-########################################################################################################
+#################################################################################################################################
 
-## Chlorophyll A comparisons ##
+######## Chlorophyll  comparisons ########
 
 #remove extra information
 cis_chlo <- subset(all_cis, all_cis$model == "chloromean" | all_cis$model == "chlororange"| 
@@ -189,19 +202,18 @@ cis_chlo <- subset(all_cis, all_cis$model == "chloromean" | all_cis$model == "ch
 cis_chlo$model[cis_chlo$fixef == "logchlomin"] <- "chloromin"
   cis_chlo$model[cis_chlo$fixef == "I(logchlomin^2)"] <- "chloromin"
 
-#add means
+#add means (coefficients from "real" model)
 #pi -> hd -> he: mean, mean^2, range, range^2, max, max^2, min, min^2
 cis_chlo$mean <- c(0.024, -0.054, 0.019, -0.036, 0.045, -0.050, -0.001, -0.046,
                    0.099, -0.355, 0.041, -0.203, 0.214, -0.300, -0.078, -0.350, 
                    0.018, -0.065, 0.013, -0.031, 0.044, -0.051, -0.024, -0.055)
   
   
-#plot chlo
+## plot ##
 cis_chlo$fixef <- factor(cis_chlo$fixef, level = c("I(logchlomin^2)", "logchlomin", "I(logchlomax^2)",
                                                     "logchlomax", "I(logchlorange^2)", "logchlorange", 
                                                     "I(logchlomean^2)", "logchlomean"))
 
-#plot
 chlo_cis_plot <- ggplot(data = cis_chlo) + 
   geom_hline(aes(yintercept = 0), color = "black", linewidth = 2, linetype = "dashed") +
   geom_point(aes(x = fixef, y = mean, color = metric), 

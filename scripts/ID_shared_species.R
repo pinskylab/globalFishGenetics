@@ -1,20 +1,35 @@
+################################################ Script to ID Shared Populations #############################################################
+
+#Identifies populations that have both mtDNA and nuclear DNA diversity estimates
+#Often, same study (or suite of authors/researchers) recorded both mtDNA and microsat information
+#Creates correlation figures (dim: 1000x1000)
+
+##########################################################################################################################################
+
+######## Set-up ########
+
 remove(list = ls())
 
+#load libraries
 library(data.table)
 library(tidyverse)
+library(scales)
 
-# put data from same studies of mtdna & msat into one csv file
-
+#read in data
 msat <- read.csv("output/msatloci_assembled.csv", stringsAsFactors = FALSE)
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
 
- #check for duplicate studies between oldmsat studies & ppdat
+####################################################################################################################################
+
+######## Identify matching studies ########
+
 overlaps <- intersect(msat$spp, mtdna$spp) #species included in both mtdna & msat
 
 msat_studies <- sort(unique(msat$Source[msat$spp %in% overlaps])) #msat studies with those species
 mtdna_studies <- sort(unique(mtdna$Source[mtdna$spp %in% overlaps]))# mtdna studies with those species
 
-all_studies <- sort(c(msat_studies, mtdna_studies))
+all_studies <- sort(c(msat_studies, mtdna_studies)) #list of studies that share same species (and might be identical)
+#comb this by eye (bc studies may have been recorded differently by different recorders) for matches
 
 #matching studies
 matches <- c("Ball et al. 2007 Mar Biol 150:1321-1332", "Ball et al. 2007 Mar. Biol. 150:1321-1332", 
@@ -66,24 +81,26 @@ matches <- c("Ball et al. 2007 Mar Biol 150:1321-1332", "Ball et al. 2007 Mar. B
              "Waldrop et al. (2016) Journal of Biogeography (J. Biogeogr.) 43, 1116â€“1129", "Waldrop et al. 2016 J. Biogeogr. 43:1116-1129", 
              "Wilson 2006", "Wilson 2006 Mol Ecol 15:809-824")
 
+##################################################################################################################################
+
+######## Pull out data from matching studies ########
+
 #pull matching studies from mtdna & msat
-msat_matches <- as.data.table(msat[(msat$Source %in% matches), ])
+msat_matches <- as.data.table(msat[(msat$Source %in% matches), ]) #make table with rows where Source matches a source in matches vector
 mtdna_matches <- as.data.table(mtdna[(mtdna$Source %in% matches), ])
 
 #take mean of msat markers
-msat_means <- msat_matches[, mean(He, na.rm = TRUE), by = .(spp, Source, Site)]
+msat_means <- msat_matches[, mean(He, na.rm = TRUE), by = .(spp, Source, Site)] #calculate mean He (bc by marker)
   msat_source_sum <- msat_means[, .N, by = Source] #count # sites by sources
 
 #take mean of mtdna markers (He)
-mtdna_means <- mtdna_matches[, mean(He, na.rm = TRUE), by = .(spp, Source, Site, MarkerName)]
+mtdna_means <- mtdna_matches[, mean(He, na.rm = TRUE), by = .(spp, Source, Site, MarkerName)] #calculate mean Hd (bc by marker)
   mtdna_source_sum <- mtdna_means[, .N, by = Source] #count # sites by sources
 
-#check where sitenames may differ
-check_sitenames_mtdna <- c(mtdna_means[spp == "Chaetodon lunulatus", 3 ])
-  check_sitenames_mtdna
-check_sitenames_msat <- c(msat_means[spp == "Verasper variegatus", 3 ])
-  check_sitenames_msat
-
+######################################################################################################################################
+  
+######## Clean up matches ########
+  
 #fix site names (make match across dataframes)
 mtdna_means$Site[mtdna_means$spp == "Anoplopoma fimbria" & mtdna_means$Site == "SQ"] <- "San Quintin"
   mtdna_means$Site[mtdna_means$spp == "Anoplopoma fimbria" & mtdna_means$Site == "BS"] <- "Bering Sea"
@@ -174,28 +191,90 @@ mtdna_means$Site[mtdna_means$spp == "Thunnus albacares" & mtdna_means$Site == "K
   mtdna_means$Site[mtdna_means$spp == "Thunnus albacares" & mtdna_means$Site == "WE"] <- "Weligama"
 mtdna_means$Site[mtdna_means$spp == "Verasper variegatus" & mtdna_means$Site == "CYS"] <- "Yellow Sea"
   mtdna_means$Site[mtdna_means$spp == "Verasper variegatus" & mtdna_means$Site == "ISB"] <- "Ise Bay"
-  
-#merge by site/species
-match_list <- list(mtdna_means, msat_means)
-match_all <- match_list %>% reduce(full_join, by = c("spp", "Site"), all = TRUE)
-  colnames(match_all) <- c("spp", "Source_mtdna", "Site", "MarkerName", "Hd", "Source_msat", "He")  
-  
-  
-match_all_noNA <- na.omit(match_all)
-cor(match_all_noNA$He, match_all_noNA$Hd) #0.459 --> in general He (msat) higher than Hd
-  
-#plot Hd v. He
-Hd_He_plot <- ggplot(data = match_all, aes(x = He, y = Hd)) + 
-  geom_point(aes (color = spp)) + 
-  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "#666666") + 
- geom_smooth() + 
-  theme_bw() + 
-  scale_x_continuous(limits = c(0, 1)) + scale_y_continuous(limits = c(0, 1))
-Hd_He_plot
 
-#plot Hd v. pi
-Hd_pi_plot <- ggplot(data = mtdna, aes(x = He, y = Pi)) + 
-  geom_point(aes (color = spp), show.legend = FALSE) + 
-  geom_smooth() + 
-  theme_bw()
-Hd_pi_plot
+################################################################################################################################
+
+######## Merge by site/species ########
+match_list <- list(mtdna_means, msat_means) #make list of mean div estimates
+
+match_all <- match_list %>% reduce(full_join, by = c("spp", "Site")) #match dataframes by spp and site (puts means in same row)
+  colnames(match_all) <- c("spp", "Source_mtdna", "Site", "MarkerName", "Hd", "Source_msat", "He")  
+  match_all_noNA <- na.omit(match_all) #remove any with missing data
+
+#write out
+#write.csv(match_all_noNA, "output/sharedstudies.csv")
+#added pi by hand and a few fuzzy matched studies as well
+
+################################################################################################################################
+
+######## Plot correlations ########
+
+shared_studies <- read.csv("output/sharedstudies.csv", stringsAsFactors = FALSE)
+  
+#subset mtdna bc are a few outliers with very high bp --- entire mtdna (mitogenome?)
+mtdna_small <-subset(mtdna, as.numeric(mtdna$bp) < 2000)
+
+#### Hd v pi plot ####
+  
+hd_pi_corr <- cor(x = mtdna_small$Pi, y = mtdna_small$He, use = "complete.obs", method = "spearman") #r= 0.8179
+  
+hd_pi_plot <- ggplot() + 
+  geom_point(data = mtdna_small, aes(x = Pi, y = He), 
+             alpha = 0.5, size = 8, color = "#0E3C45") + 
+  annotate("text", x = 0.00011, y = 0.98, label = "A", size = 20) + 
+  annotate("text", x = 0.03, y = 0.02, label = "r = 0.9178", size = 12) +
+  scale_x_continuous(trans = "log10", limits = c(0.0001, 0.1), labels = scales::label_log()) +
+  ylim(0, 1) +
+  xlab("π (mtDNA)") + ylab(bquote(H[d]~"(mtDNA)")) + 
+  theme_minimal() + 
+  theme(panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 34),
+        axis.title.y = element_text(size = 34),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 34, color = "black"),
+        axis.text.y = element_text(size = 34, color = "black"))
+hd_pi_plot
+  
+#### He v pi plot ####
+#uses shared study dataframe bc combined mtdna, msat
+
+he_pi_corr <- cor(x = shared_studies$Pi, y = shared_studies$He, use = "complete.obs", method = "spearman") #r= 0.2416
+
+he_pi_plot <- ggplot() + 
+  geom_point(data = shared_studies, aes(x = Pi, y = He), 
+             alpha = 0.5, size = 8, color = "#0E3C45") + 
+  annotate("text", x = 0.00011, y = 0.98, label = "B", size = 20) + 
+  annotate("text", x = 0.03, y = 0.02, label = "r = 0.2416", size = 12) +
+  scale_x_continuous(trans = "log10", limits = c(0.0001, 0.1), labels = scales::label_log()) +
+  ylim(0, 1) +
+  xlab("π (mtDNA)") + ylab(bquote(H[e]~"(nucDNA)")) + 
+  theme_minimal() + 
+  theme(panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 34),
+        axis.title.y = element_text(size = 34),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 34, color = "black"),
+        axis.text.y = element_text(size = 34, color = "black"))
+he_pi_plot
+  
+#### He v Hd plot ####
+#uses shared study dataframe bc combined mtdna, msat
+  
+he_hd_corr <- cor(x = shared_studies$Hd, y = shared_studies$He, use = "complete.obs", method = "spearman") #r= 0.3492
+  
+he_hd_plot <- ggplot() + 
+  geom_point(data = shared_studies, aes(x = Hd, y = He), 
+             alpha = 0.5, size = 8, color = "#0E3C45") + 
+  annotate("text", x = 0.02, y = 0.98, label = "C", size = 20) + 
+  annotate("text", x = 0.85, y = 0.02, label = "r = 0.3492", size = 12) +
+  xlim(0, 1) + 
+  ylim(0, 1) +
+  xlab(bquote(H[d]~"(mtDNA)")) + ylab(bquote(H[e]~"(nucDNA)")) + 
+  theme_minimal() + 
+  theme(panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 34),
+        axis.title.y = element_text(size = 34),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 34, color = "black"),
+        axis.text.y = element_text(size = 34, color = "black"))
+he_hd_plot

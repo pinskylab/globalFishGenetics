@@ -1,7 +1,8 @@
-########################### Script for Building Regression Figures for msat ##############################
-#Uses final msat he binomial regression models
-#Predicts he at certain values of predictor variable of interest
-#Calculates mean he of raw data (binned every X units)
+#################################### Script for Building Regression Figures for msat He #############################################
+
+#Uses msat He binomial regression models
+#Predicts He at certain values of predictor variable of interest
+#Calculates mean or median He of raw data (binned every X units)
 #Plots two together
  
 ##########################################################################################################################################
@@ -11,11 +12,11 @@
 remove(list = ls())
  
 #load libraries
- library(tidyverse)
- library(lme4)
- library(data.table)
- library(sjPlot)
- library(splines)
+library(tidyverse)
+library(lme4)
+library(data.table)
+library(sjPlot)
+library(splines)
  
 #read in data
 msat <- read.csv("output/msatloci_assembled.csv", stringsAsFactors = FALSE)
@@ -29,7 +30,7 @@ msat <- cbind(msat[, -1], msat_env[, c('sst.BO_sstmean', 'sst.BO_sstrange', 'sst
 msat <- merge(msat, cp_info[, c('spp', 'Pelagic_Coastal', 'Genus', 'Family', 'Northernmost', 'Southernmost', 'Half_RangeSize',
                                 'Centroid')], all.x = TRUE)
  
-####################################################################################################################
+##############################################################################################################################
  
 ######## Clean up dataframe ########
 
@@ -78,7 +79,7 @@ msat$lat_scale <- as.numeric(scale(msat$lat))
 msat$abslat_scale <- as.numeric(scale(msat$abslat))
 msat$lon_scale <- as.numeric(scale(msat$lon))
 
-#############################################################################################################
+################################################################################################################################
 
 ######## Range position figure ########
 
@@ -121,7 +122,7 @@ msat_he_rangepos_plot <- ggplot() +
         legend.position = "none")
 msat_he_rangepos_plot
 
-##############################################################################################################
+###############################################################################################################################
 
 ######## CrossSpp figure ########
 
@@ -157,7 +158,7 @@ msat_he_crossspp_plot <- ggplot() +
         legend.position = "none")
 msat_he_crossspp_plot
 
-#############################################################################################################
+###########################################################################################################################################
 
 ######### Abslat figure #######
 
@@ -233,7 +234,7 @@ msat_he_abslat_plot_violin <- ggplot() +
         legend.position = "none")
 msat_he_abslat_plot_violin
 
-#############################################################################################################
+################################################################################################################################
 
 ######### Lat figure #######
 
@@ -331,7 +332,7 @@ msat_he_lat_plot <- ggplot() +
           legend.position = "none")
 msat_he_lat_plot
 
-#############################################################################################################
+##################################################################################################################################
 
 ######### Lon figure #######
 
@@ -430,11 +431,11 @@ msat_he_lon_plot <- ggplot() +
         legend.position = "none")
 msat_he_lon_plot
 
-#############################################################################################################
+################################################################################################################################
  
 ######## Calculate environmental variables ########
  
-#### log transform chlorophyll A ####
+#### log transform chlorophyll ####
 #subset to only those with chloroA data
 msat <- subset(msat, msat$chloroA.BO_chlomean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
   msat <- subset(msat, msat$chloroA.BO_chlorange != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
@@ -456,7 +457,7 @@ msat <- subset(msat, msat$logchlomean != "Inf" |
   msat <- subset(msat, msat$logchlomin != "Inf" |
                    msat$logchlomin != "NaN")
 
-##################################################################################################################
+###################################################################################################################################
 
 ######### SST mean figure #######
 
@@ -499,7 +500,7 @@ msat_he_sstmean_plot <- ggplot() +
         legend.position = "none")
 msat_he_sstmean_plot
 
-##################################################################################################################
+#################################################################################################################################
 
 ######### SST range figure #######
 
@@ -542,7 +543,7 @@ msat_he_sstrange_plot <- ggplot() +
         legend.position = "none")
 msat_he_sstrange_plot
 
-##################################################################################################################
+###############################################################################################################################
 
 ######## SST max figure #######
 
@@ -585,7 +586,7 @@ msat_he_sstmax_plot <- ggplot() +
         legend.position = "none")
 msat_he_sstmax_plot
 
-##################################################################################################################
+##################################################################################################################################
 
 ######## SST min figure #######
 
@@ -628,7 +629,7 @@ msat_he_sstmin_plot <- ggplot() +
         legend.position = "none")
 msat_he_sstmin_plot
 
-##################################################################################################################
+############################################################################################################################################
 
 ######## ChloroA mean figures ########
 
@@ -675,7 +676,7 @@ msat_he_chloromean_plot <- ggplot() +
           legend.position = "none")
 msat_he_chloromean_plot
 
-##################################################################################################################
+##########################################################################################################################################
 
 ######## ChloroA range figures ########
 
@@ -721,7 +722,7 @@ msat_he_chlororange_plot <- ggplot() +
         legend.position = "none")
 msat_he_chlororange_plot
 
-##################################################################################################################
+##############################################################################################################################################
 
 ######## ChloroA max figure ########
 
@@ -767,7 +768,7 @@ msat_he_chloromax_plot <- ggplot() +
         legend.position = "none")
 msat_he_chloromax_plot
 
-##################################################################################################################
+############################################################################################################################################
 
 ######## ChloroA min figures ########
 

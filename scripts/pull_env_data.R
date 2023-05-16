@@ -1,4 +1,11 @@
-#Script to pull env data from bio oracle
+#################################### Script to Pull Env Data from Bio-ORACLE #######################################################
+
+#Records SST, Dissolved oxygen, Chlorophyll (mean min, max, range) at each data location
+#From Bio-ORACLE (https://www.bio-oracle.org/)
+
+##########################################################################################################################################
+
+######## Set-up ########
 
 remove(list = ls())
 
@@ -11,11 +18,11 @@ library(raster)
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
 msat <- read.csv("output/msatloci_assembled.csv", stringsAsFactors = FALSE)
 
-##############################################################################################################
+#################################################################################################################################
 
 ######## Gathering data from Bio-ORACLE ########
 
-#list layers in Bio-CLIM database (could also do MARSPEC)
+#list layers in Bio-CLIM database
 #only want annual (no monthly)
 list_layers(datasets = "Bio-ORACLE", monthly = FALSE)
 #for SST: Bo_sstmean, BO_sstmax, BO_sstmin, BO_sstrange
@@ -35,7 +42,7 @@ sst <- load_layers(c("BO_sstmean", "BO_sstrange", "BO_sstmax", "BO_sstmin"))
 ox <- load_layers(c("BO_dissox"))
 chloroA <- load_layers(c("BO_chlomean", "BO_chlorange", "BO_chlomax", "BO_chlomin"))
 
-###################################################################################################################
+####################################################################################################################################
 
 ######## Pull environmental data for each site ########
 

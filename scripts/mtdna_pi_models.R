@@ -1,7 +1,17 @@
-#Script for building mtDNA pi models
+################################################### Script to build mtDNA pi models ########################################################
+
+#Mitochondrial average pairwise diversity (pi) data
+#Linear generalized linear mixed effect models for pi
+#Pi log-transformed
+#Check model fits and for spatial autocorrelation in residuals with DHARMa
+
+##########################################################################################################################################
+
+######## Set-up ########
 
 remove(list = ls())
 
+#load libraries
 library(tidyverse)
 library(lme4)
 library(DHARMa)

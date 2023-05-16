@@ -1,7 +1,17 @@
-#Script for building mtDNA Hd models
+################################################### Script to build mtDNA Hd models ########################################################
+
+#Mitochondrial haplotype diversity (Hd) data
+#Binomial generalized linear mixed effect models for Hd
+#Success = heterozygote (two different haplotypes from pool), failure = homozygote
+#Check model fits and for spatial autocorrelation in residuals with DHARMa
+
+##########################################################################################################################################
+
+######## Set-up ########
 
 remove(list = ls())
 
+#load libraries
 library(tidyverse)
 library(lme4)
 library(DHARMa)

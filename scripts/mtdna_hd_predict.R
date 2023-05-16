@@ -1,8 +1,8 @@
-######################## Script for Building Regression Figures for mtDNA Hd  ##############################
+######################################## Script for Building Regression Figures for mtDNA Hd  ########################################
 
-#Uses final mtdna hd binomial regression models
-#Predicts hd at certain values of predictor variable of interest
-#Calculates mean hd of raw data (binned every X units)
+#Uses mtDNA Hd binomial regression models
+#Predicts Hd at certain values of predictor variable of interest
+#Calculates mean Hd of raw data (binned every X units)
 #Plots two together
 
 ##########################################################################################################################################

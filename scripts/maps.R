@@ -1,7 +1,13 @@
-#################################### Plot sampling locations ###########################################
+################################################### Script to plot sampling locations ########################################################
 
-#set-up
-#2000 x 1500
+#Plot either each sampled population as a point OR combine as hexbins (every 3 degrees lat/lon)
+#Maps of global chlorophyll & temp as well
+
+#Plot size: 2000 x 1500
+
+##########################################################################################################################################
+
+######## Set-up ########
 
 remove(list = ls())
 
@@ -25,6 +31,10 @@ msat <- cbind(msat[, -1], msat_env[, c('sst.BO_sstmean', 'sst.BO_sstrange', 'sst
 #pull world map data
 world_map <- map_data("world") %>% 
   filter(! long > 180)
+
+################################################################################################################################################
+
+######## Calculate tropical coverage ########
 
 mtdna_small <-subset(mtdna, as.numeric(mtdna$bp) < 2000)
 
@@ -101,7 +111,7 @@ msat_he_hexbin_plot <- world_map %>%
   guides(fill = guide_colourbar(barwidth = unit(3, "cm"), barheight = unit(10, "cm")))
 msat_he_hexbin_plot
 
-#########################################################################################################
+###################################################################################################################################
 
 ######## Create mtdna maps ########
 
@@ -238,7 +248,9 @@ mtdna_pi_hexbin_plot <- world_map %>%
   guides(fill = guide_colourbar(barwidth = unit(3, "cm"), barheight = unit(10, "cm")))
 mtdna_pi_hexbin_plot
 
-######################################################################################################################
+######################################################################################################################################
+
+######## Create environmental data maps ########
 
 #chlorophyll mean map
 chlomean_hexbin_plot <- world_map %>% 

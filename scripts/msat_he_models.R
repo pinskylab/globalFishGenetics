@@ -1,7 +1,17 @@
-#Script for building msat He models
+################################################### Script to build msat He models ########################################################
+
+#Nuclear microsatellite expected heterozygosity (He) data
+#Binomial generalized linear mixed effect models for He
+#Success = heterozygote, failure = homozygote
+#Check model fits and for spatial autocorrelation in residuals with DHARMa
+
+##########################################################################################################################################
+
+######## Set-up ########
 
 remove(list = ls())
 
+#load libraries
 library(tidyverse)
 library(lme4)
 library(DHARMa)
@@ -20,7 +30,7 @@ msat <- cbind(msat[, -1], msat_env[, c('sst.BO_sstmean', 'sst.BO_sstrange', 'sst
 msat <- merge(msat, cp_info[, c('spp', 'Pelagic_Coastal', 'Genus', 'Family', 'Northernmost', 'Southernmost', 'Half_RangeSize', 
                                 'Centroid')], all.x = TRUE)
 
-####################################################################################################################
+################################################################################################################################
 
 ######## Clean up dataframe ########
 #do this at beginning with all variables, so that all models run on same dataset (for comparisons)

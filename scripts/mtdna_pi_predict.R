@@ -1,6 +1,6 @@
-######################## Script for Building Regression Figures for Pi  ##############################
+################################### Script for Building Regression Figures for mtDNA pi  ############################################
 
-#Uses final mtdna pi linear regression models
+#Uses mtDNA pi linear regression models
 #Predicts pi at certain values of predictor variable of interest
 #Calculates mean pi of raw data (binned every X units)
 #Plots two together
