@@ -3,7 +3,6 @@
 
 Guidelines for how to enter data in mitochondrial DNA (mtDNA) data spreadsheets (including filtering criteria).
 
-
 ## Screening Instructions
 
 We only want to enter data from population genetic studies on marine fish that use mtDNA sequences, report haplotype sequences, report genetic diversity, and report where the samples were taken.
