@@ -1,5 +1,6 @@
 This directory holds the instructions given to undergraduate students to help in screening papers and entering data
 
+## Literature Search Terms & Dates
 Original search to find microsatellite papers was in Web of Science on 11 December 2011:
 `Topic=(fish* microsatellite* (marine OR ocean OR sea))`
 `Timespan=All Years`
@@ -10,7 +11,7 @@ Original search to find mtDNA papers was in Web of Science on 29 January 2013:
 
 The second search for both microsatellite and mtDNA papers was in Web of Science on 05 January 2020, using the original search criteria.
 
-### Undergraduates
+## Undergraduates
 - Diana Li (Princeton)
 - Kieryn Graham (Princeton)
 - Stan Piotrowki (Rutgers)
