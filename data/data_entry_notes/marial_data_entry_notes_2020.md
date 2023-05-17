@@ -1,6 +1,7 @@
 Notes:
 
 Date: 5/25/2020
+
 James Thorburn et. al. (2018) Aquatic Conserv: Mar Freshw Ecosyst. 2018;28:1167–1180 ; Data for n (population) and He includes FS relationship. Data for n and He excluding FS relationship vary by very little from the data I plotted so I chose not to include the data. I also did not include data that were not in HWE. This goes as following: locus DFU285 for the Wales site. If I were to remove the Fs relationships, only SACA 6396 in Celtic Sea and Southern North Sea + SACA 3853 in Southern North Sea would be out of HWE.
 
 Date: 5/26/2020
