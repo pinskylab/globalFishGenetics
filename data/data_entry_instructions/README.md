@@ -8,6 +8,8 @@ Original search to find microsatellite papers was in Web of Science on 11 Decemb
 Original search to find mtDNA papers was in Web of Science on 29 January 2013:
 `Topic=(fish* mtDNA (marine OR ocean OR sea))`
 
+The second search for both microsatellite and mtDNA papers was in Web of Science on 05 January 2020, using the original search criteria.
+
 ### Undergraduates
 - Diana Li (Princeton)
 - Kieryn Graham (Princeton)
@@ -16,3 +18,4 @@ Original search to find mtDNA papers was in Web of Science on 29 January 2013:
 - Sarah Picon (Rutgers)
 - Chloe Lewis (Rutgers)
 - Michael Weiss (Rutgers)
+- Marial Malabag (Rutgers)
