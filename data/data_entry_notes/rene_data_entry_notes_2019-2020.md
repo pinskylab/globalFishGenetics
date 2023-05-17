@@ -6,9 +6,9 @@ Malin shared GitHub repository with me on Pinsky lab site that has all work curr
 01.03.2020
 
 Browsing mtdna & microsat papers that passed screening by undergrads
-	* Made lists of the unique papers (author, year, journal (when provided)) to get a sense of what authors and # of papers included
-		* mtDNA list: mtDNA_included_papers_2013 --> 162 papers
-		* microsat_list: msat_included_papers_2011 --> 389 papers
+* Made lists of the unique papers (author, year, journal (when provided)) to get a sense of what authors and # of papers included
+	* mtDNA list: mtDNA_included_papers_2013 --> 162 papers
+	* microsat_list: msat_included_papers_2011 --> 389 papers
 
 01.05.2020
 
@@ -21,141 +21,144 @@ Exporting lists of author, journal, date, abstract to endnote in following group
 	2. mtdna_fish_diversity_2013+ (417 papers)
 
 Google scholar search?Created excel spreadsheet titled mtdna_screening_notes_2013-2020/Marine_Genetic_Diversity_Proj with metadata information about papers from Web of Science search on 1.5.2020
-	* Columns for authors, year, journal, marine fish (y/n), mtDNA (y/n), wild population (y/n), included (y/n) --> based on Malin's instructions on GitHub for undergraduates
-		* Must meet all three criteria (marine, mtDNA & wild) in order to pass screen (screen in that order)
-		* Papers that pass screen added to QuickList on EndNote and will eventually be added to new (refined) group called mtdna_abstract_2013+_pass
-			* Those that don't pass will remain in original mtdna group
-				* Screened 113 papers (Kept 56)
+* Columns for authors, year, journal, marine fish (y/n), mtDNA (y/n), wild population (y/n), included (y/n) --> based on Malin's instructions on GitHub for undergraduates
+	* Must meet all three criteria (marine, mtDNA & wild) in order to pass screen (screen in that order)
+	* Papers that pass screen added to QuickList on EndNote and will eventually be added to new (refined) group called mtdna_abstract_2013+_pass
+		* Those that don't pass will remain in original mtdna group
+			* Screened 113 papers (Kept 56)
 
 01.06.2020
 
 Finished initial screening of mtdna abstracts (screened remaining 304 papers and kept 179)
-	* In total parsed original pool of 417 papers down to 235 on first pass
-		* Most lost bc weren't marine fish (either freshwater fish or marine non-fish)
+* In total parsed original pool of 417 papers down to 235 on first pass
+	* Most lost bc weren't marine fish (either freshwater fish or marine non-fish)
 
 Starting initial screening of msat abstracts
-	* Created excel spreadsheet titled msat_screening_notes_2011-2020/Marine_Genetic_Diversity_Proj with metadata information about papers from Web of Science search on 1.5.2020
-		* Columns for authors, year, journal, marine fish(y/n), msat (y/n), wild population (y/n), non-EST (y/n), included (y/n) --> based on Malin's instructions on GitHub
-			* Must meet all four criteria in order to pass screen (screen in that order)
-				* EST = expressed sequence tag, comes from mRNA (expressed gene in tissue) and more likely that that gene will be under selection (which we don't want as looking for diversity shaped by mostly neutral processes)
-					* Work backwards from mRNA to create EST and target gene in DNA that interested in (can then sequence/play with the actual DNA)
-						* Used for microsats bc easy-ish way to get primers for genes?
-			* Papers that pass screen added to QuickList on EndNote and then added to new group called microsat_abstract_2011+_pass
-				* Those that don't pass remain in original msat group
-					* Screened 210 papers, kept 100
+* Created excel spreadsheet titled msat_screening_notes_2011-2020/Marine_Genetic_Diversity_Proj with metadata information about papers from Web of Science search on 1.5.2020
+	* Columns for authors, year, journal, marine fish(y/n), msat (y/n), wild population (y/n), non-EST (y/n), included (y/n) --> based on Malin's instructions on GitHub
+		* Must meet all four criteria in order to pass screen (screen in that order)
+			* EST = expressed sequence tag, comes from mRNA (expressed gene in tissue) and more likely that that gene will be under selection (which we don't want as looking for diversity shaped by mostly neutral processes)
+				* Work backwards from mRNA to create EST and target gene in DNA that interested in (can then sequence/play with the actual DNA)
+					* Used for microsats bc easy-ish way to get primers for genes?
+		* Papers that pass screen added to QuickList on EndNote and then added to new group called microsat_abstract_2011+_pass
+			* Those that don't pass remain in original msat group
+				* Screened 210 papers, kept 100
 
 01.07.2020
 
 Continuing first screen of msat papers
-	* Screened 290 papers, kept 121
+* Screened 290 papers, kept 121
 
 01.08.2020
 
 Continuing first screen of msat papers (from 500 on, just about halfway through at start of day)
-	* Screened 200 papers, kept 95
+* Screened 200 papers, kept 95
 
 01.09.2020
 
 Finished first screen of msat papers
-	* Screened 325 papers, kept 156
-		* In total parsed original pool of 1025 papers down to 473 on first pass
-			* Most lost bc weren't marine fish
-				* Although more non-wild pop papers in msat group than mtdna group
+* Screened 325 papers, kept 156
+	* In total parsed original pool of 1025 papers down to 473 on first pass
+		* Most lost bc weren't marine fish
+			* Although more non-wild pop papers in msat group than mtdna group
 
 Added sheet to excel spreadsheet titled mtdna_screening_notes_2013-2020 (sheet titled mtdna_paper_screen) with only papers that passed abstract screen (changed original sheet name to mtdna_abstract_screen)
-	* Columns for authors, year, journal, wild pop (y/n), hybrid (y/n), sample size (>= 4), mtDNA bp (>=200 bp), RFLPs (y/n), marine fish (y/n), # sample sites (>1), lat/long (y/n), lat/long accuracy (<=3 degrees), multiple time points, data already reported (y/n) --> based on Malin's instructions on GitHub for undergraduates
-		* Must meet all criteria to pass screen (in that order)
-			* If there is more than one time point, choose time point with largest sample size to report (if tie, use most recent)
-			* If data reported in earlier paper, use that paper
-		* Papers that pass screen added to QuickList on EndNote and will eventually be added to new (refined) group called mtdna_paper_2013+_pass
-			* Those that don't pass will remain in mtdna_abstract_2013+_pass
+* Columns for authors, year, journal, wild pop (y/n), hybrid (y/n), sample size (>= 4), mtDNA bp (>=200 bp), RFLPs (y/n), marine fish (y/n), # sample sites (>1), lat/long (y/n), lat/long accuracy (<=3 degrees), multiple time points, data already reported (y/n) --> based on Malin's instructions on GitHub for undergraduates
+	* Must meet all criteria to pass screen (in that order)
+		* If there is more than one time point, choose time point with largest sample size to report (if tie, use most recent)
+		* If data reported in earlier paper, use that paper
+	* Papers that pass screen added to QuickList on EndNote and will eventually be added to new (refined) group called mtdna_paper_2013+_pass
+		* Those that don't pass will remain in mtdna_abstract_2013+_pass
 
 Started screening papers
-	* Hard to determine lat/long precision for some papers
-		* Being conservative for now -- if exact coordinates provided give precision as 0
-			* If detailed map provided, try to match accuracy to scale of map
-				* If map isn't detailed, setting accuracy as 3 degrees for now to keep in pile (email authors/dig through supplemental material at later date)
+* Hard to determine lat/long precision for some papers
+	* Being conservative for now -- if exact coordinates provided give precision as 0
+		* If detailed map provided, try to match accuracy to scale of map
+			* If map isn't detailed, setting accuracy as 3 degrees for now to keep in pile (email authors/dig through supplemental material at later date)
 
 Screened first 50 papers, kept 2601.10.2020Continuing second screening of mtdna papers
-	* Screened next 69 papers, kept 40
+* Screened next 69 papers, kept 40
 
 01.12.2020
 
 Continuing second screening of mtdna papers
-	* Screened 23 papers, kept 9
+* Screened 23 papers, kept 9
 
 01.13.2020
 
 Continuing second screening of mtdna papers
-	* Screened 69 papers kept 39
+* Screened 69 papers kept 39
 
 01.14.2020
 
 Finished second screening of mtdna papers
-	* Screened 23 papers kept 11
+* Screened 23 papers kept 11
 
 Kept a total of 125 papers (down from 234)
-	* Kept 5 papers bc couldn't read/access them
-	* Most papers again lost bc not a marine species (or doing a diet analysis)
-		* Some bc didn't have large enough sample size
-		* Some bc didn't have lat/long coordinates or were too broad (averaged across a wide area)
-			* Although keeping ones may be able to dig up coordinates for (if give landing site, for ex)
+* Kept 5 papers bc couldn't read/access them
+* Most papers again lost bc not a marine species (or doing a diet analysis)
+	* Some bc didn't have large enough sample size
+	* Some bc didn't have lat/long coordinates or were too broad (averaged across a wide area)
+		* Although keeping ones may be able to dig up coordinates for (if give landing site, for ex)
 
 Added sheet to excel spreadsheet titled msat_screening_notes_2011-2020 (sheet titled msat_paper_screen) with only papers that passed abstract screen (changed original sheet name to msat_abstract_screen)
-	* Columns for authors, year, journal, marine fish (y/n), wild pop (y/n), hybrid (y/n), microsat (y/n), EST-linked (y/n), HWE (y/n), polymorphic (y/n), sample size (>= 4), # sample sites (>1), lat/long (y/n), lat/long accuracy (<=3 degrees), multiple time points, data already reported (y/n) --> based on Malin's instructions on GitHub for undergraduates
-		* Malin didn't have criteria for sample size/# sample sites BUT keeping same as mtdna data
-			* May go back and add if sites is less than 1 but def need decent sample size for diversity estimates
-		* Must meet all criteria to pass screen (in that order)
-			* If there is more than one time point, choose time point with largest sample size to report (if tie, use most recent)
-			* If data reported in earlier paper, use that paper
-		* Papers that pass screen added to QuickList on EndNote and will eventually be added to new (refined) group called microsat_paper_2011+_pass
-			* Those that don't pass will remain in microsat_abstract_2011+_pass
+* Columns for authors, year, journal, marine fish (y/n), wild pop (y/n), hybrid (y/n), microsat (y/n), EST-linked (y/n), HWE (y/n), polymorphic (y/n), sample size (>= 4), # sample sites (>1), lat/long (y/n), lat/long accuracy (<=3 degrees), multiple time points, data already reported (y/n) --> based on Malin's instructions on GitHub for undergraduates
+	* Malin didn't have criteria for sample size/# sample sites BUT keeping same as mtdna data
+		* May go back and add if sites is less than 1 but def need decent sample size for diversity estimates
+	* Must meet all criteria to pass screen (in that order)
+		* If there is more than one time point, choose time point with largest sample size to report (if tie, use most recent)
+		* If data reported in earlier paper, use that paper
+	* Papers that pass screen added to QuickList on EndNote and will eventually be added to new (refined) group called microsat_paper_2011+_pass
+		* Those that don't pass will remain in microsat_abstract_2011+_pass
 
 Started second screening msat papers
-	* Screened 52 papers kept 25
+* Screened 52 papers kept 25
 
-01.15.2020Creating spreadsheet with officially metadata information from mtdna papers (2013+) (mtdna_2013-2020_data)
-	* Same set up as Malin's spreadsheet
-		* Columns:
-			* Spp --> scientific name (check Fishbase to make sure most up-to-date)
-			* CommonName --> get from Fishbase (paper if not available)
-			* Source --> "Adams et al. 2010 Molecular Ecology 8:1000-1015"
-			* Country --> country where sample was taken (or ocean if far from shore)
-			* Site --> site name as given by author
-			* LatDeg --> degrees latitude (negative for Southern Hemisphere)
-				* If not given in paper, use paper figures OR google maps of place names)
-					* If range, okay for average but only if less than 3 degrees
-			* LatMin --> only if no decimal degrees
-			* LatSec --> only if no decimal degrees
-			* LonDeg --> negative for Western Hemisphere
-			* LonMin
-			* LonSec
-			* CollectionYear --> year in which samples were taken
-				* Leave blank if not stated
-				* Average if samples from multiple years were pooled
-			* MarkerName --> name of mtDNA locus as listed in paper
-			* n --> number of individuals sampled
-			* bp --> length of mtDNA locus
-			* He --> expected heterozygosity
-				* Haplotype diversity
-			* Hese --> standard error of He measurement (if SD then divide SD by square root of n)
-			* Pi --> nucleotide diversity
-			* Pise --> standard error of pi
+01.15.2020
+
+Creating spreadsheet with officially metadata information from mtdna papers (2013+) (mtdna_2013-2020_data)
+* Same set up as Malin's spreadsheet
+	* Columns:
+		* Spp --> scientific name (check Fishbase to make sure most up-to-date)
+		* CommonName --> get from Fishbase (paper if not available)
+		* Source --> "Adams et al. 2010 Molecular Ecology 8:1000-1015"
+		* Country --> country where sample was taken (or ocean if far from shore)
+		* Site --> site name as given by author
+		* LatDeg --> degrees latitude (negative for Southern Hemisphere)
+			* If not given in paper, use paper figures OR google maps of place names)
+				* If range, okay for average but only if less than 3 degrees
+		* LatMin --> only if no decimal degrees
+		* LatSec --> only if no decimal degrees
+		* LonDeg --> negative for Western Hemisphere
+		* LonMin
+		* LonSec
+		* CollectionYear --> year in which samples were taken
+			* Leave blank if not stated
+			* Average if samples from multiple years were pooled
+		* MarkerName --> name of mtDNA locus as listed in paper
+		* n --> number of individuals sampled
+		* bp --> length of mtDNA locus
+		* He --> expected heterozygosity
+			* Haplotype diversity
+		* Hese --> standard error of He measurement (if SD then divide SD by square root of n)
+		* Pi --> nucleotide diversity
+		* Pise --> standard error of pi
 
 NEEDS to have Spp, source, He or pi, and Lat (Deg or Min/Sec) for each line in order to keep
-	* So each line is a unique combo of species/sample location/marker
-		* Eg if two markers used for same sample location each get diff line
+* So each line is a unique combo of species/sample location/marker
+	* Eg if two markers used for same sample location each get diff line
 
 Pulling papers (first 50) from mtdna paper pass list and saving to computer so can do on plane tomorrow (saving under Marine Genetic Diversity Papers/mtDNA_Paper)
-	* Go paper by paper
+* Go paper by paper
 
 Continuing second screen of microsat papers
-	* Screened 31 papers, kept 18
+* Screened 31 papers, kept 18
 
 01.16.2020
 
 Starting to pull data from mtdna papers (2011+)
-	* Double check if 2011 paper that not already pulled
+* Double check if 2011 paper that not already pulled
+
 Notes:
 
 	* Not recording Anderson et al. 2017 Journal of Fish Biology 91:558-573 bc study of invasive species
