@@ -3,6 +3,7 @@ From Diana Li, Kieryn Graham, Ash Bhattacharya, Sarah Picon, Stan Piotrowski, Ch
 
 1/31/2012
 Diana Li
+
 	Fishery lat msats 000; All References 3
 
 	Canino et al 2005 Mol Ecol Notes
@@ -14,11 +15,13 @@ Diana Li
 
 2/1/2012
 Diana Li
+
 	Adams et al 2006
 		Had to go online (http://onlinelibrary.wiley.com/doi/10.1111/j.1365-294X.2006.02859.x/suppinfo) to find msat data in supplementary Table 1; for "repeat" supplementary data 2 seems to indicate that they only used tri repeats - since they used msats from Adams et al 2005, I looked there and confirmed that these are all tri; the data presented is kind of tricky to understand... might want to go over with Malin later to make sure
 
 2/2/2012
 Diana Li
+
 	Almuly et al 2005 Fisheries Science
 		This doesn't seem wild; family structure seems known (mentions "full-sib"); partially domesticated stoke from Atlit fish farm; decided to not use paper
 
@@ -38,6 +41,7 @@ Diana Li
 
 2/3/2012
 Diana Li
+
 	Babbucci et al 2006 Mol Ecol Notes
 		Primer note; easy to understand
 
@@ -46,6 +50,7 @@ Diana Li
 
 2/5/2012
 Diana Li
+
 	Bekkevold et al 2005 (cont'd)
 		Back on campus; retrieved Olsen et al paper; re-enter He data for non-HWE loci since it could be a statistical mistake and authors chose to keep these loci
 
@@ -60,6 +65,7 @@ Diana Li
 
 2/6/2012
 Diana Li
+
 	Buonaccorsi et al. 2005 Conservation Genetics
 		use msat markers previously used in a different species of rockfish (copper) from Buonaccorsi et al. 2002, but I can't seem to find info on repeats in the 2002 paper; the 2002 paper gives no indication of supplementary material or specific indication of the repeats in the msats they used; currently not using Buonaccorsi et al 2005 unless I find the repeat data
 		already entered by Malin
@@ -93,6 +99,7 @@ Diana Li
 
 2/7/2012
 Diana Li
+
 	Chevolot et al. 2006 Mol Ecol
 		similar to other Chevolot paper from JSR - uses same msats on same species in different locations
 		one msat shows as monomorphic in 2 locations but is polymorphic in all the rest. the authors don't mention anything about it though; keeping the locus, but omitting it for that location entry
@@ -122,6 +129,7 @@ Diana Li
 
 2/8/2012
 Diana Li
+
 	Franch et al. 2006 Genetics
 		Deals with linkage map; decided to not use
 
@@ -153,7 +161,8 @@ Diana Li
 
 2/13/2012
 Diana Li
-	Had to clean up data spreadsheet, applying new rules about the Collection Year - pick with highest sample size; if a tie, pick most recent
+
+Had to clean up data spreadsheet, applying new rules about the Collection Year - pick with highest sample size; if a tie, pick most recent
 
 	Guo et al 2005 Mol Ecol Notes
 		all but 1 locus deviated significantly from HWE without the Bonferroni correction - omitting these loci
@@ -168,6 +177,7 @@ Diana Li
 
 2/14/2012
 Diana Li
+
 	Jakobsdóttir et al 2006 Mol Ecol Notes
 		Locations "Iceland" and "Baltic Sea" along with a sample of 1957 archived otolith samples from "Iceland" - locations too vague; did not use paper
 
@@ -193,11 +203,13 @@ Diana Li
 
 2/16/2012
 Diana Li
+
 	LeClair et al. 2006 Trans of the Am Fish Soc
 		provide only allele frequencies, but straightforward
 
 2/17/2012
 Diana Li
+
 	Lemos et al 2006 Aquaculture R
 		5 sites - includes 1 average between sites that are too far and 1 that is too vague; entering only 3 of the 5 sites
 		They only have the average of all msats per location with no Hese values - apparently there is supplementary material but the site that is indicated does not contain this paper's supp materials....
@@ -228,6 +240,7 @@ Diana Li
 
 2/18/2012
 Diana Li
+
 	Ortega-Villaizán et al. 2006 Fisheries Sci
 		straightforward; looked up Ortega- Villaizán et al. 2003 for the repeat info on the msats
 		authors state that there is a small (slightly significant) deviation from HWE in some loci in some locations, but they still keep the loci and they state that there was no locus that deviated in all the locations
@@ -253,6 +266,7 @@ Diana Li
 
 2/19/2012
 Diana Li
+
 	Purcell et al 2006 Proc R Soc B
 		info in supplementary material
 		msats from Williams 2004a,b  Mol Ecol Notes 
@@ -263,6 +277,7 @@ Diana Li
 
 2/20/2012
 Diana Li
+
 	Renshaw et al 2006 Mol Ecol Notes
 		straightforward primer note
 
@@ -287,6 +302,7 @@ Diana Li
 
 2/21/2012
 Diana Li
+
 	Senger et al 2006 Genomics
 		deals with making linkage maps; has no He or allele freq data; not using paper
 
@@ -301,6 +317,7 @@ Diana Li
 
 2/22/2012
 Diana Li
+
 	Thompson et al 2006 Mol Ecol Notes
 		locations: Moorea, Raiatea, Huahine, Bora Bora, and Rangiroa... all averaged into "French Polynesia" - degrees lat/long are greater than 3º apart between these 5 locations; not using paper
 
@@ -347,6 +364,7 @@ Diana Li
 
 2/28/2012
 Diana Li
+
 	Hardie et al 2006 CJFAS
 		averaged He without Hese - plus, with cross species msat among non-cross species ones; 
 		for averaged He: leave MarkerName blank; average cross-species (if there is a mix between cross and non-cross species); average the repeat #
@@ -354,6 +372,7 @@ Diana Li
 
 3/1/2012
 Diana Li
+
 	entered Castilho & Ciftci
 
 	ALL REFS 1
@@ -378,11 +397,13 @@ Diana Li
 
 3/2/2012
 Diana Li
+
 	Beldade et al. 2009 Cons Gen Resources
 		straightforward
 
 3/3/2012
 Diana Li
+
 	Boissin et al. 2011 Bio J of the Linnean Society
 		confusing "resampled" avg He values (with Hese) as opposed to "non-resampled" average He values without Hese - ask malin?
 		nevermind, can use allele frequencies from appendix!
@@ -394,6 +415,7 @@ Diana Li
 
 3/4/2012
 Diana Li
+
 	Bradbury et al 2009 J Fish Bio
 		authors basically include all loci, since the removal of certain ones that seem suspicious have no significant impact on further analyses
 		authors study 3 species; there are samples of each species taken from each of 3 places, but the He values are only considered per species, not location; however the locations are within 2 degrees of each other, so I'm going to use the per-species data
@@ -405,12 +427,12 @@ Diana Li
 		the authors say that "5 of the 22 loci failed to meet HWE" but they don't say which five... I can't figure out which five they are...
 		Malin says drop SwoA8, SwoB6, SwoB108, and SwoB112 from Coral sea, and drop SwoA115, SwoB6, SwoB9, and SwoC4 from Fremantle.
 
-
 	Breton et al 2010 Cons Gen Resources
 		Locations too vague; not using paper
 
 3/5/2012
 Diana Li
+
 	Broderick et al 2011 J Fish Bio
 		can't find supplementary data - otherwise, the only data listed lumps all the locations into 1 entry per msat, but the locations are too far for our use. 
 		leave for now until supplementary data is found
@@ -422,6 +444,7 @@ Diana Li
 	
 3/6/2012
 Diana Li
+
 	Burford et al. 2011 Marine Bio
 		deals with hybrids; not use
 
@@ -442,6 +465,7 @@ Diana Li
 
 3/8/2012
 Diana Li
+
 	Canino et al. 2010 Mol Ecol
 		authors state that 2 loci, 1 each in a different location deviate from hwe after multiple tests, but USE ALL OF THEM
 		typically we don't remove just 1 locus from a certain location - if we remove it, we remove the locus for ALL sites
@@ -455,12 +479,14 @@ Diana Li
 
 3/11/2012
 Diana Li
+
 	Still working on Boissin et al. 
 		Ran into a bit of trouble trying to get latitude coordinates for the locations
 		unsure about lagoons and estuaries - checked: lagoons and estuaries ok
 
 3/13/2012
 Diana Li
+
 	Revisiting Buonaccorsi et al. 2011
 		A bit of discrepancy of exact location - inds from either San Miguel Island or from other places in southern California bight - which is still within 3º range, so i'm using coordinates for San Miguel Island
 		Msat repeat data from Berntson et al 2007
@@ -479,6 +505,7 @@ Diana Li
 
 3/15/2012
 Diana Li
+
 	Boissin et al. 2011 Bio J of the Linnean Society
 		done!
 		found the lat degrees for the locations with Malin's help
@@ -486,6 +513,7 @@ Diana Li
 
 3/16/2012
 Diana Li
+
 	Carson et al. 2009 North Am J of Fisheries Mgmt
 		authors state that 3 of the 16 loci deviated from HWE in two sites or more (of the four sites) - a few deviated in every site, so I'm not including these 3 loci either
 		I can't access the article with the msat repeat data - it seems like princeton is not subscribed to it? Saillant et al. 2004 http://goms.disl.org/tocpages/june2004vol22no1.htm
@@ -495,6 +523,7 @@ Diana Li
 
 3/17/2012
 Diana Li
+
 	Cha et al. 2009 Cons Gen Resources
 		already entered by Malin
 
@@ -529,6 +558,7 @@ Diana Li
 
 3/18/2012
 Diana Li
+
 	Coscia & Mariani 2011 Bio J of Linnean Society
 		averaged He without Hese; no loci out of HWE; msats from Chistiakov et al 2004, Ciftci et al 2002, de Leon et al 1995, Tsigenopoulos et al 2003 - all di
 
@@ -538,6 +568,7 @@ Diana Li
 
 3/20/2012
 Diana Li
+
 	Finished up Cuveliers et al. 2011
 		msats from Iyengar et al 2000, Garoia et al 2006, Porta & Alvarez 2004, Funes et al 2004
 
@@ -553,6 +584,7 @@ Diana Li
 
 3/22/2012
 Diana Li
+
 	DiBattista & Feldheim 2011 Cons Gen Res
 		tested 2 species - for one species, cor16 out of HWE (dropped); for other species cor14 & cor21 out of HWE (dropped)
 		repeat for cor16 = "complex"?? - looked up in genbank - seems like repeat of 4
@@ -566,6 +598,7 @@ Diana Li
 
 3/25/2012
 Diana Li
+
 	Dong et al. 2011 Genetics and Mol Research
 		location too vague - "along the coast of the East China Sea" - not using
 
@@ -576,6 +609,7 @@ Diana Li
 
 3/26/2012
 Diana Li
+
 	continue Earl et al. 2010
 		authors state that any departure from HWE or LD after corrections is presumed minimal; including all loci
 		samples collected sometime between 1990 and 2001...? average the years
@@ -591,6 +625,7 @@ Diana Li
 
 3/27/2012
 Diana Li
+
 	Fitzpatrick et al. 2011 Mol Ecol
 		authors state which loci are neutral - i'll be using only those
 		supplementary material has He data - only lists data for sample sizes > 5, so excludes 3 locations
@@ -601,18 +636,21 @@ Diana Li
 
 3/28/2012
 Diana Li
+
 	Therkildsen et al. 2010 CJFAS
 		have data from archived otoliths and a recent catch - otolith and recent location is basically the same (include for now?)
 		data for p value of deviation from HWE all seem to be insignificant, so including all loci
 
 3/29/2012
 Diana Li
+
 	Gaggiotti et al. 2009 Evolution
 		does not give data on He (even in supplementary material) - only Fst
 		not using
 
 4/1/2012
 Diana Li
+
 	Gaither et al. 2010 Cons Gen Res
 		2 locations: Hawaii and New Caledonia - Hawaii is not specific enough; NC falls within 3º
 		authors name a locus from each location that is out of HWE, so excluding the one from NC; also, one msat failed to amplify for NC, so not including that
@@ -638,6 +676,7 @@ Diana Li
 
 4/2/2012
 Diana Li
+
 	Golestani et al. 2010 Zoology in the Middle East
 		apparently I only have the first page of this... find the rest
 
@@ -650,6 +689,7 @@ Diana Li
 
 4/4/2012
 Diana Li
+
 	González-Wangüemert et al. 2010 J Exp Marine Bio and Eco
 		already entered by Malin
 
@@ -667,12 +707,14 @@ Diana Li
 
 4/5/2012
 Diana Li
+
 	Gubili et al. 2009 Mar Bio
 		they use 7 msats - 5 from Pardini et al 2000; 1 from Schrey & Heist 2002; and 1 that they call "a new species specific primer" which they developed but don't give much info about (has no accession number either)
 		done but without that new locus - INCLUDE NEW LOCUS (it's non cssp; leave rpt blank)
 
 4/6/2012
 Diana Li
+
 	Guinand et al. 2011 Mar Env Res
 		nursery samples; not using
 
@@ -681,6 +723,7 @@ Diana Li
 
 4/7/2012
 Diana Li
+
 	Finished up Galarza et al. 2009
 
 	Helyar et al. 2011 Cons Gen Res
@@ -703,11 +746,13 @@ Diana Li
 
 4/8/2012
 Diana Li
+
 	Hone et al. 2010 Cons Gen Res
 		5 out of HWE; of those 5, 3 may be Linked - excluding these 6
 
 4/9/2012
 Diana Li
+
 	Hu et al. 2011 Cons Gen Res
 		anadromous species; not using paper
 
@@ -717,6 +762,7 @@ Diana Li
 
 4/10/2012
 Diana Li
+
 	Järvi -Laturi et al. 2011 J of Zoology
 		does not talk about He data; not using
 
@@ -744,6 +790,7 @@ Diana Li
 
 4/12/2012
 Diana Li
+
 	Knutsen et al. 2009 Mol Ecol
 		does not talk about He; not using paper
 
@@ -758,6 +805,7 @@ Diana Li
 
 4/14/2012
 Diana Li
+
 	Revisted Landínez-garcía et al. 2009 Ciencias Marinas
 		cannot find repeat data - can't find Bagley & Geller 1998; otherwise, fine.
 
@@ -773,6 +821,7 @@ Diana Li
 
 4/15/2012
 Diana Li
+
 	Lawton et al. 2011 Mol Ecol
 		pretty straightforward; no loci excluded; just locus Tri22 (GAGAGGA)8 repeat?? they say it's a msat and that it's "tandem"
 		ASK - malin says to call it a di, since that's the dominant repeat within what they report as the repeat
@@ -791,6 +840,7 @@ Diana Li
 
 4/16/2012
 Diana Li
+
 	Liu & Avise 2011 Marine Bio
 		straightforward He data but the species lives in both salt and freshwater.... they live on the CA coast but also in the wetlands - wanders into freshwater, but doesn't live there
 
@@ -811,7 +861,8 @@ Diana Li
 
 4/18/2012
 Diana Li
-	Revisiting:
+
+Revisiting:
 
 	Gubili et al.
 		I thought I entered this, but apparently not? Well, I know what to enter now anyway, so I'm redoing it into "Lat msats 000"
@@ -834,6 +885,7 @@ Diana Li
 
 4/21/2012
 Diana Li
+
 	Ma & Chen 2011 Cons Gen
 		He was not calculated due to the limited number of individuals tested; not using paper
 
@@ -842,6 +894,7 @@ Diana Li
 
 4/24/2012
 Diana Li
+
 	Machado-Schiaffino et al. 2011 Bio Cons
 		authors exclude certain loci, but their He data only reports the average of ALL of them - aksed Malin
 
@@ -863,6 +916,7 @@ Diana Li
 
 4/25/2012
 Diana Li
+
 	McCusker & Bentzen 2010 Mol Ecol (1)
 		straightforward
 
@@ -874,6 +928,7 @@ Diana Li
 	
 4/29/2012
 Diana Li
+
 	Qiu & Miyamoto 2011 Copeia
 		pretty straightforward; authors state which loci they are out of hwe after corrections, and i drop these
 		they use allozymes instead of allele number and repeat to analyze data? is this okay? yes
@@ -887,6 +942,7 @@ Diana Li
 
 5/2/2012
 Diana Li
+
 	Canales-Aguirre et al. 2010 Gayana
 		no He data; not use
 
@@ -895,6 +951,7 @@ Diana Li
 
 5/8/2012
 Diana Li
+
 	Muths & Bourjea 2011 Cons Gen Res
 		authors say they excluded 3 but didn't specify - so i assumed they meant the 3 loci that departed significantly from hwe in BOTH populations
 
@@ -908,6 +965,7 @@ Diana Li
 
 5/9/2012
 Diana Li
+
 	Nielsen et al. 2006 Mol Ecol
 		not sure about hitch-hiking? the authors do state that one locus is studied as it may be under selection (Gno 132)
 		heterozygosity is apparently ln(RH)?? dont use
@@ -918,6 +976,7 @@ Diana Li
 	
 5/10/2012
 Diana Li
+
 	Nordeide et al. 2011 Mar Ecol Prog Series
 		meta-analysis
 
@@ -926,6 +985,7 @@ Diana Li
 
 5/13/2012
 Diana Li
+
 	Palof et al. 2011 Mar Biol
 		He uses Nei's correction; otherwise, straightforward
 
@@ -956,6 +1016,7 @@ Diana Li
 
 5/14/2012
 Diana Li
+
 	Pinsky et al. 2010 Evolution
 		keep all loci; need repeat data for the 2 from this paper
 
@@ -979,15 +1040,17 @@ Diana Li
 
 5/15/2012
 Diana Li
+
 	Putte et al. 2009 Polar Biol
 		authors state that 2 of the species tested were out of hwe on the whole, so i have excluded these two species
 
-	4/29 - 9.5h
-	5/13 - 12h
-	5/27 - 20.5h
+4/29 - 9.5h
+5/13 - 12h
+5/27 - 20.5h
 
 5/19/2012
 Diana Li
+
 	Ravago-Gotanco et al. 2010 Cons Gen Res
 		straightforward
 
@@ -1026,6 +1089,7 @@ Diana Li
 
 5/20/2012
 Diana Li
+
 	Finished up Saillant et al. 2010
 
 	Sala-Bozano et al. 2009 Mol Ecol
@@ -1048,11 +1112,13 @@ Diana Li
 
 5/22/2012
 Diana Li
+
 	Schunter et al. 2011 J of Exp Mar Biol & Ecol
 		hmm... try again later - use supp mat
 
 5/23/2012
 Diana Li
+
 	Utter & Seeb 2010 Mol Ecol
 		does not have He data; not using paper
 
@@ -1105,6 +1171,7 @@ Diana Li
 
 5/24/2012
 Diana Li
+
 	Umino et al. 2009 Fish Sci
 		authors state that all loci in HWE
 
@@ -1137,6 +1204,7 @@ Diana Li
 
 5/25/2012
 Diana Li
+
 	Vliet et al. 2009 Cons Gen Res
 		does not provide location for the samples..... not using paper
 
@@ -1155,6 +1223,7 @@ Diana Li
 
 5/27/2012
 Kieryn Graham
+
 		Durand, JD; Collet, A; Chow, S; Guinand, B; Borsa, P	MARINE BIOLOGY	10.1007/s00227-005-1564-2	2005	
 			Already entered
 
@@ -1475,6 +1544,7 @@ Kieryn Graham
 
 5/29/2012
 Diana Li
+
 	White et al. 2010 Mol Ecol
 		they say that markers may not be neutral - LnRH values and Fisher's - data analyzed in 2 groups: Crup7 alone and all others without Crup7
 
@@ -1512,6 +1582,7 @@ Diana Li
 
 6/1/2012
 Diana Li
+
 	Machado-Schiaffino et al. 2011 Bio Cons
 		authors exclude certain loci, but their He data only reports the average of ALL of them - aksed Malin
 
@@ -1538,6 +1609,7 @@ Diana Li
 
 6/4/2012
 Diana Li
+
 	Teske et al. 2010 Mar Biol
 		only report avg He, but 1 locus is out of hwe in 2 locations & LD in 3 total (2 pairs) - keep all
 
@@ -1546,6 +1618,7 @@ Diana Li
 
 6/7/2012
 Diana Li
+
 	Roberts & Ayre 2010 Mar Ecol Prog Series
 		excluded 2 locations that were out of hwe; the only reported average He per location anyway
 
@@ -1568,6 +1641,7 @@ Diana Li
 
 6/11/2012
 Diana Li
+
 	Maggio et al. 2009 ICES JMS
 		some loci deviate from hwe while others don't for different sample sites
 		COME BACK - of 84, 18 deviate; 1 locus has no deviations; some are scattered around; another locus has almost all deviate from hwe - Malin says enter it but NOTE that it is questionable - also uses data from Garioa et al. 2004 which wasn't already entered so i kept it in the Maggio entry
@@ -1579,6 +1653,7 @@ Diana Li
 
 6/28/2013
 Kieryn Graham
+
 	McDowell et al 2007	
 		Entered; sequences not entered
 
@@ -1602,6 +1677,7 @@ Kieryn Graham
 
 7/5/2013
 Kieryn Graham
+
 	Apostolidis et al. 2007	
 		Not entered - mtDNA data not there
 
@@ -1628,6 +1704,7 @@ Kieryn Graham
 
 7/8/2013
 Kieryn Graham
+
 	Casthilo et al. 2007	
 		Not entere - only one site
 	Chevolot et al. 2007	
@@ -1641,6 +1718,7 @@ Kieryn Graham
 
 7/9/2013
 Kieryn Graham
+
 	de Souza et al. 2006	
 		Entered
 	Duncan et al. 2006	
@@ -1652,6 +1730,7 @@ Kieryn Graham
 
 7/10/2013
 Kieryn Graham
+
 	Garcia-rodriguez Perez-Enriquez 2006	
 		Not entered - lobster
 
@@ -1708,6 +1787,7 @@ Kieryn Graham
 
 7/12/2013
 Kieryn Graham
+
 	Lessios Robertson 2006	
 		Not entered - mtDNA data not there
 
@@ -1794,11 +1874,13 @@ Kieryn Graham
 
 7/17/2013
 Kieryn Graham
+
 	Alvarado Bremer Baker Mejuto 1995	
 		Excluded because just one sample site suitable 
 
 7/25/2013
 Kieryn Graham
+
 	Arnason 2004	
 		Not entered - no useful data reported
 
@@ -1864,6 +1946,7 @@ Kieryn Graham
 
 7/30/2013
 Kieryn Graham
+
 	Elliot et al. 1998	
 		Excluded because not mtDNA sequence
 
@@ -1911,6 +1994,7 @@ Kieryn Graham
 
 8/10/2013
 Kieryn Graham
+
 	Kai Nakayama Nekabo 2002	
 		Not entered - one location only
 
@@ -1979,6 +2063,7 @@ Kieryn Graham
 
 8/22/2013
 Kieryn Graham
+
 	Aboim et al. 2005
 		Not entered - no info on sample size
 		Malin: Agreed. No data on sample size.
@@ -2063,6 +2148,7 @@ Kieryn Graham
 
 9/11/2013
 Kieryn Graham
+
 	Akimoto et al. 2005
 		Not entered - ppr in Chinese but doesn't appear to be any useful data anyway, at least in tables
 
@@ -2131,6 +2217,7 @@ Kieryn Graham
 
 9/12/2013
 Kieryn Graham
+
 	Banford et al. 2004	
 		Not entered - doesn't contain any useful mtDNA data	
 
@@ -2169,6 +2256,7 @@ Kieryn Graham
 
 9/19/2013
 Kieryn Graham
+
 	Ahmed et al. 2004	
 		Not entered - RFLP analysis of mtDNA	
 
@@ -2257,6 +2345,7 @@ Kieryn Graham
 
 2/23/2013
 Kieryn Graham
+
 	Balanov et al. 2004	
 		Not entered - paper not in English	
 
@@ -2314,6 +2403,7 @@ Kieryn Graham
 
 10/12/2013
 Kieryn Graham
+
 	Akimoto et al. 2002	
 		Not entered - doesn't contain any useful mtDNA data	
 
@@ -2356,6 +2446,7 @@ Kieryn Graham
 
 10/15/2013
 Kieryn Graham
+
 	Brykov & Podlesnykh 2001	
 		Not entered - RFLP analysis of mtDNA
 
@@ -2373,6 +2464,7 @@ Kieryn Graham
 
 10/26/2013
 Kieryn Graham
+
 	Burridge 1999	
 		Not entered - doesn't contain any useful mtDNA data	
 
@@ -2482,6 +2574,7 @@ Kieryn Graham
 
 10/27/2013
 Kieryn Graham
+
 	Nesbo et al. 2009	
 		Entered	
 
@@ -2558,92 +2651,91 @@ Kieryn Graham
 Stan Piotrowski
 
 	Durand et al. 2005 (2/22/15): Nuclear and mitochondrial DNA markers indicate unidirectional gene flow of Indo-Pacific to Atlantic bigeye tuna (Thunnus obesus) populations, and their admixture off southern Africa 
-	●	“Protocols and data for the mtDNA ATCO segments were from Chow et a. (2000)”...RFLP analyses were used, not sequencing 
-	●	No data entered for ATCO locus
+	● “Protocols and data for the mtDNA ATCO segments were from Chow et a. (2000)”...RFLP analyses were used, not sequencing 
+	● No data entered for ATCO locus
 
 	Evans et al. 2010 (2/22/15): Strong genetic but not spatial subdivision of two reef fish species targeted by fishers on the Great Barrier Reef 
-	●	Marker name = “hyper-variable control region I (HVR-I)” of mitochondrial DNA 
-		○	hypervariable control region is a location within the D-loop of the mtDNA in which base pairs of nucleotides have substitutions
-		○	DNA sequence of the control region is termed hypervariable because it accumulates point mutations (single base mutations) approximately 10 time te rate of nuclear DNA
-	●	Haplotype diversity reported; no standard deviation reported 
-	●	Nucleotide diversity and standard deviation reported 
-	●	Variation sites = allele numbers? 
+	● Marker name = “hyper-variable control region I (HVR-I)” of mitochondrial DNA 
+		○ hypervariable control region is a location within the D-loop of the mtDNA in which base pairs of nucleotides have substitutions
+		○ DNA sequence of the control region is termed hypervariable because it accumulates point mutations (single base mutations) approximately 10 time te rate of nuclear DNA
+	● Haplotype diversity reported; no standard deviation reported 
+	● Nucleotide diversity and standard deviation reported 
+	● Variation sites = allele numbers? 
 
 	Eytan & Hellberg 2010 (2/22/15): Nuclear and mitochondrial sequence data reveal and conceal different demographic histories and population genetic processes in Caribbean reef fishes 
-	●	Species tested: 
-		a.	Acanthemblemaria aspera (roughhead blenny): lives in shelters in live and standing dead coral off the reef surface (i.e. high-profile habitat) 
-		b.	Acanthemblemaria spinosa (spinyhead blenny): found at the base of coral skeletons and in coral rubble (i.e. low-profile habitat) 
-	●	Come back to this one 
+	● Species tested: 
+		a. Acanthemblemaria aspera (roughhead blenny): lives in shelters in live and standing dead coral off the reef surface (i.e. high-profile habitat) 
+		b. Acanthemblemaria spinosa (spinyhead blenny): found at the base of coral skeletons and in coral rubble (i.e. low-profile habitat) 
+	● Come back to this one 
 
 
 	Farnsworth et al. 2010 (2/22/15): Genetic structure across the GBR: evidence from short-lived gobies 
-	●	Examined the extent to which barriers to gene flow conuptribute to cross-shelf patterns by examining mtDNA of gobies (genus Eviota; perfect candidates because of their short life spans and inferred high rate of mutation, as well as small size and sedentary lifestyle as adults which limits dispersal capabilities)
-		○	E. albolineata (spotted fringefin goby): found exclusively on mid- and outer-shelf reefs 
-			■	392 bp of COI gene amplified 
-			■	Two mid-shelf areas = North Direction Island, Lizard Island (n=39); h=0.95, pi=1.05 +/- 0.59 
-			■	Two outer-shelf areas = Hicks Reef, Day Reef (n=41); h= 0.92, pi=0.9 +/-0.52
-		○	E. queenslandica (Queensland dwarfgoby): found exclusively on inner- and mid-shelf reefs 
-			■	408 bp of COI gene amplified 
-			■	Two inner shelf-reefs = Martin Reef, Linnet Reef 
-			■	Two mid-shelf reefs = North Direction Island, Lizard Island 
-	●	Samples sequenced by Macrogen Inc. (Korea) 
+	● Examined the extent to which barriers to gene flow conuptribute to cross-shelf patterns by examining mtDNA of gobies (genus Eviota; perfect candidates because of their short life spans and inferred high rate of mutation, as well as small size and sedentary lifestyle as adults which limits dispersal capabilities)
+		○ E. albolineata (spotted fringefin goby): found exclusively on mid- and outer-shelf reefs 
+			■ 392 bp of COI gene amplified 
+			■ Two mid-shelf areas = North Direction Island, Lizard Island (n=39); h=0.95, pi=1.05 +/- 0.59 
+			■ Two outer-shelf areas = Hicks Reef, Day Reef (n=41); h= 0.92, pi=0.9 +/-0.52
+		○ E. queenslandica (Queensland dwarfgoby): found exclusively on inner- and mid-shelf reefs 
+			■ 408 bp of COI gene amplified 
+			■ Two inner shelf-reefs = Martin Reef, Linnet Reef 
+			■ Two mid-shelf reefs = North Direction Island, Lizard Island 
+	● Samples sequenced by Macrogen Inc. (Korea) 
 
 	Fauvelot & Borsa 2011: Patterns of genetic isolation in a widely distributed pelagic fish, the narrow-barred Spanish mackerel (Scomberomorus commerson)
-	●	Impetus for study was from reports of strong population structure for narrow-barred Spanish mackerel (usually pelagic fishes exhibit little geographic differentiation) 
-		●	Spp. = Scomberomorus commerson 
-		●	Common name = narrow-barred Spanish mackerel 
-		●	Country= 
-			○	Indonesia (several different provinces, N=4)
-				■	Java Sea 
-				■	Bali
-				■	West Papua 
-			○	New Caledonia (special collectivity of France; all samples obtained from local fisherman)
-				■	Belep Islands (north-western lagoon of New Caledonia)
-				■	Nepoui (north-western lagoon of New Caledonia)
-				■	Noumea (south-western lagoon)
-				■	Canala (eastern coast) 
-		●	Collection years from 2007-2009, average to input in data sheet-- 2008
-		●	Marker name-- “highly variable 5’ end of the mitochondrial control region (380-383 bp)” 
-		●	Number of individuals sampled-
-			○	Indonesia
-				■	Java Sea (n=4)
-				■	Bali (n=6) 
-				■	West Papua (n=10) 
-			○	New Caledonia (n=194) 
-		●	Length of mtDNA loci, in base pairs 
-			○	Control region = 380-383
-			○	cytochrome b = 281 
-		●	Note, the authors also amplified 8 microsatellite loci developed from samples taken from the Persian Gulf and Oman Sea in the individuals from Bali, Java, West Papua, and in a subsample of the randomly selected individuals from New Caledonia 
-		●	He = haplotype diversity (i.e. expected heterozygosity), pi = nucleotide diversity 
-			○	Java Sea/Bali-- He = 1.000, pi = 0.052 
-			○	West Papua-- He = 0.929, pi = 0.023 
+	● Impetus for study was from reports of strong population structure for narrow-barred Spanish mackerel (usually pelagic fishes exhibit little geographic differentiation) 
+		● Spp. = Scomberomorus commerson 
+		● Common name = narrow-barred Spanish mackerel 
+		● Country= 
+			○ Indonesia (several different provinces, N=4)
+				■ Java Sea 
+				■ Bali
+				■ West Papua 
+			○ New Caledonia (special collectivity of France; all samples obtained from local fisherman)
+				■ Belep Islands (north-western lagoon of New Caledonia)
+				■ Nepoui (north-western lagoon of New Caledonia)
+				■ Noumea (south-western lagoon)
+				■ Canala (eastern coast) 
+		● Collection years from 2007-2009, average to input in data sheet-- 2008
+		● Marker name-- “highly variable 5’ end of the mitochondrial control region (380-383 bp)” 
+		● Number of individuals sampled-
+			○ Indonesia
+				■ Java Sea (n=4)
+				■ Bali (n=6) 
+				■ West Papua (n=10) 
+			○ New Caledonia (n=194) 
+		● Length of mtDNA loci, in base pairs 
+			○ Control region = 380-383
+			○ cytochrome b = 281 
+		● Note, the authors also amplified 8 microsatellite loci developed from samples taken from the Persian Gulf and Oman Sea in the individuals from Bali, Java, West Papua, and in a subsample of the randomly selected individuals from New Caledonia 
+		● He = haplotype diversity (i.e. expected heterozygosity), pi = nucleotide diversity 
+			○ Java Sea/Bali-- He = 1.000, pi = 0.052 
+			○ West Papua-- He = 0.929, pi = 0.023 
 	Are these values for the eight microsatellite loci or for the mtDNA control regions?  Very vague in the article-- need to clarify 
 
 	Gaither et al. 2010: Genetic sequences of introducing allopatric lineages of Bluestriped Snapper (Lutjanus kasmira) to Hawaii 
-	-- used data from introductions in Hawaiian Islands and from source populations in Marquesas and Society islands.. can I not use the source populations since the locations are very vague? 
-		-- how about with the Hawaiian Islands?  Check to see if degrees lat. and lon. are okay 
-		--use lat and lon from google maps to where the arrows are in the map figure 
-	-- No collection years listed, left blank 
+	● used data from introductions in Hawaiian Islands and from source populations in Marquesas and Society islands.. can I not use the source populations since the locations are very vague? 
+		● how about with the Hawaiian Islands?  Check to see if degrees lat. and lon. are okay 
+		● use lat and lon from google maps to where the arrows are in the map figure 
+	● No collection years listed, left blank 
 
 	Friess & Sebderry 2011: Genetic evidence for a single stock of the deep-sea teleost Beryx decadactylus in the North Atlantic Ocean as inferred from mtDNA control region analysis 
-	-- decimal degrees not listed, estimated using map on the figure over using minute lat and lon 
-	--average year listed (between 2003 and 2007 specimens were collected) 
-	-- bp of control region sequenced = 403
+	● decimal degrees not listed, estimated using map on the figure over using minute lat and lon 
+	●average year listed (between 2003 and 2007 specimens were collected) 
+	● bp of control region sequenced = 403
 
 	Gaither et al. 2010: Genetic evaluation of marine biogeographical barriers: perspectives from two widespread Indo-Pacific snappers (Lutjanus kasmira and Lutjanus fulvus)
-	-- if multiple loci are reported, disregard all the nuclear DNA markers? only concerned with the mtDNA markers? 
-	-- No data were entered for either Lizard Island nor Okinawa, as there were no molecular diversity values indicated even though fish were sampled from these sites 
-	--Question: how to find allele frequencies and sequences? 
-	-- No dates reported for collection 
+	● if multiple loci are reported, disregard all the nuclear DNA markers? only concerned with the mtDNA markers? 
+	● No data were entered for either Lizard Island nor Okinawa, as there were no molecular diversity values indicated even though fish were sampled from these sites 
+	● Question: how to find allele frequencies and sequences? 
+	● No dates reported for collection 
 
 	Fruciano et al. 2011: Atlantic-Mediterranean and within-Mediterranean molecular variation in Coris julis 
-	-- sequences deposited in GenBank aren’t listed in the paper
-	-- no haplotype diversity or pi values reported, didn’t input any data for this paper 
-
-
+	● sequences deposited in GenBank aren’t listed in the paper
+	● no haplotype diversity or pi values reported, didn’t input any data for this paper 
 
 2/24/2015
 Ash Bhattacharjee
+
 	Ahonen et al, 2009 10:15pm
 	Asked how to format data sheet
 	- Source is written slightly differently
@@ -2663,7 +2755,8 @@ Ash Bhattacharjee
 
 3/1/2015
 Ash Bhattacharjee
-	1:00pm
+
+	-- 1:00pm
 	Correia et al, 2012
 	- Spp: Listed as Conger conger on pub but Fishbase calls it Conger wilsoni (many different spp across
 	geographic ranges, which to use?)
@@ -2761,6 +2854,7 @@ Ash Bhattacharjee
 
 3/7/2015
 Ash Bhattacharjee
+
 	-- 3:00 pm
 	Biscoito et al, 2011
 	- Data on diversity averaged across a wide area (also vaguely identified)
@@ -2804,11 +2898,10 @@ Ash Bhattacharjee
 
 	-- Stop 5:10 PM--
 
-
 3/7/2015
 Ash Bhattacharjee
-	-- 7:00 PM
 
+	-- 7:00 PM
 	Broderick et al, 2011
 	- Name of species is Broad-barred king mackerel on fishbase, but named grey mackerel on the paper.
 	I used the name from fishbase, assuming this is the accepted name and grey mackerel may be a name
@@ -2824,7 +2917,6 @@ Ash Bhattacharjee
 	- Once again, no allele frequency or sequence data available for mtDNA (numbers given for microsat-
 	ellite loci as with other papers).
 
-
 	Campo & Garcia-Vazquez, 2010
 	- Paper also includes: "On the other hand, we also analyzed 94 individuals from
 	different North-Atlantic areas of its congeneric species L. whiffiagonis in order to compare genetic
@@ -2836,7 +2928,6 @@ Ash Bhattacharjee
 	Not sure how to match these up with the sampled alleles. 
 
 	Canino et al, 2010a
-
 	- Table 1 gives a really good overview of the important data (sample coordinates, sample 
 	sites, number of samples, collection date). 
 	- I used the most recent collection date for Puget Sound (two collection years, they sampled twice
@@ -2858,7 +2949,6 @@ Ash Bhattacharjee
 	the sum of the two = 1509
 
 	Canino et al, 2010b
-
 	- This paper only provides diversity data for the microsatellite marker (expected heterozygosity) but
 	I could not find diversity indices for the mtDNA. I couldn't find an appendix.
 	- "Mitochondrial DNA analysis.—Nucleotide diversity (Hp) and haplotype diversity (h) were estimated 
@@ -2872,6 +2962,7 @@ Ash Bhattacharjee
 
 3/13/2015
 Ash Bhattacharjee
+
 	-- 3:00 PM
 	Cannas et al, 2010
 	- Only quantitative morphological differences and genetic distance data provided in this paper. 
@@ -2890,13 +2981,14 @@ Ash Bhattacharjee
 	--Stop 4:00 PM--
 
 Stan Piotrowski
+
 	Gaither et al. 2011: High Connectivity in the Deepwater Snapper Pristipomoides filamentosus (Lutjanidae) across the Indo-Pacific with Isolation of the Hawaiian Archipelago
 		-- online access article, just used the page numbers listed on the pdf on google drive 
 		As of March 13, 1:00am… finished data entry for Hawaii, do Indo-Pacific later 
 
-
 3/15/2015
 Ash Bhattacharjee
+
 	-- 9:00 PM
 	Changing/Fixing previous data entries based on feedback
 
@@ -2959,8 +3051,8 @@ Ash Bhattacharjee
 
 3/19/2015
 Ash Bhattacharjee
-	-- 4:00 PM
 
+	-- 4:00 PM
 	Cawthorn et al, 2011
 	- There is no diversity data provided for this paper *including the supporting material available
 	online
@@ -2985,8 +3077,8 @@ Ash Bhattacharjee
 
 3/24/2015
 Ash Bhattacharjee
-	-- 9:15 PM
 
+	-- 9:15 PM
 	Coulson et al, 2011
 	- This paper is different from previous ones I have read because they have looked at multiple 
 	Skate species (some have been derived from other papers).
@@ -3010,6 +3102,7 @@ Ash Bhattacharjee
 
 3/26/2015
 Ash Bhattacharjee
+
 	-- 12:30 PM
 	Craig et al. 2011
 	- All diversity information was available to input
@@ -3019,6 +3112,7 @@ Ash Bhattacharjee
 	-- Stop 1:00 PM --
 
 Stan Piotrowski
+
 	Gaither et al. 2011: High Connectivity in the Deepwater Snapper Pristipomoides filamentosus (Lutjanidae) across the Indo-Pacific with Isolation of the Hawaiian Archipelago
 	- March 26… working on Indo-Pacific 
 	-- nothing out of the ordinary, just a lot of looking at Google Maps to find the lat and lon for all locations 
@@ -3030,9 +3124,9 @@ Stan Piotrowski
 
 	Gaither et al. 2012: Coming out of the starting blocks: extended lag time rearranges genetic diversity in introduced marine fishes of Hawai’i
 		Genetic diversity of three species introduced to the Hawaiian islands- 
-		-	Lutjanus fulvus
-		-	Cephalopholis argus 
-		-	Lutjanus kasmira (careful entering data for these, as the authors used previous data already entered in the sheet) 
+		- Lutjanus fulvus
+		- Cephalopholis argus 
+		- Lutjanus kasmira (careful entering data for these, as the authors used previous data already entered in the sheet) 
 		For L. fulvus… 
 		-- didn’t enter data from source locations, as they were identical to those in Gaither et al. 2011 (already entered in the sheet) 
 		-- I entered data for the Hawaiian islands, not already entered in previous entries 
@@ -3052,13 +3146,14 @@ Stan Piotrowski
 
 	Garcia-Rodriguez et al. 2011: population structure of Pacific sardine 
 		-- Authors used three different sampling zones based off of limits of SST
-		1)	CEN-- sardines from Ensenada w/ cold water
-		2)	TBM-- sardines from Bahia Magdalena w/ temperate water
-		3)	WBM-- sardines from Bahia Magdalena w/ warm water 
+		1) CEN-- sardines from Ensenada w/ cold water
+		2) TBM-- sardines from Bahia Magdalena w/ temperate water
+		3) WBM-- sardines from Bahia Magdalena w/ warm water 
 		-- averaged latitudes, all within 3° 
 		-- Multiple markers reported from various references were used in genetic diversity… vague about which ones are used in Table 4, but it looks like it was the 500 bp segment of the control region.
 
 Sarah Picon
+
 	Bagley and Geller 1998. Characterization of microsatellite loci in the vermilion snapper Rhomboplites aurorubens (Percoidei: Lutjanidae)
 	33.546707, -79.043071
 		how many numbers do I round up to for lat and long?
@@ -3070,26 +3165,26 @@ Sarah Picon
 	Bagley et al. 1999. Microsatellite variation, effective population size, and population genetic structure of vermilion snapper, Rhomboplites aurorubens off the southeastern USA
 		not sure if I should enter it because in Table 3 the asterisk (allelic frequencies significantly out of Hardy-Weinberg equilibrium) is present on a few of the markers.
 		Should I enter the markers that have no asterisk?
-		●	This gets a little tricky, so good to ask. Our goal is to only enter loci that are in Hardy-Weinberg equilibrium across all populations. The asterisks in the table show that certain loci in certain populations are out of equilibrium, but that could just happen by chance. What I'm more concerned about, actually, is the statement in the Results that, "The value of f was positive for all seven loci and was significantly greater than zero at three loci (Ra1, Ra5, Ra6) based on permutation testing (0.01 < p < 0.05)." This means out of HWE across all populations. I would enter data for all loci and all populations, EXCEPT Ra1, Ra5, and Ra6.
+		● This gets a little tricky, so good to ask. Our goal is to only enter loci that are in Hardy-Weinberg equilibrium across all populations. The asterisks in the table show that certain loci in certain populations are out of equilibrium, but that could just happen by chance. What I'm more concerned about, actually, is the statement in the Results that, "The value of f was positive for all seven loci and was significantly greater than zero at three loci (Ra1, Ra5, Ra6) based on permutation testing (0.01 < p < 0.05)." This means out of HWE across all populations. I would enter data for all loci and all populations, EXCEPT Ra1, Ra5, and Ra6.
 		Data entered (except Ra1, Ra5, and Ra6)
 
 	Batargias et al. 1999. Characterization of six polymorphic microsatellite markers in gilthead seabream, Sparus aurata
 		Can’t find when it was collected or where it the individuals were collected. The paper mentions the Mediterranean Sea and Adriatic Sea. Is that too broad?
 		The paper also mentions using microsatellite DNA to facilitate breeding experiments in aquaculture.
-		●	The paper mentions these locations as where the fish in general lives, but never says where they sampled the specific fish that were genotyped. That's not good. We can't use this paper.
+		● The paper mentions these locations as where the fish in general lives, but never says where they sampled the specific fish that were genotyped. That's not good. We can't use this paper.
 		Not entered.
 
 	Beheregaray&Sunnucks. 2001. Fine-scale genetic structure, estuarine colonization and incipient speciation in the marine silverside fish Odontesthes argentinensis.
 		I couldn’t find the common name in english on fishbase. however, the paper calls it “silverside fish”.
 		Some locations that were sampled were estuarine, the others were marine. Do I only include the marine individuals?
-		●	Note that this paper is actually Beheregaray & Sunnucks 2001. Using "silverside" as the common name is fine. You did the right thing by only entering the marine samples.
+		● Note that this paper is actually Beheregaray & Sunnucks 2001. Using "silverside" as the common name is fine. You did the right thing by only entering the marine samples.
 		Fixed citation.
 		Data entered.
 
 	Bailey et al. 1999. Population Ecology and Structural Dynamics of Walleye Pollock (Theragra chalcogramma)
 		Paper is mainly what the title says. Table 4 mentions mtDNA sequencing however the information needed is not provided.
 		Should I find the paper that is referenced (Shields and Gust 1995) and enter that information?
-		●	It looks like Shields & Gust 1995 is a mtDNA paper, but you're focusing on microsatellites. You could get Powers 1996, since it looks like it might have msat data.
+		● It looks like Shields & Gust 1995 is a mtDNA paper, but you're focusing on microsatellites. You could get Powers 1996, since it looks like it might have msat data.
 		Powers 1996 is an “(unpubl. report)”. Couldn’t find it online.
 		Data not entered.
 
@@ -3106,8 +3201,8 @@ Sarah Picon
 	Bahri-Sfar et al. 2000. Fragmentation of sea bass populations in the western and eastern Mediterranean as revealed by microsatellite polymorphism.
 		Did not enter the first or second generation bred in captivity. (Table 1)
 		Should I enter the samples from the coastal/continental lagoon habitat or stick with the sea habitat? (Table 1.)
-		●	Careful about Bhari-Sfar et al. 2000. Samples from Valencia, Sete, Annaba, and Marsala should not be entered since the data are from other studies you will enter (Naciri et al.1999, Garcia de Leon 1997). 
-		●	In Bhari-Sfar, did you enter coastal/lagoon populations? I can't tell from your notes.
+		● Careful about Bhari-Sfar et al. 2000. Samples from Valencia, Sete, Annaba, and Marsala should not be entered since the data are from other studies you will enter (Naciri et al.1999, Garcia de Leon 1997). 
+		● In Bhari-Sfar, did you enter coastal/lagoon populations? I can't tell from your notes.
 		Samples from Valencia, Sete, Annaba, and Marsala were removed.
 		Data entered (from sea locations)
 
@@ -3134,15 +3229,15 @@ Sarah Picon
 	De Innocentiis et al. 2001. Allozyme and microsatellite loci provide discordant estimates of population differentiation in the endangered dusky grouper (Epinephelus marginatus) within the Mediterranean Sea.
 		Some of the areas sampled are greater than 3 degrees latitude or longitude. I used the centroid location as the lat and long coordinates. Is that fine?
 		For Table 2 should I only enter data for those which did not have ☨P values (“representing significant HWE departures)
-		●	In De Innocentiis et al. 2001, please only exclude locus GAG023. Reading the paper, you'll notice that this is what the authors did, so we'll do the same. You can enter data from the other loci and populations. 
-		●	In De Innocentiis et al. 2001, you note that there are some regions that span >3degrees. You shouldn't enter data from those specific regions.
+		● In De Innocentiis et al. 2001, please only exclude locus GAG023. Reading the paper, you'll notice that this is what the authors did, so we'll do the same. You can enter data from the other loci and populations. 
+		● In De Innocentiis et al. 2001, you note that there are some regions that span >3degrees. You shouldn't enter data from those specific regions.
 		GAG023 was already excluded. Removed areas sampled that are >3 degrees.
 		NW and NA locations are larger than 3 degrees. Data from these locations were removed. 
 		Data entered.
 
 	Feldheim et al. 2001. Population genetic structure of the lemon shark (Negaprion brevirostris) in the western Atlantic: DNA microsatellite variation.
 		Confused about entering the He data for each of the 4 locations (Table 2). Is the He an average across all 4 sites?
-		●	The data in Table 2 of Feldheim et al. 2001. Molecular Ecology 10:295-303 appears to be averaged across all four sites. If those sites are within 3 degrees of each other, you can enter those data as one line per locus (so two lines total). You would NOT want to re-enter the same data on multiple lines, as it looks like you did in the spreadsheet. If I'm interpreting the paper correctly, though, those sites are spread quite far apart, and so we can't use the averaged data. If the paper reported He and pi by site, it would be OK, but I don't see those data anywhere.
+		● The data in Table 2 of Feldheim et al. 2001. Molecular Ecology 10:295-303 appears to be averaged across all four sites. If those sites are within 3 degrees of each other, you can enter those data as one line per locus (so two lines total). You would NOT want to re-enter the same data on multiple lines, as it looks like you did in the spreadsheet. If I'm interpreting the paper correctly, though, those sites are spread quite far apart, and so we can't use the averaged data. If the paper reported He and pi by site, it would be OK, but I don't see those data anywhere.
 		Data not entered.
 
 	Feldheim et al. 2002. The breeding biology of lemon sharks at a tropical nursery lagoon.
@@ -3151,6 +3246,7 @@ Sarah Picon
 
 3/27/2015
 Sarah Picon
+
 	Reilly&Ward 1999. Microsatellite loci to determine population structure of the Patagonian toothfish Dissostichus eleginoides.
 		The paper stated that they sampled from 2 sites 60km apart off Macquarie Island. Each degree of latitude or longitude is approximately 111km apart so the location is useable.
 		I differentiated between both sites under site sampled but I used the same lat/long. point for each. Should I pick another lat/long. to differentiate between both sites?
@@ -3159,17 +3255,18 @@ Sarah Picon
 
 	Turner et al. 1998. Polymorphic microsatellite DNA markers in red drum (Sciaenops ocellatus)
 		The paper only gives an estimate between 7-11 individuals used for each locus screening. Is using an estimate fine?
-		●	For Turner et al. 1998, an estimate is fine. I would use 9 (the average), and make a note in your logbook about the decision that you made.
+		● For Turner et al. 1998, an estimate is fine. I would use 9 (the average), and make a note in your logbook about the decision that you made.
 		Used the estimate of 9 individuals sampled for each locus screening.
 		Data entered.
 
 3/28/2015
 Sarah Picon
+
 	Pardini et al. 2000. Isolation and characterization of dinucleotide microsatellite loci in the Great White Shark, Carcharodon carcharias.
 		Were the 20 white shark and other elasmobranch species samples used for Table 2? (pg. 1177; top of first paragraph)
 		When the paper says 5 out of 6 primers pairs tested were polymorphic, does it mean that the other one is not polymorphic (therefore monomorphic)? (pg. 1177; second paragraph)
-		●	It looks like the 20 white shark samples were used for Table 1, while the other species were used for Table 2.
-		●	Yes, the other must have been monomorphic (and so you wouldn't enter it).
+		● It looks like the 20 white shark samples were used for Table 1, while the other species were used for Table 2.
+		● Yes, the other must have been monomorphic (and so you wouldn't enter it).
 		Data entered. 
 
 	Sola et al. 1999. Genetic characterisation of Epinephelus marginatus through cytogenetic, allozyme and microsatellite analyses: preliminary results.
@@ -3179,6 +3276,7 @@ Sarah Picon
 
 3/29/2015
 Stan Piotrowski
+
 	Gleason & Burton 2012: ID of fish eggs
 		-- DNA barcoding initiative to identify fish eggs and larvae down to the species level using mtDNA loci for fisheries science 
 		-- one of the main goals is to minimize error when identifying different commercially important species in egg and larval surveys
@@ -3215,8 +3313,8 @@ Stan Piotrowski
 
 3/30/2015
 Ash Bhattacharjee
-	-- 1:00 PM
 
+	-- 1:00 PM
 	Cui et al. 2010
 	- It looks like there are a couple things about this paper that make it unable to be used for this 
 	project
@@ -3245,6 +3343,7 @@ Ash Bhattacharjee
 	Stop -- 2:00 PM 
 
 Chloe Lewis
+
 	Karl et al. 2012: 
 		→ the values for the lat/log are not explicitly provided in the paper, however a map of the sampled sites is provided; accurate estimates were made using Google Maps. 
 		→ of the sampled sites, only the following locations are included in the data results: BRI, NTL, BMN, FLD, BLZ, and Western Atlantic; note that the location labeled “Western Atlantic” refers to the overall genetic diversity was calculated for each of the samples collected in the western Atlantic, all western Atlantic samples combined, and overall including the African and Pacific samples.
@@ -3277,33 +3376,35 @@ Chloe Lewis
 
 3/31/3015
 Sarah Picon
+
 	Smith&McVeagh 2000. Allozyme and microsatellite DNA markers of toothfish population structure in the Southern Ocean.
 		For Table 1. I am not sure how the values for He were calculated. The numbers are >1 for all He values.
-		●	Table 1 is for allozymes (see the legend), and so you wouldn't enter it. It is also allele frequencies, not He values.
+		● Table 1 is for allozymes (see the legend), and so you wouldn't enter it. It is also allele frequencies, not He values.
 		Only To2, To3, and To5 will be entered. The other loci are from another study.
 		To3 is noted to depart significantly from HWE but it “was not significant when adjusted for multiple tests”.
-		●	You want to use data from Table 3. In the notes below the table, they define Hets_exp as the "number of heterozygotes expected assuming Hardy–Weinberg equilibrium". That's not a typical definition, but it means that you need to divide Hets_exp by "N fish" to get the proportion. So for Prince E Is, He = Hets_exp/N fish = 40.24/43 = 0.9358
+		● You want to use data from Table 3. In the notes below the table, they define Hets_exp as the "number of heterozygotes expected assuming Hardy–Weinberg equilibrium". That's not a typical definition, but it means that you need to divide Hets_exp by "N fish" to get the proportion. So for Prince E Is, He = Hets_exp/N fish = 40.24/43 = 0.9358
 		Data entered.
 
 	Perez-Enriquez&Taniguchi 1999. Use of microsatellite DNA as genetic tags for the assessment of a stock enhancement program of Red Sea Bream.
 		This study is collected samples of “wildfish” from areas where the aquaculture center has released their raised fish.
 		“277,000 and 439,000 juveniles...were released into the wild in different locations of Kochi Prefecture. For the present study, two samples from the wild population were obtained from a location in the middle part of the Prefecture”.
-		●	Correct not to enter this. This population has too much influence from a captive population.
+		● Correct not to enter this. This population has too much influence from a captive population.
 		Data not entered.
 
 	Stevenson et al. 1998. Stock identification in Nassau Grouper, Epinephelus striatus, using microsatellite DNA analysis.
 		Double checking. Does x^2=He?
-		●	Wow, this is written like an old paper. I couldn't find He values in any of the tables, and x^2 values are not He. Given that they grouped loci together (last paragraph on p. 734), we won't use this paper.
+		● Wow, this is written like an old paper. I couldn't find He values in any of the tables, and x^2 values are not He. Given that they grouped loci together (last paragraph on p. 734), we won't use this paper.
 		Data not entered.
 
 	Smith et al. 1998. Polymorphic microsatellite DNA in toothfish Dissostichus eleginoides from the Southern Ocean.
 		Am I only supposed to enter “A075”? If so, I should download the entire article?
-		●	That's a conference abstract, not a paper. We'll skip it.
+		● That's a conference abstract, not a paper. We'll skip it.
 		Data not entered.
 
 
 4/1/2015
 Chloe Lewis
+
 	Kai et al. 2011: 
 		→ no data entered
 		→ the paper fails to report values for pi and h
@@ -3333,6 +3434,7 @@ Chloe Lewis
 
 4/2/2015
 Chloe Lewis
+
 	Durand et al. 2005: 
 		→ the coordinates are presented as ranges, so the averages have been taken and reported into the spreadsheet
 		→ there are neither coordinates reported for the following sample sites: Cape-2,Cape-3,Cape-4, Cape-5, IBE, and Mad, nor is there a map of the site locations offered in the paper; therefore data from these sites are not included in the spreadsheet. 
@@ -3341,6 +3443,7 @@ Chloe Lewis
 
 4/3/2015
 Sarah Picon
+
 	Perez-Enriquez et al. 1999. Genetic variability and pedigree tracing of a hatchery-reared stock of red sea bream (Pagrus major) used for stock enhancement, based on microsatellite DNA markers.
 		Individuals used are the broodstock and hatchery-reared stock.
 		Data not entered.
@@ -3348,23 +3451,24 @@ Sarah Picon
 	Ward&Reilly 2001. Development of microsatellite loci for population studies of the pink ling, Genypterus blacodes (Teleostei: Ophidiidae).
 		Are the locations sampled at too vague?
 		There is no map specifying the areas sampled like the map in Ward et al. 2001.
-		●	Some of the locations do seem too vague (New South Wales is ~10degrees tall). EVIC and WVIC may be small enough. You can check by clicking the upper and lower bounds of the region they describe to see if it is >3degrees. Same for EW, though in this case, you'll just have to assume it's not too far from coast.
+		● Some of the locations do seem too vague (New South Wales is ~10degrees tall). EVIC and WVIC may be small enough. You can check by clicking the upper and lower bounds of the region they describe to see if it is >3degrees. Same for EW, though in this case, you'll just have to assume it's not too far from coast.
 		After checking the upper and lower bounds of the regions, they are all over 3 degrees in latitude or longitude.
 		Data not entered.
 
 	Ward&Elliot 2001. Genetic population structure of species in the South East Fishery of Australia.
 		The paper uses data from several studies. Should I look at the specific studies for microsatellites?
-		●	No need to pull the underlying studies. No need to enter this paper.
+		● No need to pull the underlying studies. No need to enter this paper.
 		Data not entered.
 
 	Ward et al. 2001. Population structure of pink ling (Genypterus blacodes) from south-eastern Australian waters, inferred from allozyme and microsatellite analyses.
 		Not sure how to enter the data for microsatellites in Table 4. Which location do I use?
-		●	They are, in effect, averaging across all of their sample areas, which is >3degrees. So you can't enter these data.
+		● They are, in effect, averaging across all of their sample areas, which is >3degrees. So you can't enter these data.
 		Data not entered.
 
 
 4/4/2015
 Chloe Lewis
+
 	Kim et al. 2012: 
 		→ no data entered
 		→ the paper mentions “genetic divergence” states that China Z had the highest value followed by China D, and then Korea. 
@@ -3374,9 +3478,9 @@ Chloe Lewis
 		→ only the total base pair amount is provided; not by site location
 		→ The paper doesn't seem to define what they mean by intra-population genetic divergence
 
-
 4/5/2015
 Ash Bhattacharjee
+
 	-- 7:00 PM
 	Cuveliers et al. 2012
 	- There are 5 sample sites at which juvelines were used (not sure if this makes a difference?). 
@@ -3408,6 +3512,7 @@ Ash Bhattacharjee
 	Stop --
 
 Chloe Lewis
+
 	Kim et al. 2010 (b): 
 		→ the paper does not specify the  collection years from which the samples were taken
 		→ only the total value of base pairs are given, they are not provided by site location.
@@ -3440,6 +3545,7 @@ Chloe Lewis
 
 4/6/2015
 Chloe Lewis
+
 	Kim et al. 2010 (a): 
 		→ no data entered
 		→ the paper provides no information on pi or h values
@@ -3461,18 +3567,21 @@ Chloe Lewis
 		→ there is no information on collection years and the paper offers no values for sample site coordinates; there is no map to reference.
 
 Sarah Picon
+
 	Shaw et al. 1999. Microsatellite DNA analysis of population structure in Atlantic herring (Clupea harengus), with direct comparison to allozyme and mtDNA RFLP analyses.
 		Did not enter data from Pacific samples because the location exceeded 3 degrees longitude.
 		Data entered (except for Pacific samples)
 
 4/7/2015
 Chloe Lewis
+
 	Leray et al. 2009: 
 		→clade 1 signifies the Indian Ocean, clade 2 signifies the Pacific Rim (predominantly) and South Polynesia, clade 3 signifies South Polynesia, clade 4 signifies Marquesas, and clade 5 signifies Hawaii & Johnston.
 		→ no data entered
 		→ it appears that each clade is a separate species (note discussion of speciation in title and abstract, plus text throughout). We only use comparisons of diversity within species, and so we can't use this paper
 
 Sarah Picon
+
 	Ruzzante 1998. A comparison of several measures of genetic distance and population structure with microsatellite data: bias and sampling variance.
 		No information on He.
 		Data not entered.
@@ -3484,8 +3593,8 @@ Sarah Picon
 
 4/9/2015
 Ash Bhattacharjee
-	-- 12:30 PM
 
+	-- 12:30 PM
 	Dammannagoa et al 2011
 	- They used two portions of the mtDNA: ATPase subunit 6 & 8, so I wrote it like this:
 	ATPase 6, 8 
@@ -3508,6 +3617,7 @@ Ash Bhattacharjee
 	- No diversity data included in this paper, so I couldn't enter it into the excel sheet
 
 Stan Piotrowski
+
 	Gold et al. 2011: Phylogenetic relationships of tropical Western Atlantic snappers in subfamily Lutjaninae inferred from mtDNA sequences 
 		Red flag: “sequences were obtained from three individuals of each species.” the instructions explicitly say not to include data from papers with a sample size of less than 4 individuals…
 		--although they sampled 12 different species, only 3 individuals per species were used for sequencing.. check with Dr. Pinksy
@@ -3581,6 +3691,7 @@ Stan Piotrowski
 		These sampling locations were way too spread out to be average together, so I didn’t enter any data for this particular paper 
 
 Sarah Picon
+
 	Garcia de Leon et al. 1997. Microsatellite polymorphism and population subdivision in natural populations of European sea bass Dicentrarchus labrax (Linnaeus, 1758).
 		Data entered.
 
@@ -3590,6 +3701,7 @@ Sarah Picon
 
 4/10/2015
 Sarah Picon
+
 	Guillemaud et al. 2000. Microsatellite characterization in the rainbow wrasse Coris julis (Pisces: Labridae)
 		Data entered.
 
@@ -3611,9 +3723,9 @@ Sarah Picon
 	Jones et al. 1998. A microsatellite assessment of sneaked fertilizations and egg thievery in the fifteenspine stickleback.
 		Data entered.
 
-
 4/13/2015
 Chloe Lewis
+
 	Li et al. 2011: 
 		→ the paper does not offer any information on base pair values for the samples collected.
 		→ the sample site Qingdao is located in the Yellow Sea and the sample site Zhoushan is located in the East China Sea 
@@ -3627,19 +3739,16 @@ Chloe Lewis
 		→ the coordinate values are explicitly provided by the paper along with a detailed map.
 		→ the paper offers no pi values, however it does provided h values 
 
-
-
 4/14/2015
 Ash Bhattacharjee
-	-- 8:00 PM
 
+	-- 8:00 PM
 	Dibattista et al. 2012b
 	- Had to use google maps for coordinates because the figure provided didn't have any
 	- Didn't include "Hawaiian Islands" because the range is too large to get a coordinate (probably 
 	larger than 3 deg lat/long
 	- Averaged year: 2008
 	- Used fishbase to get the common name since paper just stated Indo-Pacific butterflyfish
-
 
 	Drew & Barber 2012a
 	- Only pi values available, no he(Table 1 only gives population parameter. Is that he?
@@ -3665,15 +3774,16 @@ Ash Bhattacharjee
 
 4/14/2015
 Sarah Picon
+
 	Jones et al. 1998. Microsatellite evidence for monogamy and sex-biased recombination in the Western Australian seahorse Hippocampus angustus.
 		Data entered.
 
 	Jones et al. 1999. The genetic mating system of a sex-role-reversal pipefish (Syngnathus typhle): a molecular inquiry.
 		Data entered.
 
-
 4/15/2015
 Chloe Lewis
+
 	Liu et al. 2010: 
 		→ the sample sites were specified as being located around Taiwan; not within the boundaries of any particular country 
 		→ the coordinates of the sample sites were accurately estimated using map provided in the paper 
@@ -3691,6 +3801,7 @@ Chloe Lewis
 		→ the coordinates were accurately estimated using the map given in the paper. 
 
 Sarah Picon
+
 	Jones et al. 2001. Surprising similarity of sneaking rates and genetic mating patterns in two populations of sand goby experiencing disparate sexual selection regimes.
 		Data entered.
 
@@ -3700,6 +3811,7 @@ Sarah Picon
 
 4/16/2015
 Sarah Picon
+
 	Jorstad et al. 2001. Intermingling of Herring Stocks in the Barents Sea Area.
 		No He information.
 		Data not entered.
@@ -3721,6 +3833,7 @@ Sarah Picon
 
 4/17/2015
 Sarah Picon
+
 	McPherson et al. 2000. Microsatellite population structure in Herring at three spatial scales.
 		Observed heterozygosity is only listed in Table 1. There is no information on expected heterozygosity.
 		Data not entered.
@@ -3728,11 +3841,10 @@ Sarah Picon
 	McPherson et al. 2001. Genetic diversity of coastal Northwest Atlantic herring populations: implications for management.
 		Data entered.
 
-
 4/19/2015
 Ash Bhattacharjee
-	-- 7:00 PM
 
+	-- 7:00 PM
 	Eble et al 2011b
 	- No collection date is given
 	- The coordinates can be estimated from the map provided in Fig 1
@@ -3758,15 +3870,16 @@ Ash Bhattacharjee
 
 4/20/2015
 Chloe Lewis
+
 	Lopez et al. 2010: 
 		→ the bp value provided by the paper is assigned to all of the samples; not individual samples.
 		→ the paper offers no coordinates or map location information for sample site Sin-04, therefore this site has been excluded from the data entry.
 		→ the lat/long coordinates for sample site PE are outside of the 3 degree range, therefore this sample has been excluded from the data entry.
 		→ the paper offers no information on collection years for the sample sites.
 
-
 4/21/2015
 Chloe Lewis
+
 	Luzatto et al. 2012:
 		→ no data has been entered from this paper
 		→ the paper offers no information on pi or h values
@@ -3779,6 +3892,7 @@ Chloe Lewis
 
 4/23/2015
 Chloe Lewis
+
 	Machado-Schiaffino et al. 2010: 
 		→ the samples were collected in 2001,2002,2004, and 2005, therefore the average of these years was taken and recorded.
 		→ 2 species were sampled for in this paper; both being North American hakes.
@@ -3786,6 +3900,7 @@ Chloe Lewis
 		→ the coordinates were explicitly given in the paper along with a reference map.
 
 Sarah Picon
+
 	McPherson et al. 2001. Isolation of nine novel tetranucleotide microsatellites in Atlantic herring (Clupea harengus).
 		Paper uses data from a different study (A. McPherson, unpublished).
 		●	The data from this paper can (and should) be entered. The citation to the unpublished report doesn't count since it was never published. It also seems to only refer to an initial test for variability, not the more extensive test shown in Table 1.
@@ -3815,17 +3930,17 @@ Sarah Picon
 		●	Unfortunately, we can't use it if it is >3degrees.
 		Data entered for J-1 and A-2. Data not entered for N-1 data.
 
-
 4/24/2015
 Chloe Lewis
+
 	Marko et al. 2010:
 		→ no data from this paper has been used.
 		→ the site names are not explicitly given by the authors of this paper. 
 		→ this paper does not meet the 3 degree lat/lon requirement.
 
-
 4/27/2015
 Stan Piotrowski
+
 	Guillermo Ceballos et al. 2012: Phlogeography of the sub-Antarctic notothenioid fish Eleginops maclovinus: evidence of population expansion 
 		-- nothing out of the ordinary, entered all data normally
 		-- just looked on Googlemaps for the lat and lon as opposed to putting in minutes and seconds (instructions preferred lat lon degrees)
@@ -3892,8 +4007,8 @@ Stan Piotrowski
 
 	Hyde & Vetter: population genetic structure in vermilion rockfish
 
-
 Chloe Lewis
+
 	McBride et al. 2010: 
 		→ none of the data from this paper were entered.
 		→ the paper offers no information on h values, pi values, or base pair values.
@@ -3906,6 +4021,7 @@ Chloe Lewis
 
 4/28/2015
 Chloe Lewis
+
 	McCusker and Bentzen 2010b: 
 		→ no data was entered for this paper.
 		→ 5 of the 7 sample sites were sampled multiple times.
@@ -3913,13 +4029,14 @@ Chloe Lewis
 
 4/30/2015
 Chloe Lewis
+
 	Menezes et al. 2012: 
 		→ this paper provides no information on base pair values.
 		→ the coordinates of sample sites were explicitly given in the pair. 
 
-
 5/1/2015
 Chloe Lewis
+
 	Medonca et al. 2011: 
 		→  the coordinates for sample sites are not explicitly given, however the paper provides a map from which accurate estimates were made. 
 		→ no base pair values are provided from this paper. 
@@ -3948,6 +4065,7 @@ Chloe Lewis
 
 5/4/2015
 Chloe Lewis
+
 	Morgan et al. 2012: 
 		→  no data from this paper has been entered.
 		→ no pi or h values provided	
@@ -3961,9 +4079,9 @@ Chloe Lewis
 		→ the base pair value given is the overall value of the sample sites; not unique to each location.
 		→ data collected from the Guam location have been omitted from the data spreadsheet as it does not meet the 3-degree lat/lon requirement; the site is over 10 degrees lat away from the rest. 
 
-
 5/5/2015
 Chloe Lewis
+
 	Sotka et al. 2005: 
 		→ the base pair value given is the overall value of the sample sites; not unique to each location.
 		→ pi values are given for each sample site; only number of haplotypes are mentioned, no haplotype diversity values. 
@@ -3976,13 +4094,11 @@ Chloe Lewis
 		→ there is no map provided and there are no coordinates explicitly given of the sample location sites. 
 		→ there are no pi or he values given. 
 
-
 5/6/2015
 Ash Bhattacharjee
-	7:00 PM
 
+	-- 7:00 PM
 	Lemair et al.
-
 	- Used previous studies to figure out what the abbreviations were (which sites etc), and used the 
 	coordinates provided in those papers or online with google maps to input data
 	- No collection year provided
@@ -3993,8 +4109,8 @@ Ash Bhattacharjee
 
 5/7/2015
 Ash Bhattacharjee
-	 6:00 PM
 
+	-- 6:00 PM
 	Continuing filling in longitudes for Fishery lat mtDNA 3 Kieryn 2013-11-04.xlsx
 	- Noticed that the first entry for Duren et ala. 2005 > Central North is a range of 27-39 deg long
 	which means its > 3 degrees*
@@ -4005,32 +4121,31 @@ Ash Bhattacharjee
 
 5/14/2015
 Chloe Lewis
+
 	Muths et al. 2011: 
 		→ the location of the collection sites is the southwestern region of the Indian Ocean; therefore there is no specific country. 
 		→ the paper provides no pi values, however the paper does provide h values for each sample site. 
 		→ the bp value is the overall value for the study; not the value of each individual sample site. 
 		→  the coordinates of sample sites are not explicitly given, however a map is provided for accurate estimation; more accurate estimates were made using google maps. 
 
-
-
 5/15/2015
 Chloe Lewis
+
 	Montanari et al. 2012: 
 		→ no data entered
 		→ the study used molecular data from hybrids of Chaetodon trifasciatus and C. lunulatus; mtDNA results results confirmed hybridization.
 		→ this paper does not meet the requirements for data entry. 
 
-
-
 5/18/2015
 Chloe Lewis
+
 	Lemaire Versini Bonhomme: 
 		→ no data entered for this paper.
 		→ the paper does not meet the 3 degree lat/lon criteria for data entry; more than half of the sample sites greatly exceed 3 degrees lat.
 
-
 5/19/2015
 Chloe Lewis
+
 	Lewallen et al. 2011: 
 		→  no data entered
 		→ the paper provides no information or data for pi and h values
@@ -4038,11 +4153,13 @@ Chloe Lewis
 
 5/20/2015
 Sarah Picon
+
 	Longitude excel sheet copied.
 	Data entered.
 
 5/21/2015
 Sarah Picon
+
 	Entering longitudes:
 		Line 60 with “Clinton, CN”. Is “CN” supposed to be “CT” for Connecticut?
 		I can’t find “Flatbrotten, Norway-Sweden” on google maps (begins on line 237)
@@ -4051,6 +4168,7 @@ Sarah Picon
 
 5/27/2015
 Sarah Picon
+
 	Entering longitudes:
 		Canino et al. 2005 Mol Ecol Notes 5:908-910
 			Data entered.
@@ -4067,6 +4185,7 @@ Sarah Picon
 
 5/28/2015
 Sarah Picon
+
 	Entering longitudes:
 		Bekkevold et al. 2005 Evolution 59:2656-2668
 			Data entered.
@@ -4088,6 +4207,7 @@ Sarah Picon
 
 5/30/2015
 Sarah Picon
+
 	Entering longitudes:
 		Graves & McDowell 2006 Bull Mar Sci 79:469-482
 			Data entered.
@@ -4130,6 +4250,7 @@ Sarah Picon
 
 5/31/2015
 Sarah Picon
+
 	Entering longitudes
 		Purcell et al. 2006 Proc R Soc B 273:1483-90
 			Data entered.
@@ -4151,6 +4272,7 @@ Sarah Picon
 
 6/3/2015
 Sarah Picon
+
 	Entering longitudes
 		LeClair et al. 2006 Trans of the Am Fish Soc 135:1631-1643
 			Article received
@@ -4162,6 +4284,7 @@ Sarah Picon
 
 6/9/2015
 Sarah Picon
+
 	Entering longitudes
 		Galarza et al. 2009 CJFAS 66:1478-1490
 			Cabo de gata
@@ -4183,6 +4306,7 @@ Sarah Picon
 
 6/13/2015
 Sarah Picon
+
 	Entering longitudes
 		Knutsen et al. 2009 Cons Gen Res 1:89-92
 			Data entered.
@@ -4207,6 +4331,7 @@ Sarah Picon
 
 6/14/2015
 Sarah Picon
+
 	Entering longitudes
 		Liu et al. 2011 Acta Oceanologica Sinica 30:76-83
 			Data entered.
@@ -4249,6 +4374,7 @@ Sarah Picon
 
 6/16/2015
 Sarah Picon
+
 	Entering longitudes
 		Palof et al. 2011 Mar Biol 158:779-792
 			Data entered.
@@ -4268,6 +4394,7 @@ Sarah Picon
 
 6/17/2015
 Sarah Picon
+
 	Entering longitudes
 		Plank et al. 2010 J Fish Bio 77:329-340
 			Data entered.
@@ -4286,6 +4413,7 @@ Sarah Picon
 
 6/18/2015
 Sarah Picon
+
 	Entering longitudes
 		Salas et al. 2009 Mar Biol 157:437-445
 			Data entered.
@@ -4307,6 +4435,7 @@ Sarah Picon
 
 6/19/2015
 Sarah Picon
+
 	Entering longitudes
 		Hess et al. 2001 CJFAS 68:89-104
 			Data entered.
@@ -4340,6 +4469,7 @@ Sarah Picon
 
 6/25/2015
 Sarah Picon
+
 	Entering longitudes
 		Machado-Schiaffino et al. 2011 Biol Cons 144:330-338
 			Data entered.
@@ -4367,6 +4497,7 @@ Sarah Picon
 
 7/2/2015
 Sarah Picon
+
 	Entering longitudes
 		Roberts & Ayre 2010 Mar Ecol Prog Series 412:223-230
 			Data entered.
@@ -4466,6 +4597,7 @@ Sarah Picon
 
 7/23/2015
 Sarah Picon
+
 	Entering longitudes
 		Cunningham et al. 2009 Can. J. Fish. Aquat. Sci 66:153-166
 			Data entered.
@@ -4485,6 +4617,7 @@ Sarah Picon
 
 7/24/2015
 Sarah Picon
+
 	Entering longitudes
 		Selkoe et al. 2006 Ecology 87:3082-3094
 			Data entered.
@@ -4510,9 +4643,9 @@ Sarah Picon
 		Galarza et al. 2007 Conserv Genet 8:1251-1253.
 			Data entered.
 
-
 7/29/2015
 Sarah Picon
+
 	Entering longitudes
 		Fritsch et al. 2007 Fisheries Research 83:123-132.
 			Data entered.
@@ -4528,9 +4661,9 @@ Sarah Picon
 			Fixed citation.
 			Data entered.
 
-
 7/30/2015
 Sarah Picon
+
 	Entering longitudes
 		Susana et al. 2007 Mol. Ecol. Notes 7:791-793.
 			Data entered.
@@ -4560,9 +4693,9 @@ Sarah Picon
 		Yagishita & Kobayashi 2008 Mol. Ecol. Res. 8:302-304.
 			Data entered.
 
-
 7/31/2015
 Sarah Picon
+
 	Entering longitudes
 		Bernardi 2008 Mol. Ecol. Res. 8:1512-1514
 			Data entered.
@@ -4592,9 +4725,9 @@ Sarah Picon
 		Miller-Sims et al. 2008: Mol. Ecol. 17:5036-5048.
 			Data entered.
 
-
 8/5/2015
 Sarah Picon
+
 	Entering longitudes
 		Nohara et al. 2009 Mol. Ecol. 9:610-612.
 			Data entered.
@@ -4602,9 +4735,9 @@ Sarah Picon
 		Purcell et al. 2009 Journal of Fish Biology 74:403-417.
 			Data entered.
 
-
 8/6/2015
 Sarah Picon
+
 	Entering longitudes
 		Tseng et al. 2009 Journal of Fish Biology 74:357-376.
 			Data entered.
@@ -4615,9 +4748,9 @@ Sarah Picon
 		Xing et al. 2009 Conserv Genet 10:789-791.
 			Data entered.
 
-
 8/8/2015
 Sarah Picon
+
 	Entering longitudes
 		Vagelli, Burford & Bernardi 2009 Marine Genomics 1:129-134.
 			Can’t figure out where to find the locations sampled at.
@@ -4628,6 +4761,7 @@ Sarah Picon
 
 8/11/2015
 Michael Weiss
+
 	Muto et. al 2011 Fishery Bulletin 109(4):429-439
 	Data not entered. The samples were all collected at a single site (intent of the authors was to eliminate geographic variability.) Additionally, the mtDNA was sequenced using AFLP.
 
@@ -4648,6 +4782,7 @@ Michael Weiss
 
 8/12/2015
 Michael Weiss
+
 	Ovenden et. al 2010 Marine and Freshwater Research 61:253-262
 	Data not entered. The samples were collected from fish markets. Additionally, the genetic data was averaged over large areas.
 
@@ -4680,6 +4815,7 @@ Michael Weiss
 
 8/13/2015
 Michael Weiss
+
 	Psomadakis et. al 2012 Italian Journal of Zoology 79(1):111-119
 	Data not entered. Only two fish were studied.
 
@@ -4712,6 +4848,7 @@ Michael Weiss
 
 8/14/2015
 Michael Weiss
+
 	Gotoh et. al 2009 Genes Genetic Systems 84:287-295
 	Data entered. The samples were taken from marine lakes and lagoons. Area is very sample, subsequently all 6 sample sites are very close together.
 
@@ -4723,6 +4860,7 @@ Michael Weiss
 
 8/17/2015
 Michael Weiss
+
 	Sala-Bozano et. al 2009 Molecular Ecology 18:4811-4826
 	Data entered. Locations were sampled in two consecutive years, the sample with more specimens was recorded. 
 
@@ -4734,6 +4872,7 @@ Michael Weiss
 
 8/18/2015
 Michael Weiss
+
 	Santos et. al 2011 Journal of Heredity 102(1):47-54
 	Data not entered. Haplotype and nucleotide diversity were averaged over an area >3 degrees of latitude and longitude.
  
@@ -4757,6 +4896,7 @@ Michael Weiss
  
 8/19/2015
 Michael Weiss
+
 	Most of the first hour was spent adding in a section for Hese and Pise.
  
 	Smith and Campana 2010 Canadian Journal of Fisheries and Aquatic Science 67:1533-1548
@@ -4790,6 +4930,7 @@ Michael Weiss
 
 8/20/2015
 Michael Weiss
+
 	Tseng and Smith 2012 Marine and Freshwater Research 63:198-209
 	Data not entered. Haplotype and nucleotide diversity data for mDNA was not reported.
 
@@ -4803,6 +4944,7 @@ Michael Weiss
 	Data entered. 
 
 Sarah Picon
+
 	Entering longitudes
 		McDowell et al. 2007 Gulf and Caribbean Research 19:75-82.
 			Data entered.
@@ -4811,9 +4953,9 @@ Sarah Picon
 			Fixed citation.
 			Data entered.
 
-
 8/21/2015
 Michael Weiss
+
 	Vasquez-Yeomans et. al 2011 Biological Invasions 13:2635-2640
 	Data not entered. Only one specimen was collected for the study.
 
@@ -4861,20 +5003,19 @@ Michael Weiss
 	Visram et. al 2010 Marine Biology 157:1475-1487
 	Data entered. Samples from Tanzania (3 different samples in the same country) were recorded individually while samples from the other three countries were recorded collectively. 
 
-
 Sarah Picon
+
 	Entering longitudes
 		Bowen et al. 2006 Marine Biology 149:899-913.
 			Data entered.
-
-		==
+	
 		Chevolot et al. 2007 Mar Biol 151:1275-1286.
 			Fixed citation.
 			Data entered.
 
-
 8/24/2015
 Michael Weiss
+
 	von der Heyden and Connell 2012 African Journal of Marine Science 34(4):505-510
 	Data not entered. Only one sample of each species was taken.
 
@@ -4889,6 +5030,7 @@ Michael Weiss
 
 8/25/2015
 Michael Weiss
+
 	Wilson and Veraguth 2010 Molecular Ecology 19:4535-4553
 	Data not entered. Haplotype and nucleotide diversity statistics are not reported. 
 
@@ -4900,6 +5042,7 @@ Michael Weiss
 
 8/26/2015
 Michael Weiss
+
 	Wu and Yang 2012 PLOS One 7(12):1-9 
 	Data not entered. Most of the samples are captive, while the others are all from one location. 
 
@@ -4917,6 +5060,7 @@ Michael Weiss
 
 8/27/2015
 Michael Weiss
+
 	Yoon et. al 2012 Asian-Australian Journal of Animal Science 25(2):170-176
 	Data not entered. Specimens used were the same as an earlier paper.
 
@@ -4948,9 +5092,9 @@ Michael Weiss
 	Anderson et. al 2009 Fisheries Bulletin 107:13-23
 	Data not entered. Haplotype and nucleotide diversity statistics were averaged across different sample sites.
 
-
 8/30/2015
 Michael Weiss
+
 	Anderson and Karel 2009 Marine and Coastal Fisheries: Dynamics, Management, and Ecosystem Science 1:121-132
 	Data entered. 
 
@@ -4962,6 +5106,7 @@ Michael Weiss
 
 9/1/2015
 Michael Weiss
+
 	Betancur et. al 2007 Molecular Phylogenetics and Evolution 45:339-357
 	Data not entered. Sample size is too small.
 
@@ -5015,6 +5160,7 @@ Michael Weiss
 
 9/2/2015
 Michael Weiss
+
 	da Silva Rodrigues-Filho et. al 2009 Genetics and Molecular Biology 32(2):405-413
 	Data not entered. This study did not include haplotype or nucleotide diversity statistics. 
 
@@ -5047,6 +5193,7 @@ Michael Weiss
 
 9/3/2015
 Michael Weiss
+
 	Golani et. al 2007 Biology Letters 3:541-545
 	Data entered. Only samples with n of at least 4 and an identifiable sampling location were recorded. 
 
@@ -5079,6 +5226,7 @@ Michael Weiss
 
 9/6/2015
 Michael Weiss
+
 	Hickey et. al 2009 Molecular Ecology 18:680-696
 	Data entered. Only samples with n of at least 4 and with a small enough sampling range were recorded. 
 
@@ -5099,6 +5247,7 @@ Michael Weiss
 
 9/7/2015
 Michael Weiss
+
 	Kartavtsev et. al 2009 Aquatic Biology 8:95-103
 	Data not entered. Haplotype and nucleotide diversity statistics are not reported. 
 
@@ -5127,6 +5276,7 @@ Michael Weiss
 
 9/8/2015
 Michael Weiss
+
 	Lewallen et. al 2007 Marine Biology 152:599-609
 	Data not entered. Haplotype and nucleotide diversity statistics are not reported for mtDNA markers. 
 
@@ -5174,6 +5324,7 @@ Michael Weiss
 
 9/9/2015
 Michael Weiss
+
 	Rocha et. al 2008 BMC Evolutionary Biology 8:157
 	Data entered. 
 
@@ -5182,6 +5333,7 @@ Michael Weiss
 
 9/10/2015
 Michael Weiss
+
 	Santa Brigida et. al 2007 Brazilian Journal of Biology 67(4):919-924
 	Data entered. Check to see if it’s ok that fish were not captured by the study, rather were purchased from the cities.
 
