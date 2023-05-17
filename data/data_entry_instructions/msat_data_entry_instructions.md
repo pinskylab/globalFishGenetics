@@ -1,8 +1,4 @@
-# Microsatellite Data Entry
----
-
 Guidelines for how to enter data in microsatellite data spreadsheets (including filtering criteria).
-
 
 ## Screening Instructions
 
