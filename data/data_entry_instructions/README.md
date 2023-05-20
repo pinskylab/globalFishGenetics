@@ -1,4 +1,4 @@
-This directory holds the instructions given to undergraduate students to help in screening papers and entering data
+This directory holds the instructions given to undergraduate students to help in screening papers and entering data. `msat_data_entry_instructions.md` contains information on screening and recording data for studies with microsatellite data, while `mtDNA_data_entry_instructions.md` contains information on screening and recording data for studies with mitochondrial DNA data.
 
 ## Literature Search Terms & Dates
 Original search to find microsatellite papers was in Web of Science on 11 December 2011:
