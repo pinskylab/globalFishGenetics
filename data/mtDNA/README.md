@@ -1,6 +1,6 @@
 CSV files with raw mitochondrial DNA data (eg, the spreadsheets where data were initially recorded). These files are read into assemble_data_mtdna.R to create one unified, merged dataset with all mtDNA data.
 
-All files contain the following information in each column (for more information, look at data/data_entry_instructions/mtDNA_data_entry_instructions.md):
+All files contain the following information in each column (for more information, look at `data/data_entry_instructions/mtDNA_data_entry_instructions.md`):
 
 1. **Spp:** Species scientific name
 2. **CommonName:** Species common name
