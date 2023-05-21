@@ -39,7 +39,7 @@ Mitochondrial DNA pi plots:
 
 * **Pi_hexbin_map.png:** Global map of mtDNA pi genetic diversity, displaying average diversity binned in 3 degree lat/lon hexagons. Created with `maps.R` script.
 * **Pi_point_map.png:** Global map of mtDNA pi genetic diversity, displaying diversity for each population individually. Created with `maps.R` script.
-* * **mtdna_pi_abslat_plot.png:** Plot of relationship between absolute latitude and mtDNA pi. Line represents the model predicted relationship with shaded 95% confidence interval. Violin plots show pi distribution binned every 10°. Created with `mtdna_pi_predict.R` script.
+* **mtdna_pi_abslat_plot.png:** Plot of relationship between absolute latitude and mtDNA pi. Line represents the model predicted relationship with shaded 95% confidence interval. Violin plots show pi distribution binned every 10°. Created with `mtdna_pi_predict.R` script.
 * **mtdna_pi_chlomax_plot.png:** Plot of relationship between maximum chlorophyll and mtDNA pi. Line represents the model predicted relationship with shaded 95% confidence interval. Created with `mtdna_pi_predict.R` script.
 * **mtdna_pi_chlomean_plot.png:** Plot of relationship between mean chlorophyll and mtDNA pi. Line represents the model predicted relationship with shaded 95% confidence interval. Created with `mtdna_pi_predict.R` script.
 * **mtdna_hd_chlomin_plot.png:** Plot of relationship between minimum chlorophyll and mtDNA Hd. Line represents the model predicted relationship with shaded 95% confidence interval. Created with `mtdna_hd_predict.R` script.
