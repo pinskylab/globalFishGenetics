@@ -12,11 +12,11 @@
 remove(list = ls())
 
 #load libraries
-library(maps)
-library(mapdata)
-library(tidyverse)
-library(ggthemes)
-library(scales)
+library(maps) #v.3.4.1
+library(mapdata) #v.2.3.1
+library(tidyverse) #v.2.0.0
+library(ggthemes) #v.4.2.4
+library(scales) #v.1.2.1
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv")

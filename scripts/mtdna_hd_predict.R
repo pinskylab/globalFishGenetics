@@ -12,11 +12,11 @@
 remove(list = ls())
 
 #load libraries
-library(tidyverse)
-library(lme4)
-library(data.table)
-library(sjPlot)
-library(splines)
+library(tidyverse) #v.2.0.0
+library(lme4) #v.1.1-31
+library(DHARMa) #v.0.4.6
+library(sjPlot) #v.2.8.12
+library(splines) #v.4.2.2
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)

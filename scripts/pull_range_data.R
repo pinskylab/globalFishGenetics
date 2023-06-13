@@ -10,8 +10,8 @@
 remove(list = ls())
 
 #load libraries
-library(rfishbase)
-library(tidyverse)
+library(rfishbase) #v.4.1.1
+library(tidyverse) #v.2.0.0
 
 #read in data
 msat <- read.csv("output/msat_assembled.csv")

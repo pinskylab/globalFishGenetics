@@ -13,8 +13,8 @@
 remove(list = ls())
 
 #load libraries
-library(lme4)
-library(splines)
+library(lme4) #v.1.1-31
+library(splines) #v.4.2.2
 
 #functions
 boot_coef <- function(data){ #to pull out fixed effects and sigma for bootstrapping

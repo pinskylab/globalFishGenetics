@@ -10,8 +10,8 @@
 remove(list = ls())
 
 #load libraries
-library(here)
-library(tidyverse)
+library(here) #v.1.0.1
+library(tidyverse) #v.2.0.0
 
 #read in mtDNA data
 pi_cis <- read.csv(here("output", "cis_pi.csv"))

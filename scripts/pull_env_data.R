@@ -10,9 +10,9 @@
 remove(list = ls())
 
 #load libraries
-library(sdmpredictors)
-library(leaflet)
-library(raster)
+library(sdmpredictors) #v.0.2.14
+library(leaflet) #v.2.1.2
+library(raster) #v.3.6-20
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)

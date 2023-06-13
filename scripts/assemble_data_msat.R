@@ -11,7 +11,7 @@
 remove(list = ls())
 
 #load libraries
-library(tidyverse)
+library(tidyverse) #v.2.0.0
 
 #write basic functions
 calcHe <- function(x) { # calculate expected he from allele frequencies (does NOT check that freqs sum to 1)

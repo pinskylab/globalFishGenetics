@@ -11,9 +11,9 @@
 remove(list = ls())
 
 #load libraries
-library(data.table)
-library(tidyverse)
-library(scales)
+library(data.table) #v.1.14.8
+library(tidyverse) #v.2.0.0
+library(scales) #v.1.2.1
 
 #read in data
 msat <- read.csv("output/msatloci_assembled.csv", stringsAsFactors = FALSE)

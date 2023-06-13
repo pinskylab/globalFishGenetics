@@ -11,7 +11,7 @@
 remove(list = ls())
 
 #load libraries
-library(tidyverse)
+library(tidyverse) #v.2.0.0
 
 #read in data
 mtdna1 <- read.csv("data/mtDNA/Fishery lat mtDNA Complete Database.csv", stringsAsFactors = FALSE) #csv from previous msat assembly
