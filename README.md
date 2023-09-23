@@ -1,4 +1,6 @@
-This repository provides the data, scripts, and figures for the analyses in "Global patterns of genetic diversity in marine fish", which identifies latitudinal and longitudinal patterns in mitochondrial and nuclear genetic diversity in marine fishes, as well as any underlying macroecological drivers. 
+This repository provides the data, scripts, and figures for the analyses in "Global patterns of genetic diversity in marine fishes", which identifies latitudinal and longitudinal patterns in mitochondrial and nuclear genetic diversity in marine fishes, as well as any underlying macroecological drivers. 
+
+**Citation:** Clark RD & Pinsky ML. (2023) Global patterns of genetic diversity in marine fishes. *Authorea*. (https://doi.org/10.22541/au.168726266.68173061/v1) *in review*
 
 A complete list of all necessary software and packages (with version numbers) can be found at the bottom of this README.
 
