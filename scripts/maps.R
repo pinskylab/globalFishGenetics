@@ -180,22 +180,6 @@ msat_he_count_hexbin_plot <- ggplot(World2) +
         legend.title.align = 0.1) + 
   guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
 msat_he_count_hexbin_plot
-
-## Count occurrences per 500x500 km cell ##
-#assign rows to grid cells
-msat_coords$Xgrid <- cut(msat_coords$X, breaks = 70355, include.lowest= T) #takes range of X and breaks into every 500 km = ~70355 unique breaks
-msat_coords$Ygrid <- cut(msat_coords$Y, breaks = 33268, include.lowest = T) #takes range of Y and break into every 500 km = ~33268 unique breaks
-msat_coords$IDgrid <- with(msat_coords, interaction(Xgrid, Ygrid)) #creates new column with both lat and lon bins -- each unique ID here is a unique grid cell
-
-#count by grid cell
-msat_coords <- as.data.table(msat_coords) #make data table so can quickly count
-msat_hexbin_count <- msat_coords[, .N, by = IDgrid]
-
-#calculate range, median, etc of count/cell
-range(msat_hexbin_count$N) #2-458 --> going to be bigger range/more for msat bc by marker - more studies & more markers/study (eg. usually ~10 microsats vs 1-2 mtDNA sequences)
-median(msat_hexbin_count$N) #17
-
-msat_great50 <- subset(msat_hexbin_count, N >= 50) #176 grid cells, 605 (781-176) have less than 50 (77%)
   
 ###################################################################################################################################
 
@@ -314,22 +298,6 @@ mtdna_hd_count_hexbin_plot <- ggplot(World2) +
   guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
 mtdna_hd_count_hexbin_plot
 
-## Count occurrences per 500x500 km cell ##
-#assign rows to grid cells
-mtdna_small_hd_coords$Xgrid <- cut(mtdna_small_hd_coords$X, breaks = 70355, include.lowest= T) #takes range of X and breaks into every 500 km = ~70355 unique breaks
-mtdna_small_hd_coords$Ygrid <- cut(mtdna_small_hd_coords$Y, breaks = 33268, include.lowest = T) #takes range of Y and break into every 500 km = ~33268 unique breaks
-mtdna_small_hd_coords$IDgrid <- with(mtdna_small_hd_coords, interaction(Xgrid, Ygrid)) #creates new column with both lat and lon bins -- each unique ID here is a unique grid cell
-
-#count by grid cell
-mtdna_small_hd_coords <- as.data.table(mtdna_small_hd_coords) #make data table so can quickly count
-mtdna_hd_hexbin_count <- mtdna_small_hd_coords[, .N, by = IDgrid]
-
-#calculate range, median, etc of count/cell
-range(mtdna_hd_hexbin_count$N) #1-43
-median(mtdna_hd_hexbin_count$N) #2
-
-mtdna_hd_great10 <- subset(mtdna_hd_hexbin_count, N >= 10) #31 grid cells,  (595-31) have less than 10 (95%)
-
 #### mtdna pi maps ####
 
 #project lat & lon to Mollweide
@@ -444,22 +412,6 @@ mtdna_pi_count_hexbin_plot <- ggplot(World2) +
         legend.title.align = 0.1) + 
   guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
 mtdna_pi_count_hexbin_plot
-
-## Count occurrences per 500x500 km cell ##
-#assign rows to grid cells
-mtdna_small_pi_coords$Xgrid <- cut(mtdna_small_pi_coords$X, breaks = 70355, include.lowest= T) #takes range of X and breaks into every 500 km = ~70355 unique breaks
-mtdna_small_pi_coords$Ygrid <- cut(mtdna_small_pi_coords$Y, breaks = 33268, include.lowest = T) #takes range of Y and break into every 500 km = ~33268 unique breaks
-mtdna_small_pi_coords$IDgrid <- with(mtdna_small_pi_coords, interaction(Xgrid, Ygrid)) #creates new column with both lat and lon bins -- each unique ID here is a unique grid cell
-
-#count by grid cell
-mtdna_small_pi_coords <- as.data.table(mtdna_small_pi_coords) #make data table so can quickly count
-mtdna_pi_hexbin_count <- mtdna_small_pi_coords[, .N, by = IDgrid]
-
-#calculate range, median, etc of count/cell
-range(mtdna_pi_hexbin_count$N) #1-43
-median(mtdna_pi_hexbin_count$N) #2
-
-mtdna_pi_great10 <- subset(mtdna_pi_hexbin_count, N >= 10) #29 grid cells,  (592-29) have less than 10 (95%)
 
 ######################################################################################################################################
 
