@@ -1,9 +1,10 @@
 ################################################### Script to plot sampling locations ########################################################
 
-#Plot either each sampled population as a point OR combine as hexbins (every 3 degrees lat/lon)
+#Plot either each sampled population as a point OR combine as hexbins (500x500 km equal-area grid cells)
+#Mollweide projection
 #Maps of global chlorophyll & temp as well
 
-#Plot size: 2000 x 1500
+#Plot size: 6000 x 4000
 
 ##########################################################################################################################################
 
@@ -12,11 +13,10 @@
 remove(list = ls())
 
 #load libraries
-library(maps) #v.3.4.1
-library(mapdata) #v.2.3.1
+library(sf) #v.1.0.13
+library(tmap) #3.3.4
 library(tidyverse) #v.2.0.0
-library(ggthemes) #v.4.2.4
-library(scales) #v.1.2.1
+library(data.table) #v.1.14.8
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv")
@@ -28,281 +28,521 @@ msat <- cbind(msat[, -1], msat_env[, c('sst.BO_sstmean', 'sst.BO_sstrange', 'sst
                                        'BO_dissox', 'chloroA.BO_chlomean', 'chloroA.BO_chlorange',
                                        'chloroA.BO_chlomax', 'chloroA.BO_chlomin')]) #merge not working for some reason, cbind bc in same order
 
-#pull world map data
-world_map <- map_data("world") %>% 
-  filter(! long > 180)
-
-################################################################################################################################################
-
-######## Calculate tropical coverage ########
-
-mtdna_small <-subset(mtdna, as.numeric(mtdna$bp) < 2000)
-
-msat_tropics <- msat %>%
-  filter(lat >= -23.4 & lat <= 23.4) %>%
-  distinct(lat, lon, .keep_all = TRUE)
-
-mtdna_tropics <- mtdna_small %>%
-  filter(lat >= -23.4 & lat <= 23.4) %>%
-  distinct(lat, lon, .keep_all = TRUE)
-
-################################################################################################################################################
-
-######## Create msat maps ########
-
-#points only map
-msat_he_point_plot <- world_map %>% 
-  ggplot(aes(map_id = region)) +
-  geom_map(map = world_map, color = "lightgray", fill = "lightgray") +
-  expand_limits(x = world_map$long, y = world_map$lat) +  
-  geom_point(data = msat, aes(x = lon, y = lat, color = He), 
-             alpha = 0.5, size = 8, inherit.aes = FALSE) + 
-  geom_rug(data = mtdna_small_hd, mapping = aes(x = lon),
-           color = "#282828", alpha = 0.5, inherit.aes = FALSE) + 
-  geom_rug(data = mtdna_small_hd, mapping = aes(y = lat), 
-           color = "#282828", alpha = 0.5, inherit.aes = FALSE) + 
-  scale_color_gradient(low = "#1f2c32", high = "#e3ebed") +
-  annotate("text", x = -170, y = 85, label = "C", size = 30) +
-  ylim(c(-90, 90)) + labs(color = "He") + 
-  xlab("Longitude") + ylab("Latitude") + 
-  theme(panel.background = element_blank(), 
-        axis.title.x = element_text(size = 50),
-        axis.title.y = element_text(size = 50),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 50, color = "black", margin = margin(t = 10)),
-        axis.text.y = element_text(size = 50, color = "black", margin = margin(r = 10)),
-        axis.line = element_line(linewidth = 4, color = "black"),
-        legend.position = "right", 
-        legend.text = element_text(size = 50), 
-        legend.title = element_text(size = 50), 
-        legend.justification = "center", 
-        legend.title.align = 0.1) + 
-  guides(color = guide_colourbar(barwidth = unit(3, "cm"), barheight = unit(10, "cm")))
-msat_he_point_plot
-
-#hex bin mean map
-msat_he_hexbin_plot <- world_map %>% 
-  ggplot(aes(map_id = region)) +
-  geom_map(map = world_map, color = "lightgray", fill = "lightgray") +
-  expand_limits(x = world_map$long, y = world_map$lat) +  
-  stat_summary_hex(data = msat, mapping= aes(x = lon, y = lat, z = He), 
-                   fun = function(x) mean(x), binwidth = c(3, 3), #mean He (z) every 3 degrees lat and long bins
-                   inherit.aes = FALSE) + 
-  geom_rug(data = msat, mapping = aes(x = lon), 
-           color = "#282828", alpha = 0.5, inherit.aes = FALSE) + 
-  geom_rug(data = msat, mapping = aes(y = lat), 
-           color = "#282828", alpha = 0.5, inherit.aes = FALSE) + 
-  scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") +
-  annotate("text", x = -170, y = 85, label = "C", size = 30) +
-  ylim(c(-90, 90)) + labs(fill = "He") + 
-  xlab("Longitude") + ylab("Latitude") + 
-  theme(panel.background = element_blank(), 
-        axis.title.x = element_text(size = 50),
-        axis.title.y = element_text(size = 50),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 50, color = "black", margin = margin(t = 10)),
-        axis.text.y = element_text(size = 50, color = "black", margin = margin(r = 10)),
-        axis.line = element_line(linewidth = 4, color = "black"),
-        legend.position = "right", 
-        legend.text = element_text(size = 50), 
-        legend.title = element_text(size = 50), 
-        legend.justification = "center", 
-        legend.title.align = 0.1) + 
-  guides(fill = guide_colourbar(barwidth = unit(3, "cm"), barheight = unit(10, "cm")))
-msat_he_hexbin_plot
-
-###################################################################################################################################
-
-######## Create mtdna maps ########
-
 #subset mtdna bc are a few outliers with very high bp --- entire mtdna (mitogenome?)
 mtdna_small <-subset(mtdna, as.numeric(mtdna$bp) < 2000)
   mtdna_small_hd <- subset(mtdna_small, mtdna_small$He != "NA")
   mtdna_small_pi <- subset(mtdna_small, mtdna_small$Pi != "NA")
 
-#### mtdna hd maps ####  
+#pull world map data
+data("World") # load the background world outline
+  World2 <- st_transform(World, "ESRI:54009") #project world outline to Mollweide
+
+#ready Mollweide projection
+projcrs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0" #the current coordinate reference systems (lat-lon)
+
+################################################################################################################################################
+
+######## Calculate tropical coverage ########
+#want unique locations -- lat lon combinations/species
+
+msat_tropics <- msat %>%
+  filter(lat >= -23.4 & lat <= 23.4) %>%
+  distinct(spp, lat, lon, .keep_all = TRUE)
+
+mtdna_tropics <- mtdna_small %>%
+  filter(lat >= -23.4 & lat <= 23.4) %>%
+  distinct(spp, lat, lon, .keep_all = TRUE)
+
+################################################################################################################################################
+
+######## Calculate polar coverage ########
+#want unique locations -- lat lon combinations/species
+
+msat_polar <- msat %>%
+  filter(lat <= -60 | lat >= 60) %>%
+  distinct(spp, lat, lon, .keep_all = TRUE)
+
+mtdna_polar <- mtdna_small %>%
+  filter(lat <= -60 | lat >= 60) %>%
+  distinct(spp, lat, lon, .keep_all = TRUE)
+
+################################################################################################################################################
+
+######## Create msat maps ########
+
+#project lat & lon to Mollweide
+msat_st <- st_as_sf(msat, coords = c("lon", "lat"), remove = FALSE, crs = projcrs) #make spatial object
+msat_st_Moll <- st_transform(msat_st, "ESRI:54009") #project to Mollweide
+
+#extract Mollweide coordinates in a data.frame
+msat_coords <- data.frame(st_coordinates(msat_st_Moll)) #get X & Y coords from the projected points in Mollweide
+msat_coords$He <- msat_st_Moll$He #copy over genetic diversity estimates
 
 #points only map
-mtdna_hd_point_plot <- world_map %>% 
-  ggplot(aes(map_id = region)) +
-  geom_map(map = world_map, color = "lightgray", fill = "lightgray") +
-  expand_limits(x = world_map$long, y = world_map$lat) +  
-  geom_point(data = mtdna_small_hd, aes(x = lon, y = lat, color = He), 
-             alpha = 0.5, size = 8, inherit.aes = FALSE) + 
-  geom_rug(data = mtdna_small_hd, mapping = aes(x = lon), 
-           color = "#282828", alpha = 0.5, inherit.aes = FALSE) + 
-  geom_rug(data = mtdna_small_hd, mapping = aes(y = lat), 
-           color = "#282828", alpha = 0.5, inherit.aes = FALSE) + 
-  scale_color_gradient(low = "#1f2c32", high = "#e3ebed") +
-  annotate("text", x = -170, y = 85, label = "B", size = 30) +
-  ylim(c(-90, 90)) + labs(color = "Hd") + 
-  xlab("Longitude") + ylab("Latitude") + 
-  theme(panel.background = element_blank(), 
-        axis.title.x = element_text(size = 50),
-        axis.title.y = element_text(size = 50),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 50, color = "black", margin = margin(t = 10)),
-        axis.text.y = element_text(size = 50, color = "black", margin = margin(r = 10)),
-        axis.line = element_line(linewidth = 4, color = "black"),
+msat_he_point_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  geom_point(data = msat_coords, aes(x = X, y = Y, color = He), 
+             alpha = 0.5, size = 16, inherit.aes = FALSE)  + 
+  geom_rug(data = msat_coords, mapping = aes(x = X), color = "#282828", 
+           length = unit(0.03, "npc"), inherit.aes = FALSE) + 
+  geom_rug(data = msat_coords, mapping = aes(y = Y), color = "#282828", 
+           length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
+  scale_color_gradient(low = "#1f2c32", high = "#e3ebed") + 
+  annotate("text", x = -17000000, y = 8500000, label = "C", size = 100) +
+  labs(color = "He") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
         legend.position = "right", 
-        legend.text = element_text(size = 50), 
-        legend.title = element_text(size = 50), 
+        legend.text = element_text(size = 120), 
+        legend.title = element_text(size = 120), 
         legend.justification = "center", 
         legend.title.align = 0.1) + 
-  guides(color = guide_colourbar(barwidth = unit(3, "cm"), barheight = unit(10, "cm")))
+  guides(color = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
+msat_he_point_plot
+
+#hex bin mean map
+msat_he_mean_hexbin_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  stat_summary_hex(data = msat_coords, aes(x = X, y = Y, z = He), 
+                   fun = function(x) mean(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
+                   inherit.aes = FALSE) + 
+  geom_rug(data = msat_coords, mapping = aes(x = X), color = "#282828", 
+           length = unit(0.03, "npc"), inherit.aes = FALSE) + 
+  geom_rug(data = msat_coords, mapping = aes(y = Y), color = "#282828", 
+           length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
+  scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
+  annotate("text", x = -17000000, y = 8500000, label = "C", size = 100) +
+  labs(fill = "He") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
+        legend.position = "right", 
+        legend.text = element_text(size = 120), 
+        legend.title = element_text(size = 120), 
+        legend.justification = "center", 
+        legend.title.align = 0.1) + 
+  guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
+msat_he_mean_hexbin_plot
+
+#hex bin SD map
+msat_he_SD_hexbin_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  stat_summary_hex(data = msat_coords, aes(x = X, y = Y, z = He), 
+                   fun = function(x) sd(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
+                   inherit.aes = FALSE) + 
+  scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
+  annotate("text", x = -17000000, y = 8500000, label = "C", size = 100) +
+  labs(fill = "SD") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
+        legend.position = "right", 
+        legend.text = element_text(size = 120), 
+        legend.title = element_text(size = 120), 
+        legend.justification = "center", 
+        legend.title.align = 0.1) + 
+  guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
+msat_he_SD_hexbin_plot
+
+#hex bin count map
+msat_he_count_hexbin_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  stat_summary_hex(data = msat_coords, aes(x = X, y = Y, z = He), 
+                   fun = function(x) length(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
+                   inherit.aes = FALSE) + 
+  scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
+  annotate("text", x = -17000000, y = 8500000, label = "C", size = 100) +
+  labs(fill = "Count") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
+        legend.position = "right", 
+        legend.text = element_text(size = 120), 
+        legend.title = element_text(size = 120), 
+        legend.justification = "center", 
+        legend.title.align = 0.1) + 
+  guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
+msat_he_count_hexbin_plot
+
+## Count occurrences per 500x500 km cell ##
+#assign rows to grid cells
+msat_coords$Xgrid <- cut(msat_coords$X, breaks = 70355, include.lowest= T) #takes range of X and breaks into every 500 km = ~70355 unique breaks
+msat_coords$Ygrid <- cut(msat_coords$Y, breaks = 33268, include.lowest = T) #takes range of Y and break into every 500 km = ~33268 unique breaks
+msat_coords$IDgrid <- with(msat_coords, interaction(Xgrid, Ygrid)) #creates new column with both lat and lon bins -- each unique ID here is a unique grid cell
+
+#count by grid cell
+msat_coords <- as.data.table(msat_coords) #make data table so can quickly count
+msat_hexbin_count <- msat_coords[, .N, by = IDgrid]
+
+#calculate range, median, etc of count/cell
+range(msat_hexbin_count$N) #2-458 --> going to be bigger range/more for msat bc by marker - more studies & more markers/study (eg. usually ~10 microsats vs 1-2 mtDNA sequences)
+median(msat_hexbin_count$N) #17
+
+msat_great50 <- subset(msat_hexbin_count, N >= 50) #176 grid cells, 605 (781-176) have less than 50 (77%)
+  
+###################################################################################################################################
+
+######## Create mtdna maps ########
+
+#### mtdna hd maps ####  
+
+#project lat & lon to Mollweide
+mtdna_small_hd_st <- st_as_sf(mtdna_small_hd, coords = c("lon", "lat"), remove = FALSE, crs = projcrs) #make spatial object
+mtdna_small_hd_st_Moll <- st_transform(mtdna_small_hd_st, "ESRI:54009") #project to Mollweide
+
+#extract Mollweide coordinates in a data.frame
+mtdna_small_hd_coords <- data.frame(st_coordinates(mtdna_small_hd_st_Moll)) #get X & Y coords from the projected points in Mollweide
+mtdna_small_hd_coords$He <- mtdna_small_hd_st_Moll$He #copy over genetic diversity estimates
+
+#points only map
+mtdna_hd_point_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  geom_point(data = mtdna_small_hd_coords, aes(x = X, y = Y, color = He), 
+             alpha = 0.5, size = 16, inherit.aes = FALSE)  + 
+  geom_rug(data = mtdna_small_hd_coords, mapping = aes(x = X), color = "#282828", 
+           length = unit(0.03, "npc"), inherit.aes = FALSE) + 
+  geom_rug(data = mtdna_small_hd_coords, mapping = aes(y = Y), color = "#282828", 
+           length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
+  scale_color_gradient(low = "#1f2c32", high = "#e3ebed") + 
+  annotate("text", x = -17000000, y = 8500000, label = "B", size = 100) +
+  labs(color = "Hd") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
+        legend.position = "right", 
+        legend.text = element_text(size = 120), 
+        legend.title = element_text(size = 120), 
+        legend.justification = "center", 
+        legend.title.align = 0.1) + 
+  guides(color = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
 mtdna_hd_point_plot
   
-#hex bin map
-mtdna_hd_hexbin_plot <- world_map %>% 
-  ggplot(aes(map_id = region)) +
-  geom_map(map = world_map, color = "lightgray", fill = "lightgray") +
-  expand_limits(x = world_map$long, y = world_map$lat) +  
-  stat_summary_hex(data = mtdna_small_hd, mapping= aes(x = lon, y = lat, z = He), 
-                   fun = function(x) mean(x), binwidth = c(3, 3), #mean Hd (z) every 3 degrees lat and long bins
+#hex bin mean map
+mtdna_hd_mean_hexbin_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  stat_summary_hex(data = mtdna_small_hd_coords, aes(x = X, y = Y, z = He), 
+                   fun = function(x) mean(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
                    inherit.aes = FALSE) + 
-  geom_rug(data = mtdna_small_hd, mapping = aes(x = lon), color = "#282828", 
-           alpha = 0.5, inherit.aes = FALSE) + 
-  geom_rug(data = mtdna_small_hd, mapping = aes(y = lat), color = "#282828", 
-           alpha = 0.5, inherit.aes = FALSE) + 
+  geom_rug(data = mtdna_small_hd_coords, mapping = aes(x = X), color = "#282828", 
+           length = unit(0.03, "npc"), inherit.aes = FALSE) + 
+  geom_rug(data = mtdna_small_hd_coords, mapping = aes(y = Y), color = "#282828", 
+           length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
   scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
-  annotate("text", x = -170, y = 85, label = "B", size = 30) +
-  ylim(c(-90, 90)) + labs(fill = "Hd") + 
-  xlab("Longitude") + ylab("Latitude") + 
-  theme(panel.background = element_blank(), 
-        axis.title.x = element_text(size = 50),
-        axis.title.y = element_text(size = 50),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 50, color = "black", margin = margin(t = 10)),
-        axis.text.y = element_text(size = 50, color = "black", margin = margin(r = 10)),
-        axis.line = element_line(linewidth = 4, color = "black"),
+  annotate("text", x = -17000000, y = 8500000, label = "B", size = 100) +
+  labs(fill = "Hd") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
         legend.position = "right", 
-        legend.text = element_text(size = 50), 
-        legend.title = element_text(size = 50), 
+        legend.text = element_text(size = 120), 
+        legend.title = element_text(size = 120), 
         legend.justification = "center", 
         legend.title.align = 0.1) + 
-  guides(fill = guide_colourbar(barwidth = unit(3, "cm"), barheight = unit(10, "cm")))
-mtdna_hd_hexbin_plot
+  guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
+mtdna_hd_mean_hexbin_plot
+
+#hex bin SD map
+mtdna_hd_SD_hexbin_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  stat_summary_hex(data = mtdna_small_hd_coords, aes(x = X, y = Y, z = He), 
+                   fun = function(x) sd(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
+                   inherit.aes = FALSE) + 
+  scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
+  annotate("text", x = -17000000, y = 8500000, label = "B", size = 100) +
+  labs(fill = "SD") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
+        legend.position = "right", 
+        legend.text = element_text(size = 120), 
+        legend.title = element_text(size = 120), 
+        legend.justification = "center", 
+        legend.title.align = 0.1) + 
+  guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
+mtdna_hd_SD_hexbin_plot
+
+#hex bin count map
+mtdna_hd_count_hexbin_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  stat_summary_hex(data = mtdna_small_hd_coords, aes(x = X, y = Y, z = He), 
+                   fun = function(x) length(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
+                   inherit.aes = FALSE) + 
+  scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
+  annotate("text", x = -17000000, y = 8500000, label = "B", size = 100) +
+  labs(fill = "Count") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
+        legend.position = "right", 
+        legend.text = element_text(size = 120), 
+        legend.title = element_text(size = 120), 
+        legend.justification = "center", 
+        legend.title.align = 0.1) + 
+  guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
+mtdna_hd_count_hexbin_plot
+
+## Count occurrences per 500x500 km cell ##
+#assign rows to grid cells
+mtdna_small_hd_coords$Xgrid <- cut(mtdna_small_hd_coords$X, breaks = 70355, include.lowest= T) #takes range of X and breaks into every 500 km = ~70355 unique breaks
+mtdna_small_hd_coords$Ygrid <- cut(mtdna_small_hd_coords$Y, breaks = 33268, include.lowest = T) #takes range of Y and break into every 500 km = ~33268 unique breaks
+mtdna_small_hd_coords$IDgrid <- with(mtdna_small_hd_coords, interaction(Xgrid, Ygrid)) #creates new column with both lat and lon bins -- each unique ID here is a unique grid cell
+
+#count by grid cell
+mtdna_small_hd_coords <- as.data.table(mtdna_small_hd_coords) #make data table so can quickly count
+mtdna_hd_hexbin_count <- mtdna_small_hd_coords[, .N, by = IDgrid]
+
+#calculate range, median, etc of count/cell
+range(mtdna_hd_hexbin_count$N) #1-43
+median(mtdna_hd_hexbin_count$N) #2
+
+mtdna_hd_great10 <- subset(mtdna_hd_hexbin_count, N >= 10) #31 grid cells,  (595-31) have less than 10 (95%)
 
 #### mtdna pi maps ####
 
+#project lat & lon to Mollweide
+mtdna_small_pi_st <- st_as_sf(mtdna_small_pi, coords = c("lon", "lat"), remove = FALSE, crs = projcrs) #make spatial object
+mtdna_small_pi_st_Moll <- st_transform(mtdna_small_pi_st, "ESRI:54009") #project to Mollweide
+
+#extract Mollweide coordinates in a data.frame
+mtdna_small_pi_coords <- data.frame(st_coordinates(mtdna_small_pi_st_Moll)) #get X & Y coords from the projected points in Mollweide
+mtdna_small_pi_coords$Pi <- mtdna_small_pi_st_Moll$Pi #copy over genetic diversity estimates
+
 #points only map
-mtdna_pi_point_plot <- world_map %>% 
-  ggplot(aes(map_id = region)) +
-  geom_map(map = world_map, color = "lightgray", fill = "lightgray") +
-  expand_limits(x = world_map$long, y = world_map$lat) +  
-  geom_point(data = mtdna_small_pi, aes(x = lon, y = lat, color = Pi), 
-             alpha = 0.5, size = 8, inherit.aes = FALSE) + 
-  geom_rug(data = mtdna_small_hd, mapping = aes(x = lon), 
-           color = "#282828", alpha = 0.5, inherit.aes = FALSE) + 
-  geom_rug(data = mtdna_small_hd, mapping = aes(y = lat), 
-           color = "#282828", alpha = 0.5, inherit.aes = FALSE) + 
+mtdna_pi_point_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  geom_point(data = mtdna_small_pi_coords, aes(x = X, y = Y, color = Pi), 
+             alpha = 0.5, size = 16, inherit.aes = FALSE)  + 
+  geom_rug(data = mtdna_small_pi_coords, mapping = aes(x = X), color = "#282828", 
+           length = unit(0.03, "npc"), inherit.aes = FALSE) + 
+  geom_rug(data = mtdna_small_pi_coords, mapping = aes(y = Y), color = "#282828", 
+           length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
   scale_color_gradient(trans = "log10", low = "#1f2c32", high = "#e3ebed", 
                        labels = scales::label_log()) + 
-  annotate("text", x = -170, y = 85, label = "A", size = 30) +
-  ylim(c(-90, 90)) + labs(color = "π") + 
-  xlab("Longitude") + ylab("Latitude") + 
-  theme(panel.background = element_blank(), 
-        axis.title.x = element_text(size = 50),
-        axis.title.y = element_text(size = 50),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 50, color = "black", margin = margin(t = 10)),
-        axis.text.y = element_text(size = 50, color = "black", margin = margin(r = 10)),
-        axis.line = element_line(linewidth = 4, color = "black"),
+  annotate("text", x = -17000000, y = 8500000, label = "A", size = 100) +
+  labs(color = "π") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
         legend.position = "right", 
-        legend.text = element_text(size = 50), 
-        legend.title = element_text(size = 50), 
+        legend.text = element_text(size = 110), 
+        legend.title = element_text(size = 110), 
         legend.justification = "center", 
         legend.title.align = 0.1) + 
-  guides(color = guide_colourbar(barwidth = unit(3, "cm"), barheight = unit(10, "cm")))
+  guides(color = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
 mtdna_pi_point_plot
 
-#hex bin map
-mtdna_pi_hexbin_plot <- world_map %>% 
-  ggplot(aes(map_id = region)) +
-  geom_map(map = world_map, color = "lightgray", fill = "lightgray") +
-  expand_limits(x = world_map$long, y = world_map$lat) +  
-  stat_summary_hex(data = mtdna_small_pi, mapping= aes(x = lon, y = lat, z = Pi), 
-                   fun = function(x) mean(x), binwidth = c(3, 3), #mean Pi (z) every 3 degrees lat and long bins
+#hex bin mean map
+mtdna_pi_mean_hexbin_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  stat_summary_hex(data = mtdna_small_pi_coords, aes(x = X, y = Y, z = Pi), 
+                   fun = function(x) mean(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
                    inherit.aes = FALSE) + 
-  geom_rug(data = mtdna_small_pi, mapping = aes(x = lon), 
-           color = "#282828", alpha = 0.5, inherit.aes = FALSE) + 
-  geom_rug(data = mtdna_small_pi, mapping = aes(y = lat), 
-           color = "#282828", alpha = 0.5, inherit.aes = FALSE) + 
+  geom_rug(data = mtdna_small_pi_coords, mapping = aes(x = X), color = "#282828", 
+           length = unit(0.03, "npc"), inherit.aes = FALSE) + 
+  geom_rug(data = mtdna_small_pi_coords, mapping = aes(y = Y), color = "#282828", 
+           length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
   scale_fill_gradient(trans = "log10", low = "#1f2c32", high = "#e3ebed", 
-                      labels = scales::label_log()) +
-  annotate("text", x = -170, y = 85, label = "A", size = 30) +
-  ylim(c(-90, 90)) + labs(fill = "π") + 
-  xlab("Longitude") + ylab("Latitude") + 
-  theme(panel.background = element_blank(), 
-        axis.title.x = element_text(size = 50),
-        axis.title.y = element_text(size = 50),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 50, color = "black", margin = margin(t = 10)),
-        axis.text.y = element_text(size = 50, color = "black", margin = margin(r = 10)),
-        axis.line = element_line(linewidth = 4, color = "black"),
+                      labels = scales::label_log()) + 
+  annotate("text", x = -17000000, y = 8500000, label = "A", size = 100) +
+  labs(fill = "π") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
         legend.position = "right", 
-        legend.text = element_text(size = 50), 
-        legend.title = element_text(size = 50), 
+        legend.text = element_text(size = 120), 
+        legend.title = element_text(size = 120), 
         legend.justification = "center", 
         legend.title.align = 0.1) + 
-  guides(fill = guide_colourbar(barwidth = unit(3, "cm"), barheight = unit(10, "cm")))
-mtdna_pi_hexbin_plot
+  guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
+mtdna_pi_mean_hexbin_plot
+
+#hex bin SD map
+mtdna_pi_SD_hexbin_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  stat_summary_hex(data = mtdna_small_pi_coords, aes(x = X, y = Y, z = Pi), 
+                   fun = function(x) sd(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
+                   inherit.aes = FALSE) + 
+  scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
+  annotate("text", x = -17000000, y = 8500000, label = "A", size = 100) +
+  labs(fill = "SD") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
+        legend.position = "right", 
+        legend.text = element_text(size = 120), 
+        legend.title = element_text(size = 120), 
+        legend.justification = "center", 
+        legend.title.align = 0.1) + 
+  guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
+mtdna_pi_SD_hexbin_plot
+
+#hex bin count map
+mtdna_pi_count_hexbin_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  stat_summary_hex(data = mtdna_small_pi_coords, aes(x = X, y = Y, z = Pi), 
+                   fun = function(x) length(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
+                   inherit.aes = FALSE) + 
+  scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
+  annotate("text", x = -17000000, y = 8500000, label = "A", size = 100) +
+  labs(fill = "Count") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
+        legend.position = "right", 
+        legend.text = element_text(size = 120), 
+        legend.title = element_text(size = 120), 
+        legend.justification = "center", 
+        legend.title.align = 0.1) + 
+  guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
+mtdna_pi_count_hexbin_plot
+
+## Count occurrences per 500x500 km cell ##
+#assign rows to grid cells
+mtdna_small_pi_coords$Xgrid <- cut(mtdna_small_pi_coords$X, breaks = 70355, include.lowest= T) #takes range of X and breaks into every 500 km = ~70355 unique breaks
+mtdna_small_pi_coords$Ygrid <- cut(mtdna_small_pi_coords$Y, breaks = 33268, include.lowest = T) #takes range of Y and break into every 500 km = ~33268 unique breaks
+mtdna_small_pi_coords$IDgrid <- with(mtdna_small_pi_coords, interaction(Xgrid, Ygrid)) #creates new column with both lat and lon bins -- each unique ID here is a unique grid cell
+
+#count by grid cell
+mtdna_small_pi_coords <- as.data.table(mtdna_small_pi_coords) #make data table so can quickly count
+mtdna_pi_hexbin_count <- mtdna_small_pi_coords[, .N, by = IDgrid]
+
+#calculate range, median, etc of count/cell
+range(mtdna_pi_hexbin_count$N) #1-43
+median(mtdna_pi_hexbin_count$N) #2
+
+mtdna_pi_great10 <- subset(mtdna_pi_hexbin_count, N >= 10) #29 grid cells,  (592-29) have less than 10 (95%)
 
 ######################################################################################################################################
 
 ######## Create environmental data maps ########
 
+#extract Mollweide coordinates, using He database
+msat_coords$chloromean <- msat_st_Moll$chloroA.BO_chlomean #copy over chlorophyll estimates
+msat_coords$sstmean <- msat_st_Moll$sst.BO_sstmean #copy over SST estimates
+
 #chlorophyll mean map
-chlomean_hexbin_plot <- world_map %>% 
-  ggplot(aes(map_id = region)) +
-  geom_map(map = world_map, color = "lightgray", fill = "lightgray") +
-  expand_limits(x = world_map$long, y = world_map$lat) +  
-  stat_summary_hex(data = msat, mapping= aes(x = lon, y = lat, z = chloroA.BO_chlomean), 
-                   fun = function(x) mean(x), binwidth = c(3, 3),
+chlomean_mean_hexbin_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  stat_summary_hex(data = msat_coords, aes(x = X, y = Y, z = chloromean), 
+                   fun = function(x) mean(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
                    inherit.aes = FALSE) + 
+  geom_rug(data = msat_coords, mapping = aes(x = X), color = "#282828", 
+           length = unit(0.03, "npc"), inherit.aes = FALSE) + 
+  geom_rug(data = msat_coords, mapping = aes(y = Y), color = "#282828", 
+           length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
   scale_fill_gradient(trans = "log10", low = "#c6cbc8", high = "#212924", 
                       labels = scales::label_log()) +
-  annotate("text", x = -175, y = 85, label = "A", size = 30) +
-  ylim(c(-90, 90)) + labs(fill = "Chlorophyll") + 
-  xlab("Longitude") + ylab("Latitude") + 
-  theme(panel.background = element_blank(), 
-        axis.title.x = element_text(size = 50),
-        axis.title.y = element_text(size = 50),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 50, color = "black", margin = margin(t = 10)),
-        axis.text.y = element_text(size = 50, color = "black", margin = margin(r = 10)),
-        axis.line = element_line(linewidth = 4, color = "black"),
+  annotate("text", x = -17000000, y = 8500000, label = "A", size = 100) +
+  labs(fill = "Chlorophyll") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
         legend.position = "right", 
-        legend.text = element_text(size = 30), 
-        legend.title = element_text(size = 30), 
+        legend.text = element_text(size = 120), 
+        legend.title = element_text(size = 120), 
         legend.justification = "center", 
         legend.title.align = 0.1) + 
-  guides(fill = guide_colourbar(barwidth = unit(3, "cm"), barheight = unit(10, "cm")))
-chlomean_hexbin_plot
+  guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
+chlomean_mean_hexbin_plot
 
 #SST mean map
-sstmean_hexbin_plot <- world_map %>% 
-  ggplot(aes(map_id = region)) +
-  geom_map(map = world_map, color = "lightgray", fill = "lightgray") +
-  expand_limits(x = world_map$long, y = world_map$lat) +  
-  stat_summary_hex(data = msat, mapping= aes(x = lon, y = lat, z = sst.BO_sstmean), 
-                   fun = function(x) mean(x), binwidth = c(3, 3),
+sstmean_mean_hexbin_plot <- ggplot(World2) +
+  geom_sf(color = "lightgrey", fill = "lightgrey") + 
+  stat_summary_hex(data = msat_coords, aes(x = X, y = Y, z = sstmean), 
+                   fun = function(x) mean(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
                    inherit.aes = FALSE) + 
+  geom_rug(data = msat_coords, mapping = aes(x = X), color = "#282828", 
+           length = unit(0.03, "npc"), inherit.aes = FALSE) + 
+  geom_rug(data = msat_coords, mapping = aes(y = Y), color = "#282828", 
+           length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
   scale_fill_gradient(low = "#ebcb99", high = "#905800") +
-  annotate("text", x = -175, y = 85, label = "B", size = 30) +
-  ylim(c(-90, 90)) + labs(fill = "SST") + 
-  xlab("Longitude") + ylab("Latitude") + 
-  theme(panel.background = element_blank(), 
-        axis.title.x = element_text(size = 50),
-        axis.title.y = element_text(size = 50),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 50, color = "black", margin = margin(t = 10)),
-        axis.text.y = element_text(size = 50, color = "black", margin = margin(r = 10)),
-        axis.line = element_line(linewidth = 4, color = "black"),
+  annotate("text", x = -17000000, y = 8500000, label = "B", size = 100) +
+  labs(fill = "SST") + 
+  theme_bw() + 
+  theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
+        panel.background = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major = element_line(color = "black"), 
+        axis.line = element_line(linewidth = 4, color = "black"), 
+        axis.title = element_blank(), 
         legend.position = "right", 
-        legend.text = element_text(size = 30), 
-        legend.title = element_text(size = 30), 
+        legend.text = element_text(size = 120), 
+        legend.title = element_text(size = 120), 
         legend.justification = "center", 
         legend.title.align = 0.1) + 
-  guides(fill = guide_colourbar(barwidth = unit(3, "cm"), barheight = unit(10, "cm")))
-sstmean_hexbin_plot
+  guides(fill = guide_colourbar(barwidth = unit(8, "cm"), barheight = unit(18, "cm")))
+sstmean_mean_hexbin_plot
+
+#### SST mean & chlorophyll mean correlation plot ####
+
+#corr coefficient (using msat bc largest database)
+corr <- cor(x = msat$sst.BO_sstmean, y = msat$chloroA.BO_chlomean, 
+            use = "complete.obs", method = "spearman") #r= -0.316
+
+#plot
+SST_chlo_plot <- ggplot() + 
+  geom_point(data = msat, aes(x = sst.BO_sstmean, y = chloroA.BO_chlomean), 
+             alpha = 0.5, size = 8, color = "#0E3C45") + 
+  annotate("text", x = 28, y = 50, label = "r = -0.316", size = 12) +
+  xlab("SST mean") + ylab("chlorophyll A mean") + 
+  theme_minimal() + 
+  theme(panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
+        axis.title.x = element_text(size = 34),
+        axis.title.y = element_text(size = 34),
+        axis.ticks = element_line(color = "black", linewidth = 2),
+        axis.text.x = element_text(size = 34, color = "black"),
+        axis.text.y = element_text(size = 34, color = "black"))
+SST_chlo_plot
