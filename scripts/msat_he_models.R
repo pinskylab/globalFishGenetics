@@ -1,8 +1,8 @@
 ################################################### Script to build msat He models ########################################################
 
 #Nuclear microsatellite expected heterozygosity (He) data
-#Binomial generalized linear mixed effect models for He
-#Success = heterozygote, failure = homozygote
+#Beta generalized linear mixed effect models for He
+#All independent variables scaled & centered (except chlorophyll, which is log-transformed)
 #Check model fits and for spatial autocorrelation in residuals with DHARMa
 
 ##########################################################################################################################################
@@ -13,10 +13,9 @@ remove(list = ls())
 
 #load libraries
 library(tidyverse) #v.2.0.0
-library(DHARMa) #v.0.4.6
-library(sjPlot) #v.2.8.12
-library(splines) #v.4.2.2
 library(glmmTMB) #1.1.7
+library(DHARMa) #v.0.4.6
+library(splines) #v.4.2.2
 library(performance) #0.10.4
 
 #read in data
@@ -46,8 +45,9 @@ msat <- subset(msat, msat$He != "NA")
 
 #remove missing CrossSpp
 msat <- subset(msat, msat$CrossSpp!= "NA")
+  msat$CrossSpp_scale <- as.numeric(scale(msat$CrossSpp))
 
-#add range position
+#### Add range position ####
 #fix character type
 msat$Centroid <- as.numeric(msat$Centroid)
 msat$Half_RangeSize <- as.numeric(msat$Half_RangeSize)
@@ -65,19 +65,8 @@ msat$range_position[msat$range_position > 1] <- 1
 #subset to only those with range_position
 msat <- subset(msat, range_position != "NA")
 
-#add random effect for every unit
-msat$ID <- (1:26733)
-
-#### Calculate success and failure ####
-msat$success <- round(msat$He*msat$n) #number of heterozygotes
-msat$failure<- round((1 - msat$He)*msat$n) #number of homozygotes
-
-#### Transform He data ####
-#to deal with 1s (no 0s in dataset as excluded monomorphic data)
-#msat$transformed_He <- NA #create column to fill in
-#for (i in 1:nrow(msat)) { #transform data to handle 1s (Douma & Weedon (2018) Methods in Ecology & Evolution)
-#  msat$transformed_He[i] <- ((msat$He[i]*(msat$n[i] - 1)) + 0.5)/msat$n[i]
-#}
+#scale range position
+msat$range_pos_scale <- as.numeric(scale(msat$range_position))
 
 #### Calculate latitude, longitude variables ####
 #calculate abslat
@@ -89,27 +78,17 @@ msat$abslat_scale <- as.numeric(scale(msat$abslat))
 msat$lon_scale <- as.numeric(scale(msat$lon))
 
 #### Calculate environmental variables ####
+#scale SST variables
+msat$sstmean_scale <- as.numeric(scale(msat$sst.BO_sstmean))
+
 ## log transform chlorophyll A ##
 #subset to only those with chloroA data
 msat <- subset(msat, msat$chloroA.BO_chlomean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  msat <- subset(msat, msat$chloroA.BO_chlorange != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  msat <- subset(msat, msat$chloroA.BO_chlomax != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  msat <- subset(msat, msat$chloroA.BO_chlomin != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-
-msat$logchlomean <- log10(msat$chloroA.BO_chlomean)
-  msat$logchlorange <- log10(msat$chloroA.BO_chlorange)
-  msat$logchlomax <- log10(msat$chloroA.BO_chlomax)
-  msat$logchlomin <- log10(msat$chloroA.BO_chlomin)
+  msat$logchlomean <- log10(msat$chloroA.BO_chlomean)
 
 #remove logchlo = NA columns
 msat <- subset(msat, msat$logchlomean != "Inf" | 
                  msat$logchlomean != "NaN")
-msat <- subset(msat, msat$logchlorange != "Inf" | 
-                 msat$logchlorange != "NaN")
-msat <- subset(msat, msat$logchlomax != "Inf" | 
-                 msat$logchlomax != "NaN")
-msat <- subset(msat, msat$logchlomin != "Inf" | 
-                 msat$logchlomin != "NaN")
 
 #### Create coordinate dataframe for SAC tests ####
 #grouping factor for residuals -- need to identify which ones have the same lat/lon
@@ -123,16 +102,10 @@ coords_unique <- coords %>% separate(coords, sep = "_", c("lat_unique", "lon_uni
   y_unique <- coords_unique$lon_unique
 
 #############################################################################################################################
-
+  
 ######## Null model ########
-
-null_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
-                         (1|Family/Genus) + (1|Source) + (1|ID),
-                       data = msat, family = binomial,
-                       na.action = "na.fail", nAGQ = 0, #nAGQ = 0 & #nAGQ = 1 qualitatively the same, so using 0 bc converges much faster
-                       control = glmerControl(optimizer = "bobyqa"))
-
-beta_null_model_he <- glmmTMB(He ~ CrossSpp + range_position + 
+  
+beta_null_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + 
                                 (1|Family/Genus) + (1|Source), 
                               data = msat, family = ordbeta, 
                               na.action = "na.fail")
@@ -156,16 +129,9 @@ sim_recalc <- recalculateResiduals(null_model_he_sim, group = msat$coords) #need
 ######## Latitude & longitude models ########
   
 #### lat model ####
-lat_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
-                        lat_scale + I(lat_scale^2) + (1|Family/Genus) + 
-                        (1|Source) + (1|ID), 
-                      family = binomial, data = msat, 
-                      na.action = "na.fail", nAGQ = 0,
-                      control = glmerControl(optimizer = "bobyqa"))
-
-beta_lat_model_he <- glmmTMB(He ~ CrossSpp + range_position + 
-                               lat_scale + I(lat_scale^2) + (1|Family/Genus) +
-                               (1|Source), 
+beta_lat_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + 
+                               lat_scale + I(lat_scale^2) + 
+                               (1|Family/Genus) + (1|Source), 
                               data = msat, family = ordbeta, 
                               na.action = "na.fail")  
 
@@ -173,7 +139,7 @@ beta_lat_model_he <- glmmTMB(He ~ CrossSpp + range_position +
 r2_nakagawa(beta_lat_model_he)
 
 #checking fit with DHARMa
-lat_model_he_sim <- simulateResiduals(fittedModel = lat_model_he, plot = F)
+lat_model_he_sim <- simulateResiduals(fittedModel = beta_lat_model_he, plot = F)
 plotQQunif(lat_model_he_sim)
 plotResiduals(lat_model_he_sim)
   plotResiduals(lat_model_he_sim, msat$lat_scale)
@@ -183,13 +149,7 @@ sim_recalc <- recalculateResiduals(lat_model_he_sim, group = msat$coords)
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 ### abslat model ####
-abslat_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + abslat_scale + 
-                           (1|Family/Genus) + (1|Source) + (1|ID), 
-                         family = binomial, data = msat, 
-                         na.action = "na.fail", nAGQ = 0,
-                         control = glmerControl(optimizer = "bobyqa"))
-  
-beta_abslat_model_he <- glmmTMB(He ~ CrossSpp + range_position + abslat_scale + 
+beta_abslat_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + abslat_scale + 
                                   (1|Family/Genus) + (1|Source), 
                                 data = msat, family = ordbeta, 
                                 na.action = "na.fail") 
@@ -198,7 +158,7 @@ beta_abslat_model_he <- glmmTMB(He ~ CrossSpp + range_position + abslat_scale +
 r2_nakagawa(beta_abslat_model_he)
 
 #checking fit with DHARMa
-abslat_model_he_sim <- simulateResiduals(fittedModel = abslat_model_he, plot = F)
+abslat_model_he_sim <- simulateResiduals(fittedModel = beta_abslat_model_he, plot = F)
 plotQQunif(abslat_model_he_sim)
 plotResiduals(abslat_model_he_sim)
   plotResiduals(abslat_model_he_sim, msat$abslat_scale)
@@ -208,13 +168,7 @@ sim_recalc <- recalculateResiduals(abslat_model_he_sim, group = msat$coords)
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 #### lon model ####
-lon_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + bs(lon_scale) + 
-                        (1|Family/Genus) + (1|Source) + (1|ID), 
-                      family = binomial, data = msat, 
-                      na.action = "na.fail", nAGQ = 0,
-                      control = glmerControl(optimizer = "bobyqa"))
-
-beta_lon_model_he <- glmmTMB(He ~ CrossSpp + range_position + bs(lon_scale) +
+beta_lon_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + bs(lon_scale) +
                                (1|Family/Genus) + (1|Source), 
                              data = msat, family = ordbeta, 
                              na.action = "na.fail") 
@@ -223,7 +177,7 @@ beta_lon_model_he <- glmmTMB(He ~ CrossSpp + range_position + bs(lon_scale) +
 r2_nakagawa(beta_lon_model_he)
 
 #checking fit with DHARMa
-lon_model_he_sim <- simulateResiduals(fittedModel = lon_model_he, plot = F)
+lon_model_he_sim <- simulateResiduals(fittedModel = beta_lon_model_he, plot = F)
 plotQQunif(lon_model_he_sim)
 plotResiduals(lon_model_he_sim)
   plotResiduals(lon_model_he_sim, msat$lon_scale)
@@ -231,26 +185,19 @@ plotResiduals(lon_model_he_sim)
 #test for SAC
 sim_recalc <- recalculateResiduals(lon_model_he_sim, group = msat$coords)
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
-
-#### lat & lon model ####
-lat_lon_model_he <- glmer(cbind(success, failure) ~  CrossSpp + range_position + lat_scale + 
-                            I(lat_scale^2) + bs(lon_scale) + (1|Family/Genus) + 
-                            (1|Source) + (1|ID), 
-                          family = binomial, data = msat, 
-                          na.action = "na.fail", nAGQ = 0,
-                          control = glmerControl(optimizer = "bobyqa"))
   
-beta_lat_lon_model_he <- glmmTMB(He ~ CrossSpp + range_position + lat_scale +
-                                   I(lat_scale^2) + bs(lon_scale) + (1|Family/Genus) +
-                                   (1|Source), 
+#### lat & lon model ####
+beta_lat_lon_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + 
+                                   lat_scale + I(lat_scale^2) + bs(lon_scale) +
+                                   (1|Family/Genus) + (1|Source), 
                                  data = msat, family = ordbeta, 
                                  na.action = "na.fail") 
-  
+
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
 r2_nakagawa(beta_lat_lon_model_he)
 
 #checking fit with DHARMa
-lat_lon_model_he_sim <- simulateResiduals(fittedModel = lat_lon_model_he, plot = F)
+lat_lon_model_he_sim <- simulateResiduals(fittedModel = beta_lat_lon_model_he, plot = F)
 plotQQunif(lat_lon_model_he_sim)
 plotResiduals(lat_lon_model_he_sim)
   plotResiduals(lat_lon_model_he_sim, msat$lon_scale)
@@ -259,26 +206,19 @@ plotResiduals(lat_lon_model_he_sim)
 #test for SAC
 sim_recalc <- recalculateResiduals(lat_lon_model_he_sim, group = msat$coords)
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
-
+  
 #### abslat & lon model ####
-abslat_lon_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
-                               abslat_scale +  bs(lon_scale) + (1|Family/Genus) + 
-                               (1|Source) + (1|ID), 
-                             family = binomial, data = msat, 
-                             na.action = "na.fail", nAGQ = 0,
-                             control = glmerControl(optimizer = "bobyqa"))
-
-beta_abslat_lon_model_he <- glmmTMB(He ~ CrossSpp + range_position + 
-                               abslat_scale + bs(lon_scale) + (1|Family/Genus) +
-                               (1|Source), 
-                             data = msat, family = ordbeta, 
-                             na.action = "na.fail") 
+beta_abslat_lon_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + 
+                                      abslat_scale + bs(lon_scale) +
+                                      (1|Family/Genus) + (1|Source), 
+                                    data = msat, family = ordbeta, 
+                                    na.action = "na.fail") 
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
 r2_nakagawa(beta_abslat_lon_model_he)
-  
+
 #checking fit with DHARMa
-abslat_lon_model_he_sim <- simulateResiduals(fittedModel = abslat_lon_model_he, plot = F)
+abslat_lon_model_he_sim <- simulateResiduals(fittedModel = beta_abslat_lon_model_he, plot = F)
 plotQQunif(abslat_lon_model_he_sim)
 plotResiduals(abslat_lon_model_he_sim)
   plotResiduals(abslat_lon_model_he_sim, msat$lon_scale)
@@ -293,13 +233,7 @@ sim_recalc <- recalculateResiduals(abslat_lon_model_he_sim, group = msat$coords)
 ######## Environmental models ########
 
 ##### sst mean model ####
-sstmean_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + sst.BO_sstmean + 
-                            (1|Family/Genus) + (1|Source) + (1|ID), 
-                          family = binomial, data = msat, 
-                          na.action = "na.fail", nAGQ = 0,
-                          control = glmerControl(optimizer = "bobyqa"))
-  
-beta_sstmean_model_he <- glmmTMB(He ~ CrossSpp + range_position + sst.BO_sstmean + 
+beta_sstmean_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + sstmean_scale + 
                                    (1|Family/Genus) + (1|Source),
                                  data = msat, family = ordbeta, 
                                  na.action = "na.fail")   
@@ -308,7 +242,7 @@ beta_sstmean_model_he <- glmmTMB(He ~ CrossSpp + range_position + sst.BO_sstmean
 r2_nakagawa(beta_sstmean_model_he)
 
 #checking fit with DHARMa
-sstmean_model_he_sim <- simulateResiduals(fittedModel = sstmean_model_he, plot = F)
+sstmean_model_he_sim <- simulateResiduals(fittedModel = beta_sstmean_model_he, plot = F)
 plotQQunif(sstmean_model_he_sim)
 plotResiduals(sstmean_model_he_sim)
   plotResiduals(sstmean_model_he_sim, msat$sst.BO_sstmean)
@@ -317,90 +251,8 @@ plotResiduals(sstmean_model_he_sim)
 sim_recalc <- recalculateResiduals(sstmean_model_he_sim, group = msat$coords)
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
   
-#### sst range model ####
-sstrange_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + sst.BO_sstrange + 
-                             (1|Family/Genus) + (1|Source) + (1|ID), 
-                           family = binomial, data = msat, 
-                           na.action = "na.fail", nAGQ = 0,
-                           control = glmerControl(optimizer = "bobyqa"))
-
-beta_sstrange_model_he <- glmmTMB(He ~ CrossSpp + range_position + sst.BO_sstrange + 
-                                    (1|Family/Genus) + (1|Source),
-                                  data = msat, family = ordbeta, 
-                                  na.action = "na.fail")   
-  
-#calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_sstrange_model_he)
-
-#checking fit with DHARMa
-sstrange_model_he_sim <- simulateResiduals(fittedModel = sstrange_model_he, plot = F)
-plotQQunif(sstrange_model_he_sim)
-plotResiduals(sstrange_model_he_sim)
-  plotResiduals(sstrange_model_he_sim, msat$sst.BO_sstrange)
-
-#test for SAC
-sim_recalc <- recalculateResiduals(sstrange_model_he_sim, group = msat$coords)
-  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
-
-#### sst max model ####
-sstmax_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + sst.BO_sstmax + 
-                           (1|Family/Genus) + (1|Source) + (1|ID), 
-                         family = binomial, data = msat, 
-                         na.action = "na.fail", nAGQ = 0,
-                         control = glmerControl(optimizer = "bobyqa"))
-
-beta_sstmax_model_he <- glmmTMB(He ~ CrossSpp + range_position + sst.BO_sstmax + 
-                                  (1|Family/Genus) + (1|Source),
-                                data = msat, family = ordbeta, 
-                                na.action = "na.fail")   
-
-#calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_sstmax_model_he)
-  
-#checking fit with DHARMa
-sstmax_model_he_sim <- simulateResiduals(fittedModel = sstmax_model_he, plot = F)
-plotQQunif(sstmax_model_he_sim)
-plotResiduals(sstmax_model_he_sim)
-  plotResiduals(sstmax_model_he_sim, msat$sst.BO_sstmax)
-
-#test for SAC
-sim_recalc <- recalculateResiduals(sstmax_model_he_sim, group = msat$coords)
-  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
-
-#### sst min model ####
-sstmin_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + sst.BO_sstmin + 
-                           (1|Family/Genus) + (1|Source) + (1|ID), 
-                         family = binomial, data = msat, 
-                         na.action = "na.fail", nAGQ = 0,
-                         control = glmerControl(optimizer = "bobyqa"))
-
-beta_sstmin_model_he <- glmmTMB(He ~ CrossSpp + range_position + sst.BO_sstmin + 
-                                  (1|Family/Genus) + (1|Source),
-                                data = msat, family = ordbeta, 
-                                na.action = "na.fail")   
-
-#calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_sstmin_model_he)
-  
-#checking fit with DHARMa
-sstmin_model_he_sim <- simulateResiduals(fittedModel = sstmin_model_he, plot = F)
-plotQQunif(sstmin_model_he_sim)
-plotResiduals(sstmin_model_he_sim)
-  plotResiduals(sstmin_model_he_sim, msat$sst.BO_sstmin)
-
-#test for SAC
-sim_recalc <- recalculateResiduals(sstmin_model_he_sim, group = msat$coords)
-  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
-
 ### chloro mean model ####
-chlomean_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
-                             logchlomean + I(logchlomean^2) + 
-                             (1|Family/Genus) + (1|Source) + (1|ID), 
-                           family = binomial, data = msat, 
-                           na.action = "na.fail", nAGQ = 0,
-                           control = glmerControl(optimizer = "bobyqa"))
-  
-beta_chlomean_model_he <- glmmTMB(He ~ CrossSpp + range_position + 
+beta_chlomean_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + 
                                     logchlomean + I(logchlomean^2) + 
                                     (1|Family/Genus) + (1|Source),
                                    data = msat, family = ordbeta, 
@@ -410,7 +262,7 @@ beta_chlomean_model_he <- glmmTMB(He ~ CrossSpp + range_position +
 r2_nakagawa(beta_chlomean_model_he)
   
 #checking fit with DHARMa
-chlomean_model_he_sim <- simulateResiduals(fittedModel = chlomean_model_he, plot = F)
+chlomean_model_he_sim <- simulateResiduals(fittedModel = beta_chlomean_model_he, plot = F)
 plotQQunif(chlomean_model_he_sim)
 plotResiduals(chlomean_model_he_sim)
   plotResiduals(chlomean_model_he_sim, msat$logchlomean)
@@ -418,112 +270,24 @@ plotResiduals(chlomean_model_he_sim)
 #test for SAC
 sim_recalc <- recalculateResiduals(chlomean_model_he_sim, group = msat$coords)
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
-
-#### chloro range model ####
-chlorange_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
-                              logchlorange + I(logchlorange^2) + 
-                              (1|Family/Genus) + (1|Source) + (1|ID), 
-                            family = binomial, data = msat, 
-                            na.action = "na.fail", nAGQ = 0,
-                            control = glmerControl(optimizer = "bobyqa"))
-
-beta_chlorange_model_he <- glmmTMB(He ~ CrossSpp + range_position + 
-                                     logchlorange + I(logchlorange^2) + 
-                                     (1|Family/Genus) + (1|Source),
-                                   data = msat, family = ordbeta, 
-                                   na.action = "na.fail")  
-
-#calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_chlorange_model_he)
   
-#checking fit with DHARMa
-chlorange_model_he_sim <- simulateResiduals(fittedModel = chlorange_model_he, plot = F)
-plotQQunif(chlorange_model_he_sim)
-plotResiduals(chlorange_model_he_sim)
-  plotResiduals(chlorange_model_he_sim, msat$logchlorange)
-  
-#test for SAC
-sim_recalc <- recalculateResiduals(chlorange_model_he_sim, group = msat$coords)
-  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
-
-#### chloro max model ####
-chlomax_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
-                            logchlomax + I(logchlomax^2) + (1|Family/Genus) + 
-                            (1|Source) + (1|ID), 
-                          family = binomial, data = msat, 
-                          na.action = "na.fail", nAGQ = 0,
-                          control = glmerControl(optimizer = "bobyqa"))
-
-beta_chlomax_model_he <- glmmTMB(He ~ CrossSpp + range_position + 
-                                   logchlomax + I(logchlomax^2) + 
-                                   (1|Family/Genus) + (1|Source),
-                                 data = msat, family = ordbeta, 
-                                 na.action = "na.fail")  
-  
-#calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_chlomax_model_he)
-
-#checking fit with DHARMa
-chlomax_model_he_sim <- simulateResiduals(fittedModel = chlomax_model_he, plot = F)
-plotQQunif(chlomax_model_he_sim)
-plotResiduals(chlomax_model_he_sim)
-  plotResiduals(chlomax_model_he_sim, msat$logchlomax)
-
-#test for SAC
-sim_recalc <- recalculateResiduals(chlomax_model_he_sim, group = msat$coords)
-  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
-
-#### chloro min model ####
-chlomin_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
-                            logchlomin + I(logchlomin^2) + (1|Family/Genus) + 
-                            (1|Source) + (1|ID), 
-                          family = binomial, data = msat, 
-                          na.action = "na.fail", nAGQ = 0,
-                          control = glmerControl(optimizer = "bobyqa"))
-  
-beta_chlomin_model_he <- glmmTMB(He ~ CrossSpp + range_position + 
-                                   logchlomin + I(logchlomin^2) + 
-                                    (1|Family/Genus) + (1|Source),
-                                 data = msat, family = ordbeta, 
-                                 na.action = "na.fail")  
-  
-#calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_chlomin_model_he)
-
-#checking fit with DHARMa
-chlomin_model_he_sim <- simulateResiduals(fittedModel = chlomin_model_he, plot = F)
-plotQQunif(chlomin_model_he_sim)
-plotResiduals(chlomin_model_he_sim)
-  plotResiduals(chlomin_model_he_sim, msat$logchlomin)
-
-#test for SAC
-sim_recalc <- recalculateResiduals(chlomin_model_he_sim, group = msat$coords)
-  testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
-  
-#### sst mean & chloro mean model ####
-sstmean_chlomean_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
-                                     sst.BO_sstmean + logchlomean + I(logchlomean^2) + 
-                                     (1|Family/Genus) + (1|Source) + (1|ID), 
-                                   family = binomial, data = msat, 
-                                   na.action = "na.fail", nAGQ = 0,
-                                   control = glmerControl(optimizer = "bobyqa"))
-
-beta_sstmean_chlomean_model_he <- glmmTMB(He ~ CrossSpp + range_position + 
-                                            sst.BO_sstmean + logchlomean + I(logchlomean^2) + 
+### SST mean & chloro mean model ####
+beta_sstmean_chlomean_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + 
+                                            sstmean_scale + logchlomean + I(logchlomean^2) + 
                                             (1|Family/Genus) + (1|Source),
                                           data = msat, family = ordbeta, 
-                                          na.action = "na.fail") 
+                                          na.action = "na.fail")  
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
 r2_nakagawa(beta_sstmean_chlomean_model_he)
-
+  
 #checking fit with DHARMa
-sstmean_chlomean_model_he_sim <- simulateResiduals(fittedModel = sstmean_chlomean_model_he, plot = F)
+sstmean_chlomean_model_he_sim <- simulateResiduals(fittedModel = beta_sstmean_chlomean_model_he, plot = F)
 plotQQunif(sstmean_chlomean_model_he_sim)
 plotResiduals(sstmean_chlomean_model_he_sim)
-  plotResiduals(sstmean_chlomean_model_he_sim, msat$sst.BO_sstmean)
   plotResiduals(sstmean_chlomean_model_he_sim, msat$logchlomean)
 
 #test for SAC
 sim_recalc <- recalculateResiduals(sstmean_chlomean_model_he_sim, group = msat$coords)
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
+  

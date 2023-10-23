@@ -1,6 +1,6 @@
 #################################### Script for Building Regression Figures for msat He #############################################
 
-#Uses msat He binomial regression models
+#Uses msat He beta regression models
 #Predicts He at certain values of predictor variable of interest
 #Calculates mean or median He of raw data (binned every X units)
 #Plots two together
@@ -13,10 +13,11 @@ remove(list = ls())
  
 #load libraries
 library(tidyverse) #v.2.0.0
-library(lme4) #v.1.1-31
+library(glmmTMB) #1.1.7
 library(DHARMa) #v.0.4.6
 library(sjPlot) #v.2.8.12
 library(splines) #v.4.2.2
+library(data.table) #1.14.8
  
 #read in data
 msat <- read.csv("output/msatloci_assembled.csv", stringsAsFactors = FALSE)
@@ -44,8 +45,9 @@ msat <- subset(msat, msat$He != "NA")
 
 #remove missing CrossSpp
 msat <- subset(msat, msat$CrossSpp!= "NA")
-
-#add range position
+  msat$CrossSpp_scale <- as.numeric(scale(msat$CrossSpp))
+  
+#### Add range position ####
 #fix character type
 msat$Centroid <- as.numeric(msat$Centroid)
 msat$Half_RangeSize <- as.numeric(msat$Half_RangeSize)
@@ -63,12 +65,8 @@ msat$range_position[msat$range_position > 1] <- 1
 #subset to only those with range_position
 msat <- subset(msat, range_position != "NA")
 
-#add random effect for every unit
-msat$ID <- (1:26733)
-
-#### Calculate success and failure ####
-msat$success <- round(msat$He*msat$n) #number of heterozygotes
-msat$failure<- round((1 - msat$He)*msat$n) #number of homozygotes
+#scale range_position
+msat$range_pos_scale <- as.numeric(scale(msat$range_position))
 
 #### Calculate latitude, longitude variables ####
 #calculate abslat
@@ -83,27 +81,33 @@ msat$lon_scale <- as.numeric(scale(msat$lon))
 
 ######## Range position figure ########
 
-null_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position +  
-                         (1|Family/Genus) + (1|Source) + (1|MarkerName), 
-                       family = binomial, data = msat, 
-                       na.action = "na.fail", nAGQ = 0,
-                       control = glmerControl(optimizer = "bobyqa"))
+null_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + 
+                           (1|Family/Genus) + (1|Source), 
+                         data = msat, family = ordbeta, 
+                         na.action = "na.fail")
 
 #### Predict ####
 #marginal effects
 rangepos_eff <- plot_model(null_model_he, type = "pred", 
-                           terms = "range_position [all]")
+                           terms = "range_pos_scale [all]",
+                           allow.new.levels = TRUE)
 
 #pull out marginal effects dataframe
 rangepos_eff_data <- as.data.frame(rangepos_eff$data)
 
+#unscale range_position
+#use same scaled:center & scaled:scale from original data
+range_pos_scale <- scale(msat$range_position) #bc had to convert to numeric to run model/calculate marginal effects
+rangepos_eff_data$range_position <- (rangepos_eff_data$x * attr(range_pos_scale, "scaled:scale")) +
+  attr(range_pos_scale, "scaled:center")
+
 #### Plot range position ####
 msat_he_rangepos_plot <- ggplot() +
   geom_line(data = rangepos_eff_data,
-            aes(x = x, y = predicted), 
+            aes(x = range_position, y = predicted), 
             color ="black", alpha = 0.3, linewidth = 10) +
   geom_ribbon(data = rangepos_eff_data,
-              aes(x = x, ymin = conf.low, ymax = conf.high),
+              aes(x = range_position, ymin = conf.low, ymax = conf.high),
               color ="black", alpha = 0.1) + #alpha makes this take way too long, so removing
   geom_rug(data = msat, mapping = aes(x = range_position), 
            color = "#282828", inherit.aes = FALSE) + 
@@ -129,18 +133,25 @@ msat_he_rangepos_plot
 ### Predict ####
 #marginal effects
 crosspp_eff <- plot_model(null_model_he, type = "pred", 
-                          terms = "CrossSpp [all]")
+                          terms = "CrossSpp_scale [all]",
+                          allow.new.levels = TRUE)
 
 #pull out marginal effects dataframe
 crosspp_eff_data <- as.data.frame(crosspp_eff$data)
 
+#unscale CrossSpp
+#use same scaled:center & scaled:scale from original data
+CrossSpp_scale <- scale(msat$CrossSpp) #bc had to convert to numeric to run model/calculate marginal effects
+crosspp_eff_data$CrossSpp <- (crosspp_eff_data$x * attr(CrossSpp_scale, "scaled:scale")) +
+  attr(CrossSpp_scale, "scaled:center")
+
 #### Plot CrossSpp ####
 msat_he_crossspp_plot <- ggplot() +
   geom_line(data = crosspp_eff_data,
-            aes(x = x, y = predicted), 
+            aes(x = CrossSpp, y = predicted), 
             color ="black", alpha = 0.3, linewidth = 10) +
   geom_ribbon(data = crosspp_eff_data,
-              aes(x = x, ymin = conf.low, ymax = conf.high),
+              aes(x = CrossSpp, ymin = conf.low, ymax = conf.high),
               color ="black", alpha = 0.1) + 
   geom_rug(data = msat, mapping = aes(x = CrossSpp), 
            color = "#282828", linewidth = 2, inherit.aes = FALSE) + 
@@ -162,16 +173,15 @@ msat_he_crossspp_plot
 
 ######### Abslat figure #######
 
-abslat_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + abslat_scale +
-                           (1|Family/Genus) + (1|Source) + (1|ID),
-                         family = binomial, data = msat, 
-                         na.action = "na.fail", nAGQ = 0,
-                         control = glmerControl(optimizer = "bobyqa"))
-
+abslat_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + abslat_scale +
+                             (1|Family/Genus) + (1|Source), 
+                           data = msat, family = ordbeta, 
+                           na.action = "na.fail")
 #### Predict ####
 #marginal effects
 abslat_eff <- plot_model(abslat_model_he, type = "pred",
-                         terms = "abslat_scale [all]")
+                         terms = "abslat_scale [all]",
+                         allow.new.levels = TRUE)
 
 #pull out marginal effects dataframe
 abslat_eff_data <- as.data.frame(abslat_eff$data)
@@ -238,17 +248,16 @@ msat_he_abslat_plot_violin
 
 ######### Lat figure #######
 
-lat_model_he <- glmer(cbind(success, failure) ~ CrossSpp + range_position + 
-                        lat_scale + I(lat_scale^2) +
-                        (1|Family/Genus) + (1|Source) + (1|ID),
-                      family = binomial, data = msat, 
-                      na.action = "na.fail", nAGQ = 0,
-                      control = glmerControl(optimizer = "bobyqa"))
-
+lat_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + 
+                          lat_scale + I(lat_scale^2) +
+                          (1|Family/Genus) + (1|Source), 
+                        data = msat, family = ordbeta, 
+                        na.action = "na.fail")
 #### Predict ####
 #marginal effects
 lat_eff <- plot_model(lat_model_he, type = "pred",
-                      terms = "lat_scale [all]")
+                      terms = "lat_scale [all]",
+                      allow.new.levels = TRUE)
 
 #pull out marginal effects dataframe
 lat_eff_data <- as.data.frame(lat_eff$data)
@@ -336,16 +345,16 @@ msat_he_lat_plot
 
 ######### Lon figure #######
 
-lon_model_he_spline <- glmer(cbind(success, failure) ~ range_position + CrossSpp + bs(lon_scale) +
-                               (1|Family/Genus) + (1|Source) + (1|ID),
-                             family = binomial, data = msat, 
-                             na.action = "na.fail", nAGQ = 0,
-                             control = glmerControl(optimizer = "bobyqa"))
+lon_model_he_spline <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + bs(lon_scale) +
+                                 (1|Family/Genus) + (1|Source), 
+                               data = msat, family = ordbeta, 
+                               na.action = "na.fail")
 
 #### Predict ####
 #marginal effects
-lon_eff <- plot_model(lon_model_he_spline, type = "eff",
-                      terms = "lon_scale [all]")
+lon_eff <- plot_model(lon_model_he_spline, type = "pred",
+                      terms = "lon_scale [all]",
+                      allow.new.levels = TRUE)
 
 #pull out marginal effects dataframe
 lon_eff_data <- as.data.frame(lon_eff$data)
@@ -402,6 +411,8 @@ lon_he_binned_medians$median_upperMAD <- lon_he_binned_medians$he_median +
 #### Plot lon ####
 
 msat_he_lon_plot <- ggplot() +
+  annotate("rect", xmin = 95, xmax = 165, ymin = 0, ymax = 1, #adding box highlighting coral triangle
+           fill = "darkolivegreen", alpha = 0.4) + 
   geom_point(data = lon_he_binned_medians,
              aes(x = X, y = he_median), 
              color = "darkblue", shape = "circle", size = 24) +
@@ -435,53 +446,49 @@ msat_he_lon_plot
  
 ######## Calculate environmental variables ########
  
+#scale SST variables
+msat$sstmean_scale <- as.numeric(scale(msat$sst.BO_sstmean))
+
 #### log transform chlorophyll ####
 #subset to only those with chloroA data
 msat <- subset(msat, msat$chloroA.BO_chlomean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  msat <- subset(msat, msat$chloroA.BO_chlorange != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  msat <- subset(msat, msat$chloroA.BO_chlomax != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  msat <- subset(msat, msat$chloroA.BO_chlomin != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-
-msat$logchlomean <- log10(msat$chloroA.BO_chlomean)
-  msat$logchlorange <- log10(msat$chloroA.BO_chlorange)
-  msat$logchlomax <- log10(msat$chloroA.BO_chlomax)
-  msat$logchlomin <- log10(msat$chloroA.BO_chlomin)
+  msat$logchlomean <- log10(msat$chloroA.BO_chlomean)
 
 #remove logchlo = NA columns
 msat <- subset(msat, msat$logchlomean != "Inf" |
                  msat$logchlomean != "NaN")
-  msat <- subset(msat, msat$logchlorange != "Inf" |
-                   msat$logchlorange != "NaN")
-  msat <- subset(msat, msat$logchlomax != "Inf" |
-                   msat$logchlomax != "NaN")
-  msat <- subset(msat, msat$logchlomin != "Inf" |
-                   msat$logchlomin != "NaN")
 
 ###################################################################################################################################
 
 ######### SST mean figure #######
 
-SSTmean_model_he <- glmer(cbind(success, failure) ~ range_position + CrossSpp + sst.BO_sstmean +
-                            (1|Family/Genus) + (1|Source) + (1|ID),
-                          family = binomial, data = msat, 
-                          na.action = "na.fail", nAGQ = 0,
-                          control = glmerControl(optimizer = "bobyqa"))
+SSTmean_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + sstmean_scale + 
+                              (1|Family/Genus) + (1|Source),
+                            data = msat, family = ordbeta, 
+                            na.action = "na.fail") 
 
 #### Predict ####
 #marginal effects
 SSTmean_eff <- plot_model(SSTmean_model_he, type = "pred",
-                          terms = "sst.BO_sstmean [all]")
+                          terms = "sstmean_scale [all]",
+                          allow.new.levels = TRUE)
   
 #pull out marginal effects dataframe
 SSTmean_eff_data <- as.data.frame(SSTmean_eff$data)
 
+#unscale SSTmean
+#use same scaled:center & scaled:scale from original data
+sstmean_scale <- scale(msat$sst.BO_sstmean) #bc had to convert to numeric to run model/calculate marginal effects
+SSTmean_eff_data$SSTmean <- (SSTmean_eff_data$x * attr(sstmean_scale, "scaled:scale")) +
+  attr(sstmean_scale, "scaled:center")
+
 #### Plot sstmean ####
 
 msat_he_sstmean_plot <- ggplot() +
-  geom_line(data = SSTmean_eff_data, aes(x = x, y = predicted), 
+  geom_line(data = SSTmean_eff_data, aes(x = SSTmean, y = predicted), 
             color ="black", alpha = 0.3, linewidth = 10) +
   geom_ribbon(data = SSTmean_eff_data,
-              aes(x = x, ymin = conf.low, ymax = conf.high), 
+              aes(x = SSTmean, ymin = conf.low, ymax = conf.high), 
               color ="black", alpha = 0.1) +
   geom_rug(data = msat, mapping = aes(x = sst.BO_sstmean), 
            color = "#282828", inherit.aes = FALSE) + 
@@ -500,150 +507,21 @@ msat_he_sstmean_plot <- ggplot() +
         legend.position = "none")
 msat_he_sstmean_plot
 
-#################################################################################################################################
-
-######### SST range figure #######
-
-SSTrange_model_he <- glmer(cbind(success, failure) ~ range_position + CrossSpp + sst.BO_sstrange +
-                            (1|Family/Genus) + (1|Source) + (1|ID),
-                          family = binomial, data = msat, 
-                          na.action = "na.fail", nAGQ = 0,
-                          control = glmerControl(optimizer = "bobyqa"))
-
-#### Predict ####
-#marginal effects
-SSTrange_eff <- plot_model(SSTrange_model_he, type = "pred",
-                          terms = "sst.BO_sstrange [all]")
-
-#pull out marginal effects dataframe
-SSTrange_eff_data <- as.data.frame(SSTrange_eff$data)
-
-#### Plot sstrange ####
-
-msat_he_sstrange_plot <- ggplot() +
-  geom_line(data = SSTrange_eff_data, aes(x = x, y = predicted), 
-            color ="black", alpha = 0.3, linewidth = 10) +
-  geom_ribbon(data = SSTrange_eff_data,
-              aes(x = x, ymin = conf.low, ymax = conf.high), 
-              color ="black", alpha = 0.1) +
-  geom_rug(data = msat, mapping = aes(x = sst.BO_sstrange), 
-           color = "#282828",inherit.aes = FALSE) + 
-  annotate("text", x = 1, y = 0.985, label = "C", size = 100) + 
-  ylim(c(0.5, 1.0)) + xlim(0, 30) +
-  xlab("SST Range (°C)") + ylab(bquote(H[e]~"(nucDNA)")) + 
-  theme(panel.background = element_blank(),
-        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 160, vjust = -2),
-        axis.title.y = element_text(size = 160, vjust = 5),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
-        axis.line = element_line(linewidth = 4, color = "black"),
-        plot.margin = unit(c(1,1.8,3,6), "cm"),
-        legend.position = "none")
-msat_he_sstrange_plot
-
-###############################################################################################################################
-
-######## SST max figure #######
-
-SSTmax_model_he <- glmer(cbind(success, failure) ~ range_position + CrossSpp + sst.BO_sstmax +
-                           (1|Family/Genus) + (1|Source) + (1|ID),
-                         family = binomial, data = msat, 
-                         na.action = "na.fail", nAGQ = 0,
-                        control = glmerControl(optimizer = "bobyqa"))
-
-#### Predict ####
-#marginal effects
-SSTmax_eff <- plot_model(SSTmax_model_he, type = "pred",
-                           terms = "sst.BO_sstmax [all]")
-
-#pull out marginal effects dataframe
-SSTmax_eff_data <- as.data.frame(SSTmax_eff$data)
-
-#### Plot sstmax ####
-
-msat_he_sstmax_plot <- ggplot() +
-  geom_line(data = SSTmax_eff_data, aes(x = x, y = predicted), 
-            color ="black", alpha = 0.3, linewidth = 10) +
-  geom_ribbon(data = SSTmax_eff_data,
-              aes(x = x, ymin = conf.low, ymax = conf.high), 
-              color ="black", alpha = 0.1) +
-  geom_rug(data = msat, mapping = aes(x = sst.BO_sstmax), 
-           color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 1, y = 0.985, label = "F", size = 100) + 
-  ylim(c(0.5, 1.0)) + xlim(0, 30) +
-  xlab("Maximum SST (°C)") + ylab(bquote(H[e]~"(nucDNA)")) + 
-  theme(panel.background = element_blank(),
-        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 160, vjust = -2),
-        axis.title.y = element_text(size = 160, vjust = 5),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
-        axis.line = element_line(linewidth = 4, color = "black"),
-        plot.margin = unit(c(1,1.8,3,6), "cm"),
-        legend.position = "none")
-msat_he_sstmax_plot
-
-##################################################################################################################################
-
-######## SST min figure #######
-
-SSTmin_model_he <- glmer(cbind(success, failure) ~ range_position + CrossSpp + sst.BO_sstmin +
-                           (1|Family/Genus) + (1|Source) + (1|ID),
-                         family = binomial, data = msat, 
-                         na.action = "na.fail", nAGQ = 0,
-                         control = glmerControl(optimizer = "bobyqa"))
-
-#### Predict ####
-#marginal effects
-SSTmin_eff <- plot_model(SSTmin_model_he, type = "pred",
-                           terms = "sst.BO_sstmin [all]")
-
-#pull out marginal effects dataframe
-SSTmin_eff_data <- as.data.frame(SSTmin_eff$data)
-
-#### Plot sstmin ####
-
-msat_he_sstmin_plot <- ggplot() +
-  geom_line(data = SSTmin_eff_data, aes(x = x, y = predicted), 
-            color ="black", alpha = 0.3, linewidth = 10) +
-  geom_ribbon(data = SSTmin_eff_data,
-              aes(x = x, ymin = conf.low, ymax = conf.high), 
-              color ="black", alpha = 0.1) +
-  geom_rug(data = msat, mapping = aes(x = sst.BO_sstmin), 
-           color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 1, y = 0.985, label = "I", size = 100) + 
-  ylim(c(0.5, 1.0)) + xlim(0, 30) +
-  xlab("Minimum SST (°C)") + ylab(bquote(H[e]~"(nucDNA)")) + 
-  theme(panel.background = element_blank(),
-        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 160, vjust = -2),
-        axis.title.y = element_text(size = 160, vjust = 5),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
-        axis.line = element_line(linewidth = 4, color = "black"),
-        plot.margin = unit(c(1,1.8,3,6), "cm"),
-        legend.position = "none")
-msat_he_sstmin_plot
-
 ############################################################################################################################################
 
 ######## ChloroA mean figures ########
 
-chloroAmean_model_he <- glmer(cbind(success, failure) ~ range_position + CrossSpp + 
-                                logchlomean + I(logchlomean^2) +
-                                (1|Family/Genus) + (1|Source) + (1|ID),
-                              family = binomial, data = msat, 
-                              na.action = "na.fail", nAGQ = 0,
-                              control = glmerControl(optimizer = "bobyqa"))
+chloroAmean_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + 
+                                  logchlomean + I(logchlomean^2) + 
+                                  (1|Family/Genus) + (1|Source),
+                                data = msat, family = ordbeta, 
+                                na.action = "na.fail")
 
 #### Predict ####
 #marginal effects
 chloroAmean_eff <- plot_model(chloroAmean_model_he, type = "pred", 
-                             terms = "logchlomean [all]")
+                              terms = "logchlomean [all]",
+                              allow.new.levels = TRUE)
 
 #pull out marginal effects dataframe
 chloroAmean_eff_data <- as.data.frame(chloroAmean_eff$data)
@@ -675,141 +553,3 @@ msat_he_chloromean_plot <- ggplot() +
           plot.margin = unit(c(1,1.8,3,6), "cm"),
           legend.position = "none")
 msat_he_chloromean_plot
-
-##########################################################################################################################################
-
-######## ChloroA range figures ########
-
-chloroArange_model_he <- glmer(cbind(success, failure) ~ range_position + CrossSpp + logchlorange + 
-                                 I(logchlorange^2) +(1|Family/Genus) + (1|Source) + (1|ID),
-                              family = binomial, data = msat,
-                              na.action = "na.fail", nAGQ = 0,
-                              control = glmerControl(optimizer = "bobyqa"))
-
-#### Predict ####
-#marginal effects
-chloroArange_eff <- plot_model(chloroArange_model_he, type = "pred", 
-                              terms = "logchlorange [all]")
-
-#pull out marginal effects dataframe
-chloroArange_eff_data <- as.data.frame(chloroArange_eff$data)
-  chloroArange_eff_data$chlorange <- 10^(chloroArange_eff_data$x)
-
-#### Plot chloroArange ####
-
-msat_he_chlororange_plot <- ggplot() +
-  geom_line(data = chloroArange_eff_data,
-            aes(x = chlorange, y = predicted), 
-            color ="black", alpha = 0.3, linewidth = 10) +
-  geom_ribbon(data = chloroArange_eff_data,
-              aes(x = chlorange, ymin = conf.low, ymax = conf.high), 
-              color ="black", alpha = 0.1) +
-  geom_rug(data = msat, mapping = aes(x = chloroA.BO_chlorange), 
-           color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 0.12, y = 0.985, label = "C", size = 100) + 
-  ylim(0.5, 1.0) +
-  scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
-  xlab(bquote("Chlorophyll Range"~(mg/m^3))) + ylab(bquote(H[e]~"(nucDNA)")) + 
-  theme(panel.background = element_blank(),
-        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 160, vjust = -1.6),
-        axis.title.y = element_text(size = 160, vjust = 5),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
-        axis.line = element_line(linewidth = 4, color = "black"),
-        plot.margin = unit(c(1,1.8,3,6), "cm"),
-        legend.position = "none")
-msat_he_chlororange_plot
-
-##############################################################################################################################################
-
-######## ChloroA max figure ########
-
-chloroAmax_model_he <- glmer(cbind(success, failure) ~ range_position + CrossSpp + logchlomax + 
-                               I(logchlomax^2) + (1|Family/Genus) + (1|Source) + (1|ID),
-                             family = binomial, data = msat, 
-                             na.action = "na.fail", nAGQ = 0,
-                             control = glmerControl(optimizer = "bobyqa"))
-
-#### Predict ####
-#marginal effects
-chloroAmax_eff <- plot_model(chloroAmax_model_he, type = "pred", 
-                               terms = "logchlomax [all]")
-
-#pull out marginal effects dataframe
-chloroAmax_eff_data <- as.data.frame(chloroAmax_eff$data)
-  chloroAmax_eff_data$chlomax <- 10^(chloroAmax_eff_data$x)
-
-#### Plot chloroAmax ####
-
-msat_he_chloromax_plot <- ggplot() +
-  geom_line(data = chloroAmax_eff_data,
-            aes(x = chlomax, y = predicted), 
-            color ="black", alpha = 0.3, linewidth = 10) +
-  geom_ribbon(data = chloroAmax_eff_data,
-              aes(x = chlomax, ymin = conf.low, ymax = conf.high), 
-              color ="black", alpha = 0.1) +
-  geom_rug(data = msat, mapping = aes(x = chloroA.BO_chlomax), 
-           color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 0.12, y = 0.985, label = "F", size = 100) + 
-  ylim(0.5, 1.0) +
-  scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
-  xlab(bquote("Maximum Chlorophyll"~(mg/m^3))) + ylab(bquote(H[e]~"(nucDNA)")) + 
-  theme(panel.background = element_blank(),
-        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 160, vjust = -1.6),
-        axis.title.y = element_text(size = 160, vjust = 5),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
-        axis.line = element_line(linewidth = 4, color = "black"),
-        plot.margin = unit(c(1,1.8,3,6), "cm"),
-        legend.position = "none")
-msat_he_chloromax_plot
-
-############################################################################################################################################
-
-######## ChloroA min figures ########
-
-chloroAmin_model_he <- glmer(cbind(success, failure) ~ range_position + CrossSpp + logchlomin + 
-                               I(logchlomin^2) + (1|Family/Genus) + (1|Source) + (1|ID),
-                             family = binomial, data = msat, 
-                             na.action = "na.fail", nAGQ = 0,
-                             control = glmerControl(optimizer = "bobyqa"))
-
-#### Predict ####
-#marginal effects
-chloroAmin_eff <- plot_model(chloroAmin_model_he, type = "pred", 
-                               terms = "logchlomin [all]")
-
-#pull out marginal effects dataframe
-chloroAmin_eff_data <- as.data.frame(chloroAmin_eff$data)
-  chloroAmin_eff_data$chlomin <- 10^(chloroAmin_eff_data$x)
-
-#### Plot chloroAmin ####
-
-msat_he_chloromin_plot <- ggplot() +
-    geom_line(data = chloroAmin_eff_data,
-              aes(x = chlomin, y = predicted), 
-              color ="black", alpha = 0.3, linewidth = 10) +
-    geom_ribbon(data = chloroAmin_eff_data,
-                aes(x = chlomin, ymin = conf.low, ymax = conf.high), 
-                color ="black", alpha = 0.1) +
-    geom_rug(data = msat, mapping = aes(x = chloroA.BO_chlomin), 
-             color = "#282828", inherit.aes = FALSE) + 
-    annotate("text", x = 0.12, y = 0.985, label = "I", size = 100) + 
-    ylim(0.5, 1.0) +
-    scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
-    xlab(bquote("Minimum Chlorophyll"~(mg/m^3))) + ylab(bquote(H[e]~"(nucDNA)")) + 
-    theme(panel.background = element_blank(),
-          panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-          axis.title.x = element_text(size = 160, vjust = -1.6),
-          axis.title.y = element_text(size = 160, vjust = 5),
-          axis.ticks = element_line(color = "black", linewidth = 2),
-          axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
-          axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
-          axis.line = element_line(linewidth = 4, color = "black"),
-          plot.margin = unit(c(1,1.8,3,6), "cm"),
-          legend.position = "none")
-msat_he_chloromin_plot
