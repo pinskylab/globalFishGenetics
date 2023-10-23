@@ -17,6 +17,7 @@ library(lme4) #v.1.1-31
 library(DHARMa) #v.0.4.6
 library(sjPlot) #v.2.8.12
 library(splines) #v.4.2.2
+library(data.table) #1.14.8
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
@@ -41,7 +42,7 @@ mtdna_small <-subset(mtdna, as.numeric(mtdna$bp) < 2000)
 #subset mtdna to remove Pi = NA columns
 mtdna_small_pi <- subset(mtdna_small, mtdna_small$Pi != "NA")
 
-#add position in range
+#### Add range position ####
 #fix character type
 mtdna_small_pi$Centroid <- as.numeric(mtdna_small_pi$Centroid)
 mtdna_small_pi$Half_RangeSize <- as.numeric(mtdna_small_pi$Half_RangeSize)
@@ -58,6 +59,9 @@ mtdna_small_pi$range_position[mtdna_small_pi$range_position > 1] <- 1
 
 #subset to only those with range_position
 mtdna_small_pi <- subset(mtdna_small_pi, range_position != "NA")
+
+#scale range_position
+mtdna_small_pi$range_pos_scale <- as.numeric(scale(mtdna_small_pi$range_position))
 
 #### Log transform pi ####
 mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$Pi != 0) #if any zeros will screw up log transformation (log10(0) is undefined, also probably shouldn't be there anyway)
@@ -79,18 +83,25 @@ mtdna_small_pi$lon_scale <- as.numeric(scale(mtdna_small_pi$lon))
 
 ######## Range position figure ########
 
-null_model_pi <- lmer(logpi ~ range_position + (1|Family/Genus) + 
+null_model_pi <- lmer(logpi ~ range_pos_scale + (1|Family/Genus) + 
                         (1|Source) + (1|MarkerName),
-                      data = mtdna_small_pi, na.action = "na.fail", 
+                      REML = FALSE, data = mtdna_small_pi, 
+                      na.action = "na.fail", 
                       control = lmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
 rangepos_eff <- plot_model(null_model_pi, type = "pred", 
-                           terms = "range_position [all]")
+                           terms = "range_pos_scale [all]")
 
 #pull out marginal effects dataframe
 rangepos_eff_data <- as.data.frame(rangepos_eff$data)
+
+#unscale raange_position
+#use same scaled:center & scaled:scale from original data
+range_pos_scale <- scale(as.numeric(mtdna_small_pi$range_position)) #bc had to convert to numeric to run model/calculate marginal effects
+rangepos_eff_data$range_position <- (rangepos_eff_data$x * attr(range_pos_scale, "scaled:scale")) + 
+  attr(range_pos_scale, "scaled:center")
 
 #unlog pi
 rangepos_eff_data$unlog_pi <- 10^(rangepos_eff_data$predicted)
@@ -101,10 +112,10 @@ rangepos_eff_data$unlog_conf.high <- 10^(rangepos_eff_data$conf.high)
 
 mtdna_pi_rangepos_plot <- ggplot() +
   geom_line(data = rangepos_eff_data,
-            aes(x = x, y = unlog_pi), 
+            aes(x = range_position, y = unlog_pi), 
             color ="black", alpha = 0.3, linewidth = 10) +
   geom_ribbon(data = rangepos_eff_data,
-              aes(x = x, ymin = unlog_conf.low, ymax = unlog_conf.high),
+              aes(x = range_position, ymin = unlog_conf.low, ymax = unlog_conf.high),
               color ="black", alpha = 0.1) +
   geom_rug(data = mtdna_small_pi, mapping = aes(x = range_position), 
            color = "#282828", inherit.aes = FALSE) + 
@@ -127,9 +138,11 @@ mtdna_pi_rangepos_plot
 
 ######### Abslat figure #######
 
-abslat_model_pi <- lmer(logpi ~ range_position + abslat_scale + (1|Family/Genus) +   
-                          (1|Source) + (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
-                        na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+abslat_model_pi <- lmer(logpi ~ range_pos_scale + abslat_scale + (1|Family/Genus) +   
+                          (1|Source) + (1|MarkerName), 
+                        REML = FALSE, data = mtdna_small_pi, 
+                        na.action = "na.fail", 
+                        control = lmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
@@ -205,9 +218,11 @@ mtdna_pi_abslat_plot_violin
 
 ######### Lat figure #######
 
-lat_model_pi <- lmer(logpi ~ range_position + lat_scale + I(lat_scale^2) + (1|Family/Genus) +   
-                          (1|Source) + (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
-                        na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+lat_model_pi <- lmer(logpi ~ range_pos_scale + lat_scale + I(lat_scale^2) + 
+                       (1|Family/Genus) + (1|Source) + (1|MarkerName), 
+                     REML = FALSE, data = mtdna_small_pi, 
+                     na.action = "na.fail", 
+                     control = lmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
@@ -304,10 +319,11 @@ mtdna_pi_lat_plot
 
 ######## Lon figure ########
 
-lon_model_pi_spline <- lmer(logpi ~ range_position + bs(lon_scale) + 
+lon_model_pi_spline <- lmer(logpi ~ range_pos_scale + bs(lon_scale) + 
                                (1|Family/Genus) + (1|Source) + (1|MarkerName),
-                            data = mtdna_small_pi, na.action = "na.fail", 
-                             control = lmerControl(optimizer = "bobyqa"))
+                            REML = FALSE, data = mtdna_small_pi, 
+                            na.action = "na.fail", 
+                            control = lmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
@@ -376,6 +392,8 @@ lon_pi_binned_medians$median_upperMAD <- lon_pi_binned_medians$pi_median +
 #### Plot lon ####
 
 mtdna_pi_lon_plot <- ggplot() +
+  annotate("rect", xmin = 95, xmax = 165, ymin = 0, ymax = 0.015, #adding box highlighting coral triangle
+           fill = "darkolivegreen", alpha = 0.4) + 
   geom_point(data = lon_pi_binned_medians, 
              aes(x = X, y = pi_median), color = "darkblue", shape = "circle", size = 24) + 
   geom_errorbar(data = lon_pi_binned_medians, 
@@ -407,44 +425,41 @@ mtdna_pi_lon_plot
 
 ######## Calculate environmental variables ########
 
+#scale SST variables
+mtdna_small_pi$sstmean_scale <- as.numeric(scale(mtdna_small_pi$sst.BO_sstmean))
+
 #### log transform chlorophyll A ####
 #subset to only those with chloroA data
 mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlomean != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlorange != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlomax != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$chloroA.BO_chlomin != 0) #if any zeros will screw up log transformation (log10(0) is undefined)
-
-mtdna_small_pi$logchlomean <- log10(mtdna_small_pi$chloroA.BO_chlomean)
-  mtdna_small_pi$logchlorange <- log10(mtdna_small_pi$chloroA.BO_chlorange)
-  mtdna_small_pi$logchlomax <- log10(mtdna_small_pi$chloroA.BO_chlomax)
-  mtdna_small_pi$logchlomin <- log10(mtdna_small_pi$chloroA.BO_chlomin)
+  mtdna_small_pi$logchlomean <- log10(mtdna_small_pi$chloroA.BO_chlomean)
 
 #remove logchlo = NA columns
 mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlomean != "Inf" | 
                            mtdna_small_pi$logchlomean != "NaN")
-  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlorange != "Inf" | 
-                             mtdna_small_pi$logchlorange != "NaN")
-  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlomax != "Inf" | 
-                             mtdna_small_pi$logchlomax != "NaN")
-  mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlomin != "Inf" | 
-                             mtdna_small_pi$logchlomin != "NaN")
 
 #######################################################################################################
 
 ######## SST mean figure ########
 
-SSTmean_model_pi <- lmer(logpi ~ range_position + sst.BO_sstmean + 
-                              (1|Family/Genus) + (1|Source) + (1|MarkerName),
-                            data = mtdna_small_pi, na.action = "na.fail", 
-                            control = lmerControl(optimizer = "bobyqa"))
+SSTmean_model_pi <- lmer(logpi ~ range_pos_scale + sstmean_scale + 
+                           (1|Family/Genus) + (1|Source) + (1|MarkerName),
+                         REML = FALSE, data = mtdna_small_pi, 
+                         na.action = "na.fail", 
+                         control = lmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
 SSTmean_eff <- plot_model(SSTmean_model_pi, type = "pred", 
-                      terms = "sst.BO_sstmean [all]")
+                      terms = "sstmean_scale [all]")
 
 #pull out marginal effects dataframe
 SSTmean_eff_data <- as.data.frame(SSTmean_eff$data)
+
+#unscale SSTmean
+#use same scaled:center & scaled:scale from original data
+sstmean_scale <- scale(mtdna_small_pi$sst.BO_sstmean) #bc had to convert to numeric to run model/calculate marginal effects
+SSTmean_eff_data$SSTmean <- (SSTmean_eff_data$x * attr(sstmean_scale, "scaled:scale")) +
+  attr(sstmean_scale, "scaled:center")
 
 #unlog pi
 SSTmean_eff_data$unlog_pi <- 10^(SSTmean_eff_data$predicted)
@@ -455,9 +470,9 @@ SSTmean_eff_data$unlog_pi <- 10^(SSTmean_eff_data$predicted)
 
 mtdna_pi_sstmean_plot <- ggplot() +
   geom_line(data = SSTmean_eff_data,
-            aes(x = x, y = unlog_pi), color ="black", alpha = 0.3, linewidth = 10) +
+            aes(x = SSTmean, y = unlog_pi), color ="black", alpha = 0.3, linewidth = 10) +
   geom_ribbon(data = SSTmean_eff_data,
-              aes(x = x, ymin = unlog_conf.low, ymax = unlog_conf.high), 
+              aes(x = SSTmean, ymin = unlog_conf.low, ymax = unlog_conf.high), 
               color ="black", alpha = 0.1) +
   geom_rug(data = mtdna_small_pi, mapping = aes(x = sst.BO_sstmean), 
            color = "#282828", inherit.aes = FALSE) + 
@@ -478,153 +493,13 @@ mtdna_pi_sstmean_plot
 
 #############################################################################################################
 
-######## SST range figure ########
-
-SSTrange_model_pi <- lmer(logpi ~ range_position + sst.BO_sstrange + 
-                           (1|Family/Genus) + (1|Source) + (1|MarkerName),
-                         data = mtdna_small_pi, na.action = "na.fail", 
-                         control = lmerControl(optimizer = "bobyqa"))
-
-#### Predict ####
-#marginal effects
-SSTrange_eff <- plot_model(SSTrange_model_pi, type = "pred", 
-                          terms = "sst.BO_sstrange [all]")
-
-#pull out marginal effects dataframe
-SSTrange_eff_data <- as.data.frame(SSTrange_eff$data)
-
-#unlog pi
-SSTrange_eff_data$unlog_pi <- 10^(SSTrange_eff_data$predicted)
-SSTrange_eff_data$unlog_conf.low <- 10^(SSTrange_eff_data$conf.low)
-SSTrange_eff_data$unlog_conf.high <- 10^(SSTrange_eff_data$conf.high)
-
-#### Plot SSTrange ####
-
-mtdna_pi_sstrange_plot <- ggplot() +
-  geom_line(data = SSTrange_eff_data, aes(x = x, y = unlog_pi), 
-            color ="black", alpha = 0.3, linewidth = 10) +
-  geom_ribbon(data = SSTrange_eff_data,
-              aes(x = x, ymin = unlog_conf.low, ymax = unlog_conf.high), 
-              color ="black", alpha = 0.1) +
-  geom_rug(data = mtdna_small_pi, mapping = aes(x = sst.BO_sstrange), 
-           color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 1, y = 0.0078, label = "A", size = 100) + 
-  ylim(0, 0.008) + xlim(0, 30) +
-  xlab("SST Range (°C)") + ylab("π (mtDNA)") + 
-  theme(panel.background = element_blank(),
-        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 160, vjust = -1.8),
-        axis.title.y = element_text(size = 160, vjust = 5),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
-        axis.line = element_line(linewidth = 4, color = "black"),
-        plot.margin = unit(c(1,1.8,3,6), "cm"),
-        legend.position = "none")
-mtdna_pi_sstrange_plot
-
-#############################################################################################################
-
-######## SST max figure ########
-
-SSTmax_model_pi <- lmer(logpi ~ range_position + sst.BO_sstmax + 
-                            (1|Family/Genus) + (1|Source) + (1|MarkerName),
-                          data = mtdna_small_pi, na.action = "na.fail", 
-                          control = lmerControl(optimizer = "bobyqa"))
-
-#### Predict ####
-#marginal effects
-SSTmax_eff <- plot_model(SSTmax_model_pi, type = "pred", 
-                           terms = "sst.BO_sstmax [all]")
-
-#pull out marginal effects dataframe
-SSTmax_eff_data <- as.data.frame(SSTmax_eff$data)
-
-#unlog pi
-SSTmax_eff_data$unlog_pi <- 10^(SSTmax_eff_data$predicted)
-SSTmax_eff_data$unlog_conf.low <- 10^(SSTmax_eff_data$conf.low)
-SSTmax_eff_data$unlog_conf.high <- 10^(SSTmax_eff_data$conf.high)
-
-#### Plot SSTmax ####
-
-mtdna_pi_sstmax_plot <- ggplot() +
-  geom_line(data = SSTmax_eff_data, aes(x = x, y = unlog_pi), 
-            color ="black", alpha = 0.3, linewidth = 10) +
-  geom_ribbon(data = SSTmax_eff_data,
-              aes(x = x, ymin = unlog_conf.low, ymax = unlog_conf.high), 
-              color ="black", alpha = 0.1) +
-  geom_rug(data = mtdna_small_pi, mapping = aes(x = sst.BO_sstmax), 
-           color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 1, y = 0.0078, label = "D", size = 100) + 
-  ylim(0, 0.008) + xlim(0, 30) +
-  xlab("Maximum SST (°C)") + ylab("π (mtDNA)") + 
-  theme(panel.background = element_blank(),
-        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 160, vjust = -1.8),
-        axis.title.y = element_text(size = 160, vjust = 5),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
-        axis.line = element_line(linewidth = 4, color = "black"),
-        plot.margin = unit(c(1,1.8,3,6), "cm"),
-        legend.position = "none")
-mtdna_pi_sstmax_plot
-
-#############################################################################################################
-
-######## SST min figure ########
-
-SSTmin_model_pi <- lmer(logpi ~ range_position + sst.BO_sstmin + 
-                          (1|Family/Genus) + (1|Source) + (1|MarkerName),
-                        data = mtdna_small_pi, na.action = "na.fail", 
-                        control = lmerControl(optimizer = "bobyqa"))
-
-#### Predict ####
-#marginal effects
-SSTmin_eff <- plot_model(SSTmin_model_pi, type = "pred", 
-                         terms = "sst.BO_sstmin [all]")
-
-#pull out marginal effects dataframe
-SSTmin_eff_data <- as.data.frame(SSTmin_eff$data)
-
-#unlog pi
-SSTmin_eff_data$unlog_pi <- 10^(SSTmin_eff_data$predicted)
-SSTmin_eff_data$unlog_conf.low <- 10^(SSTmin_eff_data$conf.low)
-SSTmin_eff_data$unlog_conf.high <- 10^(SSTmin_eff_data$conf.high)
-
-#### Plot SSTmin ####
-
-mtdna_pi_sstmin_plot <- ggplot() +
-  geom_line(data = SSTmin_eff_data, aes(x = x, y = unlog_pi), 
-            color ="black", alpha = 0.3, linewidth = 10) +
-  geom_ribbon(data = SSTmin_eff_data,
-              aes(x = x, ymin = unlog_conf.low, ymax = unlog_conf.high), 
-              color ="black", alpha = 0.1) +
-  geom_rug(data = mtdna_small_pi, mapping = aes(x = sst.BO_sstmin), 
-           color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 1, y = 0.0078, label = "G", size = 100) + 
-  ylim(0, 0.008) + xlim(0, 30) +
-  xlab("Minimum SST (°C)") + ylab("π (mtDNA)") + 
-  theme(panel.background = element_blank(),
-        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 160, vjust = -1.8),
-        axis.title.y = element_text(size = 160, vjust = 5),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
-        axis.line = element_line(linewidth = 4, color = "black"),
-        plot.margin = unit(c(1,1.8,3,6), "cm"),
-        legend.position = "none")
-mtdna_pi_sstmin_plot
-
-#############################################################################################################
-
 ######## ChloroA mean figure ########
 
-chloroAmean_model_pi <- lmer(logpi ~ range_position + logchlomean + I(logchlomean^2) + 
-                              (1|Family/Genus) + (1|Source) + 
-                              (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
-                             na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
+chloroAmean_model_pi <- lmer(logpi ~ range_pos_scale + logchlomean + I(logchlomean^2) + 
+                               (1|Family/Genus) + (1|Source) + (1|MarkerName),
+                            REML = FALSE, data = mtdna_small_pi, 
+                            na.action = "na.fail", 
+                            control = lmerControl(optimizer = "bobyqa"))
 
 #### Predict ####
 #marginal effects
@@ -666,153 +541,3 @@ mtdna_pi_chloromean_plot <- ggplot() +
         plot.margin = unit(c(1,1.8,3,6), "cm"),
         legend.position = "none")
 mtdna_pi_chloromean_plot
-
-#############################################################################################################
-
-######## ChloroA range figure ########
-
-chloroArange_model_pi <- lmer(logpi ~ range_position + logchlorange + I(logchlorange^2) + 
-                               (1|Family/Genus) + (1|Source) + 
-                               (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
-                              na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
-
-#### Predict ####
-#marginal effects
-chloroArange_eff <- plot_model(chloroArange_model_pi, type = "pred", 
-                              terms = "logchlorange [all]")
-
-#pull out marginal effects dataframe
-chloroArange_eff_data <- as.data.frame(chloroArange_eff$data)
-chloroArange_eff_data$chlorange <- 10^(chloroArange_eff_data$x)
-
-#unlog pi
-chloroArange_eff_data$unlog_pi <- 10^(chloroArange_eff_data$predicted)
-chloroArange_eff_data$unlog_conf.low <- 10^(chloroArange_eff_data$conf.low)
-chloroArange_eff_data$unlog_conf.high <- 10^(chloroArange_eff_data$conf.high)
-
-#### plot chlorange ####
-
-mtdna_pi_chlororange_plot <- ggplot() +
-  geom_line(data = chloroArange_eff_data,
-            aes(x = chlorange, y = unlog_pi), 
-            color ="black", alpha = 0.3, linewidth = 10) +
-  geom_ribbon(data = chloroArange_eff_data,
-              aes(x = chlorange, ymin = unlog_conf.low, ymax = unlog_conf.high), 
-              color ="black", alpha = 0.1)+
-  geom_rug(data = mtdna_small_pi, mapping = aes(x = chloroA.BO_chlorange),
-           color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 0.12, y = 0.0078, label = "A", size = 100) + 
-  ylim(0, 0.008) +
-  scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
-  xlab(bquote("Chlorophyll Range"~(mg/m^3))) + ylab("π (mtDNA)") + 
-  theme(panel.background = element_blank(),
-        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 160, vjust = -1.6),
-        axis.title.y = element_text(size = 160, vjust = 5),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
-        axis.line = element_line(linewidth = 4, color = "black"),
-        plot.margin = unit(c(1,1.8,3,6), "cm"),
-        legend.position = "none")
-mtdna_pi_chlororange_plot
-
-#############################################################################################################
-
-######## ChloroA max figure ########
-
-chloroAmax_model_pi <- lmer(logpi ~ range_position + logchlomax + I(logchlomax^2) + 
-                              (1|Family/Genus) + (1|Source) + 
-                              (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
-                            na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
-
-#### Predict ####
-#marginal effects
-chloroAmax_eff <- plot_model(chloroAmax_model_pi, type = "pred", 
-                         terms = "logchlomax [all]")
-
-#pull out marginal effects dataframe
-chloroAmax_eff_data <- as.data.frame(chloroAmax_eff$data)
-  chloroAmax_eff_data$chlomax <- 10^(chloroAmax_eff_data$x)
-
-#unlog pi
-chloroAmax_eff_data$unlog_pi <- 10^(chloroAmax_eff_data$predicted)
-  chloroAmax_eff_data$unlog_conf.low <- 10^(chloroAmax_eff_data$conf.low)
-  chloroAmax_eff_data$unlog_conf.high <- 10^(chloroAmax_eff_data$conf.high)
-
-#### plot chlomax ####
-
-mtdna_pi_chloromax_plot <- ggplot() +
-  geom_line(data = chloroAmax_eff_data,
-            aes(x = chlomax, y = unlog_pi), 
-            color ="black", alpha = 0.3, linewidth = 10) +
-  geom_ribbon(data = chloroAmax_eff_data,
-              aes(x = chlomax, ymin = unlog_conf.low, ymax = unlog_conf.high), 
-              color ="black", alpha = 0.1)+
-  geom_rug(data = mtdna_small_pi, mapping = aes(x = chloroA.BO_chlomax), 
-           color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 0.12, y = 0.0078, label = "D", size = 100) + 
-  ylim(0, 0.008) +
-  scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
-  xlab(bquote("Maximum Chlorophyll"~(mg/m^3))) + ylab("π (mtDNA)") + 
-  theme(panel.background = element_blank(),
-        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 160, vjust = -1.6),
-        axis.title.y = element_text(size = 160, vjust = 5),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
-        axis.line = element_line(linewidth = 4, color = "black"),
-        plot.margin = unit(c(1,1.8,3,6), "cm"),
-        legend.position = "none")
-mtdna_pi_chloromax_plot
-
-#############################################################################################################
-
-######## ChloroA min figure ########
-
-chloroAmin_model_pi <- lmer(logpi ~ range_position + logchlomin + I(logchlomin^2) + 
-                                (1|Family/Genus) + (1|Source) + 
-                                (1|MarkerName), REML = FALSE, data = mtdna_small_pi, 
-                            na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
-
-#### Predict ####
-#marginal effects
-chloroAmin_eff <- plot_model(chloroAmin_model_pi, type = "pred", 
-                               terms = "logchlomin [all]")
-
-#pull out marginal effects dataframe
-chloroAmin_eff_data <- as.data.frame(chloroAmin_eff$data)
-chloroAmin_eff_data$chlomin <- 10^(chloroAmin_eff_data$x)
-
-#unlog pi
-chloroAmin_eff_data$unlog_pi <- 10^(chloroAmin_eff_data$predicted)
-chloroAmin_eff_data$unlog_conf.low <- 10^(chloroAmin_eff_data$conf.low)
-chloroAmin_eff_data$unlog_conf.high <- 10^(chloroAmin_eff_data$conf.high)
-
-#### plot chlomin ####
-
-mtdna_pi_chloromin_plot <- ggplot() +
-  geom_line(data = chloroAmin_eff_data,
-            aes(x = chlomin, y = unlog_pi), 
-            color ="black", alpha = 0.3, linewidth = 10) +
-  geom_ribbon(data = chloroAmin_eff_data,
-              aes(x = chlomin, ymin = unlog_conf.low, ymax = unlog_conf.high), 
-              color ="black", alpha = 0.1)+
-  geom_rug(data = mtdna_small_pi, mapping = aes(x = chloroA.BO_chlomin), 
-           color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 0.12, y = 0.0078, label = "G", size = 100) + 
-  ylim(0, 0.008) +
-  scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
-  xlab(bquote("Minimum Chlorophyll"~(mg/m^3))) + ylab("π (mtDNA)") + 
-  theme(panel.background = element_blank(),
-        panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 160, vjust = -1.6),
-        axis.title.y = element_text(size = 160, vjust = 5),
-        axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
-        axis.line = element_line(linewidth = 4, color = "black"),
-        plot.margin = unit(c(1,1.8,3,6), "cm"),
-        legend.position = "none")
-mtdna_pi_chloromin_plot
