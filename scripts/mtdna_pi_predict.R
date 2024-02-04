@@ -119,7 +119,7 @@ mtdna_pi_rangepos_plot <- ggplot() +
               color ="black", alpha = 0.1) +
   geom_rug(data = mtdna_small_pi, mapping = aes(x = range_position), 
            color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 0.05, y = 0.0078, label = "A", size =90) + 
+  annotate("text", x = 0.05, y = 0.0078, label = "(a)", size =90) + 
   ylim(0, 0.008) + xlim(0, 1) +
   xlab("Range Position") + ylab("π (mtDNA)") + 
   theme(panel.background = element_blank(),
@@ -139,7 +139,8 @@ mtdna_pi_rangepos_plot
 ######### Abslat figure #######
 
 abslat_model_pi <- lmer(logpi ~ range_pos_scale + abslat_scale + (1|Family/Genus) +   
-                          (1|Source) + (1|MarkerName), 
+                          (1|Source) + (1|MarkerName) + 
+                          (0 + abslat_scale|Family), 
                         REML = FALSE, data = mtdna_small_pi, 
                         na.action = "na.fail", 
                         control = lmerControl(optimizer = "bobyqa"))
@@ -198,17 +199,17 @@ mtdna_pi_abslat_plot_violin <- ggplot() +
   geom_ribbon(data = abslat_eff_data,
               aes(x = (abslat + 5)/10, ymin = unlog_conf.low, ymax = unlog_conf.high), 
               col = "black", alpha = 0.1) +
-  annotate("text", x = 8, y = 0.0145, label = "A", size = 90) +
+  annotate("text", x = 7.75, y = 0.0145, label = "(a)", size = 90) +
   scale_y_continuous(limits = c(0, 0.015)) + 
   scale_x_discrete(labels = c(5, 15, 25, 35, 45, 55, 65, 75)) +
   xlab("Absolute Latitude") + ylab("π (mtDNA)") + 
   theme(panel.background = element_blank(),
         panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 130, vjust = -1.6),
-        axis.title.y = element_text(size = 130, vjust = 5),
+        axis.title.x = element_text(size = 160, vjust = -1.6),
+        axis.title.y = element_text(size = 160, vjust = 5),
         axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 130, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 130, color = "black", margin = margin(r = 30)),
+        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
         axis.line = element_line(linewidth = 4, color = "black"),
         plot.margin = unit(c(1,1.8,3,6), "cm"),
         legend.position = "none")
@@ -219,7 +220,8 @@ mtdna_pi_abslat_plot_violin
 ######### Lat figure #######
 
 lat_model_pi <- lmer(logpi ~ range_pos_scale + lat_scale + I(lat_scale^2) + 
-                       (1|Family/Genus) + (1|Source) + (1|MarkerName), 
+                       (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                       (0 + lat_scale|Family), 
                      REML = FALSE, data = mtdna_small_pi, 
                      na.action = "na.fail", 
                      control = lmerControl(optimizer = "bobyqa"))
@@ -299,7 +301,7 @@ mtdna_pi_lat_plot <- ggplot() +
   geom_ribbon(data = lat_eff_data,
               aes(x = lat, ymin = unlog_conf.low, ymax = unlog_conf.high), 
               color ="black", alpha = 0.1) +
-  annotate("text", x = -70, y = 0.0145, label = "A", size = 100) +
+  annotate("text", x = -65, y = 0.0145, label = "(a)", size = 100) +
   scale_x_continuous(breaks = seq(-80, 80, 20)) +
   scale_y_continuous(limits = c(0, 0.015)) + 
   xlab("Latitude") + ylab("π (mtDNA)") +
@@ -320,7 +322,8 @@ mtdna_pi_lat_plot
 ######## Lon figure ########
 
 lon_model_pi_spline <- lmer(logpi ~ range_pos_scale + bs(lon_scale) + 
-                               (1|Family/Genus) + (1|Source) + (1|MarkerName),
+                               (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                              (0 + lon_scale|Family),
                             REML = FALSE, data = mtdna_small_pi, 
                             na.action = "na.fail", 
                             control = lmerControl(optimizer = "bobyqa"))
@@ -404,7 +407,7 @@ mtdna_pi_lon_plot <- ggplot() +
   geom_ribbon(data = lon_eff_data,
               aes(x = lon, ymin = unlog_conf.low, ymax = unlog_conf.high), 
               color ="black", alpha = 0.1)  + 
-  annotate("text", x = -175, y = 0.0145, label = "A", size = 100) +
+  annotate("text", x = -175, y = 0.0145, label = "(a)", size = 100) +
   scale_x_continuous(breaks = seq(-180, 180, 20)) +
   scale_y_continuous(limits = c(0, 0.015)) + 
   xlab("Longitude") + ylab("π (mtDNA)") +
@@ -442,7 +445,8 @@ mtdna_small_pi <- subset(mtdna_small_pi, mtdna_small_pi$logchlomean != "Inf" |
 ######## SST mean figure ########
 
 SSTmean_model_pi <- lmer(logpi ~ range_pos_scale + sstmean_scale + 
-                           (1|Family/Genus) + (1|Source) + (1|MarkerName),
+                           (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                           (0 + sstmean_scale|Family),
                          REML = FALSE, data = mtdna_small_pi, 
                          na.action = "na.fail", 
                          control = lmerControl(optimizer = "bobyqa"))
@@ -476,7 +480,7 @@ mtdna_pi_sstmean_plot <- ggplot() +
               color ="black", alpha = 0.1) +
   geom_rug(data = mtdna_small_pi, mapping = aes(x = sst.BO_sstmean), 
            color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 1, y = 0.0078, label = "A", size = 100) + 
+  annotate("text", x = 2, y = 0.0078, label = "(a)", size = 100) + 
   ylim(0, 0.008) + xlim(0, 30) +
   xlab("Mean SST (°C)") + ylab("π (mtDNA)") + 
   theme(panel.background = element_blank(),
@@ -496,7 +500,8 @@ mtdna_pi_sstmean_plot
 ######## ChloroA mean figure ########
 
 chloroAmean_model_pi <- lmer(logpi ~ range_pos_scale + logchlomean + I(logchlomean^2) + 
-                               (1|Family/Genus) + (1|Source) + (1|MarkerName),
+                               (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                               (0 + logchlomean|Family),
                             REML = FALSE, data = mtdna_small_pi, 
                             na.action = "na.fail", 
                             control = lmerControl(optimizer = "bobyqa"))
@@ -526,7 +531,7 @@ mtdna_pi_chloromean_plot <- ggplot() +
               color ="black", alpha = 0.1)+
   geom_rug(data = mtdna_small_pi, mapping = aes(x = chloroA.BO_chlomean), 
            color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 0.12, y = 0.0078, label = "D", size = 100) + 
+  annotate("text", x = 0.135, y = 0.0078, label = "(d)", size = 100) + 
   ylim(0, 0.008) +
   scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
   xlab(bquote("Mean Chlorophyll"~(mg/m^3))) + ylab("π (mtDNA)") + 

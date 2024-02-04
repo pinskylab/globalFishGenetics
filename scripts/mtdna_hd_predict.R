@@ -112,7 +112,7 @@ mtdna_hd_rangepos_plot <- ggplot() +
               color ="black", alpha = 0.1) +
   geom_rug(data = mtdna_small_hd, mapping = aes(x = range_position), 
            color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 0.05, y = 0.985, label = "B", size =90) + 
+  annotate("text", x = 0.05, y = 0.985, label = "(b)", size =90) + 
   ylim(0.5, 1) + xlim(0, 1) +
   xlab("Range Position") + ylab(bquote(H[d]~"(mtDNA)")) + 
   theme(panel.background = element_blank(),
@@ -176,7 +176,8 @@ mtdna_hd_bp_plot
 
 abslat_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + 
                              abslat_scale + (1|Family/Genus) + 
-                             (1|Source) + (1|MarkerName),
+                             (1|Source) + (1|MarkerName) + 
+                             (0 + abslat_scale|Family),
                            data = mtdna_small_hd, family = ordbeta, 
                            na.action = "na.fail") 
 
@@ -231,17 +232,17 @@ mtdna_hd_abslat_plot_violin <- ggplot() +
   geom_ribbon(data = abslat_eff_data,
               aes(x = (abslat + 5)/10, ymin = conf.low, ymax = conf.high), 
               col = "black", alpha = 0.1) +
-  annotate("text", x = 8, y = 0.97, label = "B", size = 90) +
+  annotate("text", x = 7.75, y = 0.97, label = "(b)", size = 90) +
   scale_x_discrete(labels = c(5, 15, 25, 35, 45, 55, 65, 75)) +
   scale_y_continuous(limits = c(0, 1)) +
   xlab("Absolute Latitude") + ylab(bquote(H[d]~"(mtDNA)")) + 
   theme(panel.background = element_blank(),
         panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 130, vjust = -1.6),
-        axis.title.y = element_text(size = 130, vjust = 5),
+        axis.title.x = element_text(size = 160, vjust = -1.6),
+        axis.title.y = element_text(size = 160, vjust = 5),
         axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 130, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 130, color = "black", margin = margin(r = 30)),
+        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
         axis.line = element_line(linewidth = 4, color = "black"),
         plot.margin = unit(c(1,1.8,3,6), "cm"),
         legend.position = "none")
@@ -253,7 +254,8 @@ mtdna_hd_abslat_plot_violin
 
 lat_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + 
                           lat_scale + I(lat_scale^2) + (1|Family/Genus) + 
-                          (1|Source) + (1|MarkerName),
+                          (1|Source) + (1|MarkerName) + 
+                          (0 + lat_scale|Family),
                         data = mtdna_small_hd, family = ordbeta, 
                         na.action = "na.fail")  
 
@@ -329,7 +331,7 @@ mtdna_hd_lat_plot <- ggplot() +
   geom_ribbon(data = lat_eff_data,
               aes(x = lat, ymin = conf.low, ymax = conf.high), 
               color ="black", alpha = 0.1) +
-  annotate("text", x = -70, y = 0.97, label = "B", size = 90) +
+  annotate("text", x = -65, y = 0.97, label = "(b)", size = 90) +
   scale_x_continuous(breaks = seq(-80, 80, 20)) +
   scale_y_continuous(limits = c(0, 1)) +
   xlab("Latitude") + ylab(bquote(H[d]~"(mtDNA)")) + 
@@ -351,7 +353,8 @@ mtdna_hd_lat_plot
 
 lon_model_hd_spline <- glmmTMB(He ~ bp_scale + range_pos_scale + 
                                  bs(lon_scale) + (1|Family/Genus) + 
-                                 (1|Source) + (1|MarkerName),
+                                 (1|Source) + (1|MarkerName) + 
+                                 (0 + lon_scale|Family),
                                data = mtdna_small_hd, family = ordbeta, 
                                na.action = "na.fail")  
 
@@ -431,7 +434,7 @@ mtdna_hd_lon_plot <- ggplot() +
   geom_ribbon(data = lon_eff_data,
               aes(x = lon, ymin = conf.low, ymax = conf.high), 
               color ="black", alpha = 0.1) +
-  annotate("text", x = -175, y = 0.97, label = "B", size = 100) +
+  annotate("text", x = -175, y = 0.97, label = "(b)", size = 100) +
   scale_x_continuous(breaks = seq(-180, 180, 20)) +
   scale_y_continuous(limits = c(0, 1)) + 
   xlab("Longitude") + ylab(bquote(H[d]~"(mtDNA)")) + 
@@ -469,7 +472,8 @@ mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logchlomean != "Inf" |
 ######### SST mean figure #######
 
 SSTmean_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + sstmean_scale + 
-                              (1|Family/Genus) + (1|Source) + (1|MarkerName),
+                              (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                              (0 + sstmean_scale|Family),
                             data = mtdna_small_hd, family = ordbeta, 
                             na.action = "na.fail")  
   
@@ -499,7 +503,7 @@ mtdna_hd_sstmean_plot <- ggplot() +
               color ="black", alpha = 0.1) +
   geom_rug(data = mtdna_small_hd, mapping = aes(x = sst.BO_sstmean), 
            color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 1, y = 0.985, label = "B", size = 100) + 
+  annotate("text", x = 2, y = 0.985, label = "(b)", size = 100) + 
   ylim(c(0.5, 1.0)) + xlim(0, 30) +
   xlab("Mean SST (°C)") + ylab(bquote(H[d]~"(mtDNA)")) + 
   theme(panel.background = element_blank(),
@@ -520,7 +524,8 @@ mtdna_hd_sstmean_plot
 
 chloromean_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + logchlomean +
                                  I(logchlomean^2) + (1|Family/Genus) + 
-                                 (1|Source) + (1|MarkerName),
+                                 (1|Source) + (1|MarkerName) + 
+                                 (0 + logchlomean|Family),
                                data = mtdna_small_hd, family = ordbeta, 
                                na.action = "na.fail")  
 
@@ -545,7 +550,7 @@ mtdna_hd_chloromean_plot <- ggplot() +
               color ="black", alpha = 0.1) +
   geom_rug(data = mtdna_small_hd, mapping = aes(x = chloroA.BO_chlomean), 
            color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 0.12, y = 0.985, label = "E", size = 100) + 
+  annotate("text", x = 0.135, y = 0.985, label = "(e)", size = 100) + 
     ylim(0.5, 1.0) +
     scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
     xlab(bquote("Mean Chlorophyll"~(mg/m^3))) + ylab(bquote(H[d]~"(mtDNA)")) + 

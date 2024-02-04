@@ -111,7 +111,7 @@ msat_he_rangepos_plot <- ggplot() +
               color ="black", alpha = 0.1) + #alpha makes this take way too long, so removing
   geom_rug(data = msat, mapping = aes(x = range_position), 
            color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 0.05, y = 0.985, label = "C", size =90) + 
+  annotate("text", x = 0.05, y = 0.985, label = "(c)", size =90) + 
   ylim(0.5, 1) + xlim(0, 1) +
   xlab("Range Position") + ylab(bquote(H[e]~"(nucDNA)")) + 
   theme(panel.background = element_blank(),
@@ -174,7 +174,8 @@ msat_he_crossspp_plot
 ######### Abslat figure #######
 
 abslat_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + abslat_scale +
-                             (1|Family/Genus) + (1|Source), 
+                             (1|Family/Genus) + (1|Source) + 
+                             (0 + abslat_scale|Family), 
                            data = msat, family = ordbeta, 
                            na.action = "na.fail")
 #### Predict ####
@@ -228,17 +229,17 @@ msat_he_abslat_plot_violin <- ggplot() +
   geom_ribbon(data = abslat_eff_data,
               aes(x = (abslat + 5)/10, ymin = conf.low, ymax = conf.high), 
               col = "black", alpha = 0.1) +
-  annotate("text", x = 8, y = 0.97, label = "C", size = 90) +
+  annotate("text", x = 7.75, y = 0.97, label = "(c)", size = 90) +
   scale_x_discrete(labels = c(5, 15, 25, 35, 45, 55, 65, 75)) +
   scale_y_continuous(limits = c(0, 1)) +
   xlab("Absolute Latitude") + ylab(bquote(H[e]~"(nucDNA)")) + 
   theme(panel.background = element_blank(),
         panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
-        axis.title.x = element_text(size = 130, vjust = -1.6),
-        axis.title.y = element_text(size = 130, vjust = 5),
+        axis.title.x = element_text(size = 160, vjust = -1.6),
+        axis.title.y = element_text(size = 160, vjust = 5),
         axis.ticks = element_line(color = "black", linewidth = 2),
-        axis.text.x = element_text(size = 130, color = "black", margin = margin(t = 30)),
-        axis.text.y = element_text(size = 130, color = "black", margin = margin(r = 30)),
+        axis.text.x = element_text(size = 160, color = "black", margin = margin(t = 30)),
+        axis.text.y = element_text(size = 160, color = "black", margin = margin(r = 30)),
         axis.line = element_line(linewidth = 4, color = "black"),
         plot.margin = unit(c(1,1.8,3,6), "cm"),
         legend.position = "none")
@@ -250,7 +251,8 @@ msat_he_abslat_plot_violin
 
 lat_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + 
                           lat_scale + I(lat_scale^2) +
-                          (1|Family/Genus) + (1|Source), 
+                          (1|Family/Genus) + (1|Source) + 
+                          (0 + lat_scale|Family), 
                         data = msat, family = ordbeta, 
                         na.action = "na.fail")
 #### Predict ####
@@ -325,7 +327,7 @@ msat_he_lat_plot <- ggplot() +
   geom_ribbon(data = lat_eff_data,
               aes(x = lat, ymin = conf.low, ymax = conf.high), 
               color ="black", alpha = 0.1)+
-    annotate("text", x = -70, y = 0.97, label = "C", size = 90) +
+    annotate("text", x = -65, y = 0.97, label = "(c)", size = 90) +
     scale_x_continuous(breaks = seq(-80, 80, 20)) +
     scale_y_continuous(limits = c(0, 1)) +
     xlab("Latitude") + ylab(bquote(H[e]~"(nucDNA)")) + 
@@ -346,7 +348,8 @@ msat_he_lat_plot
 ######### Lon figure #######
 
 lon_model_he_spline <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + bs(lon_scale) +
-                                 (1|Family/Genus) + (1|Source), 
+                                 (1|Family/Genus) + (1|Source) + 
+                                 (0 + lon_scale|Family), 
                                data = msat, family = ordbeta, 
                                na.action = "na.fail")
 
@@ -425,7 +428,7 @@ msat_he_lon_plot <- ggplot() +
   geom_ribbon(data = lon_eff_data,
               aes(x = lon, ymin = conf.low, ymax = conf.high), 
               color ="black", alpha = 0.1) +
-  annotate("text", x = -175, y = 0.97, label = "C", size = 90) +
+  annotate("text", x = -175, y = 0.97, label = "(c)", size = 90) +
   scale_x_continuous(breaks = seq(-180, 180, 20)) +
   scale_y_continuous(limits = c(0, 1)) +
   xlab("Longitude") + ylab(bquote(H[e]~"(nucDNA)")) + 
@@ -463,7 +466,8 @@ msat <- subset(msat, msat$logchlomean != "Inf" |
 ######### SST mean figure #######
 
 SSTmean_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + sstmean_scale + 
-                              (1|Family/Genus) + (1|Source),
+                              (1|Family/Genus) + (1|Source) + 
+                              (0 + sstmean_scale|Family),
                             data = msat, family = ordbeta, 
                             na.action = "na.fail") 
 
@@ -492,8 +496,8 @@ msat_he_sstmean_plot <- ggplot() +
               color ="black", alpha = 0.1) +
   geom_rug(data = msat, mapping = aes(x = sst.BO_sstmean), 
            color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 1, y = 0.842, label = "C", size = 100) + 
-  ylim(0.65, 0.85) + xlim(0, 30) +
+  annotate("text", x = 2, y = 0.985, label = "(c)", size = 100) + 
+  ylim(0.5, 1.0) + xlim(0, 30) +
   xlab("Mean SST (°C)") + ylab(bquote(H[e]~"(nucDNA)")) + 
   theme(panel.background = element_blank(),
         panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
@@ -513,7 +517,8 @@ msat_he_sstmean_plot
 
 chloroAmean_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + 
                                   logchlomean + I(logchlomean^2) + 
-                                  (1|Family/Genus) + (1|Source),
+                                  (1|Family/Genus) + (1|Source) + 
+                                  (0 + logchlomean|Family),
                                 data = msat, family = ordbeta, 
                                 na.action = "na.fail")
 
@@ -538,8 +543,8 @@ msat_he_chloromean_plot <- ggplot() +
               color ="black", alpha = 0.1) +
   geom_rug(data = msat, mapping = aes(x = chloroA.BO_chlomean), 
            color = "#282828", inherit.aes = FALSE) + 
-  annotate("text", x = 0.12, y = 0.842, label = "F", size = 100) + 
-    ylim(0.65, 0.85) +
+  annotate("text", x = 0.135, y = 0.985, label = "(f)", size = 100) + 
+    ylim(0.5, 1.0) +
     scale_x_continuous(trans = "log10", limits = c(0.1, 10)) +
     xlab(bquote("Mean Chlorophyll"~(mg/m^3))) + ylab(bquote(H[e]~"(nucDNA)")) + 
     theme(panel.background = element_blank(),
