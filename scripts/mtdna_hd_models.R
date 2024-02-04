@@ -17,6 +17,7 @@ library(glmmTMB) #1.1.7
 library(DHARMa) #v.0.4.6
 library(splines) #v.4.2.2
 library(performance) #0.10.4
+library(MuMIn) #1.47.5
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
@@ -111,7 +112,7 @@ beta_null_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale +
                               na.action = "na.fail")  
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_null_model_hd)
+r.squaredGLMM(beta_null_model_hd)
 
 #check fit with DHARMa
 null_model_hd_sim <- simulateResiduals(fittedModel = beta_null_model_hd, plot = F) #creates "DHARMa" residuals from simulations
@@ -130,13 +131,14 @@ sim_recalc <- recalculateResiduals(null_model_hd_sim, group = mtdna_small_hd$coo
 
 #### lat model ####
 beta_lat_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + 
-                               lat_scale + I(lat_scale^2) + (1|Family/Genus) +
-                               (1|Source) + (1|MarkerName),
+                               lat_scale + I(lat_scale^2) + 
+                               (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                               (0 + lat_scale|Family),
                              data = mtdna_small_hd, family = ordbeta, 
                              na.action = "na.fail")  
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_lat_model_hd)
+r.squaredGLMM(beta_lat_model_hd)
   
 #check fit with DHARMa
 lat_model_hd_sim <- simulateResiduals(fittedModel = beta_lat_model_hd, plot = F)
@@ -149,14 +151,14 @@ sim_recalc <- recalculateResiduals(lat_model_hd_sim, group = mtdna_small_hd$coor
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 #### abslat model ####
-beta_abslat_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + 
-                                  abslat_scale + (1|Family/Genus) +
-                                  (1|Source) + (1|MarkerName),
+beta_abslat_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + abslat_scale +
+                                  (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                                  (0 + abslat_scale|Family),
                                 data = mtdna_small_hd, family = ordbeta, 
                                 na.action = "na.fail")  
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_abslat_model_hd)
+r.squaredGLMM(beta_abslat_model_hd)
 
 #check fit with DHARMa
 abslat_model_hd_sim <- simulateResiduals(fittedModel = beta_abslat_model_hd, plot = F)
@@ -169,14 +171,14 @@ sim_recalc <- recalculateResiduals(abslat_model_hd_sim, group = mtdna_small_hd$c
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
   
 #### lon model ####
-beta_lon_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + 
-                               bs(lon_scale) + (1|Family/Genus) + 
-                               (1|Source) + (1|MarkerName),
+beta_lon_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + bs(lon_scale) + 
+                               (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                               (0 + lon_scale|Family),
                              data = mtdna_small_hd, family = ordbeta, 
                              na.action = "na.fail")  
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_lon_model_hd)
+r.squaredGLMM(beta_lon_model_hd)
   
 #checking fit with DHARMa
 lon_model_hd_sim <- simulateResiduals(fittedModel = beta_lon_model_hd, plot = F)
@@ -190,13 +192,15 @@ sim_recalc <- recalculateResiduals(lon_model_hd_sim, group = mtdna_small_hd$coor
 
 #### lat & lon model ####
 beta_lat_lon_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + lat_scale + 
-                                   I(lat_scale^2) + bs(lon_scale) + (1|Family/Genus) + 
-                                   (1|Source) + (1|MarkerName),
+                                   I(lat_scale^2) + bs(lon_scale) + 
+                                   (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                                   (0 + lat_scale|Family) + (0 + lon_scale|Family),
                                  data = mtdna_small_hd, family = ordbeta, 
                                  na.action = "na.fail")  
 
+
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_lat_lon_model_hd)
+r.squaredGLMM(beta_lat_lon_model_hd)
   
 #checking fit with DHARMa
 lat_lon_model_hd_sim <- simulateResiduals(fittedModel = beta_lat_lon_model_hd, plot = F)
@@ -210,14 +214,14 @@ sim_recalc <- recalculateResiduals(lat_lon_model_hd_sim, group = mtdna_small_hd$
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
   
 #### abslat & lon model ####
-beta_abslat_lon_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + abslat_scale + 
-                                      bs(lon_scale) + (1|Family/Genus) + 
-                                      (1|Source) + (1|MarkerName),
+beta_abslat_lon_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + abslat_scale + bs(lon_scale) +
+                                      (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                                      (0 + abslat_scale|Family) + (0 + lon_scale|Family),
                                     data = mtdna_small_hd, family = ordbeta, 
                                     na.action = "na.fail")  
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_abslat_lon_model_hd)
+r.squaredGLMM(beta_abslat_lon_model_hd)
   
 #checking fit with DHARMa
 abslat_lon_model_hd_sim <- simulateResiduals(fittedModel = absbeta_lat_lon_model_hd, plot = F)
@@ -235,13 +239,14 @@ sim_recalc <- recalculateResiduals(abslat_lon_model_hd_sim, group = mtdna_small_
 ######## Environmental models ########
 
 #### sst mean model ####
-beta_sstmean_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + sstmean_scale + 
-                                   (1|Family/Genus) + (1|Source) + (1|MarkerName),
+beta_sstmean_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + sstmean_scale +
+                                   (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                                   (0 + sstmean_scale|Family),
                                  data = mtdna_small_hd, family = ordbeta, 
                                  na.action = "na.fail")  
   
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_sstmean_model_hd)
+r.squaredGLMM(beta_sstmean_model_hd)
   
 #checking fit with DHARMa
 sstmean_model_hd_sim <- simulateResiduals(fittedModel = beta_sstmean_model_hd, plot = F)
@@ -254,14 +259,14 @@ sim_recalc <- recalculateResiduals(sstmean_model_hd_sim, group = mtdna_small_hd$
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 #### chloro mean model ####
-beta_chlomean_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + logchlomean +
-                                    I(logchlomean^2) + (1|Family/Genus) + 
-                                    (1|Source) + (1|MarkerName),
+beta_chlomean_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + logchlomean + I(logchlomean^2) + 
+                                    (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                                    (0 + logchlomean|Family),
                                   data = mtdna_small_hd, family = ordbeta, 
                                   na.action = "na.fail")  
   
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_chlomean_model_hd)
+r.squaredGLMM(beta_chlomean_model_hd)
 
 #checking fit with DHARMa
 chlomean_model_hd_sim <- simulateResiduals(fittedModel = beta_chlomean_model_hd, plot = F)
@@ -274,13 +279,14 @@ sim_recalc <- recalculateResiduals(chlomean_model_hd_sim, group = mtdna_small_hd
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
   
 beta_sstmean_chlomean_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + sstmean_scale + 
-                                            logchlomean + I(logchlomean^2) + (1|Family/Genus) + 
-                                            (1|Source) + (1|MarkerName),
+                                            logchlomean + I(logchlomean^2) + 
+                                            (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                                            (0 + sstmean_scale|Family) + (0 + logchlomean|Family),
                                           data = mtdna_small_hd, family = ordbeta, 
                                           na.action = "na.fail")  
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(beta_sstmean_chlomean_model_hd)
+r.squaredGLMM(beta_sstmean_chlomean_model_hd)
 
 #checking fit with DHARMa
 sstmean_chlomean_model_hd_sim <- simulateResiduals(fittedModel = beta_sstmean_chlomean_model_hd, plot = F)

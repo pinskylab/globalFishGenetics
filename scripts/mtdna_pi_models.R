@@ -18,6 +18,7 @@ library(lme4) #v.1.1-31
 library(DHARMa) #v.0.4.6
 library(splines) #v.4.2.2
 library(performance) #0.10.4
+library(MuMIn) #1.47.5
 
 #read in data
 mtdna <- read.csv("output/mtdna_assembled.csv", stringsAsFactors = FALSE)
@@ -114,7 +115,7 @@ null_model_pi <- lmer(logpi ~ range_pos_scale + (1|Family/Genus) +
                       na.action = "na.fail", control = lmerControl(optimizer = "bobyqa"))
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(null_model_pi)
+r.squaredGLMM(null_model_pi)
  
 #pull p-values
 coefs <- data.frame(coef(summary(null_model_pi)))
@@ -137,13 +138,14 @@ sim_recalc <- recalculateResiduals(null_model_pi_sim_output,
 
 #### lat model ####
 lat_model_pi <- lmer(logpi ~ range_pos_scale + lat_scale + I(lat_scale^2) +
-                       (1|Family/Genus) + (1|Source) + (1|MarkerName), 
+                       (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                       (0 + lat_scale|Family), 
                      REML = FALSE, data = mtdna_small_pi, 
                      na.action = "na.fail",
                      control = lmerControl(optimizer = "bobyqa"))
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(lat_model_pi)
+r.squaredGLMM(lat_model_pi)
   
 #pull p-values
 coefs <- data.frame(coef(summary(lat_model_pi)))
@@ -162,14 +164,15 @@ sim_recalc <- recalculateResiduals(lat_model_pi_sim_output,
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 #### abslat model ####
-abslat_model_pi <- lmer(logpi ~ range_pos_scale + abslat_scale + (1|Family/Genus) +
-                          (1|Source) + (1|MarkerName), 
+abslat_model_pi <- lmer(logpi ~ range_pos_scale + abslat_scale + 
+                          (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                          (0 + abslat_scale|Family),
                         REML = FALSE, data = mtdna_small_pi, 
                         na.action = "na.fail", 
                         control = lmerControl(optimizer = "bobyqa"))
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(abslat_model_pi)
+r.squaredGLMM(abslat_model_pi)
   
 #pull p-values
 coefs <- data.frame(coef(summary(abslat_model_pi)))
@@ -188,14 +191,15 @@ sim_recalc <- recalculateResiduals(abslat_model_pi_sim_output,
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
 
 #### lon model ####
-lon_model_pi <- lmer(logpi ~ range_pos_scale + bs(lon_scale) + (1|Family/Genus) + 
-                       (1|Source) + (1|MarkerName), 
+lon_model_pi <- lmer(logpi ~ range_pos_scale + bs(lon_scale) + 
+                       (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                       (0 + lon_scale|Family), 
                      REML = FALSE, data = mtdna_small_pi, 
                      na.action = "na.fail",
                      control = lmerControl(optimizer = "bobyqa"))
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(lon_model_pi)
+r.squaredGLMM(lon_model_pi)
   
 #pull p-values
 coefs <- data.frame(coef(summary(lon_model_pi)))
@@ -215,14 +219,15 @@ sim_recalc <- recalculateResiduals(lon_model_pi_sim_output,
   
 #### lat & lon model ####
 lat_lon_model_pi <- lmer(logpi ~ range_pos_scale + lat_scale + 
-                           I(lat_scale^2) + bs(lon_scale) + (1|Family/Genus) + 
-                           (1|Source) + (1|MarkerName), 
+                           I(lat_scale^2) + bs(lon_scale) + 
+                           (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                           (0 + lat_scale|Family) + (0 + lon_scale|Family), 
                          REML = FALSE, data = mtdna_small_pi, 
                          na.action = "na.fail",
                          control = lmerControl(optimizer = "bobyqa"))
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(lat_lon_model_pi)
+r.squaredGLMM(lat_lon_model_pi)
   
 #pull p-values
 coefs <- data.frame(coef(summary(lat_lon_model_pi)))
@@ -241,16 +246,16 @@ sim_recalc <- recalculateResiduals(lat_lon_model_pi_sim_output,
                                    group = mtdna_small_pi$coords)
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
   
-#### abslat & lon model ####
-abslat_lon_model_pi <- lmer(logpi ~ range_pos_scale + abslat_scale + 
-                                 bs(lon_scale) + (1|Family/Genus) + 
-                                 (1|Source) + (1|MarkerName), 
+#### abslat & lon model #### 
+abslat_lon_model_pi <- lmer(logpi ~ range_pos_scale + abslat_scale + bs(lon_scale) +
+                              (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                              (0 + abslat_scale|Family) + (0 + lon_scale|Family), 
                             REML = FALSE, data = mtdna_small_pi, 
                             na.action = "na.fail",
                             control = lmerControl(optimizer = "bobyqa"))
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(abslat_lon_model_pi)
+r.squaredGLMM(abslat_lon_model_pi)
   
 #pull p-values
 coefs <- data.frame(coef(summary(abslat_lon_model_pi)))
@@ -274,14 +279,15 @@ sim_recalc <- recalculateResiduals(abslat_lon_model_pi_sim_output,
 ######## Environmental models ########
 
 #### sst mean model ####
-sstmean_model_pi <- lmer(logpi ~ range_pos_scale + sstmean_scale + (1|Family/Genus) + 
-                           (1|Source) + (1|MarkerName), 
+sstmean_model_pi <- lmer(logpi ~ range_pos_scale + sstmean_scale + 
+                           (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                           (0 + sstmean_scale|Family), 
                          REML = FALSE, data = mtdna_small_pi, 
                          na.action = "na.fail",
                          control = lmerControl(optimizer = "bobyqa"))
  
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(sstmean_model_pi)
+r.squaredGLMM(sstmean_model_pi)
    
 #pull p-values
 coefs <- data.frame(coef(summary(sstmean_model_pi)))
@@ -301,13 +307,14 @@ sim_recalc <- recalculateResiduals(sstmean_model_pi_sim_output,
 
 #### chloro mean model ####
 chlomean_model_pi <- lmer(logpi ~ range_pos_scale + logchlomean + I(logchlomean^2) + 
-                            (1|Family/Genus) + (1|Source) + (1|MarkerName), 
+                            (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                            (0 + logchlomean|Family), 
                           REML = FALSE, data = mtdna_small_pi, 
                           na.action = "na.fail",
                           control = lmerControl(optimizer = "bobyqa"))
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(chlomean_model_pi)
+r.squaredGLMM(chlomean_model_pi)
 
 #pull p-values
 coefs <- data.frame(coef(summary(chlomean_model_pi)))
@@ -325,16 +332,17 @@ sim_recalc <- recalculateResiduals(chlomean_model_pi_sim_output,
                                    group = mtdna_small_pi$coords)
   testSpatialAutocorrelation(sim_recalc, x = x_unique, y = y_unique)
   
-#### SST mean & chloro mean model ####
+#### SST mean & chloro mean model #### --> DOESN'T CONVERGE (singular fit)
 sstmean_chlomean_model_pi <- lmer(logpi ~ range_pos_scale + sstmean_scale + 
-                                    logchlomean + I(logchlomean^2) + (1|Family/Genus) + 
-                                    (1|Source) + (1|MarkerName), 
+                                    logchlomean + I(logchlomean^2) + 
+                                    (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                                    (0 + sstmean_scale|Family) + (0 + logchlomean|Family), 
                                   REML = FALSE, data = mtdna_small_pi, 
                                   na.action = "na.fail",
                                   control = lmerControl(optimizer = "bobyqa"))
 
 #calculate pseudo-rsquared (Nakagawa & Schielzeth 2013)
-r2_nakagawa(sstmean_chlomean_model_pi)
+r.squaredGLMM(sstmean_chlomean_model_pi)
 
 #pull p-values
 coefs <- data.frame(coef(summary(sstmean_chlomean_model_pi)))
