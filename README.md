@@ -1,6 +1,7 @@
 This repository provides the data, scripts, and figures for the analyses in "Global patterns of genetic diversity in marine fishes", which identifies latitudinal and longitudinal patterns in mitochondrial and nuclear genetic diversity in marine fishes, as well as any underlying macroecological drivers. 
 
-**Citation:** Clark RD & Pinsky ML. (2023) Global patterns of genetic diversity in marine fishes. *Authorea*. (https://doi.org/10.22541/au.168726266.68173061/v1) *in review*
+**Citation:** Clark RD & Pinsky ML. (2023) Global patterns of nuclear and mitochondrial genetic diversity in marine fishes. *Authorea*. [DOI:10.22541/au.169806967.74692724/v1](https://doi.org/10.22541/au.169806967.74692724/v1) *in review*
+  * *An older version of this manuscript can be found [here](https://doi.org/10.22541/au.168726266.68173061/v1)*
 
 A complete list of all necessary software and packages (with version numbers) can be found at the bottom of this README.
 
@@ -20,16 +21,16 @@ _______________________________________________________
 **Necessary R Packages**
 1. data.table (v.1.14.8)
 2. DHARMa (v.0.4.6)
-3. ggthemes (v.4.2.4)
+3. glmmTMB (v.1.1.7)
 4. here (v.1.0.1)
 5. leaflet (v.2.1.2)
 6. lme4 (v.1.1-31)
-7. mapdata (v.2.3.1)
-8. maps (v.3.4.1)
-9. raster (v.3.6-20)
-10. rfishbase (v.4.1.1)
-11. scales (v.1.2.1)
-12. sdmpredictors (v.0.2.14)
-13. sjplot (v.2.8.12)
-14. splines (v.4.2.2)
-15. tidyverse (v.2.0.0)
+7. performance (v.0.10.4)
+8. raster (v.3.6-20)
+9. rfishbase (v.4.1.1)
+10. sdmpredictors (v.0.2.14)
+11. sf (v.1.0.13)
+12. sjplot (v.2.8.12)
+13. splines (v.4.2.2)
+14. tidyverse (v.2.0.0)
+15. tmap (v.3.3.4)
