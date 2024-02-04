@@ -229,7 +229,7 @@ abslat_eff_data_allfam$unlog_pi <- 10^(abslat_eff_data_allfam$predicted)
 mtdna_pi_abslat_plot <- ggplot() +
   geom_line(data = abslat_eff_data_allfam,
             aes(x = abslat, y = unlog_pi, color = Family), linewidth = 14) +
-  annotate("text", x = 8, y = 0.0145, label = "A", size = 100) +
+  annotate("text", x = 8, y = 0.0145, label = "(a)", size = 100) +
   scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", 
                                 "#AA4499", "#44AA99", "#999933", "#882255", "#888888")) + 
   ylim(0, 0.015) + xlim(0, 90) +
@@ -380,7 +380,7 @@ lat_eff_data_allfam$unlog_pi <- 10^(lat_eff_data_allfam$predicted)
 mtdna_pi_lat_plot <- ggplot() +
   geom_line(data = lat_eff_data_allfam,
             aes(x = lat, y = unlog_pi, color = Family), linewidth = 14) +
-  annotate("text", x = -70, y = 0.0145, label = "B", size = 90) +
+  annotate("text", x = -70, y = 0.0145, label = "(b)", size = 90) +
   scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", 
                                 "#AA4499", "#44AA99", "#999933", "#882255", "#888888")) + 
   ylim(0, 0.015) + xlim(-90, 90) +
@@ -533,7 +533,7 @@ mtdna_pi_lon_plot <- ggplot() +
            fill = "darkolivegreen", alpha = 0.4) + 
   geom_line(data = lon_eff_data_allfam,
             aes(x = lon, y = unlog_pi, color = Family), linewidth = 14) +
-  annotate("text", x = -175, y = 0.0145, label = "A", size = 100) +
+  annotate("text", x = -175, y = 0.0145, label = "(a)", size = 100) +
   scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", 
                                 "#AA4499", "#44AA99", "#999933", "#882255", "#888888")) + 
   ylim(0, 0.015) + xlim(-180, 180) +
@@ -700,7 +700,7 @@ sstmean_eff_data_allfam$unlog_pi <- 10^(sstmean_eff_data_allfam$predicted)
 mtdna_pi_sstmean_plot <- ggplot() +
   geom_line(data = sstmean_eff_data_allfam,
             aes(x = sstmean, y = unlog_pi, color = Family), linewidth = 14) +
-  annotate("text", x = 1, y = 0.0078, label = "A", size = 100) + 
+  annotate("text", x = 2, y = 0.0078, label = "(a)", size = 100) + 
   scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", 
                                 "#AA4499", "#44AA99", "#999933", "#882255", "#888888")) + 
   ylim(0, 0.008) + xlim(0, 30) +
@@ -849,7 +849,7 @@ chlomean_eff_data_allfam$unlog_pi <- 10^(chlomean_eff_data_allfam$predicted)
 mtdna_pi_chlomean_plot <- ggplot() +
   geom_line(data = chlomean_eff_data_allfam,
             aes(x = chlomean, y = unlog_pi, color = Family), linewidth = 14) +
-  annotate("text", x = 0.12, y = 0.0078, label = "D", size = 100) + 
+  annotate("text", x = 0.135, y = 0.0078, label = "(d)", size = 100) + 
   scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", 
                                 "#AA4499", "#44AA99", "#999933", "#882255", "#888888")) + 
   ylim(0, 0.008) + 

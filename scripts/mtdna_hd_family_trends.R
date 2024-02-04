@@ -212,7 +212,7 @@ abslat_eff_data_allfam$abslat <- (abslat_eff_data_allfam$x * attr(abslat_scale, 
 mtdna_hd_abslat_plot <- ggplot() +
   geom_line(data = abslat_eff_data_allfam,
             aes(x = abslat, y = predicted, color = Family), linewidth = 14) +
-  annotate("text", x = 6, y = 0.97, label = "B", size = 100) +
+  annotate("text", x = 6, y = 0.97, label = "(b)", size = 100) +
   scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", 
                                 "#AA4499", "#44AA99", "#999933", "#882255", "#888888")) + 
   ylim(0.5, 1) + xlim(0, 90) +
@@ -346,7 +346,7 @@ lat_scale <- scale(mtdna_small_hd$lat) #bc had to convert to numeric to run mode
 mtdna_hd_lat_plot <- ggplot() +
   geom_line(data = lat_eff_data_allfam,
             aes(x = lat, y = predicted, color = Family), linewidth = 14) +
-annotate("text", x = -70, y = 0.97, label = "B", size = 100) +
+annotate("text", x = -70, y = 0.97, label = "(b)", size = 100) +
   scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", 
                                 "#AA4499", "#44AA99", "#999933", "#882255", "#888888")) + 
   ylim(0.5, 1) + xlim(-90, 90) +
@@ -492,7 +492,7 @@ mtdna_hd_lon_plot <- ggplot() +
            fill = "darkolivegreen", alpha = 0.4) + 
   geom_line(data = lon_eff_data_allfam,
             aes(x = lon, y = predicted, color = Family), linewidth = 14) +
-  annotate("text", x = -175, y = 0.97, label = "B", size = 100) +
+  annotate("text", x = -175, y = 0.97, label = "(b)", size = 100) +
   scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", 
                                 "#AA4499", "#44AA99", "#999933", "#882255", "#888888")) + 
   ylim(0.5, 1) + xlim(-180, 180) +
@@ -642,7 +642,7 @@ sstmean_scale <- scale(mtdna_small_hd$sst.BO_sstmean) #bc had to convert to nume
 mtdna_hd_sstmean_plot <- ggplot() +
   geom_line(data = sstmean_eff_data_allfam,
             aes(x = sstmean, y = predicted, color = Family), linewidth = 14) +
-  annotate("text", x = 1, y = 0.985, label = "B", size = 100) + 
+  annotate("text", x = 2, y = 0.985, label = "(b)", size = 100) + 
   scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", 
                                 "#AA4499", "#44AA99", "#999933", "#882255", "#888888")) + 
   ylim(0.5, 1) + xlim(0, 30) +
@@ -794,7 +794,7 @@ chlomean_eff_data_allfam$chlomean <- 10^(chlomean_eff_data_allfam$x)
 mtdna_hd_chlomean_plot <- ggplot() +
   geom_line(data = chlomean_eff_data_allfam,
             aes(x = chlomean, y = predicted, color = Family), linewidth = 14) +
-  annotate("text", x = 0.12, y = 0.985, label = "E", size = 100) + 
+  annotate("text", x = 0.135, y = 0.985, label = "(e)", size = 100) + 
   scale_color_manual(values = c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", 
                                 "#AA4499", "#44AA99", "#999933", "#882255", "#888888")) + 
   ylim(0.4, 1.0) +
