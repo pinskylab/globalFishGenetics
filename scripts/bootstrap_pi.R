@@ -122,7 +122,8 @@ cis_null <- cbind(lower_ci_null, upper_ci_null)
 
 #### lat model ####
 lat_model_pi <- lmer(logpi ~ range_poscale + lat_scale + I(lat_scale^2) + 
-                       (1|Family/Genus) + (1|Source) + (1|MarkerName), 
+                       (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                       (0 + lat_scale|Family), 
                      REML = FALSE, data = mtdna_small_pi, 
                      na.action = "na.fail", 
                      control = lmerControl(optimizer = "bobyqa"))
@@ -142,7 +143,8 @@ cis_lat <- cbind(lower_ci_lat, upper_ci_lat)
 
 #### abslat model ####
 abslat_model_pi <- lmer(logpi ~ range_pos_scale + abslat_scale + 
-                          (1|Family/Genus) + (1|Source) + (1|MarkerName), 
+                          (1|Family/Genus) + (1|Source) + (1|MarkerName) +
+                          (0 + abslat_scale|Family), 
                         REML = FALSE, data = mtdna_small_pi, 
                         na.action = "na.fail", 
                         control = lmerControl(optimizer = "bobyqa"))
@@ -162,7 +164,8 @@ cis_abslat <- cbind(lower_ci_abslat, upper_ci_abslat)
 
 #### lon model ####
 lon_model_pi <- lmer(logpi ~ range_pos_scale + bs(lon_scale) + 
-                       (1|Family/Genus) + (1|Source) + (1|MarkerName),
+                       (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                       (0 + lon_scale|Family),
                      REML = FALSE, data = mtdna_small_pi, 
                      na.action = "na.fail", 
                      control = lmerControl(optimizer = "bobyqa"))
@@ -186,7 +189,8 @@ cis_lon <- cbind(lower_ci_lon, upper_ci_lon)
 
 #### sst mean model ####
 sstmean_model_pi <- lmer(logpi ~ range_pos_scale + sstmean_scale + 
-                              (1|Family/Genus) + (1|Source) + (1|MarkerName),
+                              (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                           (0 + sstmean_scale|Family),
                          REML = FALSE, data = mtdna_small_pi, 
                          na.action = "na.fail", 
                          control = lmerControl(optimizer = "bobyqa"))
@@ -206,7 +210,8 @@ cis_sstmean <- cbind(lower_ci_sstmean, upper_ci_sstmean)
   
 #### chloroA mean model ####
 chlomean_model_pi <- lmer(logpi ~ range_pos_scale + logchlomean + I(logchlomean^2) + 
-                            (1|Family/Genus) + (1|Source) + (1|MarkerName), 
+                            (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
+                            (0 + logchlomean|Family), 
                           REML = FALSE, data = mtdna_small_pi, 
                           na.action = "na.fail", 
                           control = lmerControl(optimizer = "bobyqa"))
