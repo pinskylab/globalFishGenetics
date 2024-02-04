@@ -88,7 +88,7 @@ msat_he_point_plot <- ggplot(World2) +
   geom_rug(data = msat_coords, mapping = aes(y = Y), color = "#282828", 
            length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
   scale_color_gradient(low = "#1f2c32", high = "#e3ebed") + 
-  annotate("text", x = -17000000, y = 8500000, label = "C", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(c)", size = 100) +
   labs(color = "He") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
@@ -116,7 +116,7 @@ msat_he_mean_hexbin_plot <- ggplot(World2) +
   geom_rug(data = msat_coords, mapping = aes(y = Y), color = "#282828", 
            length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
   scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
-  annotate("text", x = -17000000, y = 8500000, label = "C", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(c)", size = 100) +
   labs(fill = "He") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
@@ -140,7 +140,7 @@ msat_he_SD_hexbin_plot <- ggplot(World2) +
                    fun = function(x) sd(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
                    inherit.aes = FALSE) + 
   scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
-  annotate("text", x = -17000000, y = 8500000, label = "C", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(c)", size = 100) +
   labs(fill = "SD") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
@@ -164,7 +164,7 @@ msat_he_count_hexbin_plot <- ggplot(World2) +
                    fun = function(x) length(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
                    inherit.aes = FALSE) + 
   scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
-  annotate("text", x = -17000000, y = 8500000, label = "C", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(c)", size = 100) +
   labs(fill = "Count") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
@@ -205,7 +205,7 @@ mtdna_hd_point_plot <- ggplot(World2) +
   geom_rug(data = mtdna_small_hd_coords, mapping = aes(y = Y), color = "#282828", 
            length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
   scale_color_gradient(low = "#1f2c32", high = "#e3ebed") + 
-  annotate("text", x = -17000000, y = 8500000, label = "B", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(b)", size = 100) +
   labs(color = "Hd") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
@@ -233,7 +233,7 @@ mtdna_hd_mean_hexbin_plot <- ggplot(World2) +
   geom_rug(data = mtdna_small_hd_coords, mapping = aes(y = Y), color = "#282828", 
            length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
   scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
-  annotate("text", x = -17000000, y = 8500000, label = "B", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(b)", size = 100) +
   labs(fill = "Hd") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
@@ -257,7 +257,7 @@ mtdna_hd_SD_hexbin_plot <- ggplot(World2) +
                    fun = function(x) sd(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
                    inherit.aes = FALSE) + 
   scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
-  annotate("text", x = -17000000, y = 8500000, label = "B", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(b)", size = 100) +
   labs(fill = "SD") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
@@ -281,7 +281,7 @@ mtdna_hd_count_hexbin_plot <- ggplot(World2) +
                    fun = function(x) length(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
                    inherit.aes = FALSE) + 
   scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
-  annotate("text", x = -17000000, y = 8500000, label = "B", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(b)", size = 100) +
   labs(fill = "Count") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
@@ -319,7 +319,7 @@ mtdna_pi_point_plot <- ggplot(World2) +
            length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
   scale_color_gradient(trans = "log10", low = "#1f2c32", high = "#e3ebed", 
                        labels = scales::label_log()) + 
-  annotate("text", x = -17000000, y = 8500000, label = "A", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(a)", size = 100) +
   labs(color = "π") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
@@ -348,7 +348,7 @@ mtdna_pi_mean_hexbin_plot <- ggplot(World2) +
            length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
   scale_fill_gradient(trans = "log10", low = "#1f2c32", high = "#e3ebed", 
                       labels = scales::label_log()) + 
-  annotate("text", x = -17000000, y = 8500000, label = "A", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(a)", size = 100) +
   labs(fill = "π") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
@@ -372,7 +372,7 @@ mtdna_pi_SD_hexbin_plot <- ggplot(World2) +
                    fun = function(x) sd(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
                    inherit.aes = FALSE) + 
   scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
-  annotate("text", x = -17000000, y = 8500000, label = "A", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(a)", size = 100) +
   labs(fill = "SD") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
@@ -396,7 +396,7 @@ mtdna_pi_count_hexbin_plot <- ggplot(World2) +
                    fun = function(x) length(x), binwidth = c(5e+05, 5e+05), #bin width and height in meters
                    inherit.aes = FALSE) + 
   scale_fill_gradient(low = "#1f2c32", high = "#e3ebed") + 
-  annotate("text", x = -17000000, y = 8500000, label = "A", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(a)", size = 100) +
   labs(fill = "Count") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
@@ -433,7 +433,7 @@ chlomean_mean_hexbin_plot <- ggplot(World2) +
            length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
   scale_fill_gradient(trans = "log10", low = "#c6cbc8", high = "#212924", 
                       labels = scales::label_log()) +
-  annotate("text", x = -17000000, y = 8500000, label = "A", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(a)", size = 100) +
   labs(fill = "Chlorophyll") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
@@ -461,7 +461,7 @@ sstmean_mean_hexbin_plot <- ggplot(World2) +
   geom_rug(data = msat_coords, mapping = aes(y = Y), color = "#282828", 
            length = unit(0.015, "npc"), inherit.aes = FALSE) + #projection messes these lengths up - looks like y is 2x as big as x
   scale_fill_gradient(low = "#ebcb99", high = "#905800") +
-  annotate("text", x = -17000000, y = 8500000, label = "B", size = 100) +
+  annotate("text", x = -16000000, y = 8500000, label = "(b)", size = 100) +
   labs(fill = "SST") + 
   theme_bw() + 
   theme(plot.margin = unit(c(8, 2, 10, 2), "cm"),
