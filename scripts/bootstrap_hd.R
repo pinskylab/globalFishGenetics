@@ -88,36 +88,13 @@ mtdna_small_hd <- subset(mtdna_small_hd, mtdna_small_hd$logchlomean != "Inf" |
                            mtdna_small_hd$logchlomean != "NaN")
 
 ################################################################################################################################
-  
-######## Null model ########
-  
-null_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + 
-                           (1|Family/Genus) + (1|Source) + (1|MarkerName),
-                         data = mtdna_small_hd, family = ordbeta,
-                         na.action = "na.fail")  
-  
-##bootstrap confidence interval for coefficients ##  
-hd_null_boot <- bootMer(null_model_hd, FUN = function(x) fixef(x)$cond, nsim = 1000)
-  boot_coef_null <- as.data.frame(hd_null_boot$t) 
-
-#pull out CIs
-lower_ci_null <- as.data.frame(apply(hd_null_boot$t, 2, quantile, 0.025))
-upper_ci_null <- as.data.frame(apply(hd_null_boot$t, 2, quantile, 0.975))
-
-cis_null <- cbind(lower_ci_null, upper_ci_null)
-  cis_null$fixef <- rownames(cis_null)
-  cis_null$model <- "lat"
-  colnames(cis_null) <- c("2.5ci", "97.5ci", "fixef", "model")
-
-#############################################################################################################################
 
 ######### Latitude & longitude models ########
 
 #### lat model ####
 lat_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + lat_scale + 
                           I(lat_scale^2) + (1|Family/Genus) + 
-                          (1|Source) + (1|MarkerName) + 
-                          (0 + lat_scale|Family),
+                          (1|Source) + (1|MarkerName),
                         data = mtdna_small_hd, family = ordbeta,
                         na.action = "na.fail")  
 
@@ -136,8 +113,7 @@ cis_lat <- cbind(lower_ci_lat, upper_ci_lat)
 
 #### abslat model ####
 abslat_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + abslat_scale +
-                             (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
-                             (0 + abslat_scale|Family),
+                             (1|Family/Genus) + (1|Source) + (1|MarkerName),
                            data = mtdna_small_hd, family = ordbeta,
                            na.action = "na.fail")  
 
@@ -156,8 +132,7 @@ cis_abslat <- cbind(lower_ci_abslat, upper_ci_abslat)
 
 #### lon model ####
 lon_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + bs(lon_scale) +
-                          (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
-                          (0 + lon_scale|Family),
+                          (1|Family/Genus) + (1|Source) + (1|MarkerName),
                         data = mtdna_small_hd, family = ordbeta,
                         na.action = "na.fail")  
 
@@ -180,8 +155,7 @@ cis_lon <- cbind(lower_ci_lon, upper_ci_lon)
   
 #### sst mean model ####
 sstmean_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + sstmean_scale + 
-                              (1|Family/Genus) + (1|Source) + (1|MarkerName) + 
-                              (0 + sstmean_scale|Family),
+                              (1|Family/Genus) + (1|Source) + (1|MarkerName),
                             data = mtdna_small_hd, family = ordbeta,
                             na.action = "na.fail")  
   
@@ -201,8 +175,7 @@ cis_sstmean <- cbind(lower_ci_sstmean, upper_ci_sstmean)
 #### chloroA mean model ####
 chlomean_model_hd <- glmmTMB(He ~ bp_scale + range_pos_scale + logchlomean + 
                                I(logchlomean^2) + (1|Family/Genus) + 
-                               (1|Source) + (1|MarkerName) + 
-                               (0 + logchlomean|Family),
+                               (1|Source) + (1|MarkerName),
                              data = mtdna_small_hd, family = ordbeta,
                              na.action = "na.fail")  
   

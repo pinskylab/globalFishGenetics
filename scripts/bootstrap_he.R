@@ -91,26 +91,11 @@ msat <- subset(msat, msat$logchlomean != "Inf" |
 
 ##################################################################################################################################
 
-######## Null model ########
-
-null_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + 
-                           (1|Family/Genus) + (1|Source),
-                         data = msat, family = ordbeta, na.action = "na.fail")
-  
-##bootstrap confidence interval for coefficients ##  
-he_null_boot <- bootMer(null_model_he, FUN = function(x) fixef(x)$cond, nsim = 1000)
-  boot_coef_null <- as.data.frame(he_null_boot$t) 
-  
-write.csv(boot_coef_null, "output/boot_he_null.csv")
-
-#####################################################################################################################################
-
 ######### Latitude & longitude models ########
 
 #### lat model ####
 lat_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + lat_scale + 
-                          I(lat_scale^2) + (1|Family/Genus) + (1|Source) + 
-                          (0 + lat_scale|Family),
+                          I(lat_scale^2) + (1|Family/Genus) + (1|Source),
                         data = msat, family = ordbeta, na.action = "na.fail")
 
 ##bootstrap confidence interval for coefficients ##  
@@ -121,8 +106,7 @@ write.csv(boot_coef_lat, "output/boot_he_lat.csv")
 
 #### abslat model ####
 abslat_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + abslat_scale + 
-                             (1|Family/Genus) + (1|Source) + 
-                             (0 + abslat_scale|Family),
+                             (1|Family/Genus) + (1|Source),
                            data = msat, family = ordbeta, na.action = "na.fail")
 
 ##bootstrap confidence interval for coefficients ##  
@@ -133,8 +117,7 @@ write.csv(boot_coef_abslat, "output/boot_he_abslat.csv")
   
 #### lon model ####
 lon_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + bs(lon_scale) + 
-                          (1|Family/Genus) + (1|Source) + 
-                          (0 + lon_scale|Family),
+                          (1|Family/Genus) + (1|Source),
                         data = msat, family = ordbeta, na.action = "na.fail")
 
 ##bootstrap confidence interval for coefficients ##  
@@ -149,8 +132,7 @@ write.csv(boot_coef_lon, "output/boot_he_lon.csv")
 
 #### sst mean model ####
 sstmean_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + sstmean_scale + 
-                              (1|Family/Genus) + (1|Source) + 
-                              (0 + sstmean_scale|Family),
+                              (1|Family/Genus) + (1|Source),
                             data = msat, family = ordbeta, na.action = "na.fail")
 
 ##bootstrap confidence interval for coefficients ##  
@@ -161,8 +143,7 @@ write.csv(boot_coef_sstmean, "output/boot_he_sstmean.csv")
 
 #### chloroA mean model ####
 chlomean_model_he <- glmmTMB(He ~ CrossSpp_scale + range_pos_scale + logchlomean + 
-                               I(logchlomean^2) + (1|Family/Genus) + (1|Source) + 
-                               (0 + logchlomean|Family),
+                               I(logchlomean^2) + (1|Family/Genus) + (1|Source),
                              data = msat, family = ordbeta, na.action = "na.fail")
 
 ##bootstrap confidence interval for coefficients ##  

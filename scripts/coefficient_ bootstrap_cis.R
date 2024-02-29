@@ -30,7 +30,6 @@ he_abslat_cis <- read.csv(here("output", "boot_he_abslat.csv"))
 he_lat_cis <- read.csv(here("output", "boot_he_lat.csv"))
 he_lon_cis <- read.csv(here("output", "boot_he_lon.csv"))
 he_sstmean_cis <- read.csv(here("output", "boot_he_sstmean.csv"))
-  he_sstmean_cis_nonas <- na.omit(he_sstmean_cis)
 he_chlomean_cis <- read.csv(here("output", "boot_he_chloromean.csv"))
 
 ##########################################################################################################################################
@@ -47,7 +46,7 @@ he_cis <- as.data.frame(c(rep("he", 11)))
                      quantile(he_lon_cis$bs.lon_scale.1, c(0.025)), 
                      quantile(he_lon_cis$bs.lon_scale.2, c(0.025)), 
                      quantile(he_lon_cis$bs.lon_scale.3, c(0.025)), 
-                     quantile(he_sstmean_cis$sst.BO_sstmean, c(0.025)), 
+                     quantile(he_sstmean_cis$sstmean_scale, c(0.025)), 
                      quantile(he_chlomean_cis$logchlomean, c(0.025)), 
                      quantile(he_chlomean_cis$I.logchlomean.2, c(0.025)))
   he_cis$X97.5ci <- c(quantile(he_null_cis$range_position, c(0.975)), 
@@ -58,7 +57,7 @@ he_cis <- as.data.frame(c(rep("he", 11)))
                      quantile(he_lon_cis$bs.lon_scale.1, c(0.975)), 
                      quantile(he_lon_cis$bs.lon_scale.2, c(0.975)), 
                      quantile(he_lon_cis$bs.lon_scale.3, c(0.975)), 
-                     quantile(he_sstmean_cis$sst.BO_sstmean, c(0.975)), 
+                     quantile(he_sstmean_cis$sstmean_scale, c(0.975)), 
                      quantile(he_chlomean_cis$logchlomean, c(0.975)), 
                      quantile(he_chlomean_cis$I.logchlomean.2, c(0.975)))
   he_cis$fixef <- c("range_position", "CrossSpp", "lat_scale", "I(lat_scale^2)", "abslat_scale",
@@ -79,8 +78,8 @@ all_cis <- rbind(pi_cis, hd_cis_geo, hd_cis_env, he_cis)
 cis_latlon <- subset(all_cis, all_cis$model == "lat" | all_cis$model == "abslat"| 
                        all_cis$model == "lon")
   cis_latlon <- subset(cis_latlon, cis_latlon$fixef != "(Intercept)" & 
-                         cis_latlon$fixef != "sigma" & cis_latlon$fixef != "range_position" & 
-                         cis_latlon$fixef != "bp_scale")
+                         cis_latlon$fixef != "sigma" & cis_latlon$fixef != "range_pos_scale" & 
+                         cis_latlon$fixef != "bp_scale" & cis_latlon$fixef != "range_position")
 
 #add means (coefficients from "real" model)
 #pi -> hd -> he: lat, lat^2, abslat, bslon1, bslon2, bslon3
@@ -124,7 +123,7 @@ latlon_cis_plot
 cis_env <- subset(all_cis, all_cis$model == "sstmean" | all_cis$model == "chloromean")
   cis_env <- subset(cis_env, cis_env$fixef != "(Intercept)" & 
                       cis_env$fixef != "sigma" & cis_env$fixef != "bp_scale" & 
-                      cis_env$fixef != "range_position")
+                      cis_env$fixef != "range_position" & cis_env$fixef != "range_pos_scale")
   
 #add means (coefficients from "real" model)
 #pi -> hd -> he: sstmean, chlomean, chlomean^2
@@ -145,7 +144,7 @@ env_cis_plot <- ggplot(data = cis_env) +
   scale_color_manual(values = c("#332288", "#88CCEE", "#117733")) +
   xlab("") + ylab("Coefficient") +
   scale_x_discrete(labels = c(bquote("chloro"~mean^2), "chloro mean", "SST mean")) +  
-  annotate("text", x = 3.4, y = -0.225, label = "(b)", size = 20) +
+  annotate("text", x = 4.3, y = -0.225, label = "(b)", size = 20) +
   coord_flip() +
   theme_minimal() + 
   theme(panel.border = element_rect(fill = NA, color = "black", linewidth = 4),
@@ -157,3 +156,4 @@ env_cis_plot <- ggplot(data = cis_env) +
         legend.title = element_blank(), 
         plot.margin = unit(c(1,1,1,1), "cm"),)
 env_cis_plot 
+
