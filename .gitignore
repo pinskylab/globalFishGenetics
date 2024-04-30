@@ -14,6 +14,7 @@ Marial_Stuff/*
 #ignore submission folder & PDF figures
 Ecology_Letters_Submission/*
 figures/Manuscript_Figures/*
+data/data_for_Dryad/*
 
 #output files to ignore
 output/boot*csv
