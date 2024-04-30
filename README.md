@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/109429185.svg)](https://zenodo.org/doi/10.5281/zenodo.11093423)
+
 This repository provides the data, scripts, and figures for the analyses in "Global patterns of genetic diversity in marine fishes", which identifies latitudinal and longitudinal patterns in mitochondrial and nuclear genetic diversity in marine fishes, as well as any underlying macroecological drivers. 
 
 **Citation:** Clark RD & Pinsky ML. (2024) Global patterns of nuclear and mitochondrial genetic diversity in marine fishes. *Ecology & Evolution*. *accepted for publication*
