@@ -14,6 +14,8 @@ This repository is organized into 4 folders:
 4. **/figures:** Contains pngs of plots included in the manuscript.
 
 Please contact René Clark at rclark848[at]gmail.com with any questions.
+
+*Also available to download as a zip archive from DRYAD: https://doi.org/10.5061/dryad.8gtht76wn.*
 _______________________________________________________
 
 **Necessary Software**
