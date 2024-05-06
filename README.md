@@ -2,8 +2,7 @@
 
 This repository provides the data, scripts, and figures for the analyses in "Global patterns of nuclear and mitochondrial genetic diversity in marine fishes", which identifies latitudinal and longitudinal patterns in mitochondrial and nuclear genetic diversity in marine fishes, as well as any underlying macroecological drivers. 
 
-**Citation:** Clark RD & Pinsky ML. (2024) Global patterns of nuclear and mitochondrial genetic diversity in marine fishes. *Ecology & Evolution*. *accepted for publication*
-  * *An older version of this manuscript can be found on Authorea [DOI:10.22541/au.169806967.74692724/v1](https://doi.org/10.22541/au.169806967.74692724/v1).* 
+**Citation:** Clark RD & Pinsky ML. (2024) Global patterns of nuclear and mitochondrial genetic diversity in marine fishes. *Ecology & Evolution*, **14**:e11365. [DOI:10.1002/ece3.11365](https://onlinelibrary.wiley.com/doi/10.1002/ece3.11365)
 
 A complete list of all necessary software and packages (with version numbers) can be found at the bottom of this README.
 
